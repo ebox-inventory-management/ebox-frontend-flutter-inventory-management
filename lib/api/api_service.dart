@@ -6,6 +6,7 @@ import '../models/login_res_models.dart';
 import '../models/register_res_model.dart';
 
 class APIService {
+  ///login user
   Future<Either<String, LoginResModel>> login(
       String email, String password) async {
     try {

@@ -1,3 +1,4 @@
+import 'package:ebox_frontend_web_inventory/views/navigationbar_screen.dart';
 import 'package:get/get.dart';
 import 'package:get_storage/get_storage.dart';
 
@@ -17,9 +18,11 @@ class AuthController extends GetxController {
   void checkToken() {
     final token = box.read('token');
     if (token != null) {
-      Get.offAllNamed('/home');
+      Get.offAll(NavigationBarScreen());
     }
   }
+
+  ///login
 
   void login(String email, String pass) async {
     final res = await _apiService.login(email, pass);
@@ -29,7 +32,7 @@ class AuthController extends GetxController {
         box.write('token', right.token);
       }
       print('login success ${right.token}');
-      Get.offAllNamed('/home');
+      Get.offAll(NavigationBarScreen());
     });
   }
 
@@ -39,7 +42,8 @@ class AuthController extends GetxController {
     try {
       final res = await _apiService.register(name, email, pass);
       res.fold((left) => Get.snackbar("Message", "Error Occurred"), (right) {
-        Get.snackbar("Message", "Login success");
+        Get.snackbar("Message", "Register success");
+        Get.offAll(NavigationBarScreen());
       });
     } catch (e) {
       print(e.toString());

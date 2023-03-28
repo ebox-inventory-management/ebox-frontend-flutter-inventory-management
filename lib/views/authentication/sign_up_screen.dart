@@ -1,19 +1,18 @@
 import 'dart:ui';
 
-import 'package:ebox_frontend_web_inventory/views/sign_up_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/src/widgets/container.dart';
 import 'package:flutter/src/widgets/framework.dart';
 import 'package:get/get.dart';
 
-import '../controller/auth_controller.dart';
+import '../../controller/auth_controller.dart';
 
-class LoginScreen extends StatelessWidget {
-  LoginScreen({super.key});
+class SignUpScreen extends StatelessWidget {
+  SignUpScreen({super.key});
   TextEditingController nameController = new TextEditingController();
   TextEditingController emailController = new TextEditingController();
   TextEditingController passwordController = new TextEditingController();
-  final controller = Get.find<AuthController>();
+  final authController = Get.put(AuthController());
 
   @override
   Widget build(BuildContext context) {
@@ -28,6 +27,11 @@ class LoginScreen extends StatelessWidget {
           crossAxisAlignment: CrossAxisAlignment.center,
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
+            TextFormField(
+              controller: nameController,
+              decoration:
+                  InputDecoration(label: Text('Name'), hintText: 'Name'),
+            ),
             TextFormField(
               controller: emailController,
               decoration:
@@ -47,11 +51,11 @@ class LoginScreen extends StatelessWidget {
                 Expanded(
                     child: TextButton(
                   onPressed: () {
-                    controller.login(
+                    authController.register(nameController.text,
                         emailController.text, passwordController.text);
                   },
                   child: Text(
-                    'Login',
+                    'Sign up',
                     style: TextStyle(color: Colors.white),
                   ),
                   style: ButtonStyle(
@@ -66,12 +70,12 @@ class LoginScreen extends StatelessWidget {
             Row(
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
-                Text('Didn\'t have account yet?'),
+                Text('Aleady have account?'),
                 TextButton(
                   onPressed: () {
-                    Get.to(() => SignUpScreen());
+                    Get.back();
                   },
-                  child: Text('Sign Up'),
+                  child: Text('Login'),
                 )
               ],
             ),
