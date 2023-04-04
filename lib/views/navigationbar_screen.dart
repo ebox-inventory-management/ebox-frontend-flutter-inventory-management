@@ -1,5 +1,7 @@
 import 'package:easy_sidemenu/easy_sidemenu.dart';
 import 'package:ebox_frontend_web_inventory/views/dashboard/dashboard_screen.dart';
+import 'package:ebox_frontend_web_inventory/views/items/items_screen.dart';
+import 'package:ebox_frontend_web_inventory/views/purchases/purchases_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/src/widgets/container.dart';
 import 'package:flutter/src/widgets/framework.dart';
@@ -38,8 +40,8 @@ class _DashboardScreenState extends State<NavigationBarScreen> {
             style: SideMenuStyle(
               showTooltip: false,
               displayMode: SideMenuDisplayMode.auto,
-              hoverColor: Colors.blue[100],
-              selectedColor: Colors.lightBlue,
+              hoverColor: Colors.blueGrey[100],
+              selectedColor: Colors.blueGrey,
               selectedTitleTextStyle: const TextStyle(color: Colors.white),
               selectedIconColor: Colors.white,
               // decoration: BoxDecoration(
@@ -144,25 +146,17 @@ class _DashboardScreenState extends State<NavigationBarScreen> {
               children: [
                 Container(
                   color: Colors.white,
-                  child: Center(child: DashBoardScreen()),
+                  child: DashBoardScreen(),
                 ),
                 Container(
                   color: Colors.white,
                   child: const Center(
-                    child: Text(
-                      'Users',
-                      style: TextStyle(fontSize: 35),
-                    ),
+                    child: ItemsScreen(),
                   ),
                 ),
                 Container(
                   color: Colors.white,
-                  child: const Center(
-                    child: Text(
-                      'Files',
-                      style: TextStyle(fontSize: 35),
-                    ),
-                  ),
+                  child: const PurchasesScreen(),
                 ),
                 Container(
                   color: Colors.white,

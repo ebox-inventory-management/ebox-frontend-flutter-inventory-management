@@ -37,6 +37,7 @@ dependencies:
   cupertino_icons: ^1.0.2
   flutter_screenutil: ^5.7.0
   easy_sidemenu: ^0.4.1+1
+  syncfusion_flutter_charts: ^21.1.38
 
 dev_dependencies:
   flutter_test:
