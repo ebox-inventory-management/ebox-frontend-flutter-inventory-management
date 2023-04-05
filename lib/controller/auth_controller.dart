@@ -1,4 +1,5 @@
 import 'package:ebox_frontend_web_inventory/views/navigationbar_screen.dart';
+import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:get_storage/get_storage.dart';
 
@@ -18,35 +19,49 @@ class AuthController extends GetxController {
   void checkToken() {
     final token = box.read('token');
     if (token != null) {
-      Get.offAll(NavigationBarScreen());
+      Get.offAllNamed('/navigation');
     }
   }
 
-  ///login
+  ///signin
 
-  void login(String email, String pass) async {
-    final res = await _apiService.login(email, pass);
-    res.fold((left) => Get.snackbar("Message", "Error Occurred"), (right) {
-      Get.snackbar("Message", "Login success");
+  void signin({required String email, required String password}) async {
+    final res = await _apiService.login(email, password);
+    res.fold(
+        (left) => Get.snackbar("Oh Snap!", "Error Occurred",
+            backgroundColor: Colors.red, colorText: Colors.white), (right) {
+      Get.snackbar("Yeah!", "SignIn Success",
+          backgroundColor: Colors.green, colorText: Colors.white);
       if (right.token != null) {
         box.write('token', right.token);
       }
       print('login success ${right.token}');
-      Get.offAll(NavigationBarScreen());
+      Get.offAllNamed('/navigation');
     });
   }
 
   ///register
 
-  void register(String name, String email, String pass) async {
+  void signup(
+      {required String name,
+      required String email,
+      required String password}) async {
     try {
-      final res = await _apiService.register(name, email, pass);
-      res.fold((left) => Get.snackbar("Message", "Error Occurred"), (right) {
-        Get.snackbar("Message", "Register success");
-        Get.offAll(NavigationBarScreen());
+      final res = await _apiService.signup(name, email, password);
+      res.fold(
+          (left) => Get.snackbar("Oh Snap!", "Error Occurred",
+              backgroundColor: Colors.red, colorText: Colors.white), (right) {
+        Get.snackbar("Yeah!", "SignUp Success",
+            backgroundColor: Colors.green, colorText: Colors.white);
+        Get.offAllNamed('/navigation');
       });
     } catch (e) {
       print(e.toString());
     }
+  }
+
+  void signout() {
+    box.remove('token');
+    Get.offAllNamed('/signin');
   }
 }

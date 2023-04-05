@@ -23,7 +23,7 @@ class APIService {
   }
 
   ///register user
-  Future<Either<String, RegisterResModel>> register(
+  Future<Either<String, RegisterResModel>> signup(
       String name, String email, String password) async {
     try {
       var response = await Dio().post(

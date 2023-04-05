@@ -1,4 +1,6 @@
 import 'package:easy_sidemenu/easy_sidemenu.dart';
+import 'package:ebox_frontend_web_inventory/models/login_res_models.dart';
+import 'package:ebox_frontend_web_inventory/models/user_res_models.dart';
 import 'package:ebox_frontend_web_inventory/views/dashboard/dashboard_screen.dart';
 import 'package:ebox_frontend_web_inventory/views/items/items_screen.dart';
 import 'package:ebox_frontend_web_inventory/views/purchases/purchases_screen.dart';
@@ -29,7 +31,7 @@ class _DashboardScreenState extends State<NavigationBarScreen> {
     super.initState();
   }
 
-  final authController = Get.put(AuthController());
+  final controller = Get.put(AuthController());
 
   @override
   Widget build(BuildContext context) {
@@ -37,17 +39,13 @@ class _DashboardScreenState extends State<NavigationBarScreen> {
       appBar: AppBar(
         elevation: 0,
         backgroundColor: Colors.white,
-        leading: Padding(
-            padding: REdgeInsets.all(10),
-            child: Center(
-              child: Text(
-                'eBox',
-                style: TextStyle(
-                    color: Colors.orangeAccent,
-                    fontWeight: FontWeight.bold,
-                    fontSize: 16.sp),
-              ),
-            )),
+        title: Text(
+          'eBox',
+          style: TextStyle(
+              color: Colors.orangeAccent,
+              fontWeight: FontWeight.bold,
+              fontSize: 24.sp),
+        ),
         actions: [
           Padding(
             padding: REdgeInsets.all(10),
@@ -204,7 +202,9 @@ class _DashboardScreenState extends State<NavigationBarScreen> {
               ),
               SideMenuItem(
                 priority: 13,
-                onTap: (page, _) {},
+                onTap: (page, _) {
+                  controller.signout();
+                },
                 title: 'Exit',
                 icon: Icon(Icons.exit_to_app),
               ),

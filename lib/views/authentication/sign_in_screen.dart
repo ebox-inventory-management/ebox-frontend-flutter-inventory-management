@@ -1,16 +1,17 @@
+import 'package:ebox_frontend_web_inventory/views/authentication/sign_up_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 
 import '../../controller/auth_controller.dart';
 
-class LoginScreen extends StatelessWidget {
-  LoginScreen({super.key});
+class SignInScreen extends StatelessWidget {
+  SignInScreen({super.key});
 
   TextEditingController usernameController = new TextEditingController();
   TextEditingController emailController = new TextEditingController();
   TextEditingController passwordController = new TextEditingController();
-  final authController = Get.put(AuthController());
+  final controller = Get.find<AuthController>();
 
   @override
   Widget build(BuildContext context) {
@@ -45,7 +46,7 @@ class LoginScreen extends StatelessWidget {
                 ),
               ),
               SizedBox(
-                height: 30.h,
+                height: 15.h,
               ),
               Padding(
                 padding: REdgeInsets.only(top: 15, bottom: 15),
@@ -81,22 +82,23 @@ class LoginScreen extends StatelessWidget {
                         borderRadius: BorderRadius.circular(5.0))),
               ),
               Padding(
-                padding: REdgeInsets.only(top: 30),
+                padding: REdgeInsets.only(top: 20),
                 child: Row(
                   children: [
                     Expanded(
                       child: TextButton(
                           style: ButtonStyle(
                               backgroundColor:
-                                  MaterialStateProperty.all(Colors.green)),
+                                  MaterialStateProperty.all(Colors.orange)),
                           onPressed: () {
-                            authController.login(
-                                emailController.text, passwordController.text);
+                            controller.signin(
+                                email: emailController.text,
+                                password: passwordController.text);
                           },
                           child: Padding(
                             padding: REdgeInsets.all(15),
                             child: Text(
-                              'Login',
+                              'SigIn',
                               style: TextStyle(
                                   color: Colors.white,
                                   fontWeight: FontWeight.bold),
@@ -105,6 +107,27 @@ class LoginScreen extends StatelessWidget {
                     ),
                   ],
                 ),
+              ),
+              SizedBox(
+                height: 10.h,
+              ),
+              Row(
+                children: [
+                  Text(
+                    'No have account yet? ',
+                    style: TextStyle(color: Colors.black54),
+                  ),
+                  GestureDetector(
+                    onTap: () {
+                      Get.to(() => SignUpScreen());
+                    },
+                    child: Text(
+                      'SignUp',
+                      style: TextStyle(
+                          color: Colors.green, fontWeight: FontWeight.bold),
+                    ),
+                  )
+                ],
               )
             ]),
           ),
