@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
-class PurchasesScreen extends StatelessWidget {
-  const PurchasesScreen({super.key});
+class SalesScreen extends StatelessWidget {
+  const SalesScreen({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -14,7 +14,7 @@ class PurchasesScreen extends StatelessWidget {
             labelColor: Colors.white,
             tabs: [
               Tab(
-                text: 'Purchases',
+                text: 'Sales',
               ),
               Tab(
                 text: 'Returns',
@@ -22,7 +22,7 @@ class PurchasesScreen extends StatelessWidget {
             ],
           ),
           title: const Text(
-            'Purchases',
+            'Sales',
             style: TextStyle(color: Colors.white),
           ),
         ),

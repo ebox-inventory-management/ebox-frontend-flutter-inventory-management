@@ -45,7 +45,7 @@ class _DashBoardScreenState extends State<DashBoardScreen> {
                       child: TextButton(
                         onPressed: () {},
                         style: TextButton.styleFrom(
-                            backgroundColor: Colors.blueGrey,
+                            backgroundColor: Colors.orange,
                             foregroundColor: Colors.white),
                         child: const Text(
                           'TODAY',
@@ -58,7 +58,7 @@ class _DashBoardScreenState extends State<DashBoardScreen> {
                       child: TextButton(
                         onPressed: () {},
                         style: TextButton.styleFrom(
-                            backgroundColor: Colors.blueGrey,
+                            backgroundColor: Colors.orange,
                             foregroundColor: Colors.white),
                         child: const Text(
                           'LAST 7 DAYS',
@@ -71,7 +71,7 @@ class _DashBoardScreenState extends State<DashBoardScreen> {
                       child: TextButton(
                         onPressed: () {},
                         style: TextButton.styleFrom(
-                            backgroundColor: Colors.blueGrey,
+                            backgroundColor: Colors.orange,
                             foregroundColor: Colors.white),
                         child: const Text(
                           'THIS MONTH',
@@ -84,7 +84,7 @@ class _DashBoardScreenState extends State<DashBoardScreen> {
                       child: TextButton(
                         onPressed: () {},
                         style: TextButton.styleFrom(
-                            backgroundColor: Colors.blueGrey,
+                            backgroundColor: Colors.orange,
                             foregroundColor: Colors.white),
                         child: const Text(
                           'THIS YEAR',
@@ -97,7 +97,7 @@ class _DashBoardScreenState extends State<DashBoardScreen> {
                       child: TextButton(
                         onPressed: () {},
                         style: TextButton.styleFrom(
-                            backgroundColor: Colors.blueGrey,
+                            backgroundColor: Colors.orange,
                             foregroundColor: Colors.white),
                         child: const Text(
                           'LAST YEAR',
@@ -261,7 +261,7 @@ class _DashBoardScreenState extends State<DashBoardScreen> {
                                   child: TextButton(
                                     onPressed: () {},
                                     style: TextButton.styleFrom(
-                                        backgroundColor: Colors.blueGrey,
+                                        backgroundColor: Colors.orange,
                                         foregroundColor: Colors.white),
                                     child: const Text(
                                       'TODAY',
@@ -275,7 +275,7 @@ class _DashBoardScreenState extends State<DashBoardScreen> {
                                   child: TextButton(
                                     onPressed: () {},
                                     style: TextButton.styleFrom(
-                                        backgroundColor: Colors.blueGrey,
+                                        backgroundColor: Colors.orange,
                                         foregroundColor: Colors.white),
                                     child: const Text(
                                       'LAST 7 DAYS',
@@ -289,7 +289,7 @@ class _DashBoardScreenState extends State<DashBoardScreen> {
                                   child: TextButton(
                                     onPressed: () {},
                                     style: TextButton.styleFrom(
-                                        backgroundColor: Colors.blueGrey,
+                                        backgroundColor: Colors.orange,
                                         foregroundColor: Colors.white),
                                     child: const Text(
                                       'THIS MONTH',
@@ -303,7 +303,7 @@ class _DashBoardScreenState extends State<DashBoardScreen> {
                                   child: TextButton(
                                     onPressed: () {},
                                     style: TextButton.styleFrom(
-                                        backgroundColor: Colors.blueGrey,
+                                        backgroundColor: Colors.orange,
                                         foregroundColor: Colors.white),
                                     child: const Text(
                                       'THIS YEAR',
@@ -317,7 +317,7 @@ class _DashBoardScreenState extends State<DashBoardScreen> {
                                   child: TextButton(
                                     onPressed: () {},
                                     style: TextButton.styleFrom(
-                                        backgroundColor: Colors.blueGrey,
+                                        backgroundColor: Colors.orange,
                                         foregroundColor: Colors.white),
                                     child: const Text(
                                       'LAST YEAR',
@@ -386,8 +386,8 @@ class _DashBoardScreenState extends State<DashBoardScreen> {
                               columnSpacing: 200.w,
                               dataTextStyle: TextStyle(
                                   fontSize: 16.sp, color: Colors.black54),
-                              headingRowColor: const MaterialStatePropertyAll(
-                                  Colors.blueGrey),
+                              headingRowColor:
+                                  const MaterialStatePropertyAll(Colors.orange),
                               headingTextStyle: TextStyle(
                                   fontSize: 16.sp,
                                   fontWeight: FontWeight.bold,
@@ -466,8 +466,8 @@ class _DashBoardScreenState extends State<DashBoardScreen> {
                               columnSpacing: 200.w,
                               dataTextStyle: TextStyle(
                                   fontSize: 16.sp, color: Colors.black54),
-                              headingRowColor: const MaterialStatePropertyAll(
-                                  Colors.blueGrey),
+                              headingRowColor:
+                                  const MaterialStatePropertyAll(Colors.orange),
                               headingTextStyle: TextStyle(
                                   fontSize: 16.sp,
                                   fontWeight: FontWeight.bold,

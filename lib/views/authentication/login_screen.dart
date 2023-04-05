@@ -21,7 +21,7 @@ class LoginScreen extends StatelessWidget {
           height: 400.h,
           decoration: BoxDecoration(
             color: Colors.white,
-            borderRadius: BorderRadius.circular(15.r),
+            borderRadius: BorderRadius.circular(5.r),
             boxShadow: [
               BoxShadow(
                 color: Colors.grey.withOpacity(0.5),
@@ -36,15 +36,16 @@ class LoginScreen extends StatelessWidget {
             child:
                 Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
               Center(
-                child: GestureDetector(
-                    onTap: () {
-                      print('width: ${MediaQuery.of(context).size.width}');
-                      print('height: ${MediaQuery.of(context).size.height}');
-                    },
-                    child: Image.asset(
-                      '../../../assets/images/logo_text.png',
-                      width: 200.w,
-                    )),
+                child: Text(
+                  'eBox',
+                  style: TextStyle(
+                      color: Colors.orange,
+                      fontSize: 36.sp,
+                      fontWeight: FontWeight.bold),
+                ),
+              ),
+              SizedBox(
+                height: 30.h,
               ),
               Padding(
                 padding: REdgeInsets.only(top: 15, bottom: 15),
@@ -80,19 +81,30 @@ class LoginScreen extends StatelessWidget {
                         borderRadius: BorderRadius.circular(5.0))),
               ),
               Padding(
-                padding: REdgeInsets.only(top: 15, bottom: 15),
-                child: TextButton(
-                    style: ButtonStyle(
-                        backgroundColor:
-                            MaterialStateProperty.all(Colors.blueAccent)),
-                    onPressed: () {
-                      authController.login(
-                          emailController.text, passwordController.text);
-                    },
-                    child: Text(
-                      'Login',
-                      style: TextStyle(color: Colors.white),
-                    )),
+                padding: REdgeInsets.only(top: 30),
+                child: Row(
+                  children: [
+                    Expanded(
+                      child: TextButton(
+                          style: ButtonStyle(
+                              backgroundColor:
+                                  MaterialStateProperty.all(Colors.green)),
+                          onPressed: () {
+                            authController.login(
+                                emailController.text, passwordController.text);
+                          },
+                          child: Padding(
+                            padding: REdgeInsets.all(15),
+                            child: Text(
+                              'Login',
+                              style: TextStyle(
+                                  color: Colors.white,
+                                  fontWeight: FontWeight.bold),
+                            ),
+                          )),
+                    ),
+                  ],
+                ),
               )
             ]),
           ),
