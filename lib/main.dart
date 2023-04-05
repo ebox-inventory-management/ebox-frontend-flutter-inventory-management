@@ -20,13 +20,12 @@ class MyApp extends StatelessWidget {
         splitScreenMode: true,
         builder: (context, child) {
           return GetMaterialApp(
-            home: NavigationBarScreen(),
-            debugShowCheckedModeBanner: false,
-            title: 'eBox Inventory Management',
-            theme: ThemeData(
-              primarySwatch: Colors.blueGrey,
-            ),
-          );
+              home: LoginScreen(),
+              debugShowCheckedModeBanner: false,
+              title: 'eBox Inventory Management',
+              theme: ThemeData(
+                primarySwatch: Colors.orange,
+              ));
         });
   }
 }
