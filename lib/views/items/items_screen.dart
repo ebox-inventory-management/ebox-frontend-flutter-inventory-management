@@ -1,14 +1,11 @@
+import 'package:ebox_frontend_web_inventory/views/items/new_item_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:get/get.dart';
 
-class ItemsScreen extends StatefulWidget {
+class ItemsScreen extends StatelessWidget {
   const ItemsScreen({super.key});
 
-  @override
-  State<ItemsScreen> createState() => _ItemsScreenState();
-}
-
-class _ItemsScreenState extends State<ItemsScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -60,7 +57,14 @@ class _ItemsScreenState extends State<ItemsScreen> {
                               width: 15.w,
                             ),
                             OutlinedButton(
-                                onPressed: () {}, child: Text('New item'))
+                                onPressed: () {
+                                  showDialog(
+                                      context: context,
+                                      builder: ((context) => Dialog(
+                                            child: NewItemScreen(),
+                                          )));
+                                },
+                                child: Text('New item'))
                           ],
                         )
                       ],
@@ -75,7 +79,7 @@ class _ItemsScreenState extends State<ItemsScreen> {
                             height: 15.h,
                           ),
                           DataTable(
-                              columnSpacing: 200.w,
+                              columnSpacing: 150.w,
                               dataTextStyle: TextStyle(
                                   fontSize: 16.sp, color: Colors.black54),
                               headingRowColor:
@@ -87,22 +91,27 @@ class _ItemsScreenState extends State<ItemsScreen> {
                               columns: const [
                                 DataColumn(
                                   label: Text(
-                                    'Created at',
+                                    'Name',
                                   ),
                                 ),
                                 DataColumn(
                                   label: Text(
-                                    'Reference',
+                                    'Code',
                                   ),
                                 ),
                                 DataColumn(
                                   label: Text(
-                                    'Supplier',
+                                    'Brand',
                                   ),
                                 ),
                                 DataColumn(
                                   label: Text(
-                                    'Grand total',
+                                    'Category',
+                                  ),
+                                ),
+                                DataColumn(
+                                  label: Text(
+                                    'Price',
                                   ),
                                 ),
                               ],
@@ -112,6 +121,7 @@ class _ItemsScreenState extends State<ItemsScreen> {
                                     DataCell(Text('2023-04-03 00:33:52')),
                                     DataCell(Text('REF-00579')),
                                     DataCell(Text('3')),
+                                    DataCell(Text('3')),
                                     DataCell(Text('\$ 0.00')),
                                   ],
                                 ),
@@ -119,6 +129,7 @@ class _ItemsScreenState extends State<ItemsScreen> {
                                   cells: [
                                     DataCell(Text('2023-04-03 00:33:52')),
                                     DataCell(Text('REF-00579')),
+                                    DataCell(Text('3')),
                                     DataCell(Text('3')),
                                     DataCell(Text('\$ 0.00')),
                                   ],
