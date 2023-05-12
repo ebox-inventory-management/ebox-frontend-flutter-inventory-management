@@ -79,7 +79,7 @@ class ItemsScreen extends StatelessWidget {
                             height: 15.h,
                           ),
                           DataTable(
-                              columnSpacing: 150.w,
+                              columnSpacing: 30.w,
                               dataTextStyle: TextStyle(
                                   fontSize: 16.sp, color: Colors.black54),
                               headingRowColor:

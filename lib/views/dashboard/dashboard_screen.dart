@@ -1,3 +1,4 @@
+import 'package:ebox_frontend_web_inventory/views/dashboard/widgets/finance_card.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:syncfusion_flutter_charts/charts.dart';
@@ -45,7 +46,7 @@ class _DashBoardScreenState extends State<DashBoardScreen> {
                       child: TextButton(
                         onPressed: () {},
                         style: TextButton.styleFrom(
-                            backgroundColor: Colors.orange,
+                            backgroundColor: Colors.green,
                             foregroundColor: Colors.white),
                         child: const Text(
                           'TODAY',
@@ -58,7 +59,7 @@ class _DashBoardScreenState extends State<DashBoardScreen> {
                       child: TextButton(
                         onPressed: () {},
                         style: TextButton.styleFrom(
-                            backgroundColor: Colors.orange,
+                            backgroundColor: Colors.green,
                             foregroundColor: Colors.white),
                         child: const Text(
                           'LAST 7 DAYS',
@@ -71,7 +72,7 @@ class _DashBoardScreenState extends State<DashBoardScreen> {
                       child: TextButton(
                         onPressed: () {},
                         style: TextButton.styleFrom(
-                            backgroundColor: Colors.orange,
+                            backgroundColor: Colors.green,
                             foregroundColor: Colors.white),
                         child: const Text(
                           'THIS MONTH',
@@ -84,7 +85,7 @@ class _DashBoardScreenState extends State<DashBoardScreen> {
                       child: TextButton(
                         onPressed: () {},
                         style: TextButton.styleFrom(
-                            backgroundColor: Colors.orange,
+                            backgroundColor: Colors.green,
                             foregroundColor: Colors.white),
                         child: const Text(
                           'THIS YEAR',
@@ -97,7 +98,7 @@ class _DashBoardScreenState extends State<DashBoardScreen> {
                       child: TextButton(
                         onPressed: () {},
                         style: TextButton.styleFrom(
-                            backgroundColor: Colors.orange,
+                            backgroundColor: Colors.green,
                             foregroundColor: Colors.white),
                         child: const Text(
                           'LAST YEAR',
@@ -108,130 +109,22 @@ class _DashBoardScreenState extends State<DashBoardScreen> {
                   ],
                 ),
               ),
-              Padding(
-                padding: REdgeInsets.only(bottom: 30),
-                child: Row(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: [
-                    Padding(
-                      padding: REdgeInsets.only(right: 15),
-                      child: Container(
-                        width: 250.w,
-                        height: 100.h,
-                        decoration: const BoxDecoration(color: Colors.white),
-                        child: Column(
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          mainAxisAlignment: MainAxisAlignment.center,
-                          children: [
-                            Padding(
-                              padding: REdgeInsets.only(bottom: 10, left: 10),
-                              child: Text(
-                                'REVENUE',
-                                style: TextStyle(color: Colors.green),
-                              ),
-                            ),
-                            Center(
-                              child: Text(
-                                '\$ 0.00',
-                                style: TextStyle(
-                                    color: Colors.black54,
-                                    fontSize: 36.sp,
-                                    fontWeight: FontWeight.bold),
-                              ),
-                            ),
-                          ],
-                        ),
-                      ),
-                    ),
-                    Padding(
-                      padding: REdgeInsets.only(right: 15),
-                      child: Container(
-                        width: 250.w,
-                        height: 100.h,
-                        decoration: const BoxDecoration(color: Colors.white),
-                        child: Column(
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          mainAxisAlignment: MainAxisAlignment.center,
-                          children: [
-                            Padding(
-                              padding: REdgeInsets.only(bottom: 10, left: 10),
-                              child: Text(
-                                'PROFITS',
-                                style: TextStyle(color: Colors.green),
-                              ),
-                            ),
-                            Center(
-                              child: Text(
-                                '\$ 0.00',
-                                style: TextStyle(
-                                    color: Colors.black54,
-                                    fontSize: 36.sp,
-                                    fontWeight: FontWeight.bold),
-                              ),
-                            ),
-                          ],
-                        ),
-                      ),
-                    ),
-                    Padding(
-                      padding: REdgeInsets.only(right: 15),
-                      child: Container(
-                        width: 250.w,
-                        height: 100.h,
-                        decoration: const BoxDecoration(color: Colors.white),
-                        child: Column(
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          mainAxisAlignment: MainAxisAlignment.center,
-                          children: [
-                            Padding(
-                              padding: REdgeInsets.only(bottom: 10, left: 10),
-                              child: Text(
-                                'PURCHASES',
-                                style: TextStyle(color: Colors.redAccent),
-                              ),
-                            ),
-                            Center(
-                              child: Text(
-                                '\$ 0.00',
-                                style: TextStyle(
-                                    color: Colors.black54,
-                                    fontSize: 36.sp,
-                                    fontWeight: FontWeight.bold),
-                              ),
-                            ),
-                          ],
-                        ),
-                      ),
-                    ),
-                    Container(
-                      width: 285.w,
-                      height: 100.h,
-                      decoration: const BoxDecoration(color: Colors.white),
-                      child: Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        mainAxisAlignment: MainAxisAlignment.center,
-                        children: [
-                          Padding(
-                            padding: REdgeInsets.only(bottom: 10, left: 10),
-                            child: Text(
-                              'VALUE IN STOCK (SALE PRICE - ALL TIME)',
-                              style: TextStyle(color: Colors.green),
-                            ),
-                          ),
-                          Center(
-                            child: Text(
-                              '\$ 0.00',
-                              style: TextStyle(
-                                  color: Colors.black54,
-                                  fontSize: 36.sp,
-                                  fontWeight: FontWeight.bold),
-                            ),
-                          ),
-                        ],
-                      ),
-                    ),
-                  ],
+              SizedBox(
+                height: 100.h,
+                child: ListView.builder(
+                  scrollDirection: Axis.horizontal,
+                  itemCount: 4,
+                  itemBuilder: (BuildContext context, int index) {
+                    return FinanceCard(
+                      amount: '0.0',
+                      name: 'PROFIT',
+                    );
+                  },
                 ),
+              ),
+              Divider(),
+              SizedBox(
+                height: 15.h,
               ),
               Padding(
                 padding: REdgeInsets.only(bottom: 30),
@@ -261,7 +154,7 @@ class _DashBoardScreenState extends State<DashBoardScreen> {
                                   child: TextButton(
                                     onPressed: () {},
                                     style: TextButton.styleFrom(
-                                        backgroundColor: Colors.orange,
+                                        backgroundColor: Colors.green,
                                         foregroundColor: Colors.white),
                                     child: const Text(
                                       'TODAY',
@@ -275,7 +168,7 @@ class _DashBoardScreenState extends State<DashBoardScreen> {
                                   child: TextButton(
                                     onPressed: () {},
                                     style: TextButton.styleFrom(
-                                        backgroundColor: Colors.orange,
+                                        backgroundColor: Colors.green,
                                         foregroundColor: Colors.white),
                                     child: const Text(
                                       'LAST 7 DAYS',
@@ -289,7 +182,7 @@ class _DashBoardScreenState extends State<DashBoardScreen> {
                                   child: TextButton(
                                     onPressed: () {},
                                     style: TextButton.styleFrom(
-                                        backgroundColor: Colors.orange,
+                                        backgroundColor: Colors.green,
                                         foregroundColor: Colors.white),
                                     child: const Text(
                                       'THIS MONTH',
@@ -303,7 +196,7 @@ class _DashBoardScreenState extends State<DashBoardScreen> {
                                   child: TextButton(
                                     onPressed: () {},
                                     style: TextButton.styleFrom(
-                                        backgroundColor: Colors.orange,
+                                        backgroundColor: Colors.green,
                                         foregroundColor: Colors.white),
                                     child: const Text(
                                       'THIS YEAR',
@@ -317,7 +210,7 @@ class _DashBoardScreenState extends State<DashBoardScreen> {
                                   child: TextButton(
                                     onPressed: () {},
                                     style: TextButton.styleFrom(
-                                        backgroundColor: Colors.orange,
+                                        backgroundColor: Colors.green,
                                         foregroundColor: Colors.white),
                                     child: const Text(
                                       'LAST YEAR',
@@ -383,7 +276,7 @@ class _DashBoardScreenState extends State<DashBoardScreen> {
                       Padding(
                           padding: REdgeInsets.all(15),
                           child: DataTable(
-                              columnSpacing: 200.w,
+                              columnSpacing: 30.w,
                               dataTextStyle: TextStyle(
                                   fontSize: 16.sp, color: Colors.black54),
                               headingRowColor:
@@ -420,7 +313,7 @@ class _DashBoardScreenState extends State<DashBoardScreen> {
                                     DataCell(Text('2023-04-03 00:33:52')),
                                     DataCell(Text('REF-00579')),
                                     DataCell(Text('3')),
-                                    DataCell(Text('\$ 0.00')),
+                                    DataCell(Text('\$ 0.0')),
                                   ],
                                 ),
                                 DataRow(
@@ -463,7 +356,7 @@ class _DashBoardScreenState extends State<DashBoardScreen> {
                       Padding(
                           padding: REdgeInsets.all(15),
                           child: DataTable(
-                              columnSpacing: 200.w,
+                              columnSpacing: 30.w,
                               dataTextStyle: TextStyle(
                                   fontSize: 16.sp, color: Colors.black54),
                               headingRowColor:

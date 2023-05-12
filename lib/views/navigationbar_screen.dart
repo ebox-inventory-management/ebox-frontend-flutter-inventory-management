@@ -1,6 +1,5 @@
-import 'package:easy_sidemenu/easy_sidemenu.dart';
-import 'package:ebox_frontend_web_inventory/models/login_res_models.dart';
-import 'package:ebox_frontend_web_inventory/models/user_res_models.dart';
+import 'package:ebox_frontend_web_inventory/controller/controllers.dart';
+
 import 'package:ebox_frontend_web_inventory/views/dashboard/dashboard_screen.dart';
 import 'package:ebox_frontend_web_inventory/views/items/items_screen.dart';
 import 'package:ebox_frontend_web_inventory/views/purchases/purchases_screen.dart';
@@ -10,228 +9,203 @@ import 'package:flutter/src/widgets/container.dart';
 import 'package:flutter/src/widgets/framework.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
-import '../controller/auth_controller.dart';
 import 'package:get/get.dart';
+import 'package:sidebarx/sidebarx.dart';
 
-class NavigationBarScreen extends StatefulWidget {
-  const NavigationBarScreen({Key? key}) : super(key: key);
-
-  @override
-  _DashboardScreenState createState() => _DashboardScreenState();
-}
-
-class _DashboardScreenState extends State<NavigationBarScreen> {
-  PageController page = PageController();
-  SideMenuController sideMenu = SideMenuController();
-  @override
-  void initState() {
-    sideMenu.addListener((p0) {
-      page.jumpToPage(p0);
-    });
-    super.initState();
-  }
-
-  final controller = Get.put(AuthController());
+class NavigationBarScreen extends StatelessWidget {
+  NavigationBarScreen({
+    Key? key,
+  }) : super(key: key);
+  final _controller = SidebarXController(selectedIndex: 0, extended: true);
+  final _key = GlobalKey<ScaffoldState>();
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-        elevation: 0,
-        backgroundColor: Colors.white,
-        title: Text(
-          'eBox',
-          style: TextStyle(
-              color: Colors.orangeAccent,
-              fontWeight: FontWeight.bold,
-              fontSize: 24.sp),
-        ),
-        actions: [
-          Padding(
-            padding: REdgeInsets.all(10),
-            child: IconButton(
-                onPressed: () {},
-                icon: Icon(
-                  Icons.notifications,
-                  color: Colors.grey,
-                )),
-          ),
-          Padding(
-            padding: REdgeInsets.all(10),
-            child: OutlinedButton(
-              onPressed: () {},
-              child: Text('Admin'),
-            ),
-          ),
-          Padding(
-            padding: REdgeInsets.all(10),
-            child: TextButton(
-                onPressed: () {},
-                child: Text('en'),
-                style: ButtonStyle(
-                    foregroundColor: MaterialStatePropertyAll(Colors.white),
-                    backgroundColor:
-                        MaterialStatePropertyAll(Colors.orangeAccent))),
-          )
-        ],
-      ),
-      body: Row(
-        mainAxisAlignment: MainAxisAlignment.start,
-        children: [
-          SideMenu(
-            controller: sideMenu,
-            style: SideMenuStyle(
-                showTooltip: false,
-                displayMode: SideMenuDisplayMode.auto,
-                hoverColor: Colors.orangeAccent[100],
-                selectedColor: Colors.orangeAccent,
-                selectedTitleTextStyle: const TextStyle(color: Colors.white),
-                selectedIconColor: Colors.white,
-                backgroundColor: Colors.white),
-            footer: const Padding(
-              padding: EdgeInsets.all(8.0),
-              child: Text(
-                'Version 1.0.0',
-                style: TextStyle(fontSize: 15),
-              ),
-            ),
-            items: [
-              SideMenuItem(
-                priority: 0,
-                title: 'Dashboard',
-                onTap: (page, _) {
-                  sideMenu.changePage(page);
-                },
-                icon: const Icon(Icons.dashboard),
-              ),
-              SideMenuItem(
-                priority: 1,
-                title: 'Items',
-                onTap: (page, _) {
-                  sideMenu.changePage(page);
-                },
-                icon: const Icon(Icons.list),
-              ),
-              SideMenuItem(
-                priority: 2,
-                title: 'Purchases',
-                onTap: (page, _) {
-                  sideMenu.changePage(page);
-                },
-                icon: const Icon(Icons.handshake),
-              ),
-              SideMenuItem(
-                priority: 3,
-                title: 'Sales',
-                onTap: (page, _) {
-                  sideMenu.changePage(page);
-                },
-                icon: const Icon(Icons.money),
-              ),
-              SideMenuItem(
-                priority: 4,
-                title: 'Quantity adjustments',
-                onTap: (page, _) {
-                  sideMenu.changePage(page);
-                },
-                icon: const Icon(Icons.list_alt_sharp),
-              ),
-              SideMenuItem(
-                priority: 5,
-                title: 'Transfers',
-                onTap: (page, _) {
-                  sideMenu.changePage(5);
-                },
-                icon: const Icon(Icons.change_circle_outlined),
-              ),
-              SideMenuItem(
-                priority: 6,
-                title: 'Suppliers',
-                onTap: (page, _) {
-                  sideMenu.changePage(6);
-                },
-                icon: const Icon(Icons.factory),
-              ),
-              SideMenuItem(
-                priority: 7,
-                title: 'Customers',
-                onTap: (page, _) {
-                  sideMenu.changePage(7);
-                },
-                icon: const Icon(Icons.groups),
-              ),
-              SideMenuItem(
-                priority: 8,
-                title: 'Categories',
-                onTap: (page, _) {
-                  sideMenu.changePage(8);
-                },
-                icon: const Icon(Icons.category),
-              ),
-              SideMenuItem(
-                priority: 9,
-                title: 'Brands',
-                onTap: (page, _) {
-                  sideMenu.changePage(9);
-                },
-                icon: const Icon(Icons.branding_watermark),
-              ),
-              SideMenuItem(
-                priority: 10,
-                title: 'Warehouses',
-                onTap: (page, _) {
-                  sideMenu.changePage(10);
-                },
-                icon: const Icon(Icons.warehouse),
-              ),
-              SideMenuItem(
-                priority: 11,
-                title: 'Users',
-                onTap: (page, _) {
-                  sideMenu.changePage(11);
-                },
-                icon: const Icon(Icons.person),
-              ),
-              SideMenuItem(
-                priority: 12,
-                title: 'Alerts',
-                onTap: (page, _) {
-                  sideMenu.changePage(12);
-                },
-                icon: const Icon(Icons.notifications),
-              ),
-              SideMenuItem(
-                priority: 13,
-                onTap: (page, _) {
-                  controller.signout();
-                },
-                title: 'Exit',
-                icon: Icon(Icons.exit_to_app),
+    return Builder(
+      builder: (context) {
+        final isSmallScreen = MediaQuery.of(context).size.width < 600;
+        return Scaffold(
+          key: _key,
+          appBar: isSmallScreen
+              ? AppBar(
+                  backgroundColor: canvasColor,
+                  leading: IconButton(
+                    onPressed: () {
+                      // if (!Platform.isAndroid && !Platform.isIOS) {
+                      //   _controller.setExtended(true);
+                      // }
+                      _key.currentState?.openDrawer();
+                    },
+                    icon: const Icon(Icons.menu),
+                  ),
+                )
+              : null,
+          drawer: ExampleSidebarX(controller: _controller),
+          body: Row(
+            children: [
+              if (!isSmallScreen) ExampleSidebarX(controller: _controller),
+              Expanded(
+                child: Center(
+                  child: _ScreensExample(
+                    controller: _controller,
+                  ),
+                ),
               ),
             ],
           ),
-          Expanded(
-            child: PageView(
-              controller: page,
-              children: [
-                DashBoardScreen(),
-                ItemsScreen(),
-                PurchasesScreen(),
-                SalesScreen(),
-                ItemsScreen(),
-                ItemsScreen(),
-                ItemsScreen(),
-                ItemsScreen(),
-                ItemsScreen(),
-                ItemsScreen(),
-                ItemsScreen(),
-                ItemsScreen(),
-                ItemsScreen(),
-              ],
-            ),
-          ),
-        ],
-      ),
+        );
+      },
     );
   }
 }
+
+class ExampleSidebarX extends StatelessWidget {
+  const ExampleSidebarX({
+    Key? key,
+    required SidebarXController controller,
+  })  : _controller = controller,
+        super(key: key);
+
+  final SidebarXController _controller;
+
+  @override
+  Widget build(BuildContext context) {
+    return SidebarX(
+      controller: _controller,
+      theme: SidebarXTheme(
+        margin: const EdgeInsets.all(10),
+        decoration: BoxDecoration(
+          color: canvasColor,
+          borderRadius: BorderRadius.circular(20),
+        ),
+        hoverColor: scaffoldBackgroundColor,
+        textStyle: TextStyle(color: Colors.white.withOpacity(0.7)),
+        selectedTextStyle: const TextStyle(color: Colors.white),
+        itemTextPadding: const EdgeInsets.only(left: 30),
+        selectedItemTextPadding: const EdgeInsets.only(left: 30),
+        itemDecoration: BoxDecoration(
+          borderRadius: BorderRadius.circular(10),
+          border: Border.all(color: canvasColor),
+        ),
+        selectedItemDecoration: BoxDecoration(
+          borderRadius: BorderRadius.circular(10),
+          border: Border.all(
+            color: actionColor.withOpacity(0.37),
+          ),
+          gradient: const LinearGradient(
+            colors: [accentCanvasColor, canvasColor],
+          ),
+          boxShadow: [
+            BoxShadow(
+              color: Colors.black.withOpacity(0.28),
+              blurRadius: 30,
+            )
+          ],
+        ),
+        iconTheme: IconThemeData(
+          color: Colors.white.withOpacity(0.7),
+          size: 20,
+        ),
+        selectedIconTheme: const IconThemeData(
+          color: Colors.white,
+          size: 20,
+        ),
+      ),
+      extendedTheme: const SidebarXTheme(
+        width: 200,
+        decoration: BoxDecoration(
+          color: canvasColor,
+        ),
+      ),
+      footerDivider: divider,
+      headerBuilder: (context, extended) {
+        return SizedBox(
+          height: 100,
+          child: Padding(
+            padding: REdgeInsets.all(16.0),
+            child: Image.asset('assets/images/carrot.png'),
+          ),
+        );
+      },
+      items: [
+        SidebarXItem(
+          icon: Icons.home,
+          label: 'Home',
+          onTap: () {
+            debugPrint('Home');
+          },
+        ),
+        const SidebarXItem(
+          icon: Icons.search,
+          label: 'Search',
+        ),
+        const SidebarXItem(
+          icon: Icons.people,
+          label: 'People',
+        ),
+        const SidebarXItem(
+          icon: Icons.favorite,
+          label: 'Favorites',
+        ),
+        const SidebarXItem(
+          iconWidget: FlutterLogo(size: 20),
+          label: 'Flutter',
+        ),
+      ],
+    );
+  }
+}
+
+class _ScreensExample extends StatelessWidget {
+  const _ScreensExample({
+    Key? key,
+    required this.controller,
+  }) : super(key: key);
+
+  final SidebarXController controller;
+
+  @override
+  Widget build(BuildContext context) {
+    return AnimatedBuilder(
+      animation: controller,
+      builder: (context, child) {
+        final pageTitle = _getTitleByIndex(controller.selectedIndex);
+        switch (controller.selectedIndex) {
+          case 0:
+            return DashBoardScreen();
+          default:
+            return DashBoardScreen();
+        }
+      },
+    );
+  }
+}
+
+String _getTitleByIndex(int index) {
+  switch (index) {
+    case 0:
+      return 'Home';
+    case 1:
+      return 'Search';
+    case 2:
+      return 'People';
+    case 3:
+      return 'Favorites';
+    case 4:
+      return 'Custom iconWidget';
+    case 5:
+      return 'Profile';
+    case 6:
+      return 'Settings';
+    default:
+      return 'Not found page';
+  }
+}
+
+const primaryColor = Color(0xFF685BFF);
+const canvasColor = Color(0xFF2E2E48);
+const scaffoldBackgroundColor = Color(0xFF464667);
+const accentCanvasColor = Color(0xFF3E3E61);
+const white = Colors.white;
+final actionColor = const Color(0xFF5F5FA7).withOpacity(0.6);
+final divider = Divider(color: white.withOpacity(0.3), height: 1);

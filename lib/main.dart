@@ -1,21 +1,26 @@
 import 'package:ebox_frontend_web_inventory/views/authentication/sign_in_screen.dart';
 import 'package:ebox_frontend_web_inventory/views/authentication/sign_up_screen.dart';
+import 'package:ebox_frontend_web_inventory/views/dashboard/dashboard_screen.dart';
+import 'package:ebox_frontend_web_inventory/views/items/items_screen.dart';
 import 'package:ebox_frontend_web_inventory/views/navigationbar_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_easyloading/flutter_easyloading.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/route_manager.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
-import 'bindings/auth_binding.dart';
+var token;
 
-void main() {
+Future<void> main() async {
+  SharedPreferences pref = await SharedPreferences.getInstance();
+  token = pref.getString('token');
+  debugPrint('Token: $token');
   runApp(const MyApp());
 }
 
 class MyApp extends StatelessWidget {
   const MyApp({super.key});
 
-  // This widget is the root of your application.
   @override
   Widget build(BuildContext context) {
     return ScreenUtilInit(
@@ -24,12 +29,11 @@ class MyApp extends StatelessWidget {
         splitScreenMode: true,
         builder: (context, child) {
           return GetMaterialApp(
-            initialBinding: AuthBinding(),
-            initialRoute: '/signin',
+            initialRoute: token == null ? '/signin' : '/navigation',
             getPages: [
               GetPage(name: '/signin', page: () => SignInScreen()),
               GetPage(name: '/navigation', page: () => NavigationBarScreen()),
-              GetPage(name: '/signup', page: () => SignUpScreen())
+              GetPage(name: '/signup', page: () => SignUpScreen()),
             ],
             debugShowCheckedModeBanner: false,
             title: 'eBox Inventory Management',

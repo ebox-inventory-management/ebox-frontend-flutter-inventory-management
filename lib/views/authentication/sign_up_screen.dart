@@ -6,14 +6,11 @@ import 'package:flutter/src/widgets/framework.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 
-import '../../controller/auth_controller.dart';
-
 class SignUpScreen extends StatelessWidget {
   SignUpScreen({super.key});
   TextEditingController nameController = new TextEditingController();
   TextEditingController emailController = new TextEditingController();
   TextEditingController passwordController = new TextEditingController();
-  final controller = Get.find<AuthController>();
 
   @override
   Widget build(BuildContext context) {
@@ -109,10 +106,10 @@ class SignUpScreen extends StatelessWidget {
                               backgroundColor:
                                   MaterialStateProperty.all(Colors.orange)),
                           onPressed: () {
-                            controller.signup(
-                                name: nameController.text,
-                                email: emailController.text,
-                                password: passwordController.text);
+                            // controller.signup(
+                            //     name: nameController.text,
+                            //     email: emailController.text,
+                            //     password: passwordController.text);
                           },
                           child: Padding(
                             padding: REdgeInsets.all(15),

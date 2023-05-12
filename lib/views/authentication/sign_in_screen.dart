@@ -1,9 +1,8 @@
+import 'package:ebox_frontend_web_inventory/controller/controllers.dart';
 import 'package:ebox_frontend_web_inventory/views/authentication/sign_up_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
-
-import '../../controller/auth_controller.dart';
 
 class SignInScreen extends StatelessWidget {
   SignInScreen({super.key});
@@ -11,7 +10,6 @@ class SignInScreen extends StatelessWidget {
   TextEditingController usernameController = new TextEditingController();
   TextEditingController emailController = new TextEditingController();
   TextEditingController passwordController = new TextEditingController();
-  final controller = Get.find<AuthController>();
 
   @override
   Widget build(BuildContext context) {
@@ -91,7 +89,7 @@ class SignInScreen extends StatelessWidget {
                               backgroundColor:
                                   MaterialStateProperty.all(Colors.orange)),
                           onPressed: () {
-                            controller.signin(
+                            authController.signIn(
                                 email: emailController.text,
                                 password: passwordController.text);
                           },
@@ -119,7 +117,7 @@ class SignInScreen extends StatelessWidget {
                   ),
                   GestureDetector(
                     onTap: () {
-                      Get.to(() => SignUpScreen());
+                      Get.toNamed('signup');
                     },
                     child: Text(
                       'SignUp',
