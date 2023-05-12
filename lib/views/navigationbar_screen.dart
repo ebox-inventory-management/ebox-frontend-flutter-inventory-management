@@ -28,7 +28,8 @@ class NavigationBarScreen extends StatelessWidget {
           key: _key,
           appBar: isSmallScreen
               ? AppBar(
-                  backgroundColor: canvasColor,
+                  backgroundColor: Colors.white,
+                  title: Text(_getTitleByIndex(_controller.selectedIndex)),
                   leading: IconButton(
                     onPressed: () {
                       // if (!Platform.isAndroid && !Platform.isIOS) {
@@ -40,10 +41,10 @@ class NavigationBarScreen extends StatelessWidget {
                   ),
                 )
               : null,
-          drawer: ExampleSidebarX(controller: _controller),
+          drawer: CustomeSidebarX(controller: _controller),
           body: Row(
             children: [
-              if (!isSmallScreen) ExampleSidebarX(controller: _controller),
+              if (!isSmallScreen) CustomeSidebarX(controller: _controller),
               Expanded(
                 child: Center(
                   child: _ScreensExample(
@@ -59,15 +60,17 @@ class NavigationBarScreen extends StatelessWidget {
   }
 }
 
-class ExampleSidebarX extends StatelessWidget {
-  const ExampleSidebarX({
+class CustomeSidebarX extends StatelessWidget {
+  CustomeSidebarX({
     Key? key,
     required SidebarXController controller,
   })  : _controller = controller,
         super(key: key);
 
   final SidebarXController _controller;
-
+  String profileImage = authController.user.value?.image ??
+      'https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460_1280.png';
+  String name = authController.user.value?.name ?? 'Not Yet';
   @override
   Widget build(BuildContext context) {
     return SidebarX(
@@ -75,81 +78,130 @@ class ExampleSidebarX extends StatelessWidget {
       theme: SidebarXTheme(
         margin: const EdgeInsets.all(10),
         decoration: BoxDecoration(
-          color: canvasColor,
+          color: Colors.white,
           borderRadius: BorderRadius.circular(20),
         ),
-        hoverColor: scaffoldBackgroundColor,
-        textStyle: TextStyle(color: Colors.white.withOpacity(0.7)),
+        hoverColor: Colors.black.withOpacity(0.1),
+        textStyle: TextStyle(color: Colors.black.withOpacity(0.7)),
         selectedTextStyle: const TextStyle(color: Colors.white),
-        itemTextPadding: const EdgeInsets.only(left: 30),
-        selectedItemTextPadding: const EdgeInsets.only(left: 30),
+        itemTextPadding: REdgeInsets.only(left: 30),
+        selectedItemTextPadding: REdgeInsets.only(left: 30),
         itemDecoration: BoxDecoration(
           borderRadius: BorderRadius.circular(10),
-          border: Border.all(color: canvasColor),
+          border: Border.all(color: Colors.white),
         ),
         selectedItemDecoration: BoxDecoration(
           borderRadius: BorderRadius.circular(10),
           border: Border.all(
-            color: actionColor.withOpacity(0.37),
+            color: Colors.white.withOpacity(0.37),
           ),
           gradient: const LinearGradient(
-            colors: [accentCanvasColor, canvasColor],
+            colors: [Colors.orange, Colors.white],
           ),
           boxShadow: [
             BoxShadow(
-              color: Colors.black.withOpacity(0.28),
-              blurRadius: 30,
+              color: Colors.white,
+              blurRadius: 30.r,
             )
           ],
         ),
         iconTheme: IconThemeData(
-          color: Colors.white.withOpacity(0.7),
-          size: 20,
+          color: Colors.grey,
+          size: 20.r,
         ),
-        selectedIconTheme: const IconThemeData(
+        selectedIconTheme: IconThemeData(
           color: Colors.white,
-          size: 20,
+          size: 20.r,
         ),
       ),
-      extendedTheme: const SidebarXTheme(
-        width: 200,
+      extendedTheme: SidebarXTheme(
+        width: 200.w,
         decoration: BoxDecoration(
-          color: canvasColor,
+          color: Colors.white,
         ),
       ),
-      footerDivider: divider,
+      footerDivider: Divider(),
       headerBuilder: (context, extended) {
-        return SizedBox(
-          height: 100,
-          child: Padding(
-            padding: REdgeInsets.all(16.0),
-            child: Image.asset('assets/images/carrot.png'),
+        return Padding(
+          padding: REdgeInsets.all(16.0),
+          child: Column(
+            children: [
+              CircleAvatar(
+                radius: 60.r,
+                foregroundImage: NetworkImage(profileImage),
+              ),
+              SizedBox(
+                height: 15.h,
+              ),
+              Text(
+                name,
+                maxLines: 2,
+                overflow: TextOverflow.ellipsis,
+                style: TextStyle(fontSize: 20.sp, fontWeight: FontWeight.w500),
+              ),
+            ],
           ),
         );
       },
       items: [
+        const SidebarXItem(
+          icon: Icons.dashboard,
+          label: 'Dashboard',
+        ),
+        const SidebarXItem(
+          icon: Icons.list,
+          label: 'Items',
+        ),
+        const SidebarXItem(
+          icon: Icons.handshake,
+          label: 'Purchases',
+        ),
+        const SidebarXItem(
+          icon: Icons.money,
+          label: 'Sales',
+        ),
+        const SidebarXItem(
+          icon: Icons.list_alt_sharp,
+          label: 'Quantity adjustments',
+        ),
+        const SidebarXItem(
+          icon: Icons.change_circle_outlined,
+          label: 'Transfers',
+        ),
+        const SidebarXItem(
+          icon: Icons.factory,
+          label: 'Suppliers',
+        ),
+        const SidebarXItem(
+          icon: Icons.groups,
+          label: 'Customers',
+        ),
+        const SidebarXItem(
+          icon: Icons.category,
+          label: 'Categories',
+        ),
+        const SidebarXItem(
+          icon: Icons.branding_watermark,
+          label: 'Brands',
+        ),
+        const SidebarXItem(
+          icon: Icons.warehouse,
+          label: 'Warehouses',
+        ),
+        const SidebarXItem(
+          icon: Icons.person,
+          label: 'Users',
+        ),
+        const SidebarXItem(
+          icon: Icons.notifications,
+          label: 'Alerts',
+        ),
         SidebarXItem(
-          icon: Icons.home,
-          label: 'Home',
+          icon: Icons.exit_to_app,
+          label: 'Exit',
           onTap: () {
-            debugPrint('Home');
+            authController.signOut();
           },
-        ),
-        const SidebarXItem(
-          icon: Icons.search,
-          label: 'Search',
-        ),
-        const SidebarXItem(
-          icon: Icons.people,
-          label: 'People',
-        ),
-        const SidebarXItem(
-          icon: Icons.favorite,
-          label: 'Favorites',
-        ),
-        const SidebarXItem(
-          iconWidget: FlutterLogo(size: 20),
-          label: 'Flutter',
         ),
       ],
     );
@@ -173,8 +225,14 @@ class _ScreensExample extends StatelessWidget {
         switch (controller.selectedIndex) {
           case 0:
             return DashBoardScreen();
+          case 1:
+            return ItemsScreen();
+          case 2:
+            return PurchasesScreen();
+          case 3:
+            return SalesScreen();
           default:
-            return DashBoardScreen();
+            return ItemsScreen();
         }
       },
     );
@@ -184,28 +242,34 @@ class _ScreensExample extends StatelessWidget {
 String _getTitleByIndex(int index) {
   switch (index) {
     case 0:
-      return 'Home';
+      return 'Dashboard';
     case 1:
-      return 'Search';
+      return 'Item';
     case 2:
-      return 'People';
+      return 'Purchases';
     case 3:
-      return 'Favorites';
+      return 'Sales';
     case 4:
-      return 'Custom iconWidget';
+      return 'Quantity adjustments';
     case 5:
-      return 'Profile';
+      return 'Transfers';
     case 6:
-      return 'Settings';
+      return 'Suppliers';
+    case 7:
+      return 'Customers';
+    case 8:
+      return 'Categories';
+    case 9:
+      return 'Brands';
+    case 10:
+      return 'Warehouses';
+    case 11:
+      return 'Users';
+    case 12:
+      return 'Alerts';
+    case 13:
+      return 'Exit';
     default:
       return 'Not found page';
   }
 }
-
-const primaryColor = Color(0xFF685BFF);
-const canvasColor = Color(0xFF2E2E48);
-const scaffoldBackgroundColor = Color(0xFF464667);
-const accentCanvasColor = Color(0xFF3E3E61);
-const white = Colors.white;
-final actionColor = const Color(0xFF5F5FA7).withOpacity(0.6);
-final divider = Divider(color: white.withOpacity(0.3), height: 1);

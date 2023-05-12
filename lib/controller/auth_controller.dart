@@ -57,17 +57,17 @@ class AuthController extends GetxController {
         var userResult = await RemoteAuthService().getUser(token: token);
         if (userResult.statusCode == 200) {
           user.value = userFromJson(userResult.body);
-          EasyLoading.showSuccess("Welcome to eBox!");
+          EasyLoading.showSuccess("Welcome to eBox Inventory Management!");
           Get.offAllNamed('/navigation');
         } else {
-          EasyLoading.showError('Something wrong1. Try again!');
+          EasyLoading.showError('Something wrong. Try again!');
         }
       } else {
-        EasyLoading.showError('Something wrong2. Try again!');
+        EasyLoading.showError('Something wrong. Try again!');
       }
     } catch (e) {
       debugPrint(e.toString());
-      EasyLoading.showError('Something wrong3. Try again!');
+      EasyLoading.showError('Something wrong. Try again!');
     } finally {
       EasyLoading.dismiss();
     }
@@ -94,7 +94,7 @@ class AuthController extends GetxController {
 
         if (userResult.statusCode == 200) {
           user.value = userFromJson(userResult.body);
-          EasyLoading.showSuccess("Welcome to eBox!");
+          EasyLoading.showSuccess("Welcome to eBox Inventory Management!");
           Get.offAllNamed('/navigation');
         } else {
           EasyLoading.showError('Something wrong. Try again!');
@@ -114,6 +114,6 @@ class AuthController extends GetxController {
     SharedPreferences prefs = await SharedPreferences.getInstance();
     prefs.remove('token');
     user.value = null;
-    Get.offAll(() => SignInScreen());
+    Get.offAllNamed('/signin');
   }
 }

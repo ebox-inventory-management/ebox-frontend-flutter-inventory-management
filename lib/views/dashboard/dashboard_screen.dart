@@ -48,9 +48,10 @@ class _DashBoardScreenState extends State<DashBoardScreen> {
                         style: TextButton.styleFrom(
                             backgroundColor: Colors.green,
                             foregroundColor: Colors.white),
-                        child: const Text(
+                        child: Text(
                           'TODAY',
-                          style: TextStyle(fontWeight: FontWeight.bold),
+                          style: TextStyle(
+                              fontWeight: FontWeight.w500, fontSize: 14.sp),
                         ),
                       ),
                     ),
@@ -61,9 +62,10 @@ class _DashBoardScreenState extends State<DashBoardScreen> {
                         style: TextButton.styleFrom(
                             backgroundColor: Colors.green,
                             foregroundColor: Colors.white),
-                        child: const Text(
+                        child: Text(
                           'LAST 7 DAYS',
-                          style: TextStyle(fontWeight: FontWeight.bold),
+                          style: TextStyle(
+                              fontWeight: FontWeight.w500, fontSize: 14.sp),
                         ),
                       ),
                     ),
@@ -74,9 +76,10 @@ class _DashBoardScreenState extends State<DashBoardScreen> {
                         style: TextButton.styleFrom(
                             backgroundColor: Colors.green,
                             foregroundColor: Colors.white),
-                        child: const Text(
+                        child: Text(
                           'THIS MONTH',
-                          style: TextStyle(fontWeight: FontWeight.bold),
+                          style: TextStyle(
+                              fontWeight: FontWeight.w500, fontSize: 14.sp),
                         ),
                       ),
                     ),
@@ -87,9 +90,10 @@ class _DashBoardScreenState extends State<DashBoardScreen> {
                         style: TextButton.styleFrom(
                             backgroundColor: Colors.green,
                             foregroundColor: Colors.white),
-                        child: const Text(
+                        child: Text(
                           'THIS YEAR',
-                          style: TextStyle(fontWeight: FontWeight.bold),
+                          style: TextStyle(
+                              fontWeight: FontWeight.w500, fontSize: 14.sp),
                         ),
                       ),
                     ),
@@ -100,9 +104,10 @@ class _DashBoardScreenState extends State<DashBoardScreen> {
                         style: TextButton.styleFrom(
                             backgroundColor: Colors.green,
                             foregroundColor: Colors.white),
-                        child: const Text(
+                        child: Text(
                           'LAST YEAR',
-                          style: TextStyle(fontWeight: FontWeight.bold),
+                          style: TextStyle(
+                              fontWeight: FontWeight.w500, fontSize: 14.sp),
                         ),
                       ),
                     ),
@@ -156,10 +161,11 @@ class _DashBoardScreenState extends State<DashBoardScreen> {
                                     style: TextButton.styleFrom(
                                         backgroundColor: Colors.green,
                                         foregroundColor: Colors.white),
-                                    child: const Text(
+                                    child: Text(
                                       'TODAY',
                                       style: TextStyle(
-                                          fontWeight: FontWeight.bold),
+                                          fontWeight: FontWeight.w500,
+                                          fontSize: 14.sp),
                                     ),
                                   ),
                                 ),
@@ -170,10 +176,11 @@ class _DashBoardScreenState extends State<DashBoardScreen> {
                                     style: TextButton.styleFrom(
                                         backgroundColor: Colors.green,
                                         foregroundColor: Colors.white),
-                                    child: const Text(
+                                    child: Text(
                                       'LAST 7 DAYS',
                                       style: TextStyle(
-                                          fontWeight: FontWeight.bold),
+                                          fontWeight: FontWeight.w500,
+                                          fontSize: 14.sp),
                                     ),
                                   ),
                                 ),
@@ -184,10 +191,11 @@ class _DashBoardScreenState extends State<DashBoardScreen> {
                                     style: TextButton.styleFrom(
                                         backgroundColor: Colors.green,
                                         foregroundColor: Colors.white),
-                                    child: const Text(
+                                    child: Text(
                                       'THIS MONTH',
                                       style: TextStyle(
-                                          fontWeight: FontWeight.bold),
+                                          fontWeight: FontWeight.w500,
+                                          fontSize: 14.sp),
                                     ),
                                   ),
                                 ),
@@ -198,10 +206,11 @@ class _DashBoardScreenState extends State<DashBoardScreen> {
                                     style: TextButton.styleFrom(
                                         backgroundColor: Colors.green,
                                         foregroundColor: Colors.white),
-                                    child: const Text(
+                                    child: Text(
                                       'THIS YEAR',
                                       style: TextStyle(
-                                          fontWeight: FontWeight.bold),
+                                          fontWeight: FontWeight.w500,
+                                          fontSize: 14.sp),
                                     ),
                                   ),
                                 ),
@@ -212,10 +221,11 @@ class _DashBoardScreenState extends State<DashBoardScreen> {
                                     style: TextButton.styleFrom(
                                         backgroundColor: Colors.green,
                                         foregroundColor: Colors.white),
-                                    child: const Text(
+                                    child: Text(
                                       'LAST YEAR',
                                       style: TextStyle(
-                                          fontWeight: FontWeight.bold),
+                                          fontWeight: FontWeight.w500,
+                                          fontSize: 14.sp),
                                     ),
                                   ),
                                 ),
