@@ -115,7 +115,7 @@ class _DashBoardScreenState extends State<DashBoardScreen> {
                 ),
               ),
               SizedBox(
-                height: 100.h,
+                height: 140.h,
                 child: ListView.builder(
                   scrollDirection: Axis.horizontal,
                   itemCount: 4,

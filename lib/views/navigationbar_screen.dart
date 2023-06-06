@@ -25,6 +25,7 @@ class NavigationBarScreen extends StatelessWidget {
       builder: (context) {
         final isSmallScreen = MediaQuery.of(context).size.width < 600;
         return Scaffold(
+          backgroundColor: Colors.grey[100],
           key: _key,
           appBar: isSmallScreen
               ? AppBar(
