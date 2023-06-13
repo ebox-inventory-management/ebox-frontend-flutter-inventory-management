@@ -1,9 +1,16 @@
+import 'package:awesome_dialog/awesome_dialog.dart';
 import 'package:ebox_frontend_web_inventory/controller/controllers.dart';
+import 'package:ebox_frontend_web_inventory/views/brand/brand_screen.dart';
+import 'package:ebox_frontend_web_inventory/views/category/category_screen.dart';
+import 'package:ebox_frontend_web_inventory/views/customers/customers_screen.dart';
 
 import 'package:ebox_frontend_web_inventory/views/dashboard/dashboard_screen.dart';
-import 'package:ebox_frontend_web_inventory/views/items/items_screen.dart';
-import 'package:ebox_frontend_web_inventory/views/purchases/purchases_screen.dart';
-import 'package:ebox_frontend_web_inventory/views/sales/sales_screen.dart';
+import 'package:ebox_frontend_web_inventory/views/export/export_screen.dart';
+import 'package:ebox_frontend_web_inventory/views/import/import_screen.dart';
+import 'package:ebox_frontend_web_inventory/views/product/product_screen.dart';
+import 'package:ebox_frontend_web_inventory/views/suppliers/suppliers_screen.dart';
+import 'package:ebox_frontend_web_inventory/views/quantity_adjustments/quantity_adjustments.dart';
+import 'package:ebox_frontend_web_inventory/views/user/user_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/src/widgets/container.dart';
 import 'package:flutter/src/widgets/framework.dart';
@@ -16,13 +23,20 @@ class NavigationBarScreen extends StatelessWidget {
   NavigationBarScreen({
     Key? key,
   }) : super(key: key);
+
   final _controller = SidebarXController(selectedIndex: 0, extended: true);
+
   final _key = GlobalKey<ScaffoldState>();
 
   @override
   Widget build(BuildContext context) {
     return Builder(
       builder: (context) {
+        dashboardController;
+        productController;
+        categoryController;
+        importController;
+        supplierController;
         final isSmallScreen = MediaQuery.of(context).size.width < 600;
         return Scaffold(
           backgroundColor: Colors.grey[100],
@@ -77,10 +91,10 @@ class CustomeSidebarX extends StatelessWidget {
     return SidebarX(
       controller: _controller,
       theme: SidebarXTheme(
-        margin: const EdgeInsets.all(10),
+        margin: REdgeInsets.all(10),
         decoration: BoxDecoration(
           color: Colors.white,
-          borderRadius: BorderRadius.circular(20),
+          borderRadius: BorderRadius.circular(20.r),
         ),
         hoverColor: Colors.black.withOpacity(0.1),
         textStyle: TextStyle(color: Colors.black.withOpacity(0.7)),
@@ -88,11 +102,11 @@ class CustomeSidebarX extends StatelessWidget {
         itemTextPadding: REdgeInsets.only(left: 30),
         selectedItemTextPadding: REdgeInsets.only(left: 30),
         itemDecoration: BoxDecoration(
-          borderRadius: BorderRadius.circular(10),
+          borderRadius: BorderRadius.circular(10.r),
           border: Border.all(color: Colors.white),
         ),
         selectedItemDecoration: BoxDecoration(
-          borderRadius: BorderRadius.circular(10),
+          borderRadius: BorderRadius.circular(10.r),
           border: Border.all(
             color: Colors.white.withOpacity(0.37),
           ),
@@ -101,7 +115,7 @@ class CustomeSidebarX extends StatelessWidget {
           ),
           boxShadow: [
             BoxShadow(
-              color: Colors.white,
+              color: Colors.grey.withOpacity(0.2),
               blurRadius: 30.r,
             )
           ],
@@ -117,7 +131,8 @@ class CustomeSidebarX extends StatelessWidget {
       ),
       extendedTheme: SidebarXTheme(
         width: 200.w,
-        decoration: BoxDecoration(
+        textStyle: TextStyle(fontSize: 16.sp, overflow: TextOverflow.ellipsis),
+        decoration: const BoxDecoration(
           color: Colors.white,
         ),
       ),
@@ -140,6 +155,7 @@ class CustomeSidebarX extends StatelessWidget {
                 overflow: TextOverflow.ellipsis,
                 style: TextStyle(fontSize: 20.sp, fontWeight: FontWeight.w500),
               ),
+              Divider(),
             ],
           ),
         );
@@ -151,23 +167,19 @@ class CustomeSidebarX extends StatelessWidget {
         ),
         const SidebarXItem(
           icon: Icons.list,
-          label: 'Items',
+          label: 'Product',
         ),
         const SidebarXItem(
-          icon: Icons.handshake,
-          label: 'Purchases',
+          icon: Icons.download,
+          label: 'Import',
         ),
         const SidebarXItem(
-          icon: Icons.money,
-          label: 'Sales',
+          icon: Icons.upload,
+          label: 'Export',
         ),
         const SidebarXItem(
           icon: Icons.list_alt_sharp,
           label: 'Quantity adjustments',
-        ),
-        const SidebarXItem(
-          icon: Icons.change_circle_outlined,
-          label: 'Transfers',
         ),
         const SidebarXItem(
           icon: Icons.factory,
@@ -186,10 +198,6 @@ class CustomeSidebarX extends StatelessWidget {
           label: 'Brands',
         ),
         const SidebarXItem(
-          icon: Icons.warehouse,
-          label: 'Warehouses',
-        ),
-        const SidebarXItem(
           icon: Icons.person,
           label: 'Users',
         ),
@@ -201,7 +209,24 @@ class CustomeSidebarX extends StatelessWidget {
           icon: Icons.exit_to_app,
           label: 'Exit',
           onTap: () {
-            authController.signOut();
+            AwesomeDialog(
+              context: context,
+              dialogType: DialogType.warning,
+              animType: AnimType.bottomSlide,
+              title: 'WARNING'.tr,
+              desc: 'Would you sure like to sign out your account?'.tr,
+              btnCancelOnPress: () {},
+              btnOkOnPress: () {
+                Get.snackbar('Sign out successful!', ''.tr,
+                    colorText: Colors.white,
+                    margin: REdgeInsets.all(15),
+                    backgroundColor: Colors.green,
+                    snackPosition: SnackPosition.BOTTOM,
+                    duration: const Duration(seconds: 2));
+
+                authController.signOut();
+              },
+            ).show();
           },
         ),
       ],
@@ -227,13 +252,28 @@ class _ScreensExample extends StatelessWidget {
           case 0:
             return DashBoardScreen();
           case 1:
-            return ItemsScreen();
+            return ProductScreen();
           case 2:
-            return PurchasesScreen();
+            return ImportScreen();
           case 3:
-            return SalesScreen();
+            return ExportScreen();
+          case 4:
+            return QuantityAdjustmentsScreen();
+          case 5:
+            return SuppliersScreen();
+          case 6:
+            return CustomerScreen();
+          case 7:
+            return CustomerScreen();
+          case 8:
+            return CategoryScreen();
+          case 9:
+            return BrandScreen();
+          case 10:
+            return UserScreen();
+
           default:
-            return ItemsScreen();
+            return UserScreen();
         }
       },
     );
@@ -245,31 +285,28 @@ String _getTitleByIndex(int index) {
     case 0:
       return 'Dashboard';
     case 1:
-      return 'Item';
+      return 'Product';
     case 2:
-      return 'Purchases';
+      return 'Import';
     case 3:
-      return 'Sales';
+      return 'Export';
     case 4:
       return 'Quantity adjustments';
     case 5:
-      return 'Transfers';
-    case 6:
       return 'Suppliers';
-    case 7:
+    case 6:
       return 'Customers';
-    case 8:
+    case 7:
       return 'Categories';
-    case 9:
+    case 8:
       return 'Brands';
-    case 10:
-      return 'Warehouses';
-    case 11:
+    case 9:
       return 'Users';
-    case 12:
+    case 10:
       return 'Alerts';
-    case 13:
+    case 11:
       return 'Exit';
+
     default:
       return 'Not found page';
   }

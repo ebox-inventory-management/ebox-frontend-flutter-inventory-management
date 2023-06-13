@@ -7,7 +7,6 @@ import 'package:get/get.dart';
 class SignInScreen extends StatelessWidget {
   SignInScreen({super.key});
 
-  TextEditingController usernameController = TextEditingController();
   TextEditingController emailController = TextEditingController();
   TextEditingController passwordController = TextEditingController();
 
@@ -113,14 +112,22 @@ class SignInScreen extends StatelessWidget {
                 ),
                 GestureDetector(
                   onTap: () {
-                    Get.toNamed('signup');
+                    Get.toNamed('/signup');
                   },
-                  child: Text(
-                    'SignUp',
-                    style: TextStyle(
-                        color: Colors.green,
-                        fontWeight: FontWeight.bold,
-                        fontSize: 16.sp),
+                  child: Container(
+                    decoration: BoxDecoration(
+                        borderRadius: BorderRadius.all(Radius.circular(10.r)),
+                        color: Colors.green),
+                    child: Padding(
+                      padding: REdgeInsets.all(10.0),
+                      child: Text(
+                        'SignUp',
+                        style: TextStyle(
+                            color: Colors.white,
+                            fontWeight: FontWeight.w500,
+                            fontSize: 16.sp),
+                      ),
+                    ),
                   ),
                 )
               ],

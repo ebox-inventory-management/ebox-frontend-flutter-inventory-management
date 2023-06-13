@@ -1,0 +1,58 @@
+import 'dart:convert';
+
+List<Product> productListFromJson(String val) => List<Product>.from(
+    json.decode(val)['products'].map((data) => Product.fromJson(data)));
+
+class Product {
+  final int id;
+  final String product_name;
+  final String product_code;
+  final String product_garage;
+  final String product_route;
+  final String product_image;
+  final String buy_date;
+  final String expire_date;
+  final String buying_price;
+  final String price;
+  final DateTime created_at;
+  final DateTime updated_at;
+  final int category_id;
+  final int supplier_id;
+  final int brand_id;
+
+  Product({
+    required this.id,
+    required this.product_name,
+    required this.product_code,
+    required this.product_garage,
+    required this.product_route,
+    required this.product_image,
+    required this.buy_date,
+    required this.expire_date,
+    required this.buying_price,
+    required this.price,
+    required this.created_at,
+    required this.updated_at,
+    required this.category_id,
+    required this.supplier_id,
+    required this.brand_id,
+  });
+
+  factory Product.fromJson(Map<dynamic, dynamic> data) => Product(
+        id: data['id'],
+        product_name: data['product_name'] ?? 'Not Yet',
+        brand_id: data['brand_id'] ?? 'Not Yet',
+        buy_date: data['buy_date'] ?? 'Not Yet',
+        buying_price: data['buying_price'] ?? 'Not Yet',
+        category_id: data['category_id'],
+        created_at: DateTime.parse(data['created_at'].toString()),
+        expire_date: data['expire_date'] ?? 'Not Yet',
+        price: data['price'] ?? 'Not Yet',
+        product_code: data['product_code'] ?? 'Not Yet',
+        product_garage: data['product_garage'] ?? 'Not Yet',
+        product_image: data['product_image'] ?? 'Not Yet',
+        product_route: data['product_route'] ?? 'Not Yet',
+        supplier_id: data['supplier_id'],
+        updated_at: DateTime.parse(data['updated_at'].toString()),
+      );
+}

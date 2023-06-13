@@ -36,84 +36,6 @@ class _DashBoardScreenState extends State<DashBoardScreen> {
         child: SingleChildScrollView(
           child: Column(
             children: [
-              Padding(
-                padding: REdgeInsets.only(bottom: 30),
-                child: Row(
-                  mainAxisAlignment: MainAxisAlignment.end,
-                  children: [
-                    Padding(
-                      padding: REdgeInsets.only(left: 5),
-                      child: TextButton(
-                        onPressed: () {},
-                        style: TextButton.styleFrom(
-                            backgroundColor: Colors.green,
-                            foregroundColor: Colors.white),
-                        child: Text(
-                          'TODAY',
-                          style: TextStyle(
-                              fontWeight: FontWeight.w500, fontSize: 14.sp),
-                        ),
-                      ),
-                    ),
-                    Padding(
-                      padding: REdgeInsets.only(left: 5),
-                      child: TextButton(
-                        onPressed: () {},
-                        style: TextButton.styleFrom(
-                            backgroundColor: Colors.green,
-                            foregroundColor: Colors.white),
-                        child: Text(
-                          'LAST 7 DAYS',
-                          style: TextStyle(
-                              fontWeight: FontWeight.w500, fontSize: 14.sp),
-                        ),
-                      ),
-                    ),
-                    Padding(
-                      padding: REdgeInsets.only(left: 5),
-                      child: TextButton(
-                        onPressed: () {},
-                        style: TextButton.styleFrom(
-                            backgroundColor: Colors.green,
-                            foregroundColor: Colors.white),
-                        child: Text(
-                          'THIS MONTH',
-                          style: TextStyle(
-                              fontWeight: FontWeight.w500, fontSize: 14.sp),
-                        ),
-                      ),
-                    ),
-                    Padding(
-                      padding: REdgeInsets.only(left: 5),
-                      child: TextButton(
-                        onPressed: () {},
-                        style: TextButton.styleFrom(
-                            backgroundColor: Colors.green,
-                            foregroundColor: Colors.white),
-                        child: Text(
-                          'THIS YEAR',
-                          style: TextStyle(
-                              fontWeight: FontWeight.w500, fontSize: 14.sp),
-                        ),
-                      ),
-                    ),
-                    Padding(
-                      padding: REdgeInsets.only(left: 5),
-                      child: TextButton(
-                        onPressed: () {},
-                        style: TextButton.styleFrom(
-                            backgroundColor: Colors.green,
-                            foregroundColor: Colors.white),
-                        child: Text(
-                          'LAST YEAR',
-                          style: TextStyle(
-                              fontWeight: FontWeight.w500, fontSize: 14.sp),
-                        ),
-                      ),
-                    ),
-                  ],
-                ),
-              ),
               SizedBox(
                 height: 140.h,
                 child: ListView.builder(
@@ -145,7 +67,7 @@ class _DashBoardScreenState extends State<DashBoardScreen> {
                           mainAxisAlignment: MainAxisAlignment.spaceBetween,
                           children: [
                             Text(
-                              'Incomes and expenses',
+                              'Incomes',
                               style: TextStyle(
                                   fontSize: 18.sp,
                                   fontWeight: FontWeight.bold,
@@ -159,7 +81,7 @@ class _DashBoardScreenState extends State<DashBoardScreen> {
                                   child: TextButton(
                                     onPressed: () {},
                                     style: TextButton.styleFrom(
-                                        backgroundColor: Colors.green,
+                                        backgroundColor: Colors.orange,
                                         foregroundColor: Colors.white),
                                     child: Text(
                                       'TODAY',
@@ -174,7 +96,7 @@ class _DashBoardScreenState extends State<DashBoardScreen> {
                                   child: TextButton(
                                     onPressed: () {},
                                     style: TextButton.styleFrom(
-                                        backgroundColor: Colors.green,
+                                        backgroundColor: Colors.orange,
                                         foregroundColor: Colors.white),
                                     child: Text(
                                       'LAST 7 DAYS',
@@ -189,7 +111,7 @@ class _DashBoardScreenState extends State<DashBoardScreen> {
                                   child: TextButton(
                                     onPressed: () {},
                                     style: TextButton.styleFrom(
-                                        backgroundColor: Colors.green,
+                                        backgroundColor: Colors.orange,
                                         foregroundColor: Colors.white),
                                     child: Text(
                                       'THIS MONTH',
@@ -204,7 +126,7 @@ class _DashBoardScreenState extends State<DashBoardScreen> {
                                   child: TextButton(
                                     onPressed: () {},
                                     style: TextButton.styleFrom(
-                                        backgroundColor: Colors.green,
+                                        backgroundColor: Colors.orange,
                                         foregroundColor: Colors.white),
                                     child: Text(
                                       'THIS YEAR',
@@ -219,7 +141,7 @@ class _DashBoardScreenState extends State<DashBoardScreen> {
                                   child: TextButton(
                                     onPressed: () {},
                                     style: TextButton.styleFrom(
-                                        backgroundColor: Colors.green,
+                                        backgroundColor: Colors.orange,
                                         foregroundColor: Colors.white),
                                     child: Text(
                                       'LAST YEAR',
@@ -246,12 +168,7 @@ class _DashBoardScreenState extends State<DashBoardScreen> {
                                 dataSource: incomesData,
                                 xValueMapper: (ChartData data, _) => data.x,
                                 yValueMapper: (ChartData data, _) => data.y,
-                                name: 'incomes'),
-                            LineSeries<ChartData, DateTime>(
-                                dataSource: expensesData,
-                                xValueMapper: (ChartData data, _) => data.x,
-                                yValueMapper: (ChartData data, _) => data.y,
-                                name: 'expenses'),
+                                name: 'Income'),
                           ],
                         ),
                       )
@@ -273,7 +190,7 @@ class _DashBoardScreenState extends State<DashBoardScreen> {
                           mainAxisAlignment: MainAxisAlignment.spaceBetween,
                           children: [
                             Text(
-                              'Latest sales (max. 5)',
+                              'Latest Import',
                               style: TextStyle(
                                   fontSize: 18.sp,
                                   fontWeight: FontWeight.bold,
@@ -353,7 +270,7 @@ class _DashBoardScreenState extends State<DashBoardScreen> {
                           mainAxisAlignment: MainAxisAlignment.spaceBetween,
                           children: [
                             Text(
-                              'Latest purchases (max. 5)',
+                              'Latest Export',
                               style: TextStyle(
                                   fontSize: 18.sp,
                                   fontWeight: FontWeight.bold,

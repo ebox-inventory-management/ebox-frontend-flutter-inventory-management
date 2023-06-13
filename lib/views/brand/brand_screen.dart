@@ -1,10 +1,9 @@
-import 'package:ebox_frontend_web_inventory/views/items/new_item_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 
-class ItemsScreen extends StatelessWidget {
-  const ItemsScreen({super.key});
+class BrandScreen extends StatelessWidget {
+  const BrandScreen({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -30,10 +29,10 @@ class ItemsScreen extends StatelessWidget {
             height: 30.h,
           ),
           Padding(
-            padding: REdgeInsets.only(bottom: 30),
+            padding: REdgeInsets.only(bottom: 30.r),
             child: Container(
               width: MediaQuery.of(context).size.width * 1,
-              decoration: BoxDecoration(color: Colors.white),
+              decoration: const BoxDecoration(color: Colors.white),
               child: Column(
                 children: [
                   Padding(
@@ -56,15 +55,6 @@ class ItemsScreen extends StatelessWidget {
                             SizedBox(
                               width: 15.w,
                             ),
-                            OutlinedButton(
-                                onPressed: () {
-                                  showDialog(
-                                      context: context,
-                                      builder: ((context) => Dialog(
-                                            child: NewItemScreen(),
-                                          )));
-                                },
-                                child: Text('New item'))
                           ],
                         )
                       ],
