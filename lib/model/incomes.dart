@@ -6,7 +6,7 @@ List<Incomes> incomeListFromJson(String val) => List<Incomes>.from(
 class Incomes {
   final int id;
   final String income_details;
-  final String income_amount;
+  final int income_amount;
   final String day;
   final String month;
   final String year;
@@ -27,7 +27,7 @@ class Incomes {
   factory Incomes.fromJson(Map<dynamic, dynamic> data) => Incomes(
         id: data['id'],
         income_details: data['income_details'] ?? 'Not Yet',
-        income_amount: data['income_amount'] ?? 'Not Yet',
+        income_amount: data['income_amount'] ?? 0,
         day: data['date'] ?? 'Not Yet',
         month: data['month'] ?? 'Not Yet',
         year: data['year'] ?? 'Not Yet',

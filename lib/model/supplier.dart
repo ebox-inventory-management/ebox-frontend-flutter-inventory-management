@@ -14,20 +14,18 @@ class Supplier {
   final List<String> product_garage;
   final List<String> product_route;
   final List<String> product_image;
-  final List<String> product_buy_date;
   final List<String> product_expire_date;
-  final List<String> product_import_price;
-  final List<String> product_export_price;
+  final List<int> product_import_price;
+  final List<int> product_export_price;
   final List<int> category_id;
   final List<int> supplier_id;
   final List<int> brand_id;
-  final List<int> product_quantity;
+  final List<String> product_quantity;
 
   Supplier({
     required this.id,
     required this.product_name,
     required this.product_quantity,
-    required this.product_buy_date,
     required this.product_expire_date,
     required this.product_import_price,
     required this.product_export_price,
@@ -49,8 +47,8 @@ class Supplier {
         name: data['name'] ?? 'Not Yet',
         created_at: DateTime.parse(data['created_at'].toString()),
         updated_at: DateTime.parse(data['updated_at'].toString()),
-        product_id: List<int>.from(
-            data['products'].map((data) => data['id'] ?? 'Not Yet')),
+        product_id:
+            List<int>.from(data['products'].map((data) => data['id'] ?? 0)),
         product_name: List<String>.from(
             data['products'].map((data) => data['product_name'] ?? 'Not Yet')),
         product_code: List<String>.from(
@@ -61,21 +59,19 @@ class Supplier {
             data['products'].map((data) => data['product_route'] ?? 'Not Yet')),
         product_image: List<String>.from(
             data['products'].map((data) => data['product_image'] ?? 'Not Yet')),
-        product_quantity: List<int>.from(data['products']
+        product_quantity: List<String>.from(data['products']
             .map((data) => data['product_quantity'] ?? 'Not Yet')),
-        product_buy_date: List<String>.from(
-            data['products'].map((data) => data['buy_date'] ?? 'Not Yet')),
         product_expire_date: List<String>.from(
             data['products'].map((data) => data['expire_date'] ?? 'Not Yet')),
-        product_import_price: List<String>.from(
-            data['products'].map((data) => data['import_price'] ?? 'Not Yet')),
-        product_export_price: List<String>.from(
-            data['products'].map((data) => data['export_price'] ?? 'Not Yet')),
+        product_import_price: List<int>.from(
+            data['products'].map((data) => data['import_price'] ?? 0)),
+        product_export_price: List<int>.from(
+            data['products'].map((data) => data['export_price'] ?? 0)),
         brand_id: List<int>.from(
-            data['products'].map((data) => data['brand_id'] ?? 'Not Yet')),
+            data['products'].map((data) => data['brand_id'] ?? 0)),
         category_id: List<int>.from(
-            data['products'].map((data) => data['category_id'] ?? 'Not Yet')),
+            data['products'].map((data) => data['category_id'] ?? 0)),
         supplier_id: List<int>.from(
-            data['products'].map((data) => data['supplier_id'] ?? 'Not Yet')),
+            data['products'].map((data) => data['supplier_id'] ?? 0)),
       );
 }

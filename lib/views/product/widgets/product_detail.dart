@@ -186,7 +186,7 @@ class ProductDetail extends StatelessWidget {
                                       BorderRadius.all(Radius.circular(10.r))),
                               child: Center(
                                 child: Text(
-                                  'Buy Date: ${product.buy_date}',
+                                  'Buy Date: ${product.created_at}',
                                   style: TextStyle(
                                       fontSize: 16.sp, color: Colors.white),
                                 ),

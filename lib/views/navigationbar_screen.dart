@@ -17,9 +17,9 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 import 'package:sidebarx/sidebarx.dart';
 
+import 'alert/alert_screen.dart';
 import 'brand/brand_screen.dart';
 import 'customer/customer_screen.dart';
-import 'customers/suppliers/suppliers_screen.dart';
 
 class NavigationBarScreen extends StatelessWidget {
   NavigationBarScreen({
@@ -39,7 +39,7 @@ class NavigationBarScreen extends StatelessWidget {
         categoryController;
         importController;
         supplierController;
-        incomeController;
+        incomeController.getIncomeToday();
         brandController;
         customerController;
         final isSmallScreen = MediaQuery.of(context).size.width < 600;
@@ -160,6 +160,18 @@ class CustomeSidebarX extends StatelessWidget {
                 overflow: TextOverflow.ellipsis,
                 style: TextStyle(fontSize: 20.sp, fontWeight: FontWeight.w500),
               ),
+              SizedBox(
+                height: 5.h,
+              ),
+              Text(
+                'Role: Not Yet',
+                maxLines: 2,
+                overflow: TextOverflow.ellipsis,
+                style: TextStyle(
+                    fontSize: 14.sp,
+                    fontWeight: FontWeight.w500,
+                    color: Colors.grey),
+              ),
               Divider(),
             ],
           ),
@@ -216,10 +228,11 @@ class CustomeSidebarX extends StatelessWidget {
           onTap: () {
             AwesomeDialog(
               context: context,
+              width: 600.w,
               dialogType: DialogType.warning,
               animType: AnimType.bottomSlide,
               title: 'WARNING'.tr,
-              desc: 'Would you sure like to sign out your account?'.tr,
+              desc: 'Are you sure you want to sign out your account?'.tr,
               btnCancelOnPress: () {},
               btnOkOnPress: () {
                 Get.snackbar('Sign out successful!', ''.tr,
@@ -275,10 +288,12 @@ class _ScreensExample extends StatelessWidget {
           case 9:
             return UserScreen();
           case 10:
-            return UserScreen();
+            return AlertScreen();
 
           default:
-            return UserScreen();
+            return Center(
+              child: Text('Not Found Screen!'),
+            );
         }
       },
     );

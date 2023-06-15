@@ -17,6 +17,9 @@ class ProductController extends GetxController {
 
   RxBool isProductLoading = false.obs;
 
+  TextEditingController searchProductsController = TextEditingController();
+  RxString searchVal = ''.obs;
+
   @override
   void onInit() async {
     getProducts();

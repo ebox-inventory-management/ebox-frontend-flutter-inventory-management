@@ -1,14 +1,32 @@
-import 'dart:convert';
-import 'dart:ui';
-
-import 'package:collection/collection.dart';
-import 'package:flutter_easyloading/flutter_easyloading.dart';
+import 'package:ebox_frontend_web_inventory/api/product_service.dart';
 import 'package:get/get.dart';
-import 'package:shared_preferences/shared_preferences.dart';
+import '../model/chart_data.dart';
+import '../views/dashboard/dashboard_screen.dart';
 
-import '../model/product.dart';
+class DashboardController extends GetxController {
+  RxList<ChartData> chartDataList = List<ChartData>.empty(growable: true).obs;
 
-import '../api/product_service.dart';
-import 'controllers.dart';
+  RxBool isChartDataLoading = false.obs;
 
-class DashboardController extends GetxController {}
+  @override
+  void onInit() async {
+    getChartData();
+    super.onInit();
+  }
+
+  void getChartData() async {
+    try {
+      isChartDataLoading(true);
+      //call api
+      var result = await RemoteProductService().get();
+      if (result != null) {
+        //assign api result
+        chartDataList.assignAll(chartDataListFromJson(result.body));
+
+        //save api result to local db
+      }
+    } finally {
+      isChartDataLoading(false);
+    }
+  }
+}

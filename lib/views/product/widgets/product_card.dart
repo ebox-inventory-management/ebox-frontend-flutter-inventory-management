@@ -73,11 +73,12 @@ class ProductCard extends StatelessWidget {
                       onPressed: () {
                         AwesomeDialog(
                           context: context,
+                          width: 600.w,
                           dialogType: DialogType.warning,
                           animType: AnimType.bottomSlide,
                           title: 'WARNING'.tr,
                           desc:
-                              'Would you sure like to delete ${product.product_name}?'
+                              'Are you sure you want to delete ${product.product_name}?'
                                   .tr,
                           btnCancelOnPress: () {},
                           btnOkOnPress: () {

@@ -15,10 +15,8 @@ import '../model/incomes.dart';
 class IncomeController extends GetxController {
   RxList<Incomes> incomesList = List<Incomes>.empty(growable: true).obs;
   Rxn<IncomeToday> incomeToday = Rxn<IncomeToday>();
-  RxList<IncomesMonth> incomesMonthList =
-      List<IncomesMonth>.empty(growable: true).obs;
-  RxList<IncomesYear> incomesYearList =
-      List<IncomesYear>.empty(growable: true).obs;
+  Rxn<IncomesMonth> incomesMonth = Rxn<IncomesMonth>();
+  Rxn<IncomesYear> incomesYearList = Rxn<IncomesYear>();
 
   RxBool isIncomesLoading = false.obs;
   RxBool isIncomeTodayLoading = false.obs;
@@ -32,13 +30,6 @@ class IncomeController extends GetxController {
     getIncomeThisYear();
     getIncomeByMonth();
     super.onInit();
-  }
-
-  late List<String> incomesMonthAmountList =
-      incomesMonthList.map((data) => data.income_amount).toList();
-  get totalMonthIncomes {
-    return incomesMonthAmountList
-        .reduce((previousValue, element) => previousValue + element);
   }
 
   void getIncomes() async {
@@ -78,7 +69,7 @@ class IncomeController extends GetxController {
           .getByMonth(month: '0${DateTime.now().month}');
       if (result != null) {
         //assign api result
-        incomesMonthList.assignAll(incomesMonthListFromJson(result.body));
+        incomesMonth.value = incomesMonthListFromJson(result.body);
       }
     } finally {
       isIncomesMonthLoading(false);
