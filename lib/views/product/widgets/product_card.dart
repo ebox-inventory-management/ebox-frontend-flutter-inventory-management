@@ -1,3 +1,5 @@
+import 'package:awesome_dialog/awesome_dialog.dart';
+import 'package:ebox_frontend_web_inventory/controller/controllers.dart';
 import 'package:ebox_frontend_web_inventory/model/product.dart';
 import 'package:ebox_frontend_web_inventory/views/product/widgets/product_detail.dart';
 import 'package:flutter/material.dart';
@@ -11,6 +13,9 @@ class ProductCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    supplierController.getSupplierById(id: product.supplier_id);
+    categoryController.getCategoryById(id: product.category_id);
+    brandController.getBrandById(id: product.brand_id);
     return GestureDetector(
       onTap: () {
         Get.dialog(ProductDetail(
@@ -65,7 +70,29 @@ class ProductCard extends StatelessWidget {
                       onPressed: () {},
                       icon: Icon(Icons.edit, color: Colors.blue, size: 25.r)),
                   IconButton(
-                      onPressed: () {},
+                      onPressed: () {
+                        AwesomeDialog(
+                          context: context,
+                          width: 600.w,
+                          dialogType: DialogType.warning,
+                          animType: AnimType.bottomSlide,
+                          title: 'WARNING'.tr,
+                          desc:
+                              'Are you sure you want to delete ${product.product_name}?'
+                                  .tr,
+                          btnCancelOnPress: () {},
+                          btnOkOnPress: () {
+                            Get.snackbar('Deleted!', ''.tr,
+                                colorText: Colors.white,
+                                margin: REdgeInsets.all(15),
+                                backgroundColor: Colors.green,
+                                snackPosition: SnackPosition.BOTTOM,
+                                duration: const Duration(seconds: 2));
+
+                            productController.deleteProduct(id: product.id);
+                          },
+                        ).show();
+                      },
                       icon: Icon(
                         Icons.delete,
                         color: Colors.red,

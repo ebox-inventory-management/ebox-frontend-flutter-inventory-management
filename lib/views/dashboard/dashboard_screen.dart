@@ -1,32 +1,26 @@
-import 'package:ebox_frontend_web_inventory/views/dashboard/widgets/finance_card.dart';
+import 'package:dropdown_button2/custom_dropdown_button2.dart';
+import 'package:ebox_frontend_web_inventory/controller/income_controller.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:syncfusion_flutter_charts/charts.dart';
 import 'package:syncfusion_flutter_charts/sparkcharts.dart';
+import 'package:get/get.dart';
+import '../../controller/controllers.dart';
+import '../../model/chart_data.dart';
+import '../product/widgets/product_list.dart';
 
 class DashBoardScreen extends StatefulWidget {
-  DashBoardScreen({super.key});
+  const DashBoardScreen({super.key});
 
   @override
   State<DashBoardScreen> createState() => _DashBoardScreenState();
 }
 
 class _DashBoardScreenState extends State<DashBoardScreen> {
-  final List<ChartData> incomesData = [
-    ChartData(DateTime(2015, 1), 6),
-    ChartData(DateTime(2015, 2), 11),
-    ChartData(DateTime(2015, 3), 9),
-    ChartData(DateTime(2015, 4), 14),
-    ChartData(DateTime(2015, 5), 10),
-  ];
+  List<String> incomeName = ['TODAY', 'MONTH', 'YEAR'];
 
-  final List<ChartData> expensesData = [
-    ChartData(DateTime(2015, 1), 4),
-    ChartData(DateTime(2015, 2), 5),
-    ChartData(DateTime(2015, 3), 10),
-    ChartData(DateTime(2015, 4), 11),
-    ChartData(DateTime(2015, 5), 5),
-  ];
+  String? selectedValueGraphIncomes = 'TODAY';
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -35,317 +29,276 @@ class _DashBoardScreenState extends State<DashBoardScreen> {
         padding: REdgeInsets.all(30),
         child: SingleChildScrollView(
           child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              SizedBox(
-                height: 140.h,
-                child: ListView.builder(
-                  scrollDirection: Axis.horizontal,
-                  itemCount: 4,
-                  itemBuilder: (BuildContext context, int index) {
-                    return FinanceCard(
-                      amount: '0.0',
-                      name: 'PROFIT',
-                    );
-                  },
+              Padding(
+                padding: REdgeInsets.only(bottom: 30.r),
+                child: Row(
+                  children: [
+                    Icon(
+                      Icons.dashboard,
+                      size: 30.r,
+                    ),
+                    SizedBox(
+                      width: 10.w,
+                    ),
+                    Text(
+                      'Dashboard',
+                      style: TextStyle(
+                          fontWeight: FontWeight.bold, fontSize: 30.sp),
+                    ),
+                  ],
                 ),
               ),
               Divider(),
-              SizedBox(
-                height: 15.h,
+              Padding(
+                padding: REdgeInsets.only(top: 15.w, bottom: 15.w),
+                child: Row(
+                  crossAxisAlignment: CrossAxisAlignment.center,
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    Row(
+                      children: [
+                        Icon(
+                          Icons.attach_money_sharp,
+                          color: Colors.orange,
+                          size: 30.r,
+                        ),
+                        SizedBox(
+                          width: 5.w,
+                        ),
+                        Text(
+                          'Total Income',
+                          style: TextStyle(
+                              fontWeight: FontWeight.w500,
+                              color: Colors.orange,
+                              fontSize: 20.sp),
+                        ),
+                      ],
+                    ),
+                    SizedBox()
+                    // CustomDropdownButton2(
+                    //   buttonWidth: 0.2.sw,
+                    //   buttonHeight: 40.w,
+                    //   hint: 'Choose Incomes',
+                    //   dropdownItems: incomeName,
+                    //   value: selectedValueGraphIncomes,
+                    //   buttonDecoration: BoxDecoration(
+                    //     borderRadius: BorderRadius.circular(15.r),
+                    //     color: Colors.white,
+                    //   ),
+                    //   dropdownWidth: 0.2.sw,
+                    //   dropdownDecoration: BoxDecoration(
+                    //     borderRadius: BorderRadius.circular(15.r),
+                    //     color: Colors.white,
+                    //   ),
+                    //   icon: Icon(
+                    //     Icons.arrow_drop_down,
+                    //     size: 40.r,
+                    //     color: Colors.orange,
+                    //   ),
+                    //   onChanged: (index) {
+                    //     setState(() {
+                    //       selectedValueGraphIncomes = index;
+                    //     });
+                    //   },
+                    // ),
+                  ],
+                ),
+              ),
+              Row(
+                children: [
+                  Container(
+                    width: 300.w,
+                    height: 200.w,
+                    decoration: BoxDecoration(
+                        borderRadius: BorderRadius.all(Radius.circular(15.r)),
+                        color: Colors.white),
+                    child: Padding(
+                      padding: REdgeInsets.all(20.r),
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.end,
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        children: [
+                          Text(
+                            'TODAY',
+                            style:
+                                TextStyle(fontSize: 16.sp, color: Colors.green),
+                          ),
+                          Center(
+                            child: Text(
+                              '\$${incomeController.incomeToday.value?.today_income}',
+                              overflow: TextOverflow.ellipsis,
+                              style: TextStyle(fontSize: 30.sp),
+                            ),
+                          ),
+                          SizedBox()
+                        ],
+                      ),
+                    ),
+                  ),
+                  SizedBox(
+                    width: 30.w,
+                  ),
+                  Container(
+                    width: 300.w,
+                    height: 200.w,
+                    decoration: BoxDecoration(
+                        borderRadius: BorderRadius.all(Radius.circular(15.r)),
+                        color: Colors.white),
+                    child: Padding(
+                      padding: REdgeInsets.all(20.r),
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.end,
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        children: [
+                          Text(
+                            'THIS MONTH',
+                            style:
+                                TextStyle(fontSize: 16.sp, color: Colors.green),
+                          ),
+                          Center(
+                            child: Text(
+                              '\$${incomeController.incomesMonth.value?.total}',
+                              overflow: TextOverflow.ellipsis,
+                              style: TextStyle(fontSize: 30.sp),
+                            ),
+                          ),
+                          SizedBox()
+                        ],
+                      ),
+                    ),
+                  ),
+                  SizedBox(
+                    width: 30.w,
+                  ),
+                  Container(
+                    width: 300.w,
+                    height: 200.w,
+                    decoration: BoxDecoration(
+                        borderRadius: BorderRadius.all(Radius.circular(15.r)),
+                        color: Colors.white),
+                    child: Padding(
+                      padding: REdgeInsets.all(20.r),
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.end,
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        children: [
+                          Text(
+                            'THIS YEAR',
+                            style:
+                                TextStyle(fontSize: 16.sp, color: Colors.green),
+                          ),
+                          Center(
+                            child: Text(
+                              '\$${incomeController.incomesYearList.value?.total}',
+                              overflow: TextOverflow.ellipsis,
+                              style: TextStyle(fontSize: 30.sp),
+                            ),
+                          ),
+                          SizedBox()
+                        ],
+                      ),
+                    ),
+                  ),
+                ],
               ),
               Padding(
-                padding: REdgeInsets.only(bottom: 30),
+                padding: REdgeInsets.only(top: 15.w, bottom: 15.w),
                 child: Container(
-                  width: MediaQuery.of(context).size.width * 1,
-                  decoration: const BoxDecoration(color: Colors.white),
-                  child: Column(
-                    children: [
-                      Padding(
-                        padding: REdgeInsets.all(15),
-                        child: Row(
-                          crossAxisAlignment: CrossAxisAlignment.center,
-                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                          children: [
-                            Text(
-                              'Incomes',
-                              style: TextStyle(
-                                  fontSize: 18.sp,
-                                  fontWeight: FontWeight.bold,
-                                  color: Colors.black54),
-                            ),
-                            Row(
-                              mainAxisAlignment: MainAxisAlignment.end,
-                              children: [
-                                Padding(
-                                  padding: REdgeInsets.only(left: 5),
-                                  child: TextButton(
-                                    onPressed: () {},
-                                    style: TextButton.styleFrom(
-                                        backgroundColor: Colors.orange,
-                                        foregroundColor: Colors.white),
-                                    child: Text(
-                                      'TODAY',
-                                      style: TextStyle(
-                                          fontWeight: FontWeight.w500,
-                                          fontSize: 14.sp),
-                                    ),
-                                  ),
-                                ),
-                                Padding(
-                                  padding: REdgeInsets.only(left: 5),
-                                  child: TextButton(
-                                    onPressed: () {},
-                                    style: TextButton.styleFrom(
-                                        backgroundColor: Colors.orange,
-                                        foregroundColor: Colors.white),
-                                    child: Text(
-                                      'LAST 7 DAYS',
-                                      style: TextStyle(
-                                          fontWeight: FontWeight.w500,
-                                          fontSize: 14.sp),
-                                    ),
-                                  ),
-                                ),
-                                Padding(
-                                  padding: REdgeInsets.only(left: 5),
-                                  child: TextButton(
-                                    onPressed: () {},
-                                    style: TextButton.styleFrom(
-                                        backgroundColor: Colors.orange,
-                                        foregroundColor: Colors.white),
-                                    child: Text(
-                                      'THIS MONTH',
-                                      style: TextStyle(
-                                          fontWeight: FontWeight.w500,
-                                          fontSize: 14.sp),
-                                    ),
-                                  ),
-                                ),
-                                Padding(
-                                  padding: REdgeInsets.only(left: 5),
-                                  child: TextButton(
-                                    onPressed: () {},
-                                    style: TextButton.styleFrom(
-                                        backgroundColor: Colors.orange,
-                                        foregroundColor: Colors.white),
-                                    child: Text(
-                                      'THIS YEAR',
-                                      style: TextStyle(
-                                          fontWeight: FontWeight.w500,
-                                          fontSize: 14.sp),
-                                    ),
-                                  ),
-                                ),
-                                Padding(
-                                  padding: REdgeInsets.only(left: 5),
-                                  child: TextButton(
-                                    onPressed: () {},
-                                    style: TextButton.styleFrom(
-                                        backgroundColor: Colors.orange,
-                                        foregroundColor: Colors.white),
-                                    child: Text(
-                                      'LAST YEAR',
-                                      style: TextStyle(
-                                          fontWeight: FontWeight.w500,
-                                          fontSize: 14.sp),
-                                    ),
-                                  ),
-                                ),
-                              ],
-                            ),
-                          ],
-                        ),
-                      ),
-                      const Divider(),
-                      Padding(
-                        padding: REdgeInsets.all(15),
-                        child: SfCartesianChart(
-                          primaryXAxis: DateTimeAxis(
-                              rangePadding: ChartRangePadding.none),
-                          legend: Legend(isVisible: true),
-                          series: <ChartSeries<ChartData, DateTime>>[
-                            LineSeries<ChartData, DateTime>(
-                                dataSource: incomesData,
-                                xValueMapper: (ChartData data, _) => data.x,
-                                yValueMapper: (ChartData data, _) => data.y,
-                                name: 'Income'),
-                          ],
-                        ),
-                      )
-                    ],
+                  decoration: BoxDecoration(
+                      color: Colors.white,
+                      borderRadius: BorderRadius.all(Radius.circular(15.r))),
+                  child: Padding(
+                    padding: REdgeInsets.all(15.r),
+                    child: SfCartesianChart(
+                      primaryXAxis:
+                          DateTimeAxis(rangePadding: ChartRangePadding.none),
+                      legend: Legend(isVisible: true),
+                      series: <ChartSeries<ChartData, DateTime>>[
+                        // LineSeries<ChartData, DateTime>(
+                        //     dataSource: dashboardController.incomesChartData,
+                        //     xValueMapper: (ChartData data, _) => data.created_at,
+                        //     yValueMapper: (ChartData data, _) => data.import_price,
+                        //     name: 'Income'),
+                        LineSeries<ChartData, DateTime>(
+                            dataSource: dashboardController.chartDataList,
+                            color: Colors.redAccent,
+                            isVisible: true,
+                            isVisibleInLegend: true,
+                            yAxisName: 'Expense',
+                            xAxisName: 'Time',
+                            xValueMapper: (ChartData data, _) =>
+                                data.created_at,
+                            yValueMapper: (ChartData data, _) =>
+                                data.import_price,
+                            name: 'Expense'),
+                      ],
+                    ),
                   ),
                 ),
               ),
+              const Divider(),
               Padding(
-                padding: REdgeInsets.only(bottom: 30),
-                child: Container(
-                  width: MediaQuery.of(context).size.width * 1,
-                  decoration: BoxDecoration(color: Colors.white),
-                  child: Column(
-                    children: [
-                      Padding(
-                        padding: REdgeInsets.all(15),
-                        child: Row(
-                          crossAxisAlignment: CrossAxisAlignment.center,
-                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                          children: [
-                            Text(
-                              'Latest Import',
-                              style: TextStyle(
-                                  fontSize: 18.sp,
-                                  fontWeight: FontWeight.bold,
-                                  color: Colors.black54),
-                            ),
-                          ],
+                padding: REdgeInsets.only(top: 15.w, bottom: 15.w),
+                child: Row(
+                  crossAxisAlignment: CrossAxisAlignment.center,
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    Row(
+                      children: [
+                        Icon(
+                          Icons.attach_money_sharp,
+                          color: Colors.orange,
+                          size: 30.r,
                         ),
-                      ),
-                      const Divider(),
-                      Padding(
-                          padding: REdgeInsets.all(15),
-                          child: DataTable(
-                              columnSpacing: 30.w,
-                              dataTextStyle: TextStyle(
-                                  fontSize: 16.sp, color: Colors.black54),
-                              headingRowColor:
-                                  const MaterialStatePropertyAll(Colors.orange),
-                              headingTextStyle: TextStyle(
-                                  fontSize: 16.sp,
-                                  fontWeight: FontWeight.bold,
-                                  color: Colors.white),
-                              columns: const [
-                                DataColumn(
-                                  label: Text(
-                                    'Created at',
-                                  ),
-                                ),
-                                DataColumn(
-                                  label: Text(
-                                    'Reference',
-                                  ),
-                                ),
-                                DataColumn(
-                                  label: Text(
-                                    'Customer',
-                                  ),
-                                ),
-                                DataColumn(
-                                  label: Text(
-                                    'Grand total',
-                                  ),
-                                ),
-                              ],
-                              rows: [
-                                DataRow(
-                                  cells: [
-                                    DataCell(Text('2023-04-03 00:33:52')),
-                                    DataCell(Text('REF-00579')),
-                                    DataCell(Text('3')),
-                                    DataCell(Text('\$ 0.0')),
-                                  ],
-                                ),
-                                DataRow(
-                                  cells: [
-                                    DataCell(Text('2023-04-03 00:33:52')),
-                                    DataCell(Text('REF-00579')),
-                                    DataCell(Text('3')),
-                                    DataCell(Text('\$ 0.00')),
-                                  ],
-                                )
-                              ])),
-                    ],
-                  ),
+                        SizedBox(
+                          width: 5.w,
+                        ),
+                        Text(
+                          'Latest Import (5 Products)',
+                          style: TextStyle(
+                              fontWeight: FontWeight.w500,
+                              color: Colors.orange,
+                              fontSize: 20.sp),
+                        ),
+                      ],
+                    ),
+                    SizedBox(),
+                  ],
                 ),
               ),
-              Padding(
-                padding: REdgeInsets.only(bottom: 30),
-                child: Container(
-                  width: MediaQuery.of(context).size.width * 1,
-                  decoration: BoxDecoration(color: Colors.white),
-                  child: Column(
-                    children: [
-                      Padding(
-                        padding: REdgeInsets.all(15),
-                        child: Row(
-                          crossAxisAlignment: CrossAxisAlignment.center,
-                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                          children: [
-                            Text(
-                              'Latest Export',
-                              style: TextStyle(
-                                  fontSize: 18.sp,
-                                  fontWeight: FontWeight.bold,
-                                  color: Colors.black54),
-                            ),
-                          ],
-                        ),
+              Obx(() {
+                if (productController.isProductLoading.value) {
+                  return const Center(child: CircularProgressIndicator());
+                } else {
+                  if (productController.productList.isNotEmpty) {
+                    return ProductList(products: productController.productList);
+                  } else {
+                    return Center(
+                      child: Column(
+                        children: [
+                          Image.network(
+                            'https://firebasestorage.googleapis.com/v0/b/ebox-inventory-management.appspot.com/o/empty.png?alt=media&token=06b30b38-cac0-490e-ac6a-6373fe120a16',
+                            scale: 4,
+                          ),
+                          Text(
+                            'Product Not Found!',
+                            style: TextStyle(
+                                color: Colors.grey,
+                                fontWeight: FontWeight.bold,
+                                fontSize: 30.sp),
+                          ),
+                        ],
                       ),
-                      const Divider(),
-                      Padding(
-                          padding: REdgeInsets.all(15),
-                          child: DataTable(
-                              columnSpacing: 30.w,
-                              dataTextStyle: TextStyle(
-                                  fontSize: 16.sp, color: Colors.black54),
-                              headingRowColor:
-                                  const MaterialStatePropertyAll(Colors.orange),
-                              headingTextStyle: TextStyle(
-                                  fontSize: 16.sp,
-                                  fontWeight: FontWeight.bold,
-                                  color: Colors.white),
-                              columns: const [
-                                DataColumn(
-                                  label: Text(
-                                    'Created at',
-                                  ),
-                                ),
-                                DataColumn(
-                                  label: Text(
-                                    'Reference',
-                                  ),
-                                ),
-                                DataColumn(
-                                  label: Text(
-                                    'Supplier',
-                                  ),
-                                ),
-                                DataColumn(
-                                  label: Text(
-                                    'Grand total',
-                                  ),
-                                ),
-                              ],
-                              rows: [
-                                DataRow(
-                                  cells: [
-                                    DataCell(Text('2023-04-03 00:33:52')),
-                                    DataCell(Text('REF-00579')),
-                                    DataCell(Text('3')),
-                                    DataCell(Text('\$ 0.00')),
-                                  ],
-                                ),
-                                DataRow(
-                                  cells: [
-                                    DataCell(Text('2023-04-03 00:33:52')),
-                                    DataCell(Text('REF-00579')),
-                                    DataCell(Text('3')),
-                                    DataCell(Text('\$ 0.00')),
-                                  ],
-                                )
-                              ])),
-                    ],
-                  ),
-                ),
-              ),
+                    );
+                  }
+                }
+              }),
             ],
           ),
         ),
       ),
     );
   }
-}
-
-class ChartData {
-  ChartData(this.x, this.y);
-  final DateTime x;
-  final double? y;
 }

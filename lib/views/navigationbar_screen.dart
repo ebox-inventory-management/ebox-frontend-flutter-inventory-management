@@ -1,15 +1,13 @@
 import 'package:awesome_dialog/awesome_dialog.dart';
 import 'package:ebox_frontend_web_inventory/controller/controllers.dart';
-import 'package:ebox_frontend_web_inventory/views/brand/brand_screen.dart';
 import 'package:ebox_frontend_web_inventory/views/category/category_screen.dart';
-import 'package:ebox_frontend_web_inventory/views/customers/customers_screen.dart';
 
 import 'package:ebox_frontend_web_inventory/views/dashboard/dashboard_screen.dart';
 import 'package:ebox_frontend_web_inventory/views/export/export_screen.dart';
 import 'package:ebox_frontend_web_inventory/views/import/import_screen.dart';
 import 'package:ebox_frontend_web_inventory/views/product/product_screen.dart';
-import 'package:ebox_frontend_web_inventory/views/suppliers/suppliers_screen.dart';
 import 'package:ebox_frontend_web_inventory/views/quantity_adjustments/quantity_adjustments.dart';
+import 'package:ebox_frontend_web_inventory/views/suppliers/supplier_screen.dart';
 import 'package:ebox_frontend_web_inventory/views/user/user_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/src/widgets/container.dart';
@@ -18,6 +16,10 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 import 'package:get/get.dart';
 import 'package:sidebarx/sidebarx.dart';
+
+import 'alert/alert_screen.dart';
+import 'brand/brand_screen.dart';
+import 'customer/customer_screen.dart';
 
 class NavigationBarScreen extends StatelessWidget {
   NavigationBarScreen({
@@ -37,6 +39,9 @@ class NavigationBarScreen extends StatelessWidget {
         categoryController;
         importController;
         supplierController;
+        incomeController.getIncomeToday();
+        brandController;
+        customerController;
         final isSmallScreen = MediaQuery.of(context).size.width < 600;
         return Scaffold(
           backgroundColor: Colors.grey[100],
@@ -155,6 +160,18 @@ class CustomeSidebarX extends StatelessWidget {
                 overflow: TextOverflow.ellipsis,
                 style: TextStyle(fontSize: 20.sp, fontWeight: FontWeight.w500),
               ),
+              SizedBox(
+                height: 5.h,
+              ),
+              Text(
+                'Role: Not Yet',
+                maxLines: 2,
+                overflow: TextOverflow.ellipsis,
+                style: TextStyle(
+                    fontSize: 14.sp,
+                    fontWeight: FontWeight.w500,
+                    color: Colors.grey),
+              ),
               Divider(),
             ],
           ),
@@ -211,10 +228,11 @@ class CustomeSidebarX extends StatelessWidget {
           onTap: () {
             AwesomeDialog(
               context: context,
+              width: 600.w,
               dialogType: DialogType.warning,
               animType: AnimType.bottomSlide,
               title: 'WARNING'.tr,
-              desc: 'Would you sure like to sign out your account?'.tr,
+              desc: 'Are you sure you want to sign out your account?'.tr,
               btnCancelOnPress: () {},
               btnOkOnPress: () {
                 Get.snackbar('Sign out successful!', ''.tr,
@@ -260,20 +278,22 @@ class _ScreensExample extends StatelessWidget {
           case 4:
             return QuantityAdjustmentsScreen();
           case 5:
-            return SuppliersScreen();
+            return SupplierScreen();
           case 6:
             return CustomerScreen();
           case 7:
-            return CustomerScreen();
-          case 8:
             return CategoryScreen();
-          case 9:
+          case 8:
             return BrandScreen();
-          case 10:
+          case 9:
             return UserScreen();
+          case 10:
+            return AlertScreen();
 
           default:
-            return UserScreen();
+            return Center(
+              child: Text('Not Found Screen!'),
+            );
         }
       },
     );

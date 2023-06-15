@@ -2,9 +2,9 @@ import 'package:http/http.dart' as http;
 
 import '../core/constants/base_url.dart';
 
-class RemoteBrandService {
+class RemoteCustomerService {
   var client = http.Client();
-  var remoteUrl = '$baseUrl/api/brands';
+  var remoteUrl = '$baseUrl/api/customers';
 
   Future<dynamic> get() async {
     var response = await client.get(Uri.parse(remoteUrl));
@@ -12,7 +12,8 @@ class RemoteBrandService {
   }
 
   Future<dynamic> getById({required int id}) async {
-    var response = await client.get(Uri.parse('$baseUrl/api/brand/view/$id'));
+    var response =
+        await client.get(Uri.parse('$baseUrl/api/customer/view/$id'));
     return response;
   }
 }

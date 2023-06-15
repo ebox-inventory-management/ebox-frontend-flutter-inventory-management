@@ -1,7 +1,6 @@
 import 'package:ebox_frontend_web_inventory/views/authentication/sign_in_screen.dart';
 import 'package:ebox_frontend_web_inventory/views/authentication/sign_up_screen.dart';
 import 'package:ebox_frontend_web_inventory/views/dashboard/dashboard_screen.dart';
-import 'package:ebox_frontend_web_inventory/views/suppliers/suppliers_screen.dart';
 import 'package:ebox_frontend_web_inventory/views/navigationbar_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_easyloading/flutter_easyloading.dart';

@@ -8,8 +8,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 
-class BrandScreen extends StatelessWidget {
-  const BrandScreen({super.key});
+class AlertScreen extends StatelessWidget {
+  const AlertScreen({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -23,33 +23,11 @@ class BrandScreen extends StatelessWidget {
             Padding(
               padding: REdgeInsets.only(bottom: 30.w),
               child: Text(
-                'Brand',
+                'Alert',
                 style: TextStyle(fontWeight: FontWeight.bold, fontSize: 30.sp),
               ),
             ),
             Divider(),
-            TextFormField(
-              textInputAction: TextInputAction.next,
-              obscureText: false,
-              decoration: InputDecoration(
-                focusColor: Colors.white,
-                hoverColor: Colors.white,
-                hintText: 'Brand Name',
-                hintStyle: TextStyle(fontSize: 14.sp),
-                labelStyle: TextStyle(fontSize: 14.sp),
-                filled: true,
-                fillColor: Colors.white,
-                focusedBorder: OutlineInputBorder(
-                    borderSide: const BorderSide(color: Colors.white),
-                    borderRadius: BorderRadius.circular(15.r)),
-                enabledBorder: OutlineInputBorder(
-                    borderSide: const BorderSide(color: Colors.white),
-                    borderRadius: BorderRadius.circular(15.r)),
-              ),
-            ),
-            SizedBox(
-              height: 30.h,
-            ),
             Obx(() {
               if (brandController.isBrandsLoading.value) {
                 return const Center(child: CircularProgressIndicator());
@@ -65,7 +43,7 @@ class BrandScreen extends StatelessWidget {
                           scale: 4,
                         ),
                         Text(
-                          'Brand Not Found!',
+                          'Alert Not Found!',
                           style: TextStyle(
                               color: Colors.grey,
                               fontWeight: FontWeight.bold,

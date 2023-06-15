@@ -20,15 +20,12 @@ class ImportScreen extends StatefulWidget {
 class _ImportScreenState extends State<ImportScreen> {
   final List<String> categoriesName =
       categoryController.categoriesList.map((data) => data.name).toList();
-
-  final List<String> brandsName = [
-    'brand1',
-    'brand2',
-  ];
+  final List<String> brandsName =
+      brandController.brandsList.map((data) => data.name).toList();
   final List<String> suppliersName =
       supplierController.suppliersList.map((data) => data.name).toList();
-  String? selectedValueCategory;
 
+  String? selectedValueCategory;
   String? selectedValueBrand;
   String? selectedValueSupplier;
 
@@ -134,8 +131,10 @@ class _ImportScreenState extends State<ImportScreen> {
   TextEditingController productRouteController = TextEditingController();
   TextEditingController buyDateController = TextEditingController();
   TextEditingController expireDateController = TextEditingController();
-  TextEditingController buyingPriceController = TextEditingController();
-  TextEditingController priceController = TextEditingController();
+  TextEditingController importPriceController = TextEditingController();
+  TextEditingController exportPriceController = TextEditingController();
+  TextEditingController productQuantityController = TextEditingController();
+
   @override
   void dispose() {
     super.dispose();
@@ -145,8 +144,9 @@ class _ImportScreenState extends State<ImportScreen> {
     productRouteController.dispose();
     buyDateController.dispose();
     expireDateController.dispose();
-    buyingPriceController.dispose();
-    priceController.dispose();
+    importPriceController.dispose();
+    exportPriceController.dispose();
+    productQuantityController.dispose();
   }
 
   @override
@@ -201,7 +201,6 @@ class _ImportScreenState extends State<ImportScreen> {
                                     'https://shop.mevid.hu/wp-content/uploads/2019/11/image.jpg',
                                     fit: BoxFit.cover,
                                   )
-                                // Image.asset('assets/create_menu_default.png')
                                 : Image.memory(
                                     Uint8List.fromList(_imageFile!.bytes!),
                                     fit: BoxFit.cover,
@@ -211,8 +210,6 @@ class _ImportScreenState extends State<ImportScreen> {
                           SizedBox(
                             height: 30.w,
                           ),
-                          // A button to trigger the file picker dialog
-
                           GestureDetector(
                             onTap: () {
                               _pickImage();
@@ -347,6 +344,9 @@ class _ImportScreenState extends State<ImportScreen> {
                       Column(
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
+                          SizedBox(
+                            height: 30.w,
+                          ),
                           Text(
                             'Product Name',
                             style: TextStyle(
@@ -379,7 +379,7 @@ class _ImportScreenState extends State<ImportScreen> {
                             ),
                           ),
                           Text(
-                            'Price',
+                            'Import Price',
                             style: TextStyle(
                                 fontWeight: FontWeight.bold, fontSize: 14.sp),
                           ),
@@ -388,7 +388,7 @@ class _ImportScreenState extends State<ImportScreen> {
                             child: SizedBox(
                               width: 0.4.sw,
                               child: TextFormField(
-                                controller: priceController,
+                                controller: importPriceController,
                                 textInputAction: TextInputAction.next,
                                 obscureText: false,
                                 decoration: InputDecoration(
@@ -400,7 +400,7 @@ class _ImportScreenState extends State<ImportScreen> {
                             ),
                           ),
                           Text(
-                            'Buying price',
+                            'Export Price',
                             style: TextStyle(
                                 fontWeight: FontWeight.bold, fontSize: 14.sp),
                           ),
@@ -409,7 +409,28 @@ class _ImportScreenState extends State<ImportScreen> {
                             child: SizedBox(
                               width: 0.4.sw,
                               child: TextFormField(
-                                controller: buyingPriceController,
+                                controller: exportPriceController,
+                                textInputAction: TextInputAction.next,
+                                obscureText: false,
+                                decoration: InputDecoration(
+                                  border: OutlineInputBorder(
+                                    borderRadius: BorderRadius.circular(10.0.r),
+                                  ),
+                                ),
+                              ),
+                            ),
+                          ),
+                          Text(
+                            'Product Quantity',
+                            style: TextStyle(
+                                fontWeight: FontWeight.bold, fontSize: 14.sp),
+                          ),
+                          Padding(
+                            padding: REdgeInsets.only(bottom: 30.r, top: 10.r),
+                            child: SizedBox(
+                              width: 0.4.sw,
+                              child: TextFormField(
+                                controller: productQuantityController,
                                 textInputAction: TextInputAction.next,
                                 obscureText: false,
                                 decoration: InputDecoration(
@@ -609,11 +630,12 @@ class _ImportScreenState extends State<ImportScreen> {
           onPressed: () {
             if (productCodeController.text.isEmpty ||
                 productNameController.text.isEmpty ||
-                priceController.text.isEmpty ||
-                buyingPriceController.text.isEmpty ||
+                exportPriceController.text.isEmpty ||
+                importPriceController.text.isEmpty ||
                 productCodeController.text.isEmpty ||
                 productGarageController.text.isEmpty ||
-                productGarageController.text.isEmpty) {
+                productGarageController.text.isEmpty ||
+                productQuantityController.text.isEmpty) {
               Get.snackbar('Something wrong!',
                   'You need to input all product information to import',
                   colorText: Colors.white,
@@ -623,7 +645,13 @@ class _ImportScreenState extends State<ImportScreen> {
                   duration: const Duration(seconds: 2));
               return;
             } else {
-              importController.createProduct(
+              Get.snackbar('Added Product!', 'You have been add product'.tr,
+                  colorText: Colors.white,
+                  margin: REdgeInsets.all(15),
+                  backgroundColor: Colors.green,
+                  snackPosition: SnackPosition.BOTTOM,
+                  duration: const Duration(seconds: 2));
+              productController.createProduct(
                   category_id: 1,
                   supplier_id: 1,
                   brand_id: 1,
@@ -634,8 +662,9 @@ class _ImportScreenState extends State<ImportScreen> {
                   product_image: '${_imageFile?.name}${DateTime.now()}',
                   buy_date: _selectedBuyDate.toString(),
                   expire_date: _selectedExpireDate.toString(),
-                  buying_price: buyingPriceController.text,
-                  price: priceController.text);
+                  buying_price: importPriceController.text,
+                  price: exportPriceController.text,
+                  product_quantity: 1);
             }
           },
           elevation: 0,
