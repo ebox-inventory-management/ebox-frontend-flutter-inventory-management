@@ -1,15 +1,13 @@
 import 'package:awesome_dialog/awesome_dialog.dart';
 import 'package:ebox_frontend_web_inventory/controller/controllers.dart';
-import 'package:ebox_frontend_web_inventory/views/brand/brand_screen.dart';
 import 'package:ebox_frontend_web_inventory/views/category/category_screen.dart';
-import 'package:ebox_frontend_web_inventory/views/customers/customers_screen.dart';
 
 import 'package:ebox_frontend_web_inventory/views/dashboard/dashboard_screen.dart';
 import 'package:ebox_frontend_web_inventory/views/export/export_screen.dart';
 import 'package:ebox_frontend_web_inventory/views/import/import_screen.dart';
 import 'package:ebox_frontend_web_inventory/views/product/product_screen.dart';
-import 'package:ebox_frontend_web_inventory/views/suppliers/suppliers_screen.dart';
 import 'package:ebox_frontend_web_inventory/views/quantity_adjustments/quantity_adjustments.dart';
+import 'package:ebox_frontend_web_inventory/views/suppliers/supplier_screen.dart';
 import 'package:ebox_frontend_web_inventory/views/user/user_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/src/widgets/container.dart';
@@ -18,6 +16,10 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 import 'package:get/get.dart';
 import 'package:sidebarx/sidebarx.dart';
+
+import 'brand/brand_screen.dart';
+import 'customer/customer_screen.dart';
+import 'customers/suppliers/suppliers_screen.dart';
 
 class NavigationBarScreen extends StatelessWidget {
   NavigationBarScreen({
@@ -37,6 +39,9 @@ class NavigationBarScreen extends StatelessWidget {
         categoryController;
         importController;
         supplierController;
+        incomeController;
+        brandController;
+        customerController;
         final isSmallScreen = MediaQuery.of(context).size.width < 600;
         return Scaffold(
           backgroundColor: Colors.grey[100],
@@ -260,15 +265,15 @@ class _ScreensExample extends StatelessWidget {
           case 4:
             return QuantityAdjustmentsScreen();
           case 5:
-            return SuppliersScreen();
+            return SupplierScreen();
           case 6:
             return CustomerScreen();
           case 7:
-            return CustomerScreen();
-          case 8:
             return CategoryScreen();
-          case 9:
+          case 8:
             return BrandScreen();
+          case 9:
+            return UserScreen();
           case 10:
             return UserScreen();
 

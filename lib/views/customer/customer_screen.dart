@@ -1,3 +1,10 @@
+import 'package:ebox_frontend_web_inventory/controller/controllers.dart';
+import 'package:ebox_frontend_web_inventory/core/constants/base_url.dart';
+import 'package:ebox_frontend_web_inventory/model/product.dart';
+import 'package:ebox_frontend_web_inventory/views/category/widgets/category_list.dart';
+import 'package:ebox_frontend_web_inventory/views/customer/widgets/customer_list.dart';
+import 'package:ebox_frontend_web_inventory/views/product/widgets/product_list.dart';
+import 'package:ebox_frontend_web_inventory/views/suppliers/widgets/supplier_list.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
@@ -10,128 +17,70 @@ class CustomerScreen extends StatelessWidget {
     return Scaffold(
       backgroundColor: Colors.grey[100],
       body: Padding(
-        padding: REdgeInsets.all(30),
-        child: Column(children: [
-          TextField(
-            decoration: InputDecoration(
-              focusedBorder: OutlineInputBorder(
-                borderSide: BorderSide(
-                  color: Colors.green,
-                ),
+        padding: REdgeInsets.all(30.r),
+        child: SingleChildScrollView(
+          child:
+              Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
+            Padding(
+              padding: REdgeInsets.only(bottom: 30.w),
+              child: Text(
+                'Customer',
+                style: TextStyle(fontWeight: FontWeight.bold, fontSize: 30.sp),
               ),
-              enabledBorder: OutlineInputBorder(
-                borderSide: BorderSide(color: Colors.blueGrey),
-              ),
-              hintText: 'Search',
             ),
-          ),
-          SizedBox(
-            height: 30.h,
-          ),
-          Padding(
-            padding: REdgeInsets.only(bottom: 30.r),
-            child: Container(
-              width: MediaQuery.of(context).size.width * 1,
-              decoration: const BoxDecoration(color: Colors.white),
-              child: Column(
-                children: [
-                  Padding(
-                    padding: REdgeInsets.all(15),
-                    child: Row(
-                      crossAxisAlignment: CrossAxisAlignment.center,
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            Divider(),
+            TextFormField(
+              textInputAction: TextInputAction.next,
+              obscureText: false,
+              decoration: InputDecoration(
+                focusColor: Colors.white,
+                hoverColor: Colors.white,
+                hintText: 'Customer Name',
+                hintStyle: TextStyle(fontSize: 14.sp),
+                labelStyle: TextStyle(fontSize: 14.sp),
+                filled: true,
+                fillColor: Colors.white,
+                focusedBorder: OutlineInputBorder(
+                    borderSide: const BorderSide(color: Colors.white),
+                    borderRadius: BorderRadius.circular(15.r)),
+                enabledBorder: OutlineInputBorder(
+                    borderSide: const BorderSide(color: Colors.white),
+                    borderRadius: BorderRadius.circular(15.r)),
+              ),
+            ),
+            SizedBox(
+              height: 30.h,
+            ),
+            Obx(() {
+              if (customerController.isCustomersLoading.value) {
+                return const Center(child: CircularProgressIndicator());
+              } else {
+                if (customerController.customersList.isNotEmpty) {
+                  return CustomerList(
+                      customers: customerController.customersList);
+                } else {
+                  return Center(
+                    child: Column(
                       children: [
-                        Text(
-                          'Latest sales (max. 5)',
-                          style: TextStyle(
-                              fontSize: 18.sp,
-                              fontWeight: FontWeight.bold,
-                              color: Colors.black54),
+                        Image.network(
+                          'https://firebasestorage.googleapis.com/v0/b/ebox-inventory-management.appspot.com/o/empty.png?alt=media&token=06b30b38-cac0-490e-ac6a-6373fe120a16',
+                          scale: 4,
                         ),
-                        Row(
-                          children: [
-                            OutlinedButton(
-                                onPressed: () {}, child: Text('Export CSV')),
-                            SizedBox(
-                              width: 15.w,
-                            ),
-                          ],
-                        )
+                        Text(
+                          'Customer Not Found!',
+                          style: TextStyle(
+                              color: Colors.grey,
+                              fontWeight: FontWeight.bold,
+                              fontSize: 30.sp),
+                        ),
                       ],
                     ),
-                  ),
-                  const Divider(),
-                  Padding(
-                      padding: REdgeInsets.all(15),
-                      child: Column(
-                        children: [
-                          SizedBox(
-                            height: 15.h,
-                          ),
-                          DataTable(
-                              columnSpacing: 30.w,
-                              dataTextStyle: TextStyle(
-                                  fontSize: 16.sp, color: Colors.black54),
-                              headingRowColor:
-                                  const MaterialStatePropertyAll(Colors.orange),
-                              headingTextStyle: TextStyle(
-                                  fontSize: 16.sp,
-                                  fontWeight: FontWeight.bold,
-                                  color: Colors.white),
-                              columns: const [
-                                DataColumn(
-                                  label: Text(
-                                    'Name',
-                                  ),
-                                ),
-                                DataColumn(
-                                  label: Text(
-                                    'Code',
-                                  ),
-                                ),
-                                DataColumn(
-                                  label: Text(
-                                    'Brand',
-                                  ),
-                                ),
-                                DataColumn(
-                                  label: Text(
-                                    'Category',
-                                  ),
-                                ),
-                                DataColumn(
-                                  label: Text(
-                                    'Price',
-                                  ),
-                                ),
-                              ],
-                              rows: [
-                                DataRow(
-                                  cells: [
-                                    DataCell(Text('2023-04-03 00:33:52')),
-                                    DataCell(Text('REF-00579')),
-                                    DataCell(Text('3')),
-                                    DataCell(Text('3')),
-                                    DataCell(Text('\$ 0.00')),
-                                  ],
-                                ),
-                                DataRow(
-                                  cells: [
-                                    DataCell(Text('2023-04-03 00:33:52')),
-                                    DataCell(Text('REF-00579')),
-                                    DataCell(Text('3')),
-                                    DataCell(Text('3')),
-                                    DataCell(Text('\$ 0.00')),
-                                  ],
-                                )
-                              ]),
-                        ],
-                      )),
-                ],
-              ),
-            ),
-          ),
-        ]),
+                  );
+                }
+              }
+            }),
+          ]),
+        ),
       ),
     );
   }

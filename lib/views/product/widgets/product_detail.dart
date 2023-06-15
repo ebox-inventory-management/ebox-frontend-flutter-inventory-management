@@ -1,8 +1,13 @@
+import 'package:ebox_frontend_web_inventory/model/category.dart';
 import 'package:ebox_frontend_web_inventory/model/product.dart';
+import 'package:ebox_frontend_web_inventory/model/supplier.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 import 'package:intl/intl.dart';
+
+import '../../../controller/controllers.dart';
+import '../../../model/brand.dart';
 
 class ProductDetail extends StatelessWidget {
   final Product product;
@@ -118,7 +123,8 @@ class ProductDetail extends StatelessWidget {
                               height: 15.w,
                             ),
                             Text(
-                              'Price: \$${product.price}',
+                              'Product Quantity: ${product.product_quantity}',
+                              overflow: TextOverflow.ellipsis,
                               style: TextStyle(
                                   fontWeight: FontWeight.w500,
                                   fontSize: 18.sp,
@@ -128,7 +134,17 @@ class ProductDetail extends StatelessWidget {
                               height: 5.w,
                             ),
                             Text(
-                              'Buying Price: \$${product.buying_price}',
+                              'Import Price: \$${product.import_price}',
+                              style: TextStyle(
+                                  fontWeight: FontWeight.w500,
+                                  fontSize: 18.sp,
+                                  color: Colors.red),
+                            ),
+                            SizedBox(
+                              height: 5.w,
+                            ),
+                            Text(
+                              'Export Price: \$${product.export_price}',
                               style: TextStyle(
                                   fontWeight: FontWeight.w500,
                                   fontSize: 18.sp,
@@ -214,7 +230,7 @@ class ProductDetail extends StatelessWidget {
                                       BorderRadius.all(Radius.circular(10.r))),
                               child: Center(
                                 child: Text(
-                                  '${product.category_id}',
+                                  '${categoryController.category.value?.name}',
                                   style: TextStyle(
                                       fontSize: 16.sp, color: Colors.white),
                                 ),
@@ -240,7 +256,7 @@ class ProductDetail extends StatelessWidget {
                                       BorderRadius.all(Radius.circular(10.r))),
                               child: Center(
                                 child: Text(
-                                  '${product.supplier_id}',
+                                  '${supplierController.supplier.value?.name}',
                                   style: TextStyle(
                                       fontSize: 16.sp, color: Colors.white),
                                 ),
@@ -266,7 +282,7 @@ class ProductDetail extends StatelessWidget {
                                       BorderRadius.all(Radius.circular(10.r))),
                               child: Center(
                                 child: Text(
-                                  '${product.brand_id}',
+                                  '${brandController.brand.value?.name}',
                                   style: TextStyle(
                                       fontSize: 16.sp, color: Colors.white),
                                 ),

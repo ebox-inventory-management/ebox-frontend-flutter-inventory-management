@@ -1,15 +1,14 @@
 import 'package:ebox_frontend_web_inventory/controller/controllers.dart';
 import 'package:ebox_frontend_web_inventory/core/constants/base_url.dart';
 import 'package:ebox_frontend_web_inventory/model/product.dart';
-import 'package:ebox_frontend_web_inventory/views/brand/widgets/brand_list.dart';
 import 'package:ebox_frontend_web_inventory/views/product/widgets/product_list.dart';
 import 'package:ebox_frontend_web_inventory/views/suppliers/widgets/supplier_list.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 
-class BrandScreen extends StatelessWidget {
-  const BrandScreen({super.key});
+class SupplierScreen extends StatelessWidget {
+  const SupplierScreen({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -23,7 +22,7 @@ class BrandScreen extends StatelessWidget {
             Padding(
               padding: REdgeInsets.only(bottom: 30.w),
               child: Text(
-                'Brand',
+                'Supplier',
                 style: TextStyle(fontWeight: FontWeight.bold, fontSize: 30.sp),
               ),
             ),
@@ -34,7 +33,7 @@ class BrandScreen extends StatelessWidget {
               decoration: InputDecoration(
                 focusColor: Colors.white,
                 hoverColor: Colors.white,
-                hintText: 'Brand Name',
+                hintText: 'Supplier Name',
                 hintStyle: TextStyle(fontSize: 14.sp),
                 labelStyle: TextStyle(fontSize: 14.sp),
                 filled: true,
@@ -51,11 +50,12 @@ class BrandScreen extends StatelessWidget {
               height: 30.h,
             ),
             Obx(() {
-              if (brandController.isBrandsLoading.value) {
+              if (supplierController.isSuppliersLoading.value) {
                 return const Center(child: CircularProgressIndicator());
               } else {
-                if (brandController.brandsList.isNotEmpty) {
-                  return BrandList(brands: brandController.brandsList);
+                if (supplierController.suppliersList.isNotEmpty) {
+                  return SupplierList(
+                      suppliers: supplierController.suppliersList);
                 } else {
                   return Center(
                     child: Column(
@@ -65,7 +65,7 @@ class BrandScreen extends StatelessWidget {
                           scale: 4,
                         ),
                         Text(
-                          'Brand Not Found!',
+                          'Supplier Not Found!',
                           style: TextStyle(
                               color: Colors.grey,
                               fontWeight: FontWeight.bold,

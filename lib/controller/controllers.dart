@@ -1,4 +1,7 @@
+import 'package:ebox_frontend_web_inventory/controller/brand_controller.dart';
 import 'package:ebox_frontend_web_inventory/controller/category_controller.dart';
+import 'package:ebox_frontend_web_inventory/controller/customer_controller.dart';
+import 'package:ebox_frontend_web_inventory/controller/income_controller.dart';
 import 'package:ebox_frontend_web_inventory/controller/product_controller.dart';
 import 'package:ebox_frontend_web_inventory/controller/dashboard_controller.dart';
 import 'package:ebox_frontend_web_inventory/controller/supplier_controller.dart';
@@ -12,3 +15,6 @@ ImportController importController = Get.put(ImportController());
 CategoryController categoryController = Get.put(CategoryController());
 DashboardController dashboardController = Get.put(DashboardController());
 SupplierController supplierController = Get.put(SupplierController());
+IncomeController incomeController = Get.put(IncomeController());
+BrandController brandController = Get.put(BrandController());
+CustomerController customerController = Get.put(CustomerController());

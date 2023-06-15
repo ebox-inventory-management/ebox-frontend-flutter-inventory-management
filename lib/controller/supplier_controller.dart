@@ -1,7 +1,7 @@
 import 'dart:convert';
 import 'dart:ui';
 
-import 'package:ebox_frontend_web_inventory/model/categories.dart';
+import 'package:ebox_frontend_web_inventory/model/brands.dart';
 import 'package:ebox_frontend_web_inventory/model/category.dart';
 import 'package:ebox_frontend_web_inventory/model/supplier.dart';
 import 'package:ebox_frontend_web_inventory/model/suppliers.dart';
@@ -12,7 +12,7 @@ import '../api/supplier_service.dart';
 
 class SupplierController extends GetxController {
   RxList<Suppliers> suppliersList = List<Suppliers>.empty(growable: true).obs;
-  Rxn<Supplier> category = Rxn<Supplier>();
+  Rxn<Supplier> supplier = Rxn<Supplier>();
 
   RxBool isSuppliersLoading = false.obs;
   RxBool isSupplierLoading = false.obs;
@@ -47,7 +47,7 @@ class SupplierController extends GetxController {
 
       if (result != null) {
         //assign api result
-        category.value = supplierListFromJson(result.body);
+        supplier.value = supplierListFromJson(result.body);
         //save api result to local db
       }
     } finally {

@@ -1,8 +1,10 @@
-import 'package:ebox_frontend_web_inventory/views/dashboard/widgets/finance_card.dart';
+import 'package:ebox_frontend_web_inventory/controller/income_controller.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:syncfusion_flutter_charts/charts.dart';
 import 'package:syncfusion_flutter_charts/sparkcharts.dart';
+
+import '../../controller/controllers.dart';
 
 class DashBoardScreen extends StatefulWidget {
   DashBoardScreen({super.key});
@@ -13,20 +15,13 @@ class DashBoardScreen extends StatefulWidget {
 
 class _DashBoardScreenState extends State<DashBoardScreen> {
   final List<ChartData> incomesData = [
-    ChartData(DateTime(2015, 1), 6),
-    ChartData(DateTime(2015, 2), 11),
-    ChartData(DateTime(2015, 3), 9),
-    ChartData(DateTime(2015, 4), 14),
-    ChartData(DateTime(2015, 5), 10),
+    ChartData(DateTime(DateTime.now().year, DateTime.now().month - 4), 6),
+    ChartData(DateTime(DateTime.now().year, DateTime.now().month - 3), 11),
+    ChartData(DateTime(DateTime.now().year, DateTime.now().month - 2), 9),
+    ChartData(DateTime(DateTime.now().year, DateTime.now().month - 1), 14),
+    ChartData(DateTime(DateTime.now().year, DateTime.now().month), 10),
   ];
 
-  final List<ChartData> expensesData = [
-    ChartData(DateTime(2015, 1), 4),
-    ChartData(DateTime(2015, 2), 5),
-    ChartData(DateTime(2015, 3), 10),
-    ChartData(DateTime(2015, 4), 11),
-    ChartData(DateTime(2015, 5), 5),
-  ];
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -35,19 +30,156 @@ class _DashBoardScreenState extends State<DashBoardScreen> {
         padding: REdgeInsets.all(30),
         child: SingleChildScrollView(
           child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              SizedBox(
-                height: 140.h,
-                child: ListView.builder(
-                  scrollDirection: Axis.horizontal,
-                  itemCount: 4,
-                  itemBuilder: (BuildContext context, int index) {
-                    return FinanceCard(
-                      amount: '0.0',
-                      name: 'PROFIT',
-                    );
-                  },
+              Padding(
+                padding: REdgeInsets.only(bottom: 30.r),
+                child: Row(
+                  children: [
+                    Icon(
+                      Icons.dashboard,
+                      size: 30.r,
+                    ),
+                    SizedBox(
+                      width: 10.w,
+                    ),
+                    Text(
+                      'Dashboard',
+                      style: TextStyle(
+                          fontWeight: FontWeight.bold, fontSize: 30.sp),
+                    ),
+                  ],
                 ),
+              ),
+              Divider(),
+              SizedBox(
+                height: 15.w,
+              ),
+              Row(
+                crossAxisAlignment: CrossAxisAlignment.center,
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  Row(
+                    children: [
+                      Icon(
+                        Icons.attach_money_sharp,
+                        color: Colors.orange,
+                        size: 30.r,
+                      ),
+                      SizedBox(
+                        width: 5.w,
+                      ),
+                      Text(
+                        'Total Incomes',
+                        style: TextStyle(
+                            fontWeight: FontWeight.w500,
+                            color: Colors.orange,
+                            fontSize: 20.sp),
+                      ),
+                    ],
+                  ),
+                  SizedBox(),
+                ],
+              ),
+              SizedBox(
+                height: 15.w,
+              ),
+              Row(
+                children: [
+                  Container(
+                    width: 300.w,
+                    height: 200.w,
+                    decoration: BoxDecoration(
+                        borderRadius: BorderRadius.all(Radius.circular(15.r)),
+                        color: Colors.white),
+                    child: Padding(
+                      padding: REdgeInsets.all(20.r),
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.end,
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        children: [
+                          Text(
+                            'TODAY',
+                            style:
+                                TextStyle(fontSize: 16.sp, color: Colors.green),
+                          ),
+                          Center(
+                            child: Text(
+                              '\$${incomeController.incomeToday.value?.today_income}',
+                              overflow: TextOverflow.ellipsis,
+                              style: TextStyle(fontSize: 30.sp),
+                            ),
+                          ),
+                          SizedBox()
+                        ],
+                      ),
+                    ),
+                  ),
+                  SizedBox(
+                    width: 30.w,
+                  ),
+                  Container(
+                    width: 300.w,
+                    height: 200.w,
+                    decoration: BoxDecoration(
+                        borderRadius: BorderRadius.all(Radius.circular(15.r)),
+                        color: Colors.white),
+                    child: Padding(
+                      padding: REdgeInsets.all(20.r),
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.end,
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        children: [
+                          Text(
+                            'THIS MONTH',
+                            style:
+                                TextStyle(fontSize: 16.sp, color: Colors.green),
+                          ),
+                          Center(
+                            child: Text(
+                              '\$${incomeController.incomesMonthList.length}',
+                              overflow: TextOverflow.ellipsis,
+                              style: TextStyle(fontSize: 30.sp),
+                            ),
+                          ),
+                          SizedBox()
+                        ],
+                      ),
+                    ),
+                  ),
+                  SizedBox(
+                    width: 30.w,
+                  ),
+                  Container(
+                    width: 300.w,
+                    height: 200.w,
+                    decoration: BoxDecoration(
+                        borderRadius: BorderRadius.all(Radius.circular(15.r)),
+                        color: Colors.white),
+                    child: Padding(
+                      padding: REdgeInsets.all(20.r),
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.end,
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        children: [
+                          Text(
+                            'THIS YEAR',
+                            style:
+                                TextStyle(fontSize: 16.sp, color: Colors.green),
+                          ),
+                          Center(
+                            child: Text(
+                              '\$${incomeController.incomesYearList.length}',
+                              overflow: TextOverflow.ellipsis,
+                              style: TextStyle(fontSize: 30.sp),
+                            ),
+                          ),
+                          SizedBox()
+                        ],
+                      ),
+                    ),
+                  ),
+                ],
               ),
               Divider(),
               SizedBox(
@@ -55,110 +187,93 @@ class _DashBoardScreenState extends State<DashBoardScreen> {
               ),
               Padding(
                 padding: REdgeInsets.only(bottom: 30),
-                child: Container(
-                  width: MediaQuery.of(context).size.width * 1,
-                  decoration: const BoxDecoration(color: Colors.white),
-                  child: Column(
-                    children: [
-                      Padding(
-                        padding: REdgeInsets.all(15),
-                        child: Row(
-                          crossAxisAlignment: CrossAxisAlignment.center,
-                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                child: Column(
+                  children: [
+                    Row(
+                      crossAxisAlignment: CrossAxisAlignment.center,
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: [
+                        Row(
                           children: [
-                            Text(
-                              'Incomes',
-                              style: TextStyle(
-                                  fontSize: 18.sp,
-                                  fontWeight: FontWeight.bold,
-                                  color: Colors.black54),
+                            Icon(
+                              Icons.auto_graph,
+                              color: Colors.orange,
+                              size: 30.r,
                             ),
-                            Row(
-                              mainAxisAlignment: MainAxisAlignment.end,
-                              children: [
-                                Padding(
-                                  padding: REdgeInsets.only(left: 5),
-                                  child: TextButton(
-                                    onPressed: () {},
-                                    style: TextButton.styleFrom(
-                                        backgroundColor: Colors.orange,
-                                        foregroundColor: Colors.white),
-                                    child: Text(
-                                      'TODAY',
-                                      style: TextStyle(
-                                          fontWeight: FontWeight.w500,
-                                          fontSize: 14.sp),
-                                    ),
-                                  ),
-                                ),
-                                Padding(
-                                  padding: REdgeInsets.only(left: 5),
-                                  child: TextButton(
-                                    onPressed: () {},
-                                    style: TextButton.styleFrom(
-                                        backgroundColor: Colors.orange,
-                                        foregroundColor: Colors.white),
-                                    child: Text(
-                                      'LAST 7 DAYS',
-                                      style: TextStyle(
-                                          fontWeight: FontWeight.w500,
-                                          fontSize: 14.sp),
-                                    ),
-                                  ),
-                                ),
-                                Padding(
-                                  padding: REdgeInsets.only(left: 5),
-                                  child: TextButton(
-                                    onPressed: () {},
-                                    style: TextButton.styleFrom(
-                                        backgroundColor: Colors.orange,
-                                        foregroundColor: Colors.white),
-                                    child: Text(
-                                      'THIS MONTH',
-                                      style: TextStyle(
-                                          fontWeight: FontWeight.w500,
-                                          fontSize: 14.sp),
-                                    ),
-                                  ),
-                                ),
-                                Padding(
-                                  padding: REdgeInsets.only(left: 5),
-                                  child: TextButton(
-                                    onPressed: () {},
-                                    style: TextButton.styleFrom(
-                                        backgroundColor: Colors.orange,
-                                        foregroundColor: Colors.white),
-                                    child: Text(
-                                      'THIS YEAR',
-                                      style: TextStyle(
-                                          fontWeight: FontWeight.w500,
-                                          fontSize: 14.sp),
-                                    ),
-                                  ),
-                                ),
-                                Padding(
-                                  padding: REdgeInsets.only(left: 5),
-                                  child: TextButton(
-                                    onPressed: () {},
-                                    style: TextButton.styleFrom(
-                                        backgroundColor: Colors.orange,
-                                        foregroundColor: Colors.white),
-                                    child: Text(
-                                      'LAST YEAR',
-                                      style: TextStyle(
-                                          fontWeight: FontWeight.w500,
-                                          fontSize: 14.sp),
-                                    ),
-                                  ),
-                                ),
-                              ],
+                            SizedBox(
+                              width: 10.w,
+                            ),
+                            Text(
+                              'Incomes Graph',
+                              style: TextStyle(
+                                  fontWeight: FontWeight.w500,
+                                  color: Colors.orange,
+                                  fontSize: 20.sp),
                             ),
                           ],
                         ),
-                      ),
-                      const Divider(),
-                      Padding(
-                        padding: REdgeInsets.all(15),
+                        Row(
+                          mainAxisAlignment: MainAxisAlignment.end,
+                          children: [
+                            Padding(
+                              padding: REdgeInsets.only(left: 5),
+                              child: TextButton(
+                                onPressed: () {},
+                                style: TextButton.styleFrom(
+                                    backgroundColor: Colors.yellow[600],
+                                    foregroundColor: Colors.white),
+                                child: Text(
+                                  'TODAY',
+                                  style: TextStyle(
+                                      fontWeight: FontWeight.w500,
+                                      fontSize: 14.sp),
+                                ),
+                              ),
+                            ),
+                            Padding(
+                              padding: REdgeInsets.only(left: 5),
+                              child: TextButton(
+                                onPressed: () {},
+                                style: TextButton.styleFrom(
+                                    backgroundColor: Colors.yellow[600],
+                                    foregroundColor: Colors.white),
+                                child: Text(
+                                  'THIS MONTH',
+                                  style: TextStyle(
+                                      fontWeight: FontWeight.w500,
+                                      fontSize: 14.sp),
+                                ),
+                              ),
+                            ),
+                            Padding(
+                              padding: REdgeInsets.only(left: 5),
+                              child: TextButton(
+                                onPressed: () {},
+                                style: TextButton.styleFrom(
+                                    backgroundColor: Colors.yellow[600],
+                                    foregroundColor: Colors.white),
+                                child: Text(
+                                  'THIS YEAR',
+                                  style: TextStyle(
+                                      fontWeight: FontWeight.w500,
+                                      fontSize: 14.sp),
+                                ),
+                              ),
+                            ),
+                          ],
+                        ),
+                      ],
+                    ),
+                    SizedBox(
+                      height: 15.w,
+                    ),
+                    Container(
+                      decoration: BoxDecoration(
+                          color: Colors.white,
+                          borderRadius:
+                              BorderRadius.all(Radius.circular(15.r))),
+                      child: Padding(
+                        padding: REdgeInsets.all(15.r),
                         child: SfCartesianChart(
                           primaryXAxis: DateTimeAxis(
                               rangePadding: ChartRangePadding.none),
@@ -171,11 +286,12 @@ class _DashBoardScreenState extends State<DashBoardScreen> {
                                 name: 'Income'),
                           ],
                         ),
-                      )
-                    ],
-                  ),
+                      ),
+                    )
+                  ],
                 ),
               ),
+              const Divider(),
               Padding(
                 padding: REdgeInsets.only(bottom: 30),
                 child: Container(

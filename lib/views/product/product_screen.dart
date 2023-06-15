@@ -55,7 +55,23 @@ class ProductScreen extends StatelessWidget {
                 if (productController.productList.isNotEmpty) {
                   return ProductList(products: productController.productList);
                 } else {
-                  return Text('Empty');
+                  return Center(
+                    child: Column(
+                      children: [
+                        Image.network(
+                          'https://firebasestorage.googleapis.com/v0/b/ebox-inventory-management.appspot.com/o/empty.png?alt=media&token=06b30b38-cac0-490e-ac6a-6373fe120a16',
+                          scale: 4,
+                        ),
+                        Text(
+                          'Product Not Found!',
+                          style: TextStyle(
+                              color: Colors.grey,
+                              fontWeight: FontWeight.bold,
+                              fontSize: 30.sp),
+                        ),
+                      ],
+                    ),
+                  );
                 }
               }
             }),
