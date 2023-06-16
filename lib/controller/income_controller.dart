@@ -65,8 +65,7 @@ class IncomeController extends GetxController {
     try {
       isIncomesMonthLoading(true);
       //call api
-      var result = await RemoteIncomeService()
-          .getByMonth(month: '0${DateTime.now().month}');
+      var result = await RemoteIncomeService().getByMonth();
       if (result != null) {
         //assign api result
         incomesMonth.value = incomesMonthListFromJson(result.body);

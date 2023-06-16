@@ -6,7 +6,7 @@ import 'package:syncfusion_flutter_charts/charts.dart';
 import 'package:syncfusion_flutter_charts/sparkcharts.dart';
 import 'package:get/get.dart';
 import '../../controller/controllers.dart';
-import '../../model/chart_data.dart';
+import '../../model/chart_data_expenses.dart';
 import '../product/widgets/product_list.dart';
 
 class DashBoardScreen extends StatefulWidget {
@@ -215,22 +215,22 @@ class _DashBoardScreenState extends State<DashBoardScreen> {
                       primaryXAxis:
                           DateTimeAxis(rangePadding: ChartRangePadding.none),
                       legend: Legend(isVisible: true),
-                      series: <ChartSeries<ChartData, DateTime>>[
+                      series: <ChartSeries<ChartDataExpenses, DateTime>>[
                         // LineSeries<ChartData, DateTime>(
                         //     dataSource: dashboardController.incomesChartData,
                         //     xValueMapper: (ChartData data, _) => data.created_at,
                         //     yValueMapper: (ChartData data, _) => data.import_price,
                         //     name: 'Income'),
-                        LineSeries<ChartData, DateTime>(
+                        LineSeries<ChartDataExpenses, DateTime>(
                             dataSource: dashboardController.chartDataList,
                             color: Colors.redAccent,
                             isVisible: true,
                             isVisibleInLegend: true,
                             yAxisName: 'Expense',
                             xAxisName: 'Time',
-                            xValueMapper: (ChartData data, _) =>
+                            xValueMapper: (ChartDataExpenses data, _) =>
                                 data.created_at,
-                            yValueMapper: (ChartData data, _) =>
+                            yValueMapper: (ChartDataExpenses data, _) =>
                                 data.import_price,
                             name: 'Expense'),
                       ],

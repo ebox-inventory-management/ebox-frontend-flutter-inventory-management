@@ -4,6 +4,7 @@ import 'dart:ui';
 import 'package:ebox_frontend_web_inventory/model/brands.dart';
 import 'package:ebox_frontend_web_inventory/model/categories.dart';
 import 'package:ebox_frontend_web_inventory/model/category.dart';
+import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
 import '../api/brand_service.dart';
@@ -20,6 +21,32 @@ class BrandController extends GetxController {
   void onInit() async {
     getBrands();
     super.onInit();
+  }
+
+  void deleteBrand({required int id}) async {
+    await RemoteBrandService.deleteById(id: id);
+  }
+
+  void updateBrand({
+    required int id,
+    required String name,
+  }) async {
+    try {
+      await RemoteBrandService().update(id: id, name: name);
+    } catch (e) {
+      debugPrint(e.toString());
+    }
+  }
+
+  void create({
+    required int id,
+    required String name,
+  }) async {
+    try {
+      await RemoteBrandService().create(name: name);
+    } catch (e) {
+      debugPrint(e.toString());
+    }
   }
 
   void getBrands() async {

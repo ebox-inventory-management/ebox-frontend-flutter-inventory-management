@@ -17,8 +17,7 @@ class Suppliers {
   final List<String> product_expire_date;
   final List<int> product_import_price;
   final List<int> product_export_price;
-  final List<String> product_quantity;
-
+  final List<int> product_quantity;
   final List<int> category_id;
   final List<int> supplier_id;
   final List<int> brand_id;
@@ -60,7 +59,7 @@ class Suppliers {
             data['products'].map((data) => data['product_route'] ?? 'Not Yet')),
         product_image: List<String>.from(
             data['products'].map((data) => data['product_image'] ?? 'Not Yet')),
-        product_quantity: List<String>.from(data['products']
+        product_quantity: List<int>.from(data['products']
             .map((data) => data['product_quantity'] ?? 'Not Yet')),
         product_expire_date: List<String>.from(
             data['products'].map((data) => data['expire_date'] ?? 'Not Yet')),

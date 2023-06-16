@@ -28,28 +28,6 @@ class CategoryScreen extends StatelessWidget {
               ),
             ),
             Divider(),
-            TextFormField(
-              textInputAction: TextInputAction.next,
-              obscureText: false,
-              decoration: InputDecoration(
-                focusColor: Colors.white,
-                hoverColor: Colors.white,
-                hintText: 'Category Name',
-                hintStyle: TextStyle(fontSize: 14.sp),
-                labelStyle: TextStyle(fontSize: 14.sp),
-                filled: true,
-                fillColor: Colors.white,
-                focusedBorder: OutlineInputBorder(
-                    borderSide: const BorderSide(color: Colors.white),
-                    borderRadius: BorderRadius.circular(15.r)),
-                enabledBorder: OutlineInputBorder(
-                    borderSide: const BorderSide(color: Colors.white),
-                    borderRadius: BorderRadius.circular(15.r)),
-              ),
-            ),
-            SizedBox(
-              height: 30.h,
-            ),
             Obx(() {
               if (categoryController.isCategoriesLoading.value) {
                 return const Center(child: CircularProgressIndicator());

@@ -32,7 +32,7 @@ class CustomerCard extends StatelessWidget {
                 borderRadius: BorderRadius.all(Radius.circular(15.r)),
                 image: const DecorationImage(
                     image: NetworkImage(
-                        'https://images.unsplash.com/photo-1503023345310-bd7c1de61c7d?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8Mnx8aHVtYW58ZW58MHx8MHx8fDA%3D&w=1000&q=80'),
+                        'https://cdn-icons-png.flaticon.com/512/4143/4143107.png'),
                     fit: BoxFit.cover)),
           ),
           Padding(
@@ -45,6 +45,13 @@ class CustomerCard extends StatelessWidget {
                   customers.name,
                   style:
                       TextStyle(fontSize: 24.sp, fontWeight: FontWeight.w500),
+                ),
+                Text(
+                  customers.phone,
+                  style: TextStyle(
+                      fontSize: 14.sp,
+                      fontWeight: FontWeight.w500,
+                      color: Colors.grey),
                 ),
               ],
             ),
@@ -61,6 +68,7 @@ class CustomerCard extends StatelessWidget {
                     onPressed: () {
                       AwesomeDialog(
                         context: context,
+                        width: 600.w,
                         dialogType: DialogType.warning,
                         animType: AnimType.bottomSlide,
                         title: 'WARNING'.tr,

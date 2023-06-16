@@ -4,7 +4,7 @@ IncomeToday incomeTodayFromJson(String val) =>
     IncomeToday.fromJson(json.decode(val));
 
 class IncomeToday {
-  String today_income;
+  int today_income;
 
   IncomeToday({
     required this.today_income,

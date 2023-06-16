@@ -6,7 +6,7 @@ List<Product> productListFromJson(String val) => List<Product>.from(
 class Product {
   final int id;
   final String product_name;
-  final String product_quantity;
+  final int product_quantity;
   final String product_code;
   final String product_garage;
   final String product_route;
@@ -48,7 +48,7 @@ class Product {
         expire_date: data['expire_date'] ?? 'Not Yet',
         export_price: data['export_price'] ?? 0,
         product_code: data['product_code'] ?? 'Not Yet',
-        product_quantity: data['product_quantity'] ?? 'Not Yet',
+        product_quantity: data['product_quantity'] ?? 0,
         product_garage: data['product_garage'] ?? 'Not Yet',
         product_image: data['product_image'] ?? 'Not Yet',
         product_route: data['product_route'] ?? 'Not Yet',

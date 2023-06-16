@@ -5,6 +5,7 @@ import 'package:ebox_frontend_web_inventory/model/brands.dart';
 import 'package:ebox_frontend_web_inventory/model/category.dart';
 import 'package:ebox_frontend_web_inventory/model/supplier.dart';
 import 'package:ebox_frontend_web_inventory/model/suppliers.dart';
+import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
 import '../api/category_service.dart';
@@ -21,6 +22,70 @@ class SupplierController extends GetxController {
   void onInit() async {
     getSuppliers();
     super.onInit();
+  }
+
+  void delete({required int id}) async {
+    await RemoteSupplierService.deleteById(id: id);
+  }
+
+  void updateSupplier({
+    required int id,
+    required String name,
+    required String email,
+    required String phone,
+    required String address,
+    required String city,
+    required String type,
+    required String shop_name,
+    required String photo,
+    required String bank_name,
+    required String bank_number,
+  }) async {
+    try {
+      await RemoteSupplierService().update(
+          id: id,
+          name: name,
+          address: address,
+          bank_name: bank_name,
+          bank_number: bank_number,
+          city: city,
+          email: email,
+          phone: phone,
+          photo: photo,
+          shop_name: shop_name,
+          type: type);
+    } catch (e) {
+      debugPrint(e.toString());
+    }
+  }
+
+  void create({
+    required String name,
+    required String email,
+    required String phone,
+    required String address,
+    required String city,
+    required String type,
+    required String shop_name,
+    required String photo,
+    required String bank_name,
+    required String bank_number,
+  }) async {
+    try {
+      await RemoteSupplierService().create(
+          name: name,
+          address: address,
+          bank_name: bank_name,
+          bank_number: bank_number,
+          city: city,
+          email: email,
+          phone: phone,
+          photo: photo,
+          shop_name: shop_name,
+          type: type);
+    } catch (e) {
+      debugPrint(e.toString());
+    }
   }
 
   void getSuppliers() async {
