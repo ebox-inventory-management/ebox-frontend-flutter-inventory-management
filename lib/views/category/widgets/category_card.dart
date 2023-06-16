@@ -61,6 +61,7 @@ class CategoryCard extends StatelessWidget {
                     onPressed: () {
                       AwesomeDialog(
                         context: context,
+                        width: 600.w,
                         dialogType: DialogType.warning,
                         animType: AnimType.bottomSlide,
                         title: 'WARNING'.tr,

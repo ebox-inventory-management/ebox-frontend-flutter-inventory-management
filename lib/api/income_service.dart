@@ -16,9 +16,8 @@ class RemoteIncomeService {
     return response;
   }
 
-  Future<dynamic> getByMonth({required String month}) async {
-    var response =
-        await client.get(Uri.parse('$baseUrl/api/income/month/$month'));
+  Future<dynamic> getByMonth() async {
+    var response = await client.get(Uri.parse('$baseUrl/api/income/month'));
     return response;
   }
 

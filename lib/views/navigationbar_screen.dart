@@ -196,7 +196,7 @@ class CustomeSidebarX extends StatelessWidget {
         ),
         const SidebarXItem(
           icon: Icons.list_alt_sharp,
-          label: 'Quantity adjustments',
+          label: 'Adjustment',
         ),
         const SidebarXItem(
           icon: Icons.factory,

@@ -1,10 +1,11 @@
 import 'package:ebox_frontend_web_inventory/api/product_service.dart';
 import 'package:get/get.dart';
-import '../model/chart_data.dart';
+import '../model/chart_data_expenses.dart';
 import '../views/dashboard/dashboard_screen.dart';
 
 class DashboardController extends GetxController {
-  RxList<ChartData> chartDataList = List<ChartData>.empty(growable: true).obs;
+  RxList<ChartDataExpenses> chartDataList =
+      List<ChartDataExpenses>.empty(growable: true).obs;
 
   RxBool isChartDataLoading = false.obs;
 
@@ -21,7 +22,7 @@ class DashboardController extends GetxController {
       var result = await RemoteProductService().get();
       if (result != null) {
         //assign api result
-        chartDataList.assignAll(chartDataListFromJson(result.body));
+        chartDataList.assignAll(chartDataExpensesListFromJson(result.body));
 
         //save api result to local db
       }
