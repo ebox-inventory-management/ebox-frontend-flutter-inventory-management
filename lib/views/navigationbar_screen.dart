@@ -5,6 +5,7 @@ import 'package:ebox_frontend_web_inventory/views/category/category_screen.dart'
 import 'package:ebox_frontend_web_inventory/views/dashboard/dashboard_screen.dart';
 import 'package:ebox_frontend_web_inventory/views/export/export_screen.dart';
 import 'package:ebox_frontend_web_inventory/views/import/import_screen.dart';
+import 'package:ebox_frontend_web_inventory/views/product/widgets/product_add.dart';
 import 'package:ebox_frontend_web_inventory/views/product/product_screen.dart';
 import 'package:ebox_frontend_web_inventory/views/quantity_adjustments/quantity_adjustments.dart';
 import 'package:ebox_frontend_web_inventory/views/suppliers/supplier_screen.dart';
@@ -40,6 +41,8 @@ class NavigationBarScreen extends StatelessWidget {
         importController;
         supplierController;
         incomeController.getIncomeToday();
+        expenseController.getExpenseToday();
+        revenueController.getRevenueToday();
         brandController;
         customerController;
         final isSmallScreen = MediaQuery.of(context).size.width < 600;
@@ -196,7 +199,7 @@ class CustomeSidebarX extends StatelessWidget {
         ),
         const SidebarXItem(
           icon: Icons.list_alt_sharp,
-          label: 'Adjustment',
+          label: 'Quantity',
         ),
         const SidebarXItem(
           icon: Icons.factory,

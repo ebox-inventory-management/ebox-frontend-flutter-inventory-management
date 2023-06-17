@@ -4,10 +4,12 @@ import 'package:ebox_frontend_web_inventory/controller/customer_controller.dart'
 import 'package:ebox_frontend_web_inventory/controller/income_controller.dart';
 import 'package:ebox_frontend_web_inventory/controller/product_controller.dart';
 import 'package:ebox_frontend_web_inventory/controller/dashboard_controller.dart';
+import 'package:ebox_frontend_web_inventory/controller/revenue_controller.dart';
 import 'package:ebox_frontend_web_inventory/controller/supplier_controller.dart';
 import 'package:get/get.dart';
 import 'adjustment_controller.dart';
 import 'auth_controller.dart';
+import 'expense_controller.dart';
 import 'import_controller.dart';
 
 ProductController productController = Get.put(ProductController());
@@ -20,3 +22,5 @@ IncomeController incomeController = Get.put(IncomeController());
 BrandController brandController = Get.put(BrandController());
 CustomerController customerController = Get.put(CustomerController());
 AdjustmentController adjustmentController = Get.put(AdjustmentController());
+ExpenseController expenseController = Get.put(ExpenseController());
+RevenueController revenueController = Get.put(RevenueController());

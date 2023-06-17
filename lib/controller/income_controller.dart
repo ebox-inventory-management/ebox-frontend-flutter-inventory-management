@@ -3,20 +3,17 @@ import 'dart:ui';
 
 import 'package:ebox_frontend_web_inventory/model/brands.dart';
 import 'package:ebox_frontend_web_inventory/model/category.dart';
-import 'package:ebox_frontend_web_inventory/model/incomes_month.dart';
-import 'package:ebox_frontend_web_inventory/model/incomes_year.dart';
+import 'package:ebox_frontend_web_inventory/model/total_amount.dart';
 import 'package:get/get.dart';
 
 import '../api/category_service.dart';
 import '../api/income_service.dart';
-import '../model/income_today.dart';
-import '../model/incomes.dart';
+import '../model/today_income.dart';
 
 class IncomeController extends GetxController {
-  RxList<Incomes> incomesList = List<Incomes>.empty(growable: true).obs;
-  Rxn<IncomeToday> incomeToday = Rxn<IncomeToday>();
-  Rxn<IncomesMonth> incomesMonth = Rxn<IncomesMonth>();
-  Rxn<IncomesYear> incomesYearList = Rxn<IncomesYear>();
+  Rxn<TodayIncome> incomeToday = Rxn<TodayIncome>();
+  Rxn<TotalAmount> incomesMonth = Rxn<TotalAmount>();
+  Rxn<TotalAmount> incomesYear = Rxn<TotalAmount>();
 
   RxBool isIncomesLoading = false.obs;
   RxBool isIncomeTodayLoading = false.obs;
@@ -25,25 +22,10 @@ class IncomeController extends GetxController {
 
   @override
   void onInit() async {
-    getIncomes();
     getIncomeToday();
     getIncomeThisYear();
-    getIncomeByMonth();
+    getIncomeThisMonth();
     super.onInit();
-  }
-
-  void getIncomes() async {
-    try {
-      isIncomesLoading(true);
-      //call api
-      var result = await RemoteIncomeService().get();
-      if (result != null) {
-        //assign api result
-        incomesList.assignAll(incomeListFromJson(result.body));
-      }
-    } finally {
-      isIncomesLoading(false);
-    }
   }
 
   void getIncomeToday() async {
@@ -61,14 +43,14 @@ class IncomeController extends GetxController {
     }
   }
 
-  void getIncomeByMonth() async {
+  void getIncomeThisMonth() async {
     try {
       isIncomesMonthLoading(true);
       //call api
-      var result = await RemoteIncomeService().getByMonth();
+      var result = await RemoteIncomeService().getThisMonth();
       if (result != null) {
         //assign api result
-        incomesMonth.value = incomesMonthListFromJson(result.body);
+        incomesMonth.value = totalAmountListFromJson(result.body);
       }
     } finally {
       isIncomesMonthLoading(false);
@@ -83,7 +65,7 @@ class IncomeController extends GetxController {
 
       if (result != null) {
         //assign api result
-        incomesYearList.value = incomesYearListFromJson(result.body);
+        incomesYear.value = totalAmountListFromJson(result.body);
       }
     } finally {
       isIncomeYearLoading(false);

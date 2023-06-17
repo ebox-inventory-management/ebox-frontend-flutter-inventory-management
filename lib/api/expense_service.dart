@@ -16,7 +16,7 @@ class RemoteExpenseService {
     return response;
   }
 
-  Future<dynamic> getThisMonth({required String month}) async {
+  Future<dynamic> getThisMonth() async {
     var response = await client.get(Uri.parse('$remoteUrl/month'));
 
     return response;

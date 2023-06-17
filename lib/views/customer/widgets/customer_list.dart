@@ -7,7 +7,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 import '../../../controller/controllers.dart';
-import '../../../model/product.dart';
+import '../../../model/products.dart';
 import '../../../model/suppliers.dart';
 import 'customer_card.dart';
 

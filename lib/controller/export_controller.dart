@@ -5,6 +5,7 @@ import 'dart:ui';
 
 import 'package:ebox_frontend_web_inventory/api/import_service.dart';
 import 'package:ebox_frontend_web_inventory/api/product_service.dart';
+import 'package:ebox_frontend_web_inventory/model/export.dart';
 import 'package:ebox_frontend_web_inventory/model/import.dart';
 import 'package:file_picker/file_picker.dart';
 import 'package:flutter/material.dart';
@@ -13,13 +14,13 @@ import 'package:get/get.dart';
 
 import 'package:shared_preferences/shared_preferences.dart';
 
-class ImportController extends GetxController {
-  RxList<Import> importList = List<Import>.empty(growable: true).obs;
-  RxBool isImportLoading = false.obs;
+class ExportController extends GetxController {
+  RxList<Export> exportList = List<Export>.empty(growable: true).obs;
+  RxBool isExportLoading = false.obs;
 
   @override
   void onInit() async {
-    getImports();
+    getExports();
     super.onInit();
   }
 
@@ -35,19 +36,19 @@ class ImportController extends GetxController {
     }
   }
 
-  void getImports() async {
+  void getExports() async {
     try {
-      isImportLoading(true);
+      isExportLoading(true);
       //call api
       var result = await RemoteImportService().get();
       if (result != null) {
         //assign api result
-        importList.assignAll(importListFromJson(result.body));
+        exportList.assignAll(exportListFromJson(result.body));
 
         //save api result to local db
       }
     } finally {
-      isImportLoading(false);
+      isExportLoading(false);
     }
   }
 }

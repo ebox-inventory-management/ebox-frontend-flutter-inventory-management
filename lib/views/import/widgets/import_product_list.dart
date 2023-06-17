@@ -1,18 +1,16 @@
-import 'package:ebox_frontend_web_inventory/model/categories.dart';
-import 'package:ebox_frontend_web_inventory/model/supplier.dart';
+import 'package:ebox_frontend_web_inventory/model/import.dart';
+import 'package:ebox_frontend_web_inventory/model/suppliers.dart';
+import 'package:ebox_frontend_web_inventory/views/import/widgets/import_product_card.dart';
 import 'package:ebox_frontend_web_inventory/views/product/widgets/product_card.dart';
-import 'package:ebox_frontend_web_inventory/views/suppliers/widgets/supplier_card.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 import '../../../controller/controllers.dart';
 import '../../../model/products.dart';
-import '../../../model/suppliers.dart';
-import 'category_card.dart';
 
-class CategoryList extends StatelessWidget {
-  final List<Categories> categories;
-  const CategoryList({super.key, required this.categories});
+class ImportProductList extends StatelessWidget {
+  final List<Import> imports;
+  const ImportProductList({super.key, required this.imports});
 
   @override
   Widget build(BuildContext context) {
@@ -22,16 +20,16 @@ class CategoryList extends StatelessWidget {
       child: ListView.separated(
         physics: const BouncingScrollPhysics(),
         scrollDirection: Axis.vertical,
-        itemCount: categories.length,
+        itemCount: imports.length,
         shrinkWrap: true,
         itemBuilder: (context, index) {
-          return CategoryCard(
-            categories: categories[index],
-            index: index,
-          );
+          productController.getProductsById(id: imports[index].product_id);
+          return ImportProductCard(import: imports[index]);
         },
         separatorBuilder: (BuildContext context, int index) {
-          return Divider();
+          return SizedBox(
+            height: 15.w,
+          );
         },
       ),
     );

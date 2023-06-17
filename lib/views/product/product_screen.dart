@@ -1,6 +1,7 @@
 import 'package:ebox_frontend_web_inventory/controller/controllers.dart';
 import 'package:ebox_frontend_web_inventory/core/constants/base_url.dart';
-import 'package:ebox_frontend_web_inventory/model/product.dart';
+import 'package:ebox_frontend_web_inventory/model/products.dart';
+import 'package:ebox_frontend_web_inventory/views/product/widgets/product_add.dart';
 import 'package:ebox_frontend_web_inventory/views/product/widgets/product_list.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
@@ -18,14 +19,17 @@ class ProductScreen extends StatelessWidget {
         child: SingleChildScrollView(
           child:
               Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
+            Text(
+              'Product',
+              style: TextStyle(fontWeight: FontWeight.bold, fontSize: 30.sp),
+            ),
             Padding(
-              padding: REdgeInsets.only(bottom: 30.w),
-              child: Text(
-                'Product',
-                style: TextStyle(fontWeight: FontWeight.bold, fontSize: 30.sp),
+              padding: REdgeInsets.only(top: 15.w, bottom: 15.r),
+              child: Divider(
+                color: Colors.black.withOpacity(0.1),
+                thickness: 5.w,
               ),
             ),
-            Divider(),
             Material(
               borderRadius: BorderRadius.circular(15),
               child: Obx(
@@ -82,7 +86,7 @@ class ProductScreen extends StatelessWidget {
               height: 30.h,
             ),
             Obx(() {
-              if (productController.isProductLoading.value) {
+              if (productController.isProductsLoading.value) {
                 return const Center(child: CircularProgressIndicator());
               } else {
                 if (productController.productList.isNotEmpty) {
@@ -109,6 +113,18 @@ class ProductScreen extends StatelessWidget {
               }
             }),
           ]),
+        ),
+      ),
+      floatingActionButton: FloatingActionButton(
+        onPressed: () {
+          Get.dialog(const ProductAdd());
+        },
+        elevation: 0,
+        foregroundColor: Colors.white,
+        backgroundColor: Colors.green,
+        child: Icon(
+          Icons.add,
+          size: 30.w,
         ),
       ),
     );

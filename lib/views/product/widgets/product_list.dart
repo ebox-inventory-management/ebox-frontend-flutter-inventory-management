@@ -4,10 +4,10 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 import '../../../controller/controllers.dart';
-import '../../../model/product.dart';
+import '../../../model/products.dart';
 
 class ProductList extends StatelessWidget {
-  final List<Product> products;
+  final List<Products> products;
   const ProductList({super.key, required this.products});
 
   @override
@@ -24,7 +24,9 @@ class ProductList extends StatelessWidget {
           return ProductCard(product: products[index]);
         },
         separatorBuilder: (BuildContext context, int index) {
-          return Divider();
+          return SizedBox(
+            height: 15.w,
+          );
         },
       ),
     );

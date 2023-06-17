@@ -1,9 +1,9 @@
 import 'dart:convert';
 
-Product productListFromJson(String val) =>
-    Product.fromJson(json.decode(val)['product']);
+List<Products> productsListFromJson(String val) => List<Products>.from(
+    json.decode(val)['products'].map((data) => Products.fromJson(data)));
 
-class Product {
+class Products {
   final int id;
   final String product_name;
   final int product_quantity;
@@ -21,7 +21,7 @@ class Product {
   final int supplier_id;
   final int brand_id;
 
-  Product({
+  Products({
     required this.id,
     required this.product_name,
     required this.product_amount,
@@ -40,7 +40,7 @@ class Product {
     required this.brand_id,
   });
 
-  factory Product.fromJson(Map<dynamic, dynamic> data) => Product(
+  factory Products.fromJson(Map<dynamic, dynamic> data) => Products(
         id: data['id'],
         product_name: data['product_name'] ?? 'Not Yet',
         brand_id: data['brand_id'] ?? 'Not Yet',

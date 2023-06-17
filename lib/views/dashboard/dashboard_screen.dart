@@ -1,5 +1,6 @@
 import 'package:dropdown_button2/custom_dropdown_button2.dart';
 import 'package:ebox_frontend_web_inventory/controller/income_controller.dart';
+import 'package:ebox_frontend_web_inventory/model/chart_data_incomes.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:syncfusion_flutter_charts/charts.dart';
@@ -17,9 +18,13 @@ class DashBoardScreen extends StatefulWidget {
 }
 
 class _DashBoardScreenState extends State<DashBoardScreen> {
-  List<String> incomeName = ['TODAY', 'MONTH', 'YEAR'];
+  List<String> total = ['TODAY', 'MONTH', 'YEAR'];
 
-  String? selectedValueGraphIncomes = 'TODAY';
+  String? selectedValueTotal = 'TODAY';
+
+  String? tempIncomes = incomeController.incomeToday.value?.today_income;
+  String? tempExpenses = expenseController.expenseToday.value?.today_expense;
+  String? tempRevenue = revenueController.revenueToday.value?.today_revenue;
 
   @override
   Widget build(BuildContext context) {
@@ -31,28 +36,31 @@ class _DashBoardScreenState extends State<DashBoardScreen> {
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
+              Row(
+                children: [
+                  Icon(
+                    Icons.dashboard,
+                    size: 30.r,
+                  ),
+                  SizedBox(
+                    width: 10.w,
+                  ),
+                  Text(
+                    'Dashboard',
+                    style:
+                        TextStyle(fontWeight: FontWeight.bold, fontSize: 30.sp),
+                  ),
+                ],
+              ),
               Padding(
-                padding: REdgeInsets.only(bottom: 30.r),
-                child: Row(
-                  children: [
-                    Icon(
-                      Icons.dashboard,
-                      size: 30.r,
-                    ),
-                    SizedBox(
-                      width: 10.w,
-                    ),
-                    Text(
-                      'Dashboard',
-                      style: TextStyle(
-                          fontWeight: FontWeight.bold, fontSize: 30.sp),
-                    ),
-                  ],
+                padding: REdgeInsets.only(top: 15.w, bottom: 15.r),
+                child: Divider(
+                  color: Colors.black.withOpacity(0.1),
+                  thickness: 5.w,
                 ),
               ),
-              Divider(),
               Padding(
-                padding: REdgeInsets.only(top: 15.w, bottom: 15.w),
+                padding: REdgeInsets.only(bottom: 15.r),
                 child: Row(
                   crossAxisAlignment: CrossAxisAlignment.center,
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -68,7 +76,7 @@ class _DashBoardScreenState extends State<DashBoardScreen> {
                           width: 5.w,
                         ),
                         Text(
-                          'Total Income',
+                          'Total',
                           style: TextStyle(
                               fontWeight: FontWeight.w500,
                               color: Colors.orange,
@@ -76,40 +84,63 @@ class _DashBoardScreenState extends State<DashBoardScreen> {
                         ),
                       ],
                     ),
-                    SizedBox()
-                    // CustomDropdownButton2(
-                    //   buttonWidth: 0.2.sw,
-                    //   buttonHeight: 40.w,
-                    //   hint: 'Choose Incomes',
-                    //   dropdownItems: incomeName,
-                    //   value: selectedValueGraphIncomes,
-                    //   buttonDecoration: BoxDecoration(
-                    //     borderRadius: BorderRadius.circular(15.r),
-                    //     color: Colors.white,
-                    //   ),
-                    //   dropdownWidth: 0.2.sw,
-                    //   dropdownDecoration: BoxDecoration(
-                    //     borderRadius: BorderRadius.circular(15.r),
-                    //     color: Colors.white,
-                    //   ),
-                    //   icon: Icon(
-                    //     Icons.arrow_drop_down,
-                    //     size: 40.r,
-                    //     color: Colors.orange,
-                    //   ),
-                    //   onChanged: (index) {
-                    //     setState(() {
-                    //       selectedValueGraphIncomes = index;
-                    //     });
-                    //   },
-                    // ),
+                    CustomDropdownButton2(
+                      buttonWidth: 0.2.sw,
+                      buttonHeight: 40.w,
+                      hint: 'Choose Incomes',
+                      dropdownItems: total,
+                      value: selectedValueTotal,
+                      buttonDecoration: BoxDecoration(
+                        borderRadius: BorderRadius.circular(15.r),
+                        color: Colors.white,
+                      ),
+                      dropdownWidth: 0.2.sw,
+                      dropdownDecoration: BoxDecoration(
+                        borderRadius: BorderRadius.circular(15.r),
+                        color: Colors.white,
+                      ),
+                      icon: Icon(
+                        Icons.arrow_drop_down,
+                        size: 40.r,
+                        color: Colors.orange,
+                      ),
+                      onChanged: (index) {
+                        setState(() {
+                          selectedValueTotal = index;
+                          if (selectedValueTotal == 'TODAY') {
+                            tempIncomes = incomeController
+                                .incomeToday.value?.today_income;
+                            tempExpenses = expenseController
+                                .expenseToday.value?.today_expense;
+                            tempRevenue = revenueController
+                                .revenueToday.value?.today_revenue;
+                          } else if (selectedValueTotal == 'MONTH') {
+                            tempIncomes =
+                                incomeController.incomesMonth.value?.total;
+                            tempExpenses =
+                                expenseController.expenseMonth.value?.total;
+                            tempRevenue =
+                                revenueController.revenueMonth.value?.total;
+                          } else if (selectedValueTotal == 'YEAR') {
+                            tempIncomes =
+                                incomeController.incomesYear.value?.total;
+                            tempExpenses =
+                                expenseController.expenseYear.value?.total;
+                            tempRevenue =
+                                revenueController.revenueYear.value?.total;
+                          }
+                        });
+                      },
+                    ),
                   ],
                 ),
               ),
               Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                crossAxisAlignment: CrossAxisAlignment.center,
                 children: [
                   Container(
-                    width: 300.w,
+                    width: 350.w,
                     height: 200.w,
                     decoration: BoxDecoration(
                         borderRadius: BorderRadius.all(Radius.circular(15.r)),
@@ -121,13 +152,13 @@ class _DashBoardScreenState extends State<DashBoardScreen> {
                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
                         children: [
                           Text(
-                            'TODAY',
+                            'INCOMES',
                             style:
                                 TextStyle(fontSize: 16.sp, color: Colors.green),
                           ),
                           Center(
                             child: Text(
-                              '\$${incomeController.incomeToday.value?.today_income}',
+                              '\$$tempIncomes',
                               overflow: TextOverflow.ellipsis,
                               style: TextStyle(fontSize: 30.sp),
                             ),
@@ -137,11 +168,8 @@ class _DashBoardScreenState extends State<DashBoardScreen> {
                       ),
                     ),
                   ),
-                  SizedBox(
-                    width: 30.w,
-                  ),
                   Container(
-                    width: 300.w,
+                    width: 350.w,
                     height: 200.w,
                     decoration: BoxDecoration(
                         borderRadius: BorderRadius.all(Radius.circular(15.r)),
@@ -153,13 +181,13 @@ class _DashBoardScreenState extends State<DashBoardScreen> {
                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
                         children: [
                           Text(
-                            'THIS MONTH',
+                            'EXPENSES',
                             style:
-                                TextStyle(fontSize: 16.sp, color: Colors.green),
+                                TextStyle(fontSize: 16.sp, color: Colors.red),
                           ),
                           Center(
                             child: Text(
-                              '\$${incomeController.incomesMonth.value?.total}',
+                              '\$$tempExpenses',
                               overflow: TextOverflow.ellipsis,
                               style: TextStyle(fontSize: 30.sp),
                             ),
@@ -169,11 +197,8 @@ class _DashBoardScreenState extends State<DashBoardScreen> {
                       ),
                     ),
                   ),
-                  SizedBox(
-                    width: 30.w,
-                  ),
                   Container(
-                    width: 300.w,
+                    width: 350.w,
                     height: 200.w,
                     decoration: BoxDecoration(
                         borderRadius: BorderRadius.all(Radius.circular(15.r)),
@@ -185,13 +210,13 @@ class _DashBoardScreenState extends State<DashBoardScreen> {
                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
                         children: [
                           Text(
-                            'THIS YEAR',
-                            style:
-                                TextStyle(fontSize: 16.sp, color: Colors.green),
+                            'REVENUE',
+                            style: TextStyle(
+                                fontSize: 16.sp, color: Colors.yellow),
                           ),
                           Center(
                             child: Text(
-                              '\$${incomeController.incomesYearList.value?.total}',
+                              '\$$tempRevenue',
                               overflow: TextOverflow.ellipsis,
                               style: TextStyle(fontSize: 30.sp),
                             ),
@@ -212,17 +237,26 @@ class _DashBoardScreenState extends State<DashBoardScreen> {
                   child: Padding(
                     padding: REdgeInsets.all(15.r),
                     child: SfCartesianChart(
+                      title: ChartTitle(text: 'Income and Expense'),
                       primaryXAxis:
                           DateTimeAxis(rangePadding: ChartRangePadding.none),
                       legend: Legend(isVisible: true),
-                      series: <ChartSeries<ChartDataExpenses, DateTime>>[
-                        // LineSeries<ChartData, DateTime>(
-                        //     dataSource: dashboardController.incomesChartData,
-                        //     xValueMapper: (ChartData data, _) => data.created_at,
-                        //     yValueMapper: (ChartData data, _) => data.import_price,
-                        //     name: 'Income'),
+                      series: <ChartSeries<dynamic, DateTime>>[
+                        LineSeries<ChartDataIncomes, DateTime>(
+                            dataSource: dashboardController.chartDataIncomeList,
+                            color: Colors.blueAccent,
+                            isVisible: true,
+                            isVisibleInLegend: true,
+                            yAxisName: 'Incomes',
+                            xAxisName: 'Time',
+                            xValueMapper: (ChartDataIncomes data, _) =>
+                                data.created_at,
+                            yValueMapper: (ChartDataIncomes data, _) =>
+                                data.total_export_price,
+                            name: 'Incomes'),
                         LineSeries<ChartDataExpenses, DateTime>(
-                            dataSource: dashboardController.chartDataList,
+                            dataSource:
+                                dashboardController.chartDataExpenseList,
                             color: Colors.redAccent,
                             isVisible: true,
                             isVisibleInLegend: true,
@@ -231,7 +265,7 @@ class _DashBoardScreenState extends State<DashBoardScreen> {
                             xValueMapper: (ChartDataExpenses data, _) =>
                                 data.created_at,
                             yValueMapper: (ChartDataExpenses data, _) =>
-                                data.import_price,
+                                data.total_import_price,
                             name: 'Expense'),
                       ],
                     ),
@@ -269,7 +303,7 @@ class _DashBoardScreenState extends State<DashBoardScreen> {
                 ),
               ),
               Obx(() {
-                if (productController.isProductLoading.value) {
+                if (productController.isProductsLoading.value) {
                   return const Center(child: CircularProgressIndicator());
                 } else {
                   if (productController.productList.isNotEmpty) {
