@@ -2,7 +2,7 @@ import 'package:awesome_dialog/awesome_dialog.dart';
 import 'package:ebox_frontend_web_inventory/controller/controllers.dart';
 import 'package:ebox_frontend_web_inventory/model/categories.dart';
 import 'package:ebox_frontend_web_inventory/model/customers.dart';
-import 'package:ebox_frontend_web_inventory/model/product.dart';
+import 'package:ebox_frontend_web_inventory/model/products.dart';
 import 'package:ebox_frontend_web_inventory/model/suppliers.dart';
 import 'package:ebox_frontend_web_inventory/views/product/widgets/product_detail.dart';
 import 'package:flutter/material.dart';

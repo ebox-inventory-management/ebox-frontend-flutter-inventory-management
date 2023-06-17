@@ -1,15 +1,15 @@
-import 'package:ebox_frontend_web_inventory/model/product.dart';
+import 'package:ebox_frontend_web_inventory/model/products.dart';
 import 'package:get/get.dart';
 
 import '../api/adjustment_service.dart';
 
 class AdjustmentController extends GetxController {
-  RxList<Product> productsByCategoryList =
-      List<Product>.empty(growable: true).obs;
-  RxList<Product> productsByCategoryBrandList =
-      List<Product>.empty(growable: true).obs;
-  RxList<Product> productsByCategorySupplierList =
-      List<Product>.empty(growable: true).obs;
+  RxList<Products> productsByCategoryList =
+      List<Products>.empty(growable: true).obs;
+  RxList<Products> productsByCategoryBrandList =
+      List<Products>.empty(growable: true).obs;
+  RxList<Products> productsByCategorySupplierList =
+      List<Products>.empty(growable: true).obs;
 
   RxBool isProductsByCategoryLoading = false.obs;
   RxBool isProductsByCategorySupplierLoading = false.obs;
@@ -28,7 +28,7 @@ class AdjustmentController extends GetxController {
           await RemoteAdjustmentService.getProductsByCategoryId(id: id);
       if (result != null) {
         //assign api result
-        productsByCategoryList.assignAll(productListFromJson(result.body));
+        productsByCategoryList.assignAll(productsListFromJson(result.body));
 
         //save api result to local db
       }
@@ -48,7 +48,8 @@ class AdjustmentController extends GetxController {
           brandId: brandId, categoryId: categoryId);
       if (result != null) {
         //assign api result
-        productsByCategoryBrandList.assignAll(productListFromJson(result.body));
+        productsByCategoryBrandList
+            .assignAll(productsListFromJson(result.body));
 
         //save api result to local db
       }
@@ -70,7 +71,7 @@ class AdjustmentController extends GetxController {
       if (result != null) {
         //assign api result
         productsByCategorySupplierList
-            .assignAll(productListFromJson(result.body));
+            .assignAll(productsListFromJson(result.body));
 
         //save api result to local db
       }

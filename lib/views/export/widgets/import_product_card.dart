@@ -1,20 +1,22 @@
 import 'package:awesome_dialog/awesome_dialog.dart';
 import 'package:ebox_frontend_web_inventory/controller/controllers.dart';
+import 'package:ebox_frontend_web_inventory/model/import.dart';
 import 'package:ebox_frontend_web_inventory/model/products.dart';
-import 'package:ebox_frontend_web_inventory/model/suppliers.dart';
 import 'package:ebox_frontend_web_inventory/views/product/widgets/product_detail.dart';
+import 'package:ebox_frontend_web_inventory/views/product/widgets/product_edit.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 
-class SupplierCard extends StatelessWidget {
-  final Suppliers suppliers;
-  final int index;
+class ImportProductCard extends StatelessWidget {
+  final Import import;
 
-  const SupplierCard({super.key, required this.suppliers, required this.index});
+  const ImportProductCard({super.key, required this.import});
 
   @override
   Widget build(BuildContext context) {
+    TextEditingController quantityController = TextEditingController();
+
     return Container(
       width: 1.sw,
       height: 100.w,
@@ -40,9 +42,16 @@ class SupplierCard extends StatelessWidget {
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
                 Text(
-                  suppliers.name,
+                  productController.product.value?.product_name ?? 'Not Yet',
                   style:
                       TextStyle(fontSize: 24.sp, fontWeight: FontWeight.w500),
+                ),
+                SizedBox(
+                  height: 5.h,
+                ),
+                Text(
+                  'Total Price: \$${import.total_import_price}',
+                  style: TextStyle(fontSize: 14.sp, color: Colors.grey),
                 ),
               ],
             ),
@@ -52,37 +61,24 @@ class SupplierCard extends StatelessWidget {
             padding: REdgeInsets.all(15.r),
             child: Row(
               children: [
-                IconButton(
-                    onPressed: () {},
-                    icon: Icon(Icons.edit, color: Colors.blue, size: 25.r)),
-                IconButton(
-                    onPressed: () {
-                      AwesomeDialog(
-                        context: context,
-                        width: 600.w,
-                        dialogType: DialogType.warning,
-                        animType: AnimType.bottomSlide,
-                        title: 'WARNING'.tr,
-                        desc: 'Would you sure like to delete ${suppliers.name}?'
-                            .tr,
-                        btnCancelOnPress: () {},
-                        btnOkOnPress: () {
-                          Get.snackbar('Deleted!', ''.tr,
-                              colorText: Colors.white,
-                              margin: REdgeInsets.all(15),
-                              backgroundColor: Colors.green,
-                              snackPosition: SnackPosition.BOTTOM,
-                              duration: const Duration(seconds: 2));
-
-                          productController.deleteProduct(id: suppliers.id);
-                        },
-                      ).show();
-                    },
-                    icon: Icon(
-                      Icons.delete,
-                      color: Colors.red,
-                      size: 25.r,
-                    ))
+                Text(
+                  'Quantity: ',
+                  style: TextStyle(fontSize: 14.sp, color: Colors.grey),
+                ),
+                SizedBox(
+                  width: 0.1.sw,
+                  child: TextFormField(
+                    controller: quantityController,
+                    textInputAction: TextInputAction.next,
+                    obscureText: false,
+                    decoration: InputDecoration(
+                      hintText: '${import.import_quantity}',
+                      border: OutlineInputBorder(
+                        borderRadius: BorderRadius.circular(10.0.r),
+                      ),
+                    ),
+                  ),
+                ),
               ],
             ),
           )

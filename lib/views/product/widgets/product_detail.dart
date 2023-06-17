@@ -1,5 +1,5 @@
 import 'package:ebox_frontend_web_inventory/model/category.dart';
-import 'package:ebox_frontend_web_inventory/model/product.dart';
+import 'package:ebox_frontend_web_inventory/model/products.dart';
 import 'package:ebox_frontend_web_inventory/model/supplier.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
@@ -10,7 +10,7 @@ import '../../../controller/controllers.dart';
 import '../../../model/brand.dart';
 
 class ProductDetail extends StatelessWidget {
-  final Product product;
+  final Products product;
   const ProductDetail({super.key, required this.product});
 
   @override
@@ -123,7 +123,7 @@ class ProductDetail extends StatelessWidget {
                               height: 15.w,
                             ),
                             Text(
-                              'Product Quantity: ${product.product_quantity}',
+                              'Quantity: ${product.product_quantity}',
                               overflow: TextOverflow.ellipsis,
                               style: TextStyle(
                                   fontWeight: FontWeight.w500,
@@ -145,6 +145,16 @@ class ProductDetail extends StatelessWidget {
                             ),
                             Text(
                               'Export Price: \$${product.export_price}',
+                              style: TextStyle(
+                                  fontWeight: FontWeight.w500,
+                                  fontSize: 18.sp,
+                                  color: Colors.red),
+                            ),
+                            SizedBox(
+                              height: 5.w,
+                            ),
+                            Text(
+                              'Product amount: \$${product.product_amount}',
                               style: TextStyle(
                                   fontWeight: FontWeight.w500,
                                   fontSize: 18.sp,

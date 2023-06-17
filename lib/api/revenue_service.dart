@@ -2,9 +2,9 @@ import 'package:http/http.dart' as http;
 
 import '../core/constants/base_url.dart';
 
-class RemoteIncomeService {
+class RemoteRevenueService {
   var client = http.Client();
-  var remoteUrl = '$baseUrl/api/incomes';
+  var remoteUrl = '$baseUrl/api/revenues';
 
   Future<dynamic> get() async {
     var response = await client.get(Uri.parse(remoteUrl));
@@ -12,17 +12,18 @@ class RemoteIncomeService {
   }
 
   Future<dynamic> getToday() async {
-    var response = await client.get(Uri.parse('$baseUrl/api/income/today'));
+    var response = await client.get(Uri.parse('$remoteUrl/today'));
     return response;
   }
 
   Future<dynamic> getThisMonth() async {
-    var response = await client.get(Uri.parse('$baseUrl/api/income/month'));
+    var response = await client.get(Uri.parse('$remoteUrl/month'));
+
     return response;
   }
 
   Future<dynamic> getThisYear() async {
-    var response = await client.get(Uri.parse('$baseUrl/api/income/year'));
+    var response = await client.get(Uri.parse('$remoteUrl/year'));
     return response;
   }
 }

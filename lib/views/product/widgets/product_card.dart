@@ -1,13 +1,14 @@
 import 'package:awesome_dialog/awesome_dialog.dart';
 import 'package:ebox_frontend_web_inventory/controller/controllers.dart';
-import 'package:ebox_frontend_web_inventory/model/product.dart';
+import 'package:ebox_frontend_web_inventory/model/products.dart';
 import 'package:ebox_frontend_web_inventory/views/product/widgets/product_detail.dart';
+import 'package:ebox_frontend_web_inventory/views/product/widgets/product_edit.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 
 class ProductCard extends StatelessWidget {
-  final Product product;
+  final Products product;
 
   const ProductCard({super.key, required this.product});
 
@@ -55,7 +56,7 @@ class ProductCard extends StatelessWidget {
                     height: 5.h,
                   ),
                   Text(
-                    product.product_code,
+                    'Quantity: ${product.product_quantity}',
                     style: TextStyle(fontSize: 14.sp, color: Colors.grey),
                   ),
                 ],
@@ -67,7 +68,9 @@ class ProductCard extends StatelessWidget {
               child: Row(
                 children: [
                   IconButton(
-                      onPressed: () {},
+                      onPressed: () {
+                        Get.dialog(ProductEdit(product: product));
+                      },
                       icon: Icon(Icons.edit, color: Colors.blue, size: 25.r)),
                   IconButton(
                       onPressed: () {
