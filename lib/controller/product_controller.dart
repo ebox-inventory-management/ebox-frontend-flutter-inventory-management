@@ -136,4 +136,20 @@ class ProductController extends GetxController {
       isProductLoading(false);
     }
   }
+
+  void getProductsByName({required String name}) async {
+    try {
+      isProductLoading(true);
+      //call api
+      var result = await RemoteProductService().getByName(name: name);
+
+      if (result != null) {
+        //assign api result
+        product.value = productListFromJson(result.body);
+        //save api result to local db
+      }
+    } finally {
+      isProductLoading(false);
+    }
+  }
 }

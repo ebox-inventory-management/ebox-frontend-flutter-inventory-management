@@ -1,9 +1,9 @@
 import 'package:ebox_frontend_web_inventory/model/products.dart';
 import 'package:get/get.dart';
 
-import '../api/adjustment_service.dart';
+import '../api/quantity_adjustment_service.dart';
 
-class AdjustmentController extends GetxController {
+class QuantityAdjustmentController extends GetxController {
   RxList<Products> productsByCategoryList =
       List<Products>.empty(growable: true).obs;
   RxList<Products> productsByCategoryBrandList =
@@ -25,7 +25,7 @@ class AdjustmentController extends GetxController {
       isProductsByCategoryLoading(true);
       //call api
       var result =
-          await RemoteAdjustmentService.getProductsByCategoryId(id: id);
+          await RemoteQuantityAdjustmentService.getProductsByCategoryId(id: id);
       if (result != null) {
         //assign api result
         productsByCategoryList.assignAll(productsListFromJson(result.body));
@@ -44,8 +44,9 @@ class AdjustmentController extends GetxController {
     try {
       isProductsByCategoryBrandLoading(true);
       //call api
-      var result = await RemoteAdjustmentService.getProductsByCategoryBrandId(
-          brandId: brandId, categoryId: categoryId);
+      var result =
+          await RemoteQuantityAdjustmentService.getProductsByCategoryBrandId(
+              brandId: brandId, categoryId: categoryId);
       if (result != null) {
         //assign api result
         productsByCategoryBrandList
@@ -66,7 +67,7 @@ class AdjustmentController extends GetxController {
       isProductsByCategorySupplierLoading(true);
       //call api
       var result =
-          await RemoteAdjustmentService.getProductsByCategorySupplierId(
+          await RemoteQuantityAdjustmentService.getProductsByCategorySupplierId(
               supplierId: supplierId, categoryId: categoryId);
       if (result != null) {
         //assign api result

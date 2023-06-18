@@ -11,28 +11,28 @@ import 'package:intl/intl.dart';
 
 import '../../../controller/controllers.dart';
 
-class ImportProductAdd extends StatefulWidget {
-  const ImportProductAdd({super.key});
+class ExportProductAdd extends StatefulWidget {
+  const ExportProductAdd({super.key});
 
   @override
-  State<ImportProductAdd> createState() => _ImportProductAddState();
+  State<ExportProductAdd> createState() => _ExportProductAddState();
 }
 
-class _ImportProductAddState extends State<ImportProductAdd> {
-  final List<String> importProductsName =
+class _ExportProductAddState extends State<ExportProductAdd> {
+  final List<String> productsName =
       productController.productList.map((data) => data.product_name).toList();
 
-  String? selectedValueProductImport;
+  String? selectedValueProduct;
 
   Color backgroundColor = Colors.grey;
   Color foregroundColor = Colors.white;
 
-  TextEditingController importQuantityController = TextEditingController();
+  TextEditingController exportQuantityController = TextEditingController();
 
   @override
   void dispose() {
     super.dispose();
-    importQuantityController.dispose();
+    exportQuantityController.dispose();
   }
 
   @override
@@ -57,7 +57,7 @@ class _ImportProductAddState extends State<ImportProductAdd> {
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [
                         Text(
-                          'Import Product',
+                          'Export Product',
                           style: TextStyle(
                               fontWeight: FontWeight.bold, fontSize: 30.sp),
                         ),
@@ -89,7 +89,7 @@ class _ImportProductAddState extends State<ImportProductAdd> {
                       child: SizedBox(
                         width: 0.4.sw,
                         child: TextFormField(
-                          controller: importQuantityController,
+                          controller: exportQuantityController,
                           textInputAction: TextInputAction.next,
                           obscureText: false,
                           onChanged: (val) {
@@ -120,8 +120,8 @@ class _ImportProductAddState extends State<ImportProductAdd> {
                         buttonWidth: 0.2.sw,
                         buttonHeight: 40.w,
                         hint: 'Choose Product',
-                        dropdownItems: importProductsName,
-                        value: selectedValueProductImport,
+                        dropdownItems: productsName,
+                        value: selectedValueProduct,
                         buttonDecoration: BoxDecoration(
                           borderRadius: BorderRadius.circular(15.r),
                           color: Colors.grey[100],
@@ -138,7 +138,7 @@ class _ImportProductAddState extends State<ImportProductAdd> {
                         ),
                         onChanged: (index) {
                           setState(() {
-                            selectedValueProductImport = index;
+                            selectedValueProduct = index;
                           });
                         },
                       ),
@@ -146,10 +146,10 @@ class _ImportProductAddState extends State<ImportProductAdd> {
                     Center(
                       child: TextButton(
                         onPressed: () {
-                          if (importQuantityController.text.isEmpty ||
-                              selectedValueProductImport == null) {
+                          if (exportQuantityController.text.isEmpty ||
+                              selectedValueProduct == null) {
                             Get.snackbar('Something wrong!',
-                                'You need to input all information to import',
+                                'You need to input all information to export',
                                 colorText: Colors.white,
                                 margin: REdgeInsets.all(15),
                                 backgroundColor: Colors.redAccent,
@@ -157,17 +157,20 @@ class _ImportProductAddState extends State<ImportProductAdd> {
                                 duration: const Duration(seconds: 2));
                             return;
                           } else {
-                            Get.snackbar('Imported Product!',
+                            productController.getProductsByName(
+                                name: selectedValueProduct!);
+
+                            Get.snackbar('Exported Product!',
                                 'You have been import product'.tr,
                                 colorText: Colors.white,
                                 margin: REdgeInsets.all(15),
                                 backgroundColor: Colors.green,
                                 snackPosition: SnackPosition.BOTTOM,
                                 duration: const Duration(seconds: 2));
-                            importController.create(
-                                productId: 2,
+                            exportController.create(
+                                productId: productController.product.value!.id,
                                 product_quantity:
-                                    int.parse(importQuantityController.text));
+                                    int.parse(exportQuantityController.text));
                             Get.back();
                           }
                         },
@@ -181,7 +184,7 @@ class _ImportProductAddState extends State<ImportProductAdd> {
                           padding: REdgeInsets.only(
                               top: 15.r, bottom: 15.r, left: 30.r, right: 30.r),
                           child: Text(
-                            'Import',
+                            'Export',
                             style: TextStyle(fontSize: 20.sp),
                           ),
                         ),

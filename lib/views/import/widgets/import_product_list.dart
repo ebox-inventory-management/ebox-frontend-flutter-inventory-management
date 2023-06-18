@@ -14,24 +14,20 @@ class ImportProductList extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return SizedBox(
-      width: 1.sw,
-      height: 0.8.sh,
-      child: ListView.separated(
-        physics: const BouncingScrollPhysics(),
-        scrollDirection: Axis.vertical,
-        itemCount: imports.length,
-        shrinkWrap: true,
-        itemBuilder: (context, index) {
-          productController.getProductsById(id: imports[index].product_id);
-          return ImportProductCard(import: imports[index]);
-        },
-        separatorBuilder: (BuildContext context, int index) {
-          return SizedBox(
-            height: 15.w,
-          );
-        },
-      ),
+    return ListView.separated(
+      physics: const BouncingScrollPhysics(),
+      scrollDirection: Axis.vertical,
+      itemCount: imports.length,
+      shrinkWrap: true,
+      itemBuilder: (context, index) {
+        productController.getProductsById(id: imports[index].product_id);
+        return ImportProductCard(import: imports[index]);
+      },
+      separatorBuilder: (BuildContext context, int index) {
+        return SizedBox(
+          height: 15.w,
+        );
+      },
     );
   }
 }

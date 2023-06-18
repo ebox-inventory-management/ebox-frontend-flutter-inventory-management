@@ -1,10 +1,15 @@
+import 'package:ebox_frontend_web_inventory/controller/controllers.dart';
+import 'package:ebox_frontend_web_inventory/core/constants/base_url.dart';
+import 'package:ebox_frontend_web_inventory/model/products.dart';
+import 'package:ebox_frontend_web_inventory/views/export/widgets/export_product_add.dart';
+import 'package:ebox_frontend_web_inventory/views/export/widgets/export_product_list.dart';
+import 'package:ebox_frontend_web_inventory/views/import/widgets/import_product_add.dart';
+import 'package:ebox_frontend_web_inventory/views/import/widgets/import_product_list.dart';
+import 'package:ebox_frontend_web_inventory/views/product/widgets/product_add.dart';
+import 'package:ebox_frontend_web_inventory/views/product/widgets/product_list.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
-
-import '../../controller/controllers.dart';
-import '../import/widgets/import_product_list.dart';
-import '../product/widgets/product_add.dart';
 
 class ExportScreen extends StatelessWidget {
   const ExportScreen({super.key});
@@ -13,14 +18,27 @@ class ExportScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: Colors.grey[100],
-      body: Padding(
-        padding: REdgeInsets.all(30.r),
-        child: SingleChildScrollView(
+      body: SingleChildScrollView(
+        physics: const BouncingScrollPhysics(),
+        child: Padding(
+          padding: REdgeInsets.all(30.r),
           child:
               Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
-            Text(
-              'Import',
-              style: TextStyle(fontWeight: FontWeight.bold, fontSize: 30.sp),
+            Row(
+              children: [
+                Icon(
+                  Icons.upload,
+                  size: 30.r,
+                ),
+                SizedBox(
+                  width: 10.w,
+                ),
+                Text(
+                  'Export',
+                  style:
+                      TextStyle(fontWeight: FontWeight.bold, fontSize: 30.sp),
+                ),
+              ],
             ),
             Padding(
               padding: REdgeInsets.only(top: 15.w, bottom: 15.r),
@@ -56,7 +74,7 @@ class ExportScreen extends StatelessWidget {
                               productController.searchProductsController
                                   .clear();
                               productController.searchVal.value = '';
-                              productController.getProducts();
+                              // productController.getProducts();
                             },
                             icon: Icon(
                               Icons.clear,
@@ -65,7 +83,7 @@ class ExportScreen extends StatelessWidget {
                         : null,
                     filled: true,
                     fillColor: Colors.white,
-                    hintText: 'Search products'.tr,
+                    hintText: 'Search history export'.tr,
                     hintStyle: TextStyle(
                         fontSize: 12.sp,
                         color: Colors.grey,
@@ -81,16 +99,54 @@ class ExportScreen extends StatelessWidget {
                 ),
               ),
             ),
-            SizedBox(
-              height: 30.h,
+            Padding(
+              padding: REdgeInsets.only(top: 30.w, bottom: 15.w),
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  Text(
+                    'History Exports',
+                    style: TextStyle(
+                        fontWeight: FontWeight.w600,
+                        fontSize: 20.sp,
+                        color: Colors.grey),
+                  ),
+                  TextButton(
+                      onPressed: () {
+                        Get.dialog(const ExportProductAdd());
+                      },
+                      style: TextButton.styleFrom(
+                        foregroundColor: Colors.white,
+                        backgroundColor: Colors.orange,
+                      ),
+                      child: Row(
+                        children: [
+                          Icon(
+                            Icons.upload,
+                            size: 30.r,
+                          ),
+                          SizedBox(
+                            width: 5.w,
+                          ),
+                          Text(
+                            'Export Product',
+                            style: TextStyle(
+                              fontWeight: FontWeight.w500,
+                              fontSize: 16.sp,
+                            ),
+                          ),
+                        ],
+                      ))
+                ],
+              ),
             ),
             Obx(() {
-              if (importController.isImportLoading.value) {
+              if (exportController.isExportLoading.value) {
                 return const Center(child: CircularProgressIndicator());
               } else {
-                if (productController.productList.isNotEmpty) {
-                  return ImportProductList(
-                      imports: importController.importList);
+                if (exportController.exportList.isNotEmpty) {
+                  return ExportProductList(
+                      exports: exportController.exportList);
                 } else {
                   return Center(
                     child: Column(
@@ -113,18 +169,6 @@ class ExportScreen extends StatelessWidget {
               }
             }),
           ]),
-        ),
-      ),
-      floatingActionButton: FloatingActionButton(
-        onPressed: () {
-          Get.dialog(const ProductAdd());
-        },
-        elevation: 0,
-        foregroundColor: Colors.white,
-        backgroundColor: Colors.green,
-        child: Icon(
-          Icons.add,
-          size: 30.w,
         ),
       ),
     );
