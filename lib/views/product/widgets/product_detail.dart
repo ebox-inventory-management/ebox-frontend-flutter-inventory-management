@@ -38,7 +38,7 @@ class ProductDetail extends StatelessWidget {
                           },
                           icon: Icon(
                             Icons.cancel,
-                            size: 30.r,
+                            size: 40.r,
                             color: Colors.grey,
                           ))
                     ],
@@ -68,7 +68,7 @@ class ProductDetail extends StatelessWidget {
                           Row(
                             children: [
                               Container(
-                                width: 250.w,
+                                width: 300.w,
                                 height: 50.w,
                                 decoration: BoxDecoration(
                                     color: Colors.grey,
@@ -76,7 +76,7 @@ class ProductDetail extends StatelessWidget {
                                         Radius.circular(10.r))),
                                 child: Center(
                                   child: Text(
-                                    'Import Date: ${DateFormat('dd/MM/yyyy').format(product.created_at)}',
+                                    'Create Date: ${product.created_at}',
                                     style: TextStyle(
                                         fontSize: 16.sp, color: Colors.white),
                                   ),
@@ -86,7 +86,7 @@ class ProductDetail extends StatelessWidget {
                                 width: 30.w,
                               ),
                               Container(
-                                width: 250.w,
+                                width: 300.w,
                                 height: 50.w,
                                 decoration: BoxDecoration(
                                     color: Colors.blueAccent,
@@ -94,7 +94,7 @@ class ProductDetail extends StatelessWidget {
                                         Radius.circular(10.r))),
                                 child: Center(
                                   child: Text(
-                                    'Update Date: ${DateFormat('dd/MM/yyyy').format(product.updated_at)}',
+                                    'Update Date: ${product.created_at}',
                                     style: TextStyle(
                                         fontSize: 16.sp, color: Colors.white),
                                   ),

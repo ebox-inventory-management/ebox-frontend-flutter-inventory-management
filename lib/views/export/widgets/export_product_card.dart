@@ -1,5 +1,6 @@
 import 'package:awesome_dialog/awesome_dialog.dart';
 import 'package:ebox_frontend_web_inventory/controller/controllers.dart';
+import 'package:ebox_frontend_web_inventory/model/export.dart';
 import 'package:ebox_frontend_web_inventory/model/import.dart';
 import 'package:ebox_frontend_web_inventory/model/products.dart';
 import 'package:ebox_frontend_web_inventory/views/product/widgets/product_detail.dart';
@@ -10,10 +11,10 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 import 'package:intl/intl.dart';
 
-class ImportProductCard extends StatelessWidget {
-  final Import import;
+class ExportProductCard extends StatelessWidget {
+  final Export export;
 
-  const ImportProductCard({super.key, required this.import});
+  const ExportProductCard({super.key, required this.export});
 
   @override
   Widget build(BuildContext context) {
@@ -74,7 +75,7 @@ class ImportProductCard extends StatelessWidget {
                     height: 5.h,
                   ),
                   Text(
-                    'Total Price: \$${import.total_import_price}',
+                    'Total Price: \$${export.total_export_price}',
                     style: TextStyle(fontSize: 14.sp, color: Colors.grey),
                   ),
                 ],
@@ -88,14 +89,14 @@ class ImportProductCard extends StatelessWidget {
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
                   Text(
-                    'Quantity: ${import.import_quantity}',
+                    'Quantity: ${export.export_quantity}',
                     style: TextStyle(fontSize: 16.sp, color: Colors.black),
                   ),
                   SizedBox(
                     height: 5.w,
                   ),
                   Text(
-                    'Imported Date: ${import.created_at}',
+                    'Exported Date: ${export.created_at}',
                     style: TextStyle(fontSize: 14.sp, color: Colors.grey),
                   ),
                 ],

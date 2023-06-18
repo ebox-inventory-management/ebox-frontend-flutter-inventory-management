@@ -4,7 +4,7 @@ import 'package:http/http.dart' as http;
 
 import '../core/constants/base_url.dart';
 
-class RemoteAdjustmentService {
+class RemoteQuantityAdjustmentService {
   static Future<dynamic> getProductsByCategoryId({required int id}) async {
     var response = await http.Client()
         .get(Uri.parse('$baseUrl/api/products/category/$id'));

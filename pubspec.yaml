@@ -46,6 +46,7 @@ dependencies:
   dropdown_button2: ^1.9.1
   collection: ^1.17.0
   auto_reload: ^1.1.0
+  flutter_snake_navigationbar: ^0.6.1
 
 dev_dependencies:
   flutter_test:

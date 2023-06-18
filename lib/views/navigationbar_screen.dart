@@ -7,7 +7,7 @@ import 'package:ebox_frontend_web_inventory/views/export/export_screen.dart';
 import 'package:ebox_frontend_web_inventory/views/import/import_screen.dart';
 import 'package:ebox_frontend_web_inventory/views/product/widgets/product_add.dart';
 import 'package:ebox_frontend_web_inventory/views/product/product_screen.dart';
-import 'package:ebox_frontend_web_inventory/views/quantity_adjustments/quantity_adjustments.dart';
+import 'package:ebox_frontend_web_inventory/views/quantity_adjustments/quantity_adjustment_screen.dart';
 import 'package:ebox_frontend_web_inventory/views/suppliers/supplier_screen.dart';
 import 'package:ebox_frontend_web_inventory/views/user/user_screen.dart';
 import 'package:flutter/material.dart';
@@ -35,16 +35,16 @@ class NavigationBarScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     return Builder(
       builder: (context) {
-        dashboardController;
-        productController;
-        categoryController;
-        importController;
-        supplierController;
-        incomeController.getIncomeToday();
-        expenseController.getExpenseToday();
-        revenueController.getRevenueToday();
-        brandController;
-        customerController;
+        // dashboardController;
+        // productController;
+        // categoryController;
+        // importController;
+        // supplierController;
+        // incomeController.getIncomeToday();
+        // expenseController.getExpenseToday();
+        // revenueController.getRevenueToday();
+        // brandController;
+        // customerController;
         final isSmallScreen = MediaQuery.of(context).size.width < 600;
         return Scaffold(
           backgroundColor: Colors.grey[100],
@@ -199,7 +199,7 @@ class CustomeSidebarX extends StatelessWidget {
         ),
         const SidebarXItem(
           icon: Icons.list_alt_sharp,
-          label: 'Quantity',
+          label: 'Quantity Adjustment',
         ),
         const SidebarXItem(
           icon: Icons.factory,
@@ -279,7 +279,7 @@ class _ScreensExample extends StatelessWidget {
           case 3:
             return ExportScreen();
           case 4:
-            return QuantityAdjustmentsScreen();
+            return QuantityAdjustmentScreen();
           case 5:
             return SupplierScreen();
           case 6:

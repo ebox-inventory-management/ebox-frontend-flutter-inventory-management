@@ -16,14 +16,27 @@ class ImportScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: Colors.grey[100],
-      body: Padding(
-        padding: REdgeInsets.all(30.r),
-        child: SingleChildScrollView(
+      body: SingleChildScrollView(
+        physics: const BouncingScrollPhysics(),
+        child: Padding(
+          padding: REdgeInsets.all(30.r),
           child:
               Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
-            Text(
-              'Import',
-              style: TextStyle(fontWeight: FontWeight.bold, fontSize: 30.sp),
+            Row(
+              children: [
+                Icon(
+                  Icons.download,
+                  size: 30.r,
+                ),
+                SizedBox(
+                  width: 10.w,
+                ),
+                Text(
+                  'Import',
+                  style:
+                      TextStyle(fontWeight: FontWeight.bold, fontSize: 30.sp),
+                ),
+              ],
             ),
             Padding(
               padding: REdgeInsets.only(top: 15.w, bottom: 15.r),
@@ -59,7 +72,7 @@ class ImportScreen extends StatelessWidget {
                               productController.searchProductsController
                                   .clear();
                               productController.searchVal.value = '';
-                              productController.getProducts();
+                              // productController.getProducts();
                             },
                             icon: Icon(
                               Icons.clear,
@@ -68,7 +81,7 @@ class ImportScreen extends StatelessWidget {
                         : null,
                     filled: true,
                     fillColor: Colors.white,
-                    hintText: 'Search products'.tr,
+                    hintText: 'Search history import'.tr,
                     hintStyle: TextStyle(
                         fontSize: 12.sp,
                         color: Colors.grey,
@@ -84,14 +97,52 @@ class ImportScreen extends StatelessWidget {
                 ),
               ),
             ),
-            SizedBox(
-              height: 30.h,
+            Padding(
+              padding: REdgeInsets.only(top: 30.w, bottom: 15.w),
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  Text(
+                    'History Imports',
+                    style: TextStyle(
+                        fontWeight: FontWeight.w600,
+                        fontSize: 20.sp,
+                        color: Colors.grey),
+                  ),
+                  TextButton(
+                      onPressed: () {
+                        Get.dialog(const ImportProductAdd());
+                      },
+                      style: TextButton.styleFrom(
+                        foregroundColor: Colors.white,
+                        backgroundColor: Colors.orange,
+                      ),
+                      child: Row(
+                        children: [
+                          Icon(
+                            Icons.download,
+                            size: 30.r,
+                          ),
+                          SizedBox(
+                            width: 5.w,
+                          ),
+                          Text(
+                            'Import Product',
+                            style: TextStyle(
+                              fontWeight: FontWeight.w500,
+                              fontSize: 16.sp,
+                            ),
+                          ),
+                        ],
+                      ))
+                ],
+              ),
             ),
             Obx(() {
               if (importController.isImportLoading.value) {
                 return const Center(child: CircularProgressIndicator());
               } else {
-                if (productController.productList.isNotEmpty) {
+                if (importController.importList.isNotEmpty) {
                   return ImportProductList(
                       imports: importController.importList);
                 } else {
@@ -116,18 +167,6 @@ class ImportScreen extends StatelessWidget {
               }
             }),
           ]),
-        ),
-      ),
-      floatingActionButton: FloatingActionButton(
-        onPressed: () {
-          Get.dialog(const ImportProductAdd());
-        },
-        elevation: 0,
-        foregroundColor: Colors.white,
-        backgroundColor: Colors.green,
-        child: Icon(
-          Icons.add,
-          size: 30.w,
         ),
       ),
     );

@@ -19,9 +19,21 @@ class ProductScreen extends StatelessWidget {
         child: SingleChildScrollView(
           child:
               Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
-            Text(
-              'Product',
-              style: TextStyle(fontWeight: FontWeight.bold, fontSize: 30.sp),
+            Row(
+              children: [
+                Icon(
+                  Icons.list,
+                  size: 30.r,
+                ),
+                SizedBox(
+                  width: 10.w,
+                ),
+                Text(
+                  'Product',
+                  style:
+                      TextStyle(fontWeight: FontWeight.bold, fontSize: 30.sp),
+                ),
+              ],
             ),
             Padding(
               padding: REdgeInsets.only(top: 15.w, bottom: 15.r),
@@ -82,8 +94,46 @@ class ProductScreen extends StatelessWidget {
                 ),
               ),
             ),
-            SizedBox(
-              height: 30.h,
+            Padding(
+              padding: REdgeInsets.only(top: 30.w, bottom: 15.w),
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  Text(
+                    'All Products',
+                    style: TextStyle(
+                        fontWeight: FontWeight.w600,
+                        fontSize: 20.sp,
+                        color: Colors.grey),
+                  ),
+                  TextButton(
+                      onPressed: () {
+                        Get.dialog(const ProductAdd());
+                      },
+                      style: TextButton.styleFrom(
+                        foregroundColor: Colors.white,
+                        backgroundColor: Colors.orange,
+                      ),
+                      child: Row(
+                        children: [
+                          Icon(
+                            Icons.add,
+                            size: 30.r,
+                          ),
+                          SizedBox(
+                            width: 5.w,
+                          ),
+                          Text(
+                            'Add Product',
+                            style: TextStyle(
+                              fontWeight: FontWeight.w500,
+                              fontSize: 16.sp,
+                            ),
+                          ),
+                        ],
+                      ))
+                ],
+              ),
             ),
             Obx(() {
               if (productController.isProductsLoading.value) {
@@ -113,18 +163,6 @@ class ProductScreen extends StatelessWidget {
               }
             }),
           ]),
-        ),
-      ),
-      floatingActionButton: FloatingActionButton(
-        onPressed: () {
-          Get.dialog(const ProductAdd());
-        },
-        elevation: 0,
-        foregroundColor: Colors.white,
-        backgroundColor: Colors.green,
-        child: Icon(
-          Icons.add,
-          size: 30.w,
         ),
       ),
     );

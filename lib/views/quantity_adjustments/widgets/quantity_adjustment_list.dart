@@ -6,9 +6,9 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import '../../../controller/controllers.dart';
 import '../../../model/products.dart';
 
-class ProductList extends StatelessWidget {
+class QuantityAdjustmentList extends StatelessWidget {
   final List<Products> products;
-  const ProductList({super.key, required this.products});
+  const QuantityAdjustmentList({super.key, required this.products});
 
   @override
   Widget build(BuildContext context) {

@@ -168,10 +168,24 @@ class _ProductEditState extends State<ProductEdit> {
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  Text(
-                    'Edit ${widget.product.product_name}',
-                    style:
-                        TextStyle(fontWeight: FontWeight.bold, fontSize: 30.sp),
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      Text(
+                        'Edit ${widget.product.product_name}',
+                        style: TextStyle(
+                            fontWeight: FontWeight.bold, fontSize: 30.sp),
+                      ),
+                      IconButton(
+                          onPressed: () {
+                            Get.back();
+                          },
+                          icon: Icon(
+                            Icons.cancel,
+                            size: 40.r,
+                            color: Colors.grey,
+                          ))
+                    ],
                   ),
                   Padding(
                     padding: REdgeInsets.only(top: 15.w, bottom: 15.r),

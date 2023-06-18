@@ -3,6 +3,7 @@ import 'dart:io';
 import 'dart:typed_data';
 import 'dart:ui';
 
+import 'package:ebox_frontend_web_inventory/api/export_service.dart';
 import 'package:ebox_frontend_web_inventory/api/import_service.dart';
 import 'package:ebox_frontend_web_inventory/api/product_service.dart';
 import 'package:ebox_frontend_web_inventory/model/export.dart';
@@ -29,7 +30,7 @@ class ExportController extends GetxController {
     required int product_quantity,
   }) async {
     try {
-      await RemoteImportService()
+      await RemoteExportService()
           .create(productId: productId, product_quantity: product_quantity);
     } catch (e) {
       debugPrint(e.toString());
@@ -40,7 +41,7 @@ class ExportController extends GetxController {
     try {
       isExportLoading(true);
       //call api
-      var result = await RemoteImportService().get();
+      var result = await RemoteExportService().get();
       if (result != null) {
         //assign api result
         exportList.assignAll(exportListFromJson(result.body));

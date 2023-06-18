@@ -66,6 +66,12 @@ class RemoteProductService {
     return response;
   }
 
+  Future<dynamic> getByName({required String name}) async {
+    var response =
+        await client.get(Uri.parse('$baseUrl/api/product/name/$name'));
+    return response;
+  }
+
   Future<dynamic> create({
     required int category_id,
     required int supplier_id,
