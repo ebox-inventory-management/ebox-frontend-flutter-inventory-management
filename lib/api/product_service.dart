@@ -9,7 +9,7 @@ class RemoteProductService {
   var remoteUrl = '$baseUrl/api/products';
 
   static Future<dynamic> delete({required int id}) async {
-    var response = await http.Client().delete(
+    var response = await http.Client().get(
       Uri.parse('$baseUrl/api/product/delete/$id'),
     );
     return response;
@@ -46,7 +46,7 @@ class RemoteProductService {
       "product_quantity": product_quantity,
       "export_price": export_price
     };
-    var response = await client.put(
+    var response = await client.post(
       Uri.parse('$baseUrl/api/product/update/$id'),
       headers: {
         "Content-Type": "application/json",
@@ -66,6 +66,12 @@ class RemoteProductService {
     return response;
   }
 
+  Future<dynamic> getByKeyword({required String keyword}) async {
+    var response =
+        await client.get(Uri.parse('$baseUrl/api/product/search/$keyword'));
+    return response;
+  }
+
   Future<dynamic> getByName({required String name}) async {
     var response =
         await client.get(Uri.parse('$baseUrl/api/product/name/$name'));
@@ -77,15 +83,13 @@ class RemoteProductService {
     required int supplier_id,
     required int brand_id,
     required String product_name,
-    required int product_quantity,
     required String product_code,
     required String product_garage,
     required String product_route,
     required String product_image,
-    required String buy_date,
     required String expire_date,
-    required String import_price,
-    required String export_price,
+    required int import_price,
+    required int export_price,
   }) async {
     var body = {
       "category_id": category_id,
@@ -96,10 +100,8 @@ class RemoteProductService {
       "product_garage": product_garage,
       "product_route": product_route,
       "product_image": product_image,
-      "buy_date": buy_date,
       "expire_date": expire_date,
       "import_price": import_price,
-      "product_quantity": product_quantity,
       "export_price": export_price
     };
     var response = await client.post(

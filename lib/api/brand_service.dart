@@ -51,6 +51,18 @@ class RemoteBrandService {
     return response;
   }
 
+  Future<dynamic> getByKeyword({required String keyword}) async {
+    var response =
+        await client.get(Uri.parse('$baseUrl/api/brand/search/$keyword'));
+    return response;
+  }
+
+  Future<dynamic> getByName({required String name}) async {
+    var response = await client.get(Uri.parse('$baseUrl/api/brand/$name'));
+    print(response.statusCode);
+    return response;
+  }
+
   static Future<dynamic> deleteById({required int id}) async {
     var response =
         await http.Client().get(Uri.parse('$baseUrl/api/brand/delete/$id'));

@@ -93,4 +93,15 @@ class RemoteSupplierService {
         await http.Client().get(Uri.parse('$baseUrl/api/supplier/delete/$id'));
     return response;
   }
+
+  Future<dynamic> getByKeyword({required String keyword}) async {
+    var response =
+        await client.get(Uri.parse('$baseUrl/api/supplier/search/$keyword'));
+    return response;
+  }
+
+  Future<dynamic> getByName({required String name}) async {
+    var response = await client.get(Uri.parse('$baseUrl/api/supplier/$name'));
+    return response;
+  }
 }

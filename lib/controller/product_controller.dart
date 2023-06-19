@@ -14,7 +14,7 @@ import '../api/product_service.dart';
 import 'controllers.dart';
 
 class ProductController extends GetxController {
-  RxList<Products> productList = List<Products>.empty(growable: true).obs;
+  RxList<Products> productsList = List<Products>.empty(growable: true).obs;
   Rxn<Product> product = Rxn<Product>();
 
   RxBool isProductsLoading = false.obs;
@@ -79,27 +79,24 @@ class ProductController extends GetxController {
     required String product_garage,
     required String product_route,
     required String product_image,
-    required String buy_date,
     required String expire_date,
-    required String buying_price,
-    required int product_quantity,
-    required String price,
+    required int import_price,
+    required int export_price,
   }) async {
     try {
       await RemoteProductService().create(
-          category_id: category_id,
-          supplier_id: supplier_id,
-          brand_id: brand_id,
-          product_code: product_code,
-          export_price: price,
-          product_garage: product_garage,
-          product_image: product_image,
-          product_name: product_name,
-          product_route: product_route,
-          import_price: buying_price,
-          buy_date: buy_date,
-          expire_date: expire_date,
-          product_quantity: product_quantity);
+        category_id: category_id,
+        supplier_id: supplier_id,
+        brand_id: brand_id,
+        product_code: product_code,
+        export_price: export_price,
+        product_garage: product_garage,
+        product_image: product_image,
+        product_name: product_name,
+        product_route: product_route,
+        import_price: import_price,
+        expire_date: expire_date,
+      );
     } catch (e) {
       debugPrint(e.toString());
     }
@@ -113,8 +110,7 @@ class ProductController extends GetxController {
 
       if (result != null) {
         //assign api result
-        productList.assignAll(productsListFromJson(result.body));
-        //save api result to local db
+        productsList.assignAll(productsListFromJson(result.body));
       }
     } finally {
       isProductsLoading(false);
@@ -130,10 +126,24 @@ class ProductController extends GetxController {
       if (result != null) {
         //assign api result
         product.value = productListFromJson(result.body);
-        //save api result to local db
       }
     } finally {
       isProductLoading(false);
+    }
+  }
+
+  void getProductsByKeyword({required String keyword}) async {
+    try {
+      isProductsLoading(true);
+      //call api
+      var result = await RemoteProductService().getByKeyword(keyword: keyword);
+
+      if (result != null) {
+        //assign api result
+        productsList.assignAll(productsListFromJson(result.body));
+      }
+    } finally {
+      isProductsLoading(false);
     }
   }
 
@@ -146,7 +156,6 @@ class ProductController extends GetxController {
       if (result != null) {
         //assign api result
         product.value = productListFromJson(result.body);
-        //save api result to local db
       }
     } finally {
       isProductLoading(false);

@@ -14,11 +14,11 @@ class ProductCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    supplierController.getSupplierById(id: product.supplier_id);
-    categoryController.getCategoryById(id: product.category_id);
-    brandController.getBrandById(id: product.brand_id);
     return GestureDetector(
       onTap: () {
+        supplierController.getSupplierById(id: product.supplier_id);
+        categoryController.getCategoryById(id: product.category_id);
+        brandController.getBrandById(id: product.brand_id);
         Get.dialog(ProductDetail(
           product: product,
         ));

@@ -1,5 +1,6 @@
 import 'package:collection/collection.dart';
 import 'package:dropdown_button2/custom_dropdown_button2.dart';
+import 'package:ebox_frontend_web_inventory/model/suppliers.dart';
 
 import 'package:file_picker/file_picker.dart';
 import 'package:flutter/foundation.dart';
@@ -11,16 +12,16 @@ import 'package:intl/intl.dart';
 import '../../../controller/controllers.dart';
 import '../../../model/products.dart';
 
-class ProductEdit extends StatefulWidget {
-  final Products product;
+class SupplierEdit extends StatefulWidget {
+  final Suppliers suppliers;
 
-  const ProductEdit({super.key, required this.product});
+  const SupplierEdit({super.key, required this.suppliers});
 
   @override
-  State<ProductEdit> createState() => _ProductEditState();
+  State<SupplierEdit> createState() => _SupplierEditState();
 }
 
-class _ProductEditState extends State<ProductEdit> {
+class _SupplierEditState extends State<SupplierEdit> {
   final List<String> categoriesName =
       categoryController.categoriesList.map((data) => data.name).toList();
   final List<String> brandsName =
@@ -132,9 +133,11 @@ class _ProductEditState extends State<ProductEdit> {
   TextEditingController productCodeController = TextEditingController();
   TextEditingController productGarageController = TextEditingController();
   TextEditingController productRouteController = TextEditingController();
+  TextEditingController buyDateController = TextEditingController();
   TextEditingController expireDateController = TextEditingController();
   TextEditingController importPriceController = TextEditingController();
   TextEditingController exportPriceController = TextEditingController();
+  TextEditingController productQuantityController = TextEditingController();
 
   @override
   void dispose() {
@@ -143,9 +146,11 @@ class _ProductEditState extends State<ProductEdit> {
     productCodeController.dispose();
     productGarageController.dispose();
     productRouteController.dispose();
+    buyDateController.dispose();
     expireDateController.dispose();
     importPriceController.dispose();
     exportPriceController.dispose();
+    productQuantityController.dispose();
   }
 
   @override
@@ -168,7 +173,7 @@ class _ProductEditState extends State<ProductEdit> {
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
                       Text(
-                        'Edit ${widget.product.product_name}',
+                        'Edit ${widget.suppliers.product_name}',
                         style: TextStyle(
                             fontWeight: FontWeight.bold, fontSize: 30.sp),
                       ),
@@ -437,6 +442,27 @@ class _ProductEditState extends State<ProductEdit> {
                             ),
                           ),
                           Text(
+                            'Product Quantity',
+                            style: TextStyle(
+                                fontWeight: FontWeight.bold, fontSize: 14.sp),
+                          ),
+                          Padding(
+                            padding: REdgeInsets.only(bottom: 30.r, top: 10.r),
+                            child: SizedBox(
+                              width: 0.4.sw,
+                              child: TextFormField(
+                                controller: productQuantityController,
+                                textInputAction: TextInputAction.next,
+                                obscureText: false,
+                                decoration: InputDecoration(
+                                  border: OutlineInputBorder(
+                                    borderRadius: BorderRadius.circular(10.0.r),
+                                  ),
+                                ),
+                              ),
+                            ),
+                          ),
+                          Text(
                             'Product Code',
                             style: TextStyle(
                                 fontWeight: FontWeight.bold, fontSize: 14.sp),
@@ -500,6 +526,61 @@ class _ProductEditState extends State<ProductEdit> {
                             ),
                           ),
                           Text(
+                            'Buy Date',
+                            style: TextStyle(
+                                fontWeight: FontWeight.bold, fontSize: 14.sp),
+                          ),
+                          Padding(
+                            padding: REdgeInsets.only(bottom: 15, top: 10),
+                            child: Row(
+                              children: [
+                                GestureDetector(
+                                  onTap: () => _selectBuyDate(context),
+                                  child: Center(
+                                    child: CircleAvatar(
+                                        radius: 30.r,
+                                        backgroundColor: Colors.orange,
+                                        foregroundColor: Colors.white,
+                                        child: Icon(
+                                          Icons.edit,
+                                          size: 25.r,
+                                        )),
+                                  ),
+                                ),
+                                SizedBox(
+                                  width: 15.w,
+                                ),
+                                SizedBox(
+                                  width: 270.w,
+                                  child: TextFormField(
+                                    controller: buyDateController,
+                                    keyboardType: TextInputType.datetime,
+                                    textInputAction: TextInputAction.done,
+                                    obscureText: false,
+                                    readOnly: true,
+                                    onTap: () async {
+                                      _selectBuyDate(context);
+                                    },
+                                    decoration: InputDecoration(
+                                      fillColor: Colors.white,
+                                      border: OutlineInputBorder(
+                                        borderRadius:
+                                            BorderRadius.circular(10.0.r),
+                                      ),
+                                      hintText: _selectedBuyDate == null
+                                          ? DateFormat('dd / MMMM / yyyy')
+                                              .format(DateTime.now())
+                                          : DateFormat('dd / MMMM / yyyy')
+                                              .format(_selectedBuyDate!),
+                                      hintStyle: TextStyle(fontSize: 14.sp),
+                                      labelStyle: TextStyle(fontSize: 14.sp),
+                                    ),
+                                  ),
+                                ),
+                              ],
+                            ),
+                          ),
+                          Text(
                             'Expire Date',
                             style: TextStyle(
                                 fontWeight: FontWeight.bold, fontSize: 14.sp),
@@ -509,7 +590,7 @@ class _ProductEditState extends State<ProductEdit> {
                             child: Row(
                               children: [
                                 GestureDetector(
-                                  onTap: () => _selectExpireDate(context),
+                                  onTap: () => _selectBuyDate(context),
                                   child: Center(
                                     child: CircleAvatar(
                                         radius: 30.r,
@@ -567,7 +648,8 @@ class _ProductEditState extends State<ProductEdit> {
                             importPriceController.text.isEmpty ||
                             productCodeController.text.isEmpty ||
                             productGarageController.text.isEmpty ||
-                            productGarageController.text.isEmpty) {
+                            productGarageController.text.isEmpty ||
+                            productQuantityController.text.isEmpty) {
                           Get.snackbar('Something wrong!',
                               'You need to input all product information to import',
                               colorText: Colors.white,
@@ -599,7 +681,7 @@ class _ProductEditState extends State<ProductEdit> {
                               buying_price: importPriceController.text,
                               price: exportPriceController.text,
                               product_quantity: 1,
-                              id: widget.product.id);
+                              id: widget.suppliers.id);
                         }
                       },
                       style: TextButton.styleFrom(

@@ -19,7 +19,8 @@ class CustomerController extends GetxController {
   Rxn<Customer> customer = Rxn<Customer>();
   RxBool isCustomerLoading = false.obs;
   RxBool isCustomersLoading = false.obs;
-
+  TextEditingController searchCustomersController = TextEditingController();
+  RxString searchVal = ''.obs;
   @override
   void onInit() async {
     getCustomers();
@@ -117,6 +118,22 @@ class CustomerController extends GetxController {
       }
     } finally {
       isCustomerLoading(false);
+    }
+  }
+
+  void getCustomerByName({required String keyword}) async {
+    try {
+      isCustomersLoading(true);
+      //call api
+      var result = await RemoteCustomerService().getByName(keyword: keyword);
+
+      if (result != null) {
+        //assign api result
+        customersList.assignAll(customersListFromJson(result.body));
+        //save api result to local db
+      }
+    } finally {
+      isCustomersLoading(false);
     }
   }
 }

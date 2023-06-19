@@ -135,8 +135,8 @@ class _QuantityCategoriesSuppliersState
             if (productController.isProductsLoading.value) {
               return const Center(child: CircularProgressIndicator());
             } else {
-              if (productController.productList.isNotEmpty) {
-                return ProductList(products: productController.productList);
+              if (productController.productsList.isNotEmpty) {
+                return ProductList(products: productController.productsList);
               } else {
                 return Center(
                   child: Column(

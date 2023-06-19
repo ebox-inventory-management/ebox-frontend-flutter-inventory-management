@@ -35,16 +35,6 @@ class NavigationBarScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     return Builder(
       builder: (context) {
-        // dashboardController;
-        // productController;
-        // categoryController;
-        // importController;
-        // supplierController;
-        // incomeController.getIncomeToday();
-        // expenseController.getExpenseToday();
-        // revenueController.getRevenueToday();
-        // brandController;
-        // customerController;
         final isSmallScreen = MediaQuery.of(context).size.width < 600;
         return Scaffold(
           backgroundColor: Colors.grey[100],
@@ -186,7 +176,7 @@ class CustomeSidebarX extends StatelessWidget {
           label: 'Dashboard',
         ),
         const SidebarXItem(
-          icon: Icons.list,
+          icon: Icons.inventory,
           label: 'Product',
         ),
         const SidebarXItem(

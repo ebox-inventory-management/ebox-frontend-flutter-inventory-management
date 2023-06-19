@@ -22,7 +22,7 @@ class ProductScreen extends StatelessWidget {
             Row(
               children: [
                 Icon(
-                  Icons.list,
+                  Icons.inventory,
                   size: 30.r,
                 ),
                 SizedBox(
@@ -48,10 +48,14 @@ class ProductScreen extends StatelessWidget {
                 () => TextField(
                   controller: productController.searchProductsController,
                   onSubmitted: (value) {
-                    // productController.getVendorByName(keyword: value);
+                    productController.getProductsByKeyword(keyword: value);
                   },
                   onChanged: (value) {
-                    productController.searchVal.value = value;
+                    if (value.isEmpty) {
+                      productController.getProducts();
+                    } else {
+                      productController.searchVal.value = value;
+                    }
                   },
                   cursorColor: Colors.orange,
                   decoration: InputDecoration(
@@ -113,24 +117,30 @@ class ProductScreen extends StatelessWidget {
                       style: TextButton.styleFrom(
                         foregroundColor: Colors.white,
                         backgroundColor: Colors.orange,
+                        shape: RoundedRectangleBorder(
+                            borderRadius:
+                                BorderRadius.all(Radius.circular(15.r))),
                       ),
-                      child: Row(
-                        children: [
-                          Icon(
-                            Icons.add,
-                            size: 30.r,
-                          ),
-                          SizedBox(
-                            width: 5.w,
-                          ),
-                          Text(
-                            'Add Product',
-                            style: TextStyle(
-                              fontWeight: FontWeight.w500,
-                              fontSize: 16.sp,
+                      child: Padding(
+                        padding: REdgeInsets.all(15.r),
+                        child: Row(
+                          children: [
+                            Icon(
+                              Icons.add,
+                              size: 30.r,
                             ),
-                          ),
-                        ],
+                            SizedBox(
+                              width: 5.w,
+                            ),
+                            Text(
+                              'Add Product',
+                              style: TextStyle(
+                                fontWeight: FontWeight.w500,
+                                fontSize: 14.sp,
+                              ),
+                            ),
+                          ],
+                        ),
                       ))
                 ],
               ),
@@ -139,14 +149,14 @@ class ProductScreen extends StatelessWidget {
               if (productController.isProductsLoading.value) {
                 return const Center(child: CircularProgressIndicator());
               } else {
-                if (productController.productList.isNotEmpty) {
-                  return ProductList(products: productController.productList);
+                if (productController.productsList.isNotEmpty) {
+                  return ProductList(products: productController.productsList);
                 } else {
                   return Center(
                     child: Column(
                       children: [
                         Image.network(
-                          'https://firebasestorage.googleapis.com/v0/b/ebox-inventory-management.appspot.com/o/empty.png?alt=media&token=06b30b38-cac0-490e-ac6a-6373fe120a16',
+                          'https://firebasestorage.googleapis.com/v0/b/ebox-inventory-management.appspot.com/o/product.png?alt=media&token=910d822f-0b0e-45ed-8a0b-79dd0d8b84d2',
                           scale: 4,
                         ),
                         Text(

@@ -15,7 +15,8 @@ class CategoryController extends GetxController {
   Rxn<Category> category = Rxn<Category>();
   RxBool isCategoryLoading = false.obs;
   RxBool isCategoriesLoading = false.obs;
-
+  TextEditingController searchCategoriesController = TextEditingController();
+  RxString searchVal = ''.obs;
   @override
   void onInit() async {
     getCategories();
@@ -56,8 +57,6 @@ class CategoryController extends GetxController {
       if (result != null) {
         //assign api result
         categoriesList.assignAll(categoriesListFromJson(result.body));
-
-        //save api result to local db
       }
     } finally {
       isCategoriesLoading(false);
@@ -73,7 +72,36 @@ class CategoryController extends GetxController {
       if (result != null) {
         //assign api result
         category.value = categoryListFromJson(result.body);
-        //save api result to local db
+      }
+    } finally {
+      isCategoryLoading(false);
+    }
+  }
+
+  void getCategoryByKeyword({required String keyword}) async {
+    try {
+      isCategoriesLoading(true);
+      //call api
+      var result = await RemoteCategoryService().getByKeyword(keyword: keyword);
+
+      if (result != null) {
+        //assign api result
+        categoriesList.assignAll(categoriesListFromJson(result.body));
+      }
+    } finally {
+      isCategoriesLoading(false);
+    }
+  }
+
+  void getCategoryByName({required String name}) async {
+    try {
+      isCategoryLoading(true);
+      //call api
+      var result = await RemoteCategoryService().getByName(name: name);
+
+      if (result != null) {
+        //assign api result
+        category.value = categoryListFromJson(result.body);
       }
     } finally {
       isCategoryLoading(false);

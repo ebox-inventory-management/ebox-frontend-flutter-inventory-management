@@ -2,7 +2,6 @@ import 'package:ebox_frontend_web_inventory/model/categories.dart';
 import 'package:ebox_frontend_web_inventory/model/customers.dart';
 import 'package:ebox_frontend_web_inventory/model/supplier.dart';
 import 'package:ebox_frontend_web_inventory/views/product/widgets/product_card.dart';
-import 'package:ebox_frontend_web_inventory/views/suppliers/widgets/supplier_card.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 

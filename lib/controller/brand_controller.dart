@@ -16,7 +16,8 @@ class BrandController extends GetxController {
   Rxn<Brand> brand = Rxn<Brand>();
   RxBool isBrandLoading = false.obs;
   RxBool isBrandsLoading = false.obs;
-
+  TextEditingController searchBrandsController = TextEditingController();
+  RxString searchVal = ''.obs;
   @override
   void onInit() async {
     getBrands();
@@ -75,6 +76,36 @@ class BrandController extends GetxController {
         //assign api result
         brand.value = brandListFromJson(result.body);
         //save api result to local db
+      }
+    } finally {
+      isBrandLoading(false);
+    }
+  }
+
+  void getBrandsByKeyword({required String keyword}) async {
+    try {
+      isBrandsLoading(true);
+      //call api
+      var result = await RemoteBrandService().getByKeyword(keyword: keyword);
+
+      if (result != null) {
+        //assign api result
+        brandsList.assignAll(brandsListFromJson(result.body));
+      }
+    } finally {
+      isBrandsLoading(false);
+    }
+  }
+
+  void getBrandByName({required String name}) async {
+    try {
+      isBrandLoading(true);
+      //call api
+      var result = await RemoteBrandService().getByName(name: name);
+
+      if (result != null) {
+        //assign api result
+        brand.value = brandListFromJson(result.body);
       }
     } finally {
       isBrandLoading(false);

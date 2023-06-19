@@ -11,6 +11,6 @@ class TotalAmount {
   });
 
   factory TotalAmount.fromJson(Map<String, dynamic> data) => TotalAmount(
-        total: data['total'] ?? 0,
+        total: data['total'].toString(),
       );
 }
