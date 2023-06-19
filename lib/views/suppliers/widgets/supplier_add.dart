@@ -4,67 +4,22 @@ import 'package:dropdown_button2/custom_dropdown_button2.dart';
 import 'package:file_picker/file_picker.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 import 'package:intl/intl.dart';
 
 import '../../../controller/controllers.dart';
 
-class ProductAdd extends StatefulWidget {
-  const ProductAdd({super.key});
+class SupplierAdd extends StatefulWidget {
+  const SupplierAdd({super.key});
 
   @override
-  State<ProductAdd> createState() => _ProductAddState();
+  State<SupplierAdd> createState() => _SupplierAddState();
 }
 
-class _ProductAddState extends State<ProductAdd> {
-  final List<String> categoriesName =
-      categoryController.categoriesList.map((data) => data.name).toList();
-  final List<String> brandsName =
-      brandController.brandsList.map((data) => data.name).toList();
-  final List<String> suppliersName =
-      supplierController.suppliersList.map((data) => data.name).toList();
-
-  String? selectedValueCategory;
-  String? selectedValueBrand;
-  String? selectedValueSupplier;
-
-  DateTime? _selectedBuyDate;
-  DateTime? _selectedExpireDate;
-
+class _SupplierAddState extends State<SupplierAdd> {
   Color backgroundColor = Colors.grey;
   Color foregroundColor = Colors.white;
-
-  Future<void> _selectExpireDate(BuildContext context) async {
-    final DateTime? picked = await showDatePicker(
-      builder: (context, child) {
-        return Theme(
-          data: Theme.of(context).copyWith(
-            colorScheme: const ColorScheme.light(
-              primary: Colors.orange,
-              onSurface: Colors.orange,
-            ),
-            textButtonTheme: TextButtonThemeData(
-              style: TextButton.styleFrom(
-                foregroundColor: Colors.orange,
-              ),
-            ),
-          ),
-          child: child!,
-        );
-      },
-      context: context,
-      initialDate: DateTime.now(),
-      firstDate: DateTime(1900),
-      lastDate: DateTime(2100),
-    );
-    if (picked != null && picked != _selectedExpireDate) {
-      setState(() {
-        _selectedExpireDate = picked;
-      });
-    }
-  }
 
   // Variable to hold the selected image file
   PlatformFile? _imageFile;
@@ -94,24 +49,30 @@ class _ProductAddState extends State<ProductAdd> {
     }
   }
 
-  TextEditingController productNameController = TextEditingController();
-  TextEditingController productCodeController = TextEditingController();
-  TextEditingController productGarageController = TextEditingController();
-  TextEditingController productRouteController = TextEditingController();
-  TextEditingController expireDateController = TextEditingController();
-  TextEditingController importPriceController = TextEditingController();
-  TextEditingController exportPriceController = TextEditingController();
+  TextEditingController addressController = TextEditingController();
+  TextEditingController bankNameController = TextEditingController();
+  TextEditingController bankNumberController = TextEditingController();
+  TextEditingController cityController = TextEditingController();
+  TextEditingController emailController = TextEditingController();
+  TextEditingController nameController = TextEditingController();
+  TextEditingController phoneController = TextEditingController();
+  TextEditingController photoController = TextEditingController();
+  TextEditingController shopNameController = TextEditingController();
+  TextEditingController typeController = TextEditingController();
 
   @override
   void dispose() {
     super.dispose();
-    productNameController.dispose();
-    productCodeController.dispose();
-    productGarageController.dispose();
-    productRouteController.dispose();
-    expireDateController.dispose();
-    importPriceController.dispose();
-    exportPriceController.dispose();
+    addressController.dispose();
+    bankNameController.dispose();
+    bankNumberController.dispose();
+    cityController.dispose();
+    emailController.dispose();
+    nameController.dispose();
+    phoneController.dispose();
+    photoController.dispose();
+    shopNameController.dispose();
+    typeController.dispose();
   }
 
   @override
@@ -136,7 +97,7 @@ class _ProductAddState extends State<ProductAdd> {
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [
                         Text(
-                          'Add Product',
+                          'Add Supplier',
                           style: TextStyle(
                               fontWeight: FontWeight.bold, fontSize: 30.sp),
                         ),
@@ -166,7 +127,7 @@ class _ProductAddState extends State<ProductAdd> {
                             Padding(
                               padding: REdgeInsets.only(bottom: 15.r),
                               child: Text(
-                                'Product Image',
+                                'Supplier Image',
                                 style: TextStyle(
                                     fontWeight: FontWeight.bold,
                                     fontSize: 14.sp),
@@ -217,120 +178,6 @@ class _ProductAddState extends State<ProductAdd> {
                                 ),
                               ),
                             ),
-                            SizedBox(
-                              height: 30.w,
-                            ),
-                            Text(
-                              'Category',
-                              style: TextStyle(
-                                  fontWeight: FontWeight.bold, fontSize: 14.sp),
-                            ),
-                            Padding(
-                              padding:
-                                  REdgeInsets.only(top: 15.r, bottom: 30.r),
-                              child: CustomDropdownButton2(
-                                buttonWidth: 0.2.sw,
-                                buttonHeight: 40.w,
-                                hint: 'Choose Category',
-                                dropdownItems: categoriesName,
-                                value: selectedValueCategory,
-                                buttonDecoration: BoxDecoration(
-                                  borderRadius: BorderRadius.circular(15.r),
-                                  color: Colors.grey[100],
-                                ),
-                                dropdownWidth: 0.2.sw,
-                                dropdownDecoration: BoxDecoration(
-                                  borderRadius: BorderRadius.circular(15.r),
-                                  color: Colors.white,
-                                ),
-                                icon: Icon(
-                                  Icons.arrow_drop_down,
-                                  size: 40.r,
-                                  color: Colors.orange,
-                                ),
-                                onChanged: (index) {
-                                  setState(() {
-                                    selectedValueCategory = index;
-                                    categoryController.getCategoryByName(
-                                        name: selectedValueCategory!);
-                                  });
-                                },
-                              ),
-                            ),
-                            Text(
-                              'Brand',
-                              style: TextStyle(
-                                  fontWeight: FontWeight.bold, fontSize: 14.sp),
-                            ),
-                            Padding(
-                              padding:
-                                  REdgeInsets.only(top: 15.r, bottom: 30.r),
-                              child: CustomDropdownButton2(
-                                buttonWidth: 0.2.sw,
-                                buttonHeight: 40.w,
-                                hint: 'Choose Brand',
-                                dropdownItems: brandsName,
-                                value: selectedValueBrand,
-                                buttonDecoration: BoxDecoration(
-                                  borderRadius: BorderRadius.circular(15.r),
-                                  color: Colors.grey[100],
-                                ),
-                                dropdownWidth: 0.2.sw,
-                                dropdownDecoration: BoxDecoration(
-                                  borderRadius: BorderRadius.circular(15.r),
-                                  color: Colors.white,
-                                ),
-                                icon: Icon(
-                                  Icons.arrow_drop_down,
-                                  size: 40.r,
-                                  color: Colors.orange,
-                                ),
-                                onChanged: (index) {
-                                  setState(() {
-                                    selectedValueBrand = index;
-                                    brandController.getBrandByName(
-                                        name: selectedValueBrand!);
-                                  });
-                                },
-                              ),
-                            ),
-                            Text(
-                              'Supplier',
-                              style: TextStyle(
-                                  fontWeight: FontWeight.bold, fontSize: 14.sp),
-                            ),
-                            Padding(
-                              padding:
-                                  REdgeInsets.only(top: 15.r, bottom: 30.r),
-                              child: CustomDropdownButton2(
-                                buttonWidth: 0.2.sw,
-                                buttonHeight: 40.w,
-                                hint: 'Choose Supplier',
-                                dropdownItems: suppliersName,
-                                value: selectedValueSupplier,
-                                buttonDecoration: BoxDecoration(
-                                  borderRadius: BorderRadius.circular(15.r),
-                                  color: Colors.grey[100],
-                                ),
-                                dropdownWidth: 0.2.sw,
-                                dropdownDecoration: BoxDecoration(
-                                  borderRadius: BorderRadius.circular(15.r),
-                                  color: Colors.white,
-                                ),
-                                icon: Icon(
-                                  Icons.arrow_drop_down,
-                                  size: 40.r,
-                                  color: Colors.orange,
-                                ),
-                                onChanged: (index) {
-                                  setState(() {
-                                    selectedValueSupplier = index;
-                                    supplierController.getSupplierByName(
-                                        name: selectedValueSupplier!);
-                                  });
-                                },
-                              ),
-                            ),
                           ],
                         ),
                         Spacer(),
@@ -341,7 +188,7 @@ class _ProductAddState extends State<ProductAdd> {
                               height: 30.w,
                             ),
                             Text(
-                              'Product Name',
+                              'Supplier Name',
                               style: TextStyle(
                                   fontWeight: FontWeight.bold, fontSize: 14.sp),
                             ),
@@ -351,7 +198,7 @@ class _ProductAddState extends State<ProductAdd> {
                               child: SizedBox(
                                 width: 0.4.sw,
                                 child: TextFormField(
-                                  controller: productNameController,
+                                  controller: nameController,
                                   onChanged: (val) {
                                     setState(() {
                                       backgroundColor = val.isNotEmpty
@@ -374,7 +221,7 @@ class _ProductAddState extends State<ProductAdd> {
                               ),
                             ),
                             Text(
-                              'Import Price',
+                              'Email',
                               style: TextStyle(
                                   fontWeight: FontWeight.bold, fontSize: 14.sp),
                             ),
@@ -384,57 +231,7 @@ class _ProductAddState extends State<ProductAdd> {
                               child: SizedBox(
                                 width: 0.4.sw,
                                 child: TextFormField(
-                                  controller: importPriceController,
-                                  keyboardType: TextInputType.number,
-                                  inputFormatters: <TextInputFormatter>[
-                                    FilteringTextInputFormatter.digitsOnly
-                                  ],
-                                  decoration: InputDecoration(
-                                    border: OutlineInputBorder(
-                                      borderRadius:
-                                          BorderRadius.circular(10.0.r),
-                                    ),
-                                  ),
-                                ),
-                              ),
-                            ),
-                            Text(
-                              'Export Price',
-                              style: TextStyle(
-                                  fontWeight: FontWeight.bold, fontSize: 14.sp),
-                            ),
-                            Padding(
-                              padding:
-                                  REdgeInsets.only(bottom: 30.r, top: 10.r),
-                              child: SizedBox(
-                                width: 0.4.sw,
-                                child: TextFormField(
-                                  controller: exportPriceController,
-                                  keyboardType: TextInputType.number,
-                                  inputFormatters: <TextInputFormatter>[
-                                    FilteringTextInputFormatter.digitsOnly
-                                  ],
-                                  decoration: InputDecoration(
-                                    border: OutlineInputBorder(
-                                      borderRadius:
-                                          BorderRadius.circular(10.0.r),
-                                    ),
-                                  ),
-                                ),
-                              ),
-                            ),
-                            Text(
-                              'Product Code',
-                              style: TextStyle(
-                                  fontWeight: FontWeight.bold, fontSize: 14.sp),
-                            ),
-                            Padding(
-                              padding:
-                                  REdgeInsets.only(bottom: 30.r, top: 10.r),
-                              child: SizedBox(
-                                width: 0.4.sw,
-                                child: TextFormField(
-                                  controller: productCodeController,
+                                  controller: emailController,
                                   textInputAction: TextInputAction.next,
                                   obscureText: false,
                                   decoration: InputDecoration(
@@ -447,7 +244,7 @@ class _ProductAddState extends State<ProductAdd> {
                               ),
                             ),
                             Text(
-                              'Product Garage',
+                              'Phone',
                               style: TextStyle(
                                   fontWeight: FontWeight.bold, fontSize: 14.sp),
                             ),
@@ -457,7 +254,7 @@ class _ProductAddState extends State<ProductAdd> {
                               child: SizedBox(
                                 width: 0.4.sw,
                                 child: TextFormField(
-                                  controller: productGarageController,
+                                  controller: phoneController,
                                   textInputAction: TextInputAction.next,
                                   obscureText: false,
                                   decoration: InputDecoration(
@@ -470,7 +267,7 @@ class _ProductAddState extends State<ProductAdd> {
                               ),
                             ),
                             Text(
-                              'Product Route',
+                              'Address',
                               style: TextStyle(
                                   fontWeight: FontWeight.bold, fontSize: 14.sp),
                             ),
@@ -480,7 +277,7 @@ class _ProductAddState extends State<ProductAdd> {
                               child: SizedBox(
                                 width: 0.4.sw,
                                 child: TextFormField(
-                                  controller: productRouteController,
+                                  controller: addressController,
                                   textInputAction: TextInputAction.next,
                                   obscureText: false,
                                   decoration: InputDecoration(
@@ -493,58 +290,118 @@ class _ProductAddState extends State<ProductAdd> {
                               ),
                             ),
                             Text(
-                              'Expire Date',
+                              'City',
                               style: TextStyle(
                                   fontWeight: FontWeight.bold, fontSize: 14.sp),
                             ),
                             Padding(
-                              padding: REdgeInsets.only(bottom: 15, top: 10),
-                              child: Row(
-                                children: [
-                                  GestureDetector(
-                                    onTap: () => _selectExpireDate(context),
-                                    child: Center(
-                                      child: CircleAvatar(
-                                          radius: 30.r,
-                                          backgroundColor: Colors.orange,
-                                          foregroundColor: Colors.white,
-                                          child: Icon(
-                                            Icons.edit,
-                                            size: 25.r,
-                                          )),
+                              padding:
+                                  REdgeInsets.only(bottom: 30.r, top: 10.r),
+                              child: SizedBox(
+                                width: 0.4.sw,
+                                child: TextFormField(
+                                  controller: cityController,
+                                  textInputAction: TextInputAction.next,
+                                  obscureText: false,
+                                  decoration: InputDecoration(
+                                    border: OutlineInputBorder(
+                                      borderRadius:
+                                          BorderRadius.circular(10.0.r),
                                     ),
                                   ),
-                                  SizedBox(
-                                    width: 15.w,
-                                  ),
-                                  SizedBox(
-                                    width: 270.w,
-                                    child: TextFormField(
-                                      controller: expireDateController,
-                                      keyboardType: TextInputType.datetime,
-                                      textInputAction: TextInputAction.done,
-                                      obscureText: false,
-                                      readOnly: true,
-                                      onTap: () async {
-                                        _selectExpireDate(context);
-                                      },
-                                      decoration: InputDecoration(
-                                        fillColor: Colors.white,
-                                        border: OutlineInputBorder(
-                                          borderRadius:
-                                              BorderRadius.circular(10.0.r),
-                                        ),
-                                        hintText: _selectedExpireDate == null
-                                            ? DateFormat('dd / MMMM / yyyy')
-                                                .format(DateTime.now())
-                                            : DateFormat('dd / MMMM / yyyy')
-                                                .format(_selectedExpireDate!),
-                                        hintStyle: TextStyle(fontSize: 14.sp),
-                                        labelStyle: TextStyle(fontSize: 14.sp),
-                                      ),
+                                ),
+                              ),
+                            ),
+                            Text(
+                              'Type',
+                              style: TextStyle(
+                                  fontWeight: FontWeight.bold, fontSize: 14.sp),
+                            ),
+                            Padding(
+                              padding:
+                                  REdgeInsets.only(bottom: 30.r, top: 10.r),
+                              child: SizedBox(
+                                width: 0.4.sw,
+                                child: TextFormField(
+                                  controller: typeController,
+                                  textInputAction: TextInputAction.next,
+                                  obscureText: false,
+                                  decoration: InputDecoration(
+                                    border: OutlineInputBorder(
+                                      borderRadius:
+                                          BorderRadius.circular(10.0.r),
                                     ),
                                   ),
-                                ],
+                                ),
+                              ),
+                            ),
+                            Text(
+                              'Shop Name',
+                              style: TextStyle(
+                                  fontWeight: FontWeight.bold, fontSize: 14.sp),
+                            ),
+                            Padding(
+                              padding:
+                                  REdgeInsets.only(bottom: 30.r, top: 10.r),
+                              child: SizedBox(
+                                width: 0.4.sw,
+                                child: TextFormField(
+                                  controller: shopNameController,
+                                  textInputAction: TextInputAction.next,
+                                  obscureText: false,
+                                  decoration: InputDecoration(
+                                    border: OutlineInputBorder(
+                                      borderRadius:
+                                          BorderRadius.circular(10.0.r),
+                                    ),
+                                  ),
+                                ),
+                              ),
+                            ),
+                            Text(
+                              'Bank Name',
+                              style: TextStyle(
+                                  fontWeight: FontWeight.bold, fontSize: 14.sp),
+                            ),
+                            Padding(
+                              padding:
+                                  REdgeInsets.only(bottom: 30.r, top: 10.r),
+                              child: SizedBox(
+                                width: 0.4.sw,
+                                child: TextFormField(
+                                  controller: bankNameController,
+                                  textInputAction: TextInputAction.next,
+                                  obscureText: false,
+                                  decoration: InputDecoration(
+                                    border: OutlineInputBorder(
+                                      borderRadius:
+                                          BorderRadius.circular(10.0.r),
+                                    ),
+                                  ),
+                                ),
+                              ),
+                            ),
+                            Text(
+                              'Bank Number',
+                              style: TextStyle(
+                                  fontWeight: FontWeight.bold, fontSize: 14.sp),
+                            ),
+                            Padding(
+                              padding:
+                                  REdgeInsets.only(bottom: 30.r, top: 10.r),
+                              child: SizedBox(
+                                width: 0.4.sw,
+                                child: TextFormField(
+                                  controller: bankNumberController,
+                                  textInputAction: TextInputAction.next,
+                                  obscureText: false,
+                                  decoration: InputDecoration(
+                                    border: OutlineInputBorder(
+                                      borderRadius:
+                                          BorderRadius.circular(10.0.r),
+                                    ),
+                                  ),
+                                ),
                               ),
                             ),
                           ],
@@ -554,18 +411,17 @@ class _ProductAddState extends State<ProductAdd> {
                     Center(
                       child: TextButton(
                         onPressed: () {
-                          if (productCodeController.text.isEmpty ||
-                              productNameController.text.isEmpty ||
-                              exportPriceController.text.isEmpty ||
-                              importPriceController.text.isEmpty ||
-                              productCodeController.text.isEmpty ||
-                              productGarageController.text.isEmpty ||
-                              productGarageController.text.isEmpty ||
-                              categoryController.category.value?.id == null ||
-                              supplierController.supplier.value?.id == null ||
-                              brandController.brand.value?.id == null) {
+                          if (bankNameController.text.isEmpty ||
+                              addressController.text.isEmpty ||
+                              photoController.text.isEmpty ||
+                              phoneController.text.isEmpty ||
+                              bankNameController.text.isEmpty ||
+                              bankNumberController.text.isEmpty ||
+                              bankNumberController.text.isEmpty ||
+                              shopNameController.text.isEmpty ||
+                              typeController.text.isEmpty) {
                             Get.snackbar('Something wrong!',
-                                'You need to input all product information to import',
+                                'You need to input all supplier information to add',
                                 colorText: Colors.white,
                                 margin: REdgeInsets.all(15),
                                 backgroundColor: Colors.redAccent,
@@ -573,31 +429,24 @@ class _ProductAddState extends State<ProductAdd> {
                                 duration: const Duration(seconds: 2));
                             return;
                           } else {
-                            Get.snackbar('Added Product!',
-                                'You have been add product'.tr,
+                            Get.snackbar('Added Supplier!',
+                                'You have been add supplier'.tr,
                                 colorText: Colors.white,
                                 margin: REdgeInsets.all(15),
                                 backgroundColor: Colors.green,
                                 snackPosition: SnackPosition.BOTTOM,
                                 duration: const Duration(seconds: 2));
-
-                            productController.createProduct(
-                              category_id:
-                                  categoryController.category.value!.id,
-                              supplier_id:
-                                  supplierController.supplier.value!.id,
-                              brand_id: brandController.brand.value!.id,
-                              product_name: productNameController.text,
-                              product_code: productCodeController.text,
-                              product_garage: productGarageController.text,
-                              product_route: productRouteController.text,
-                              product_image: 'image',
-                              expire_date: _selectedExpireDate.toString(),
-                              import_price:
-                                  int.parse(importPriceController.text),
-                              export_price:
-                                  int.parse(exportPriceController.text),
-                            );
+                            supplierController.create(
+                                address: addressController.text,
+                                bank_name: bankNameController.text,
+                                bank_number: bankNameController.text,
+                                city: cityController.text,
+                                email: emailController.text,
+                                name: nameController.text,
+                                phone: phoneController.text,
+                                photo: '',
+                                shop_name: shopNameController.text,
+                                type: typeController.text);
                           }
                         },
                         style: TextButton.styleFrom(

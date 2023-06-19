@@ -20,7 +20,7 @@ class ImportProductAdd extends StatefulWidget {
 
 class _ImportProductAddState extends State<ImportProductAdd> {
   final List<String> importProductsName =
-      productController.productList.map((data) => data.product_name).toList();
+      productController.productsList.map((data) => data.product_name).toList();
 
   String? selectedValueProductImport;
 
@@ -90,8 +90,11 @@ class _ImportProductAddState extends State<ImportProductAdd> {
                         width: 0.4.sw,
                         child: TextFormField(
                           controller: importQuantityController,
-                          textInputAction: TextInputAction.next,
-                          obscureText: false,
+                          keyboardType: TextInputType.number,
+                          inputFormatters: <TextInputFormatter>[
+                            FilteringTextInputFormatter.allow(
+                                RegExp(r'[0-9,-]')),
+                          ],
                           onChanged: (val) {
                             setState(() {
                               backgroundColor =
@@ -100,7 +103,6 @@ class _ImportProductAddState extends State<ImportProductAdd> {
                                   val.isNotEmpty ? Colors.white : Colors.white;
                             });
                           },
-                          keyboardType: TextInputType.number,
                           decoration: InputDecoration(
                             border: OutlineInputBorder(
                               borderRadius: BorderRadius.circular(10.0.r),
@@ -139,6 +141,9 @@ class _ImportProductAddState extends State<ImportProductAdd> {
                         onChanged: (index) {
                           setState(() {
                             selectedValueProductImport = index;
+                            productController.getProductsByName(
+                                name: selectedValueProductImport!);
+                            print(productController.product.value!.id);
                           });
                         },
                       ),
@@ -165,7 +170,7 @@ class _ImportProductAddState extends State<ImportProductAdd> {
                                 snackPosition: SnackPosition.BOTTOM,
                                 duration: const Duration(seconds: 2));
                             importController.create(
-                                productId: 2,
+                                productId: productController.product.value!.id,
                                 product_quantity:
                                     int.parse(importQuantityController.text));
                             Get.back();

@@ -20,7 +20,7 @@ class ExportProductAdd extends StatefulWidget {
 
 class _ExportProductAddState extends State<ExportProductAdd> {
   final List<String> productsName =
-      productController.productList.map((data) => data.product_name).toList();
+      productController.productsList.map((data) => data.product_name).toList();
 
   String? selectedValueProduct;
 
@@ -157,8 +157,8 @@ class _ExportProductAddState extends State<ExportProductAdd> {
                                 duration: const Duration(seconds: 2));
                             return;
                           } else {
-                            productController.getProductsByName(
-                                name: selectedValueProduct!);
+                            // productController.getProductsByName(
+                            //     name: selectedValueProduct!);
 
                             Get.snackbar('Exported Product!',
                                 'You have been import product'.tr,

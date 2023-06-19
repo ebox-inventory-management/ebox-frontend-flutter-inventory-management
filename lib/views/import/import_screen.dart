@@ -45,60 +45,8 @@ class ImportScreen extends StatelessWidget {
                 thickness: 5.w,
               ),
             ),
-            Material(
-              borderRadius: BorderRadius.circular(15),
-              child: Obx(
-                () => TextField(
-                  controller: productController.searchProductsController,
-                  onSubmitted: (value) {
-                    // productController.getVendorByName(keyword: value);
-                  },
-                  onChanged: (value) {
-                    productController.searchVal.value = value;
-                  },
-                  cursorColor: Colors.orange,
-                  decoration: InputDecoration(
-                    prefixIconColor: Colors.grey,
-                    prefixIcon: Icon(
-                      Icons.search,
-                      size: 20.r,
-                    ),
-                    suffixIconColor: Colors.grey,
-                    suffixIcon: productController.searchVal.value.isNotEmpty
-                        ? IconButton(
-                            onPressed: () {
-                              FocusScope.of(context).requestFocus(FocusNode());
-
-                              productController.searchProductsController
-                                  .clear();
-                              productController.searchVal.value = '';
-                              // productController.getProducts();
-                            },
-                            icon: Icon(
-                              Icons.clear,
-                              size: 20.r,
-                            ))
-                        : null,
-                    filled: true,
-                    fillColor: Colors.white,
-                    hintText: 'Search history import'.tr,
-                    hintStyle: TextStyle(
-                        fontSize: 12.sp,
-                        color: Colors.grey,
-                        fontWeight: FontWeight.w300),
-                    contentPadding: REdgeInsets.only(top: 30),
-                    focusedBorder: OutlineInputBorder(
-                        borderSide: const BorderSide(color: Colors.white),
-                        borderRadius: BorderRadius.circular(30.r)),
-                    enabledBorder: OutlineInputBorder(
-                        borderSide: const BorderSide(color: Colors.white),
-                        borderRadius: BorderRadius.circular(30.r)),
-                  ),
-                ),
-              ),
-            ),
             Padding(
-              padding: REdgeInsets.only(top: 30.w, bottom: 15.w),
+              padding: REdgeInsets.only(top: 15.w, bottom: 15.w),
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
@@ -116,24 +64,30 @@ class ImportScreen extends StatelessWidget {
                       style: TextButton.styleFrom(
                         foregroundColor: Colors.white,
                         backgroundColor: Colors.orange,
+                        shape: RoundedRectangleBorder(
+                            borderRadius:
+                                BorderRadius.all(Radius.circular(15.r))),
                       ),
-                      child: Row(
-                        children: [
-                          Icon(
-                            Icons.download,
-                            size: 30.r,
-                          ),
-                          SizedBox(
-                            width: 5.w,
-                          ),
-                          Text(
-                            'Import Product',
-                            style: TextStyle(
-                              fontWeight: FontWeight.w500,
-                              fontSize: 16.sp,
+                      child: Padding(
+                        padding: REdgeInsets.all(15.r),
+                        child: Row(
+                          children: [
+                            Icon(
+                              Icons.download,
+                              size: 30.r,
                             ),
-                          ),
-                        ],
+                            SizedBox(
+                              width: 5.w,
+                            ),
+                            Text(
+                              'Import Product',
+                              style: TextStyle(
+                                fontWeight: FontWeight.w500,
+                                fontSize: 14.sp,
+                              ),
+                            ),
+                          ],
+                        ),
                       ))
                 ],
               ),
@@ -150,11 +104,11 @@ class ImportScreen extends StatelessWidget {
                     child: Column(
                       children: [
                         Image.network(
-                          'https://firebasestorage.googleapis.com/v0/b/ebox-inventory-management.appspot.com/o/empty.png?alt=media&token=06b30b38-cac0-490e-ac6a-6373fe120a16',
+                          'https://firebasestorage.googleapis.com/v0/b/ebox-inventory-management.appspot.com/o/import.png?alt=media&token=a4bec55a-9e0f-40de-a868-34b8cb6bda77',
                           scale: 4,
                         ),
                         Text(
-                          'Product Not Found!',
+                          'No import any product yet!',
                           style: TextStyle(
                               color: Colors.grey,
                               fontWeight: FontWeight.bold,

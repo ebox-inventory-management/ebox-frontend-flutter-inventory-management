@@ -47,58 +47,6 @@ class ExportScreen extends StatelessWidget {
                 thickness: 5.w,
               ),
             ),
-            Material(
-              borderRadius: BorderRadius.circular(15),
-              child: Obx(
-                () => TextField(
-                  controller: productController.searchProductsController,
-                  onSubmitted: (value) {
-                    // productController.getVendorByName(keyword: value);
-                  },
-                  onChanged: (value) {
-                    productController.searchVal.value = value;
-                  },
-                  cursorColor: Colors.orange,
-                  decoration: InputDecoration(
-                    prefixIconColor: Colors.grey,
-                    prefixIcon: Icon(
-                      Icons.search,
-                      size: 20.r,
-                    ),
-                    suffixIconColor: Colors.grey,
-                    suffixIcon: productController.searchVal.value.isNotEmpty
-                        ? IconButton(
-                            onPressed: () {
-                              FocusScope.of(context).requestFocus(FocusNode());
-
-                              productController.searchProductsController
-                                  .clear();
-                              productController.searchVal.value = '';
-                              // productController.getProducts();
-                            },
-                            icon: Icon(
-                              Icons.clear,
-                              size: 20.r,
-                            ))
-                        : null,
-                    filled: true,
-                    fillColor: Colors.white,
-                    hintText: 'Search history export'.tr,
-                    hintStyle: TextStyle(
-                        fontSize: 12.sp,
-                        color: Colors.grey,
-                        fontWeight: FontWeight.w300),
-                    contentPadding: REdgeInsets.only(top: 30),
-                    focusedBorder: OutlineInputBorder(
-                        borderSide: const BorderSide(color: Colors.white),
-                        borderRadius: BorderRadius.circular(30.r)),
-                    enabledBorder: OutlineInputBorder(
-                        borderSide: const BorderSide(color: Colors.white),
-                        borderRadius: BorderRadius.circular(30.r)),
-                  ),
-                ),
-              ),
-            ),
             Padding(
               padding: REdgeInsets.only(top: 30.w, bottom: 15.w),
               child: Row(
@@ -152,11 +100,11 @@ class ExportScreen extends StatelessWidget {
                     child: Column(
                       children: [
                         Image.network(
-                          'https://firebasestorage.googleapis.com/v0/b/ebox-inventory-management.appspot.com/o/empty.png?alt=media&token=06b30b38-cac0-490e-ac6a-6373fe120a16',
+                          'https://firebasestorage.googleapis.com/v0/b/ebox-inventory-management.appspot.com/o/delivery.png?alt=media&token=d7d350d3-a537-4fee-aa4c-87b0de4f4801',
                           scale: 4,
                         ),
                         Text(
-                          'Product Not Found!',
+                          'No export any product yet!',
                           style: TextStyle(
                               color: Colors.grey,
                               fontWeight: FontWeight.bold,

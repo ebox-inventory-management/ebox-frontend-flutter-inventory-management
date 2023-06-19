@@ -115,19 +115,25 @@ class _DashBoardScreenState extends State<DashBoardScreen> {
                             tempRevenue = revenueController
                                 .revenueToday.value?.today_revenue;
                           } else if (selectedValueTotal == 'MONTH') {
-                            tempIncomes =
-                                incomeController.incomesMonth.value?.total;
-                            tempExpenses =
-                                expenseController.expenseMonth.value?.total;
-                            tempRevenue =
-                                revenueController.revenueMonth.value?.total;
+                            tempIncomes = incomeController
+                                .incomesMonth.value?.total
+                                .toString();
+                            tempExpenses = expenseController
+                                .expenseMonth.value?.total
+                                .toString();
+                            tempRevenue = revenueController
+                                .revenueMonth.value?.total
+                                .toString();
                           } else if (selectedValueTotal == 'YEAR') {
-                            tempIncomes =
-                                incomeController.incomesYear.value?.total;
-                            tempExpenses =
-                                expenseController.expenseYear.value?.total;
-                            tempRevenue =
-                                revenueController.revenueYear.value?.total;
+                            tempIncomes = incomeController
+                                .incomesYear.value?.total
+                                .toString();
+                            tempExpenses = expenseController
+                                .expenseYear.value?.total
+                                .toString();
+                            tempRevenue = revenueController
+                                .revenueYear.value?.total
+                                .toString();
                           }
                         });
                       },
@@ -306,8 +312,9 @@ class _DashBoardScreenState extends State<DashBoardScreen> {
                 if (productController.isProductsLoading.value) {
                   return const Center(child: CircularProgressIndicator());
                 } else {
-                  if (productController.productList.isNotEmpty) {
-                    return ProductList(products: productController.productList);
+                  if (productController.productsList.isNotEmpty) {
+                    return ProductList(
+                        products: productController.productsList);
                   } else {
                     return Center(
                       child: Column(

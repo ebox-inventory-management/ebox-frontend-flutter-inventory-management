@@ -89,4 +89,10 @@ class RemoteCustomerService {
         await http.Client().get(Uri.parse('$baseUrl/api/customer/delete/$id'));
     return response;
   }
+
+  Future<dynamic> getByName({required String keyword}) async {
+    var response =
+        await client.get(Uri.parse('$baseUrl/api/customer/search/$keyword'));
+    return response;
+  }
 }

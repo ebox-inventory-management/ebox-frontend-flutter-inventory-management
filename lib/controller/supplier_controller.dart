@@ -17,7 +17,8 @@ class SupplierController extends GetxController {
 
   RxBool isSuppliersLoading = false.obs;
   RxBool isSupplierLoading = false.obs;
-
+  TextEditingController searchSuppliersController = TextEditingController();
+  RxString searchVal = ''.obs;
   @override
   void onInit() async {
     getSuppliers();
@@ -96,8 +97,6 @@ class SupplierController extends GetxController {
       if (result != null) {
         //assign api result
         suppliersList.assignAll(suppliersListFromJson(result.body));
-
-        //save api result to local db
       }
     } finally {
       isSuppliersLoading(false);
@@ -113,10 +112,39 @@ class SupplierController extends GetxController {
       if (result != null) {
         //assign api result
         supplier.value = supplierListFromJson(result.body);
-        //save api result to local db
       }
     } finally {
       isSupplierLoading(false);
+    }
+  }
+
+  void getSupplierByName({required String name}) async {
+    try {
+      isSupplierLoading(true);
+      //call api
+      var result = await RemoteSupplierService().getByName(name: name);
+
+      if (result != null) {
+        //assign api result
+        supplier.value = supplierListFromJson(result.body);
+      }
+    } finally {
+      isSupplierLoading(false);
+    }
+  }
+
+  void getSupplierByKeyword({required String keyword}) async {
+    try {
+      isSuppliersLoading(true);
+      //call api
+      var result = await RemoteSupplierService().getByKeyword(keyword: keyword);
+
+      if (result != null) {
+        //assign api result
+        suppliersList.assignAll(suppliersListFromJson(result.body));
+      }
+    } finally {
+      isSuppliersLoading(false);
     }
   }
 }
