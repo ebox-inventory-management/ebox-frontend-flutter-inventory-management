@@ -191,24 +191,6 @@ class ProductDetail extends StatelessWidget {
                               width: 400.w,
                               height: 50.w,
                               decoration: BoxDecoration(
-                                  color: Colors.green,
-                                  borderRadius:
-                                      BorderRadius.all(Radius.circular(10.r))),
-                              child: Center(
-                                child: Text(
-                                  'Buy Date: ${product.created_at}',
-                                  style: TextStyle(
-                                      fontSize: 16.sp, color: Colors.white),
-                                ),
-                              ),
-                            ),
-                            SizedBox(
-                              height: 10.w,
-                            ),
-                            Container(
-                              width: 400.w,
-                              height: 50.w,
-                              decoration: BoxDecoration(
                                   color: Colors.redAccent,
                                   borderRadius:
                                       BorderRadius.all(Radius.circular(10.r))),

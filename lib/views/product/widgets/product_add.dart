@@ -1,5 +1,6 @@
 import 'package:collection/collection.dart';
 import 'package:dropdown_button2/custom_dropdown_button2.dart';
+import 'package:ebox_frontend_web_inventory/api/product_service.dart';
 
 import 'package:file_picker/file_picker.dart';
 import 'package:flutter/foundation.dart';
@@ -30,11 +31,7 @@ class _ProductAddState extends State<ProductAdd> {
   String? selectedValueBrand;
   String? selectedValueSupplier;
 
-  DateTime? _selectedBuyDate;
   DateTime? _selectedExpireDate;
-
-  Color backgroundColor = Colors.grey;
-  Color foregroundColor = Colors.white;
 
   Future<void> _selectExpireDate(BuildContext context) async {
     final DateTime? picked = await showDatePicker(
@@ -56,7 +53,7 @@ class _ProductAddState extends State<ProductAdd> {
       },
       context: context,
       initialDate: DateTime.now(),
-      firstDate: DateTime(1900),
+      firstDate: DateTime.now(),
       lastDate: DateTime(2100),
     );
     if (picked != null && picked != _selectedExpireDate) {
@@ -352,16 +349,6 @@ class _ProductAddState extends State<ProductAdd> {
                                 width: 0.4.sw,
                                 child: TextFormField(
                                   controller: productNameController,
-                                  onChanged: (val) {
-                                    setState(() {
-                                      backgroundColor = val.isNotEmpty
-                                          ? Colors.orange
-                                          : Colors.grey;
-                                      foregroundColor = val.isNotEmpty
-                                          ? Colors.white
-                                          : Colors.white;
-                                    });
-                                  },
                                   textInputAction: TextInputAction.next,
                                   obscureText: false,
                                   decoration: InputDecoration(
@@ -561,26 +548,19 @@ class _ProductAddState extends State<ProductAdd> {
                               productCodeController.text.isEmpty ||
                               productGarageController.text.isEmpty ||
                               productGarageController.text.isEmpty ||
-                              categoryController.category.value?.id == null ||
-                              supplierController.supplier.value?.id == null ||
-                              brandController.brand.value?.id == null) {
+                              _selectedExpireDate == null ||
+                              selectedValueCategory == null ||
+                              selectedValueSupplier == null ||
+                              selectedValueBrand == null) {
                             Get.snackbar('Something wrong!',
-                                'You need to input all product information to import',
+                                'You need to input all product information to add',
                                 colorText: Colors.white,
-                                margin: REdgeInsets.all(15),
+                                margin: REdgeInsets.all(15.r),
                                 backgroundColor: Colors.redAccent,
                                 snackPosition: SnackPosition.BOTTOM,
                                 duration: const Duration(seconds: 2));
                             return;
                           } else {
-                            Get.snackbar('Added Product!',
-                                'You have been add product'.tr,
-                                colorText: Colors.white,
-                                margin: REdgeInsets.all(15),
-                                backgroundColor: Colors.green,
-                                snackPosition: SnackPosition.BOTTOM,
-                                duration: const Duration(seconds: 2));
-
                             productController.createProduct(
                               category_id:
                                   categoryController.category.value!.id,
@@ -601,8 +581,20 @@ class _ProductAddState extends State<ProductAdd> {
                           }
                         },
                         style: TextButton.styleFrom(
-                            foregroundColor: foregroundColor,
-                            backgroundColor: backgroundColor,
+                            foregroundColor: Colors.white,
+                            backgroundColor:
+                                productCodeController.text.isEmpty ||
+                                        productNameController.text.isEmpty ||
+                                        exportPriceController.text.isEmpty ||
+                                        importPriceController.text.isEmpty ||
+                                        productCodeController.text.isEmpty ||
+                                        productGarageController.text.isEmpty ||
+                                        productGarageController.text.isEmpty ||
+                                        selectedValueCategory == null ||
+                                        selectedValueSupplier == null ||
+                                        selectedValueBrand == null
+                                    ? Colors.grey
+                                    : Colors.orange,
                             shape: RoundedRectangleBorder(
                                 borderRadius:
                                     BorderRadius.all(Radius.circular(15.r)))),

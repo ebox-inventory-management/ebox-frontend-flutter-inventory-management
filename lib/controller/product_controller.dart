@@ -5,6 +5,7 @@ import 'package:collection/collection.dart';
 import 'package:ebox_frontend_web_inventory/model/product.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_easyloading/flutter_easyloading.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
@@ -37,17 +38,15 @@ class ProductController extends GetxController {
     required int category_id,
     required int supplier_id,
     required int brand_id,
-    required int id,
     required String product_name,
     required String product_code,
     required String product_garage,
     required String product_route,
     required String product_image,
-    required String buy_date,
     required String expire_date,
-    required String buying_price,
-    required int product_quantity,
-    required String price,
+    required int import_price,
+    required int export_price,
+    required int id,
   }) async {
     try {
       await RemoteProductService().update(
@@ -55,15 +54,13 @@ class ProductController extends GetxController {
           supplier_id: supplier_id,
           brand_id: brand_id,
           product_code: product_code,
-          export_price: price,
+          export_price: export_price,
           product_garage: product_garage,
           product_image: product_image,
           product_name: product_name,
           product_route: product_route,
-          import_price: buying_price,
-          buy_date: buy_date,
+          import_price: import_price,
           expire_date: expire_date,
-          product_quantity: product_quantity,
           id: id);
     } catch (e) {
       debugPrint(e.toString());

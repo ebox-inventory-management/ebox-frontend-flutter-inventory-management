@@ -666,22 +666,8 @@ class _SupplierEditState extends State<SupplierEdit> {
                               backgroundColor: Colors.green,
                               snackPosition: SnackPosition.BOTTOM,
                               duration: const Duration(seconds: 2));
-                          productController.updateProduct(
-                              category_id: 1,
-                              supplier_id: 1,
-                              brand_id: 1,
-                              product_name: productNameController.text,
-                              product_code: productCodeController.text,
-                              product_garage: productGarageController.text,
-                              product_route: productRouteController.text,
-                              product_image:
-                                  '${_imageFile?.name}${DateTime.now()}',
-                              buy_date: _selectedBuyDate.toString(),
-                              expire_date: _selectedExpireDate.toString(),
-                              buying_price: importPriceController.text,
-                              price: exportPriceController.text,
-                              product_quantity: 1,
-                              id: widget.suppliers.id);
+                          // supplierController.updateSupplier(
+                          //    );
                         }
                       },
                       style: TextButton.styleFrom(

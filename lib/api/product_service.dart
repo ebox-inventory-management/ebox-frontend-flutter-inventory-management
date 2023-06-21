@@ -1,8 +1,13 @@
 import 'dart:convert';
 
+import 'package:ebox_frontend_web_inventory/controller/controllers.dart';
+import 'package:ebox_frontend_web_inventory/controller/product_controller.dart';
+import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:http/http.dart' as http;
 
 import '../core/constants/base_url.dart';
+import 'package:get/get.dart';
 
 class RemoteProductService {
   var client = http.Client();
@@ -12,6 +17,26 @@ class RemoteProductService {
     var response = await http.Client().get(
       Uri.parse('$baseUrl/api/product/delete/$id'),
     );
+    if (response.statusCode == 200) {
+      Get.snackbar('Deleted Product!', 'You have been delete product'.tr,
+          colorText: Colors.white,
+          margin: REdgeInsets.all(15.r),
+          backgroundColor: Colors.green,
+          snackPosition: SnackPosition.BOTTOM,
+          duration: const Duration(seconds: 2));
+    } else {
+      Get.snackbar(
+          'Something wrong!', 'Delete product is not working right now',
+          colorText: Colors.white,
+          margin: REdgeInsets.all(15.r),
+          backgroundColor: Colors.redAccent,
+          snackPosition: SnackPosition.BOTTOM,
+          duration: const Duration(seconds: 2));
+    }
+    productController.getProducts();
+
+    print(response.statusCode);
+
     return response;
   }
 
@@ -20,16 +45,14 @@ class RemoteProductService {
     required int supplier_id,
     required int brand_id,
     required String product_name,
-    required int product_quantity,
-    required int id,
     required String product_code,
     required String product_garage,
     required String product_route,
     required String product_image,
-    required String buy_date,
     required String expire_date,
-    required String import_price,
-    required String export_price,
+    required int import_price,
+    required int export_price,
+    required int id,
   }) async {
     var body = {
       "category_id": category_id,
@@ -40,10 +63,8 @@ class RemoteProductService {
       "product_garage": product_garage,
       "product_route": product_route,
       "product_image": product_image,
-      "buy_date": buy_date,
       "expire_date": expire_date,
       "import_price": import_price,
-      "product_quantity": product_quantity,
       "export_price": export_price
     };
     var response = await client.post(
@@ -53,11 +74,42 @@ class RemoteProductService {
       },
       body: jsonEncode(body),
     );
+    if (response.statusCode == 500) {
+      Get.snackbar('Something wrong!', 'You need to update new product name!',
+          colorText: Colors.white,
+          margin: REdgeInsets.all(15.r),
+          backgroundColor: Colors.redAccent,
+          snackPosition: SnackPosition.BOTTOM,
+          duration: const Duration(seconds: 2));
+    } else if (response.statusCode == 200) {
+      Get.snackbar('Updated Product!', 'You have been update product'.tr,
+          colorText: Colors.white,
+          margin: REdgeInsets.all(15.r),
+          backgroundColor: Colors.green,
+          snackPosition: SnackPosition.BOTTOM,
+          duration: const Duration(seconds: 2));
+
+      Get.offAndToNamed('/navigation');
+    } else {
+      Get.snackbar(
+          'Something wrong!', 'Update product is not working right now',
+          colorText: Colors.white,
+          margin: REdgeInsets.all(15.r),
+          backgroundColor: Colors.redAccent,
+          snackPosition: SnackPosition.BOTTOM,
+          duration: const Duration(seconds: 2));
+    }
+
+    productController.getProducts();
+
+    print(response.statusCode);
     return response;
   }
 
   Future<dynamic> get() async {
     var response = await client.get(Uri.parse(remoteUrl));
+    print(response.statusCode);
+
     return response;
   }
 
@@ -112,6 +164,32 @@ class RemoteProductService {
       body: jsonEncode(body),
     );
     print(response.statusCode);
+    if (response.statusCode == 500) {
+      Get.snackbar('Something wrong!', 'You need to input new product name!',
+          colorText: Colors.white,
+          margin: REdgeInsets.all(15.r),
+          backgroundColor: Colors.redAccent,
+          snackPosition: SnackPosition.BOTTOM,
+          duration: const Duration(seconds: 2));
+    } else if (response.statusCode == 200) {
+      Get.snackbar('Added Product!', 'You have been add product'.tr,
+          colorText: Colors.white,
+          margin: REdgeInsets.all(15.r),
+          backgroundColor: Colors.green,
+          snackPosition: SnackPosition.BOTTOM,
+          duration: const Duration(seconds: 2));
+
+      Get.offAndToNamed('/navigation');
+    } else {
+      Get.snackbar('Something wrong!', 'Add product is not working right now',
+          colorText: Colors.white,
+          margin: REdgeInsets.all(15.r),
+          backgroundColor: Colors.redAccent,
+          snackPosition: SnackPosition.BOTTOM,
+          duration: const Duration(seconds: 2));
+    }
+
+    productController.getProducts();
     return response;
   }
 }

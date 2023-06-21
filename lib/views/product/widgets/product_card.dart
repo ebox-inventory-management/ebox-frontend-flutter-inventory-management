@@ -7,20 +7,30 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 
-class ProductCard extends StatelessWidget {
+class ProductCard extends StatefulWidget {
   final Products product;
 
   const ProductCard({super.key, required this.product});
 
   @override
+  State<ProductCard> createState() => _ProductCardState();
+}
+
+class _ProductCardState extends State<ProductCard> {
+  @override
+  initState() {
+    super.initState();
+    supplierController.getSupplierById(id: widget.product.supplier_id);
+    categoryController.getCategoryById(id: widget.product.category_id);
+    brandController.getBrandById(id: widget.product.brand_id);
+  }
+
+  @override
   Widget build(BuildContext context) {
     return GestureDetector(
       onTap: () {
-        supplierController.getSupplierById(id: product.supplier_id);
-        categoryController.getCategoryById(id: product.category_id);
-        brandController.getBrandById(id: product.brand_id);
         Get.dialog(ProductDetail(
-          product: product,
+          product: widget.product,
         ));
       },
       child: Container(
@@ -48,7 +58,7 @@ class ProductCard extends StatelessWidget {
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
                   Text(
-                    product.product_name,
+                    widget.product.product_name,
                     style:
                         TextStyle(fontSize: 24.sp, fontWeight: FontWeight.w500),
                   ),
@@ -56,7 +66,7 @@ class ProductCard extends StatelessWidget {
                     height: 5.h,
                   ),
                   Text(
-                    'Quantity: ${product.product_quantity}',
+                    'Quantity: ${widget.product.product_quantity}',
                     style: TextStyle(fontSize: 14.sp, color: Colors.grey),
                   ),
                 ],
@@ -69,7 +79,7 @@ class ProductCard extends StatelessWidget {
                 children: [
                   IconButton(
                       onPressed: () {
-                        Get.dialog(ProductEdit(product: product));
+                        Get.dialog(ProductEdit(product: widget.product));
                       },
                       icon: Icon(Icons.edit, color: Colors.blue, size: 25.r)),
                   IconButton(
@@ -81,18 +91,12 @@ class ProductCard extends StatelessWidget {
                           animType: AnimType.bottomSlide,
                           title: 'WARNING'.tr,
                           desc:
-                              'Are you sure you want to delete ${product.product_name}?'
+                              'Are you sure you want to delete ${widget.product.product_name}?'
                                   .tr,
                           btnCancelOnPress: () {},
                           btnOkOnPress: () {
-                            Get.snackbar('Deleted!', ''.tr,
-                                colorText: Colors.white,
-                                margin: REdgeInsets.all(15),
-                                backgroundColor: Colors.green,
-                                snackPosition: SnackPosition.BOTTOM,
-                                duration: const Duration(seconds: 2));
-
-                            productController.deleteProduct(id: product.id);
+                            productController.deleteProduct(
+                                id: widget.product.id);
                           },
                         ).show();
                       },

@@ -32,42 +32,7 @@ class _ProductEditState extends State<ProductEdit> {
   String? selectedValueBrand;
   String? selectedValueSupplier;
 
-  DateTime? _selectedBuyDate;
   DateTime? _selectedExpireDate;
-
-  Color backgroundColor = Colors.grey;
-  Color foregroundColor = Colors.white;
-
-  Future<void> _selectBuyDate(BuildContext context) async {
-    final DateTime? picked = await showDatePicker(
-      builder: (context, child) {
-        return Theme(
-          data: Theme.of(context).copyWith(
-            colorScheme: const ColorScheme.light(
-              primary: Colors.orange,
-              onSurface: Colors.orange,
-            ),
-            textButtonTheme: TextButtonThemeData(
-              style: TextButton.styleFrom(
-                foregroundColor: Colors.orange,
-              ),
-            ),
-          ),
-          child: child!,
-        );
-      },
-      context: context,
-      initialDate: DateTime.now(),
-      firstDate: DateTime(1900),
-      lastDate: DateTime(2100),
-    );
-    if (picked != null && picked != _selectedBuyDate) {
-      setState(() {
-        _selectedBuyDate = picked;
-        debugPrint('$_selectedBuyDate');
-      });
-    }
-  }
 
   Future<void> _selectExpireDate(BuildContext context) async {
     final DateTime? picked = await showDatePicker(
@@ -89,13 +54,12 @@ class _ProductEditState extends State<ProductEdit> {
       },
       context: context,
       initialDate: DateTime.now(),
-      firstDate: DateTime(1900),
+      firstDate: DateTime.now(),
       lastDate: DateTime(2100),
     );
     if (picked != null && picked != _selectedExpireDate) {
       setState(() {
         _selectedExpireDate = picked;
-        debugPrint(_selectedExpireDate as String?);
       });
     }
   }
@@ -261,7 +225,7 @@ class _ProductEditState extends State<ProductEdit> {
                             child: CustomDropdownButton2(
                               buttonWidth: 0.2.sw,
                               buttonHeight: 40.w,
-                              hint: 'Choose Category',
+                              hint: categoryController.category.value!.name,
                               dropdownItems: categoriesName,
                               value: selectedValueCategory,
                               buttonDecoration: BoxDecoration(
@@ -281,7 +245,8 @@ class _ProductEditState extends State<ProductEdit> {
                               onChanged: (index) {
                                 setState(() {
                                   selectedValueCategory = index;
-                                  print(selectedValueCategory);
+                                  categoryController.getCategoryByName(
+                                      name: selectedValueCategory!);
                                 });
                               },
                             ),
@@ -296,7 +261,7 @@ class _ProductEditState extends State<ProductEdit> {
                             child: CustomDropdownButton2(
                               buttonWidth: 0.2.sw,
                               buttonHeight: 40.w,
-                              hint: 'Choose Brand',
+                              hint: brandController.brand.value!.name,
                               dropdownItems: brandsName,
                               value: selectedValueBrand,
                               buttonDecoration: BoxDecoration(
@@ -316,6 +281,8 @@ class _ProductEditState extends State<ProductEdit> {
                               onChanged: (index) {
                                 setState(() {
                                   selectedValueBrand = index;
+                                  brandController.getBrandByName(
+                                      name: selectedValueBrand!);
                                 });
                               },
                             ),
@@ -330,7 +297,7 @@ class _ProductEditState extends State<ProductEdit> {
                             child: CustomDropdownButton2(
                               buttonWidth: 0.2.sw,
                               buttonHeight: 40.w,
-                              hint: 'Choose Supplier',
+                              hint: supplierController.supplier.value!.name,
                               dropdownItems: suppliersName,
                               value: selectedValueSupplier,
                               buttonDecoration: BoxDecoration(
@@ -350,6 +317,8 @@ class _ProductEditState extends State<ProductEdit> {
                               onChanged: (index) {
                                 setState(() {
                                   selectedValueSupplier = index;
+                                  supplierController.getSupplierByName(
+                                      name: selectedValueSupplier!);
                                 });
                               },
                             ),
@@ -374,19 +343,11 @@ class _ProductEditState extends State<ProductEdit> {
                               width: 0.4.sw,
                               child: TextFormField(
                                 controller: productNameController,
-                                onChanged: (val) {
-                                  setState(() {
-                                    backgroundColor = val.isNotEmpty
-                                        ? Colors.orange
-                                        : Colors.grey;
-                                    foregroundColor = val.isNotEmpty
-                                        ? Colors.white
-                                        : Colors.white;
-                                  });
-                                },
                                 textInputAction: TextInputAction.next,
                                 obscureText: false,
                                 decoration: InputDecoration(
+                                  hintText: widget.product.product_name,
+                                  hintStyle: TextStyle(fontSize: 16.sp),
                                   border: OutlineInputBorder(
                                     borderRadius: BorderRadius.circular(10.0.r),
                                   ),
@@ -408,6 +369,9 @@ class _ProductEditState extends State<ProductEdit> {
                                 textInputAction: TextInputAction.next,
                                 obscureText: false,
                                 decoration: InputDecoration(
+                                  hintText:
+                                      widget.product.import_price.toString(),
+                                  hintStyle: TextStyle(fontSize: 16.sp),
                                   border: OutlineInputBorder(
                                     borderRadius: BorderRadius.circular(10.0.r),
                                   ),
@@ -429,6 +393,9 @@ class _ProductEditState extends State<ProductEdit> {
                                 textInputAction: TextInputAction.next,
                                 obscureText: false,
                                 decoration: InputDecoration(
+                                  hintText:
+                                      widget.product.export_price.toString(),
+                                  hintStyle: TextStyle(fontSize: 16.sp),
                                   border: OutlineInputBorder(
                                     borderRadius: BorderRadius.circular(10.0.r),
                                   ),
@@ -450,6 +417,8 @@ class _ProductEditState extends State<ProductEdit> {
                                 textInputAction: TextInputAction.next,
                                 obscureText: false,
                                 decoration: InputDecoration(
+                                  hintText: widget.product.product_code,
+                                  hintStyle: TextStyle(fontSize: 16.sp),
                                   border: OutlineInputBorder(
                                     borderRadius: BorderRadius.circular(10.0.r),
                                   ),
@@ -471,6 +440,8 @@ class _ProductEditState extends State<ProductEdit> {
                                 textInputAction: TextInputAction.next,
                                 obscureText: false,
                                 decoration: InputDecoration(
+                                  hintText: widget.product.product_garage,
+                                  hintStyle: TextStyle(fontSize: 16.sp),
                                   border: OutlineInputBorder(
                                     borderRadius: BorderRadius.circular(10.0.r),
                                   ),
@@ -492,6 +463,8 @@ class _ProductEditState extends State<ProductEdit> {
                                 textInputAction: TextInputAction.next,
                                 obscureText: false,
                                 decoration: InputDecoration(
+                                  hintText: widget.product.product_route,
+                                  hintStyle: TextStyle(fontSize: 16.sp),
                                   border: OutlineInputBorder(
                                     borderRadius: BorderRadius.circular(10.0.r),
                                   ),
@@ -567,9 +540,13 @@ class _ProductEditState extends State<ProductEdit> {
                             importPriceController.text.isEmpty ||
                             productCodeController.text.isEmpty ||
                             productGarageController.text.isEmpty ||
-                            productGarageController.text.isEmpty) {
+                            productGarageController.text.isEmpty ||
+                            _selectedExpireDate == null ||
+                            selectedValueCategory == null ||
+                            selectedValueSupplier == null ||
+                            selectedValueBrand == null) {
                           Get.snackbar('Something wrong!',
-                              'You need to input all product information to import',
+                              'You need to input all product information to update',
                               colorText: Colors.white,
                               margin: REdgeInsets.all(15),
                               backgroundColor: Colors.redAccent,
@@ -577,34 +554,36 @@ class _ProductEditState extends State<ProductEdit> {
                               duration: const Duration(seconds: 2));
                           return;
                         } else {
-                          Get.snackbar(
-                              'Added Product!', 'You have been add product'.tr,
-                              colorText: Colors.white,
-                              margin: REdgeInsets.all(15),
-                              backgroundColor: Colors.green,
-                              snackPosition: SnackPosition.BOTTOM,
-                              duration: const Duration(seconds: 2));
                           productController.updateProduct(
-                              category_id: 1,
-                              supplier_id: 1,
-                              brand_id: 1,
-                              product_name: productNameController.text,
-                              product_code: productCodeController.text,
-                              product_garage: productGarageController.text,
-                              product_route: productRouteController.text,
-                              product_image:
-                                  '${_imageFile?.name}${DateTime.now()}',
-                              buy_date: _selectedBuyDate.toString(),
-                              expire_date: _selectedExpireDate.toString(),
-                              buying_price: importPriceController.text,
-                              price: exportPriceController.text,
-                              product_quantity: 1,
-                              id: widget.product.id);
+                            category_id: categoryController.category.value!.id,
+                            supplier_id: supplierController.supplier.value!.id,
+                            brand_id: brandController.brand.value!.id,
+                            product_name: productNameController.text,
+                            product_code: productCodeController.text,
+                            product_garage: productGarageController.text,
+                            product_route: productRouteController.text,
+                            product_image: 'image',
+                            expire_date: _selectedExpireDate.toString(),
+                            import_price: int.parse(importPriceController.text),
+                            export_price: int.parse(exportPriceController.text),
+                            id: widget.product.id,
+                          );
                         }
                       },
                       style: TextButton.styleFrom(
-                          foregroundColor: foregroundColor,
-                          backgroundColor: backgroundColor,
+                          foregroundColor: Colors.white,
+                          backgroundColor: productCodeController.text.isEmpty ||
+                                  productNameController.text.isEmpty ||
+                                  exportPriceController.text.isEmpty ||
+                                  importPriceController.text.isEmpty ||
+                                  productCodeController.text.isEmpty ||
+                                  productGarageController.text.isEmpty ||
+                                  productGarageController.text.isEmpty ||
+                                  selectedValueCategory == null ||
+                                  selectedValueSupplier == null ||
+                                  selectedValueBrand == null
+                              ? Colors.grey
+                              : Colors.orange,
                           shape: RoundedRectangleBorder(
                               borderRadius:
                                   BorderRadius.all(Radius.circular(15.r)))),
