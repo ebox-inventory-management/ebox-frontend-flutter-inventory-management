@@ -18,6 +18,9 @@ class ProductList extends StatelessWidget {
       itemCount: products.length,
       shrinkWrap: true,
       itemBuilder: (context, index) {
+        // supplierController.getSupplierById(id: products[index].supplier_id);
+        // categoryController.getCategoryById(id: products[index].category_id);
+        // brandController.getBrandById(id: products[index].brand_id);
         return ProductCard(product: products.reversed.toList()[index]);
       },
       separatorBuilder: (BuildContext context, int index) {

@@ -156,7 +156,7 @@ class ProductScreen extends StatelessWidget {
                     child: Column(
                       children: [
                         Image.network(
-                          'https://firebasestorage.googleapis.com/v0/b/ebox-inventory-management.appspot.com/o/product.png?alt=media&token=910d822f-0b0e-45ed-8a0b-79dd0d8b84d2',
+                          'https://firebasestorage.googleapis.com/v0/b/ebox-inventory-management.appspot.com/o/empty.png?alt=media&token=06b30b38-cac0-490e-ac6a-6373fe120a16',
                           scale: 4,
                         ),
                         Text(
