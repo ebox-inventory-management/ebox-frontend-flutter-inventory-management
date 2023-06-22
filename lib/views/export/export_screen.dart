@@ -66,24 +66,30 @@ class ExportScreen extends StatelessWidget {
                       style: TextButton.styleFrom(
                         foregroundColor: Colors.white,
                         backgroundColor: Colors.orange,
+                        shape: RoundedRectangleBorder(
+                            borderRadius:
+                                BorderRadius.all(Radius.circular(15.r))),
                       ),
-                      child: Row(
-                        children: [
-                          Icon(
-                            Icons.upload,
-                            size: 30.r,
-                          ),
-                          SizedBox(
-                            width: 5.w,
-                          ),
-                          Text(
-                            'Export Product',
-                            style: TextStyle(
-                              fontWeight: FontWeight.w500,
-                              fontSize: 16.sp,
+                      child: Padding(
+                        padding: REdgeInsets.all(15.r),
+                        child: Row(
+                          children: [
+                            Icon(
+                              Icons.download,
+                              size: 30.r,
                             ),
-                          ),
-                        ],
+                            SizedBox(
+                              width: 5.w,
+                            ),
+                            Text(
+                              'Export Product',
+                              style: TextStyle(
+                                fontWeight: FontWeight.w500,
+                                fontSize: 14.sp,
+                              ),
+                            ),
+                          ],
+                        ),
                       ))
                 ],
               ),

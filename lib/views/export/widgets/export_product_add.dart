@@ -24,9 +24,6 @@ class _ExportProductAddState extends State<ExportProductAdd> {
 
   String? selectedValueProduct;
 
-  Color backgroundColor = Colors.grey;
-  Color foregroundColor = Colors.white;
-
   TextEditingController exportQuantityController = TextEditingController();
 
   @override
@@ -92,15 +89,11 @@ class _ExportProductAddState extends State<ExportProductAdd> {
                           controller: exportQuantityController,
                           textInputAction: TextInputAction.next,
                           obscureText: false,
-                          onChanged: (val) {
-                            setState(() {
-                              backgroundColor =
-                                  val.isNotEmpty ? Colors.orange : Colors.grey;
-                              foregroundColor =
-                                  val.isNotEmpty ? Colors.white : Colors.white;
-                            });
-                          },
                           keyboardType: TextInputType.number,
+                          inputFormatters: <TextInputFormatter>[
+                            FilteringTextInputFormatter.allow(
+                                RegExp(r'[0-9,-]')),
+                          ],
                           decoration: InputDecoration(
                             border: OutlineInputBorder(
                               borderRadius: BorderRadius.circular(10.0.r),
@@ -139,6 +132,8 @@ class _ExportProductAddState extends State<ExportProductAdd> {
                         onChanged: (index) {
                           setState(() {
                             selectedValueProduct = index;
+                            productController.getProductsByName(
+                                name: selectedValueProduct!);
                           });
                         },
                       ),
@@ -157,26 +152,19 @@ class _ExportProductAddState extends State<ExportProductAdd> {
                                 duration: const Duration(seconds: 2));
                             return;
                           } else {
-                            // productController.getProductsByName(
-                            //     name: selectedValueProduct!);
-
-                            Get.snackbar('Exported Product!',
-                                'You have been import product'.tr,
-                                colorText: Colors.white,
-                                margin: REdgeInsets.all(15),
-                                backgroundColor: Colors.green,
-                                snackPosition: SnackPosition.BOTTOM,
-                                duration: const Duration(seconds: 2));
                             exportController.create(
                                 productId: productController.product.value!.id,
                                 product_quantity:
                                     int.parse(exportQuantityController.text));
-                            Get.back();
                           }
                         },
                         style: TextButton.styleFrom(
-                            foregroundColor: foregroundColor,
-                            backgroundColor: backgroundColor,
+                            foregroundColor: Colors.white,
+                            backgroundColor:
+                                exportQuantityController.text.isEmpty ||
+                                        selectedValueProduct == null
+                                    ? Colors.grey
+                                    : Colors.orange,
                             shape: RoundedRectangleBorder(
                                 borderRadius:
                                     BorderRadius.all(Radius.circular(15.r)))),

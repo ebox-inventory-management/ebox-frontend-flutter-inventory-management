@@ -1,9 +1,17 @@
 import 'package:awesome_dialog/awesome_dialog.dart';
 import 'package:ebox_frontend_web_inventory/controller/controllers.dart';
 import 'package:ebox_frontend_web_inventory/model/brands.dart';
+import 'package:ebox_frontend_web_inventory/model/categories.dart';
+import 'package:ebox_frontend_web_inventory/model/customers.dart';
 import 'package:ebox_frontend_web_inventory/model/products.dart';
 import 'package:ebox_frontend_web_inventory/model/suppliers.dart';
+import 'package:ebox_frontend_web_inventory/views/brand/widgets/brand_edit.dart';
+import 'package:ebox_frontend_web_inventory/views/category/widgets/category_edit.dart';
+import 'package:ebox_frontend_web_inventory/views/customer/widgets/customer_edit.dart';
 import 'package:ebox_frontend_web_inventory/views/product/widgets/product_detail.dart';
+import 'package:ebox_frontend_web_inventory/views/product/widgets/product_edit.dart';
+import 'package:ebox_frontend_web_inventory/views/suppliers/widgets/supplier_detail.dart';
+import 'package:ebox_frontend_web_inventory/views/suppliers/widgets/supplier_edit.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
@@ -11,7 +19,6 @@ import 'package:get/get.dart';
 class BrandCard extends StatelessWidget {
   final Brands brands;
   final int index;
-
   const BrandCard({super.key, required this.brands, required this.index});
 
   @override
@@ -24,16 +31,6 @@ class BrandCard extends StatelessWidget {
           color: Colors.white),
       child: Row(
         children: [
-          Container(
-            width: 100.w,
-            height: 100.w,
-            decoration: BoxDecoration(
-                borderRadius: BorderRadius.all(Radius.circular(15.r)),
-                image: const DecorationImage(
-                    image: NetworkImage(
-                        'https://images.unsplash.com/photo-1503023345310-bd7c1de61c7d?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8Mnx8aHVtYW58ZW58MHx8MHx8fDA%3D&w=1000&q=80'),
-                    fit: BoxFit.cover)),
-          ),
           Padding(
             padding: REdgeInsets.only(left: 15.r, top: 10.r, bottom: 10.r),
             child: Column(
@@ -45,6 +42,13 @@ class BrandCard extends StatelessWidget {
                   style:
                       TextStyle(fontSize: 24.sp, fontWeight: FontWeight.w500),
                 ),
+                SizedBox(
+                  height: 5.h,
+                ),
+                Text(
+                  'Create date: ${brands.created_at}',
+                  style: TextStyle(fontSize: 14.sp, color: Colors.grey),
+                ),
               ],
             ),
           ),
@@ -54,7 +58,9 @@ class BrandCard extends StatelessWidget {
             child: Row(
               children: [
                 IconButton(
-                    onPressed: () {},
+                    onPressed: () {
+                      Get.dialog(BrandEdit(brands: brands));
+                    },
                     icon: Icon(Icons.edit, color: Colors.blue, size: 25.r)),
                 IconButton(
                     onPressed: () {
@@ -64,18 +70,11 @@ class BrandCard extends StatelessWidget {
                         dialogType: DialogType.warning,
                         animType: AnimType.bottomSlide,
                         title: 'WARNING'.tr,
-                        desc:
-                            'Would you sure like to delete ${brands.name}?'.tr,
+                        desc: 'Are you sure you want to delete ${brands.name}?'
+                            .tr,
                         btnCancelOnPress: () {},
                         btnOkOnPress: () {
-                          Get.snackbar('Deleted!', ''.tr,
-                              colorText: Colors.white,
-                              margin: REdgeInsets.all(15),
-                              backgroundColor: Colors.green,
-                              snackPosition: SnackPosition.BOTTOM,
-                              duration: const Duration(seconds: 2));
-
-                          productController.deleteProduct(id: brands.id);
+                          categoryController.delete(id: brands.id);
                         },
                       ).show();
                     },

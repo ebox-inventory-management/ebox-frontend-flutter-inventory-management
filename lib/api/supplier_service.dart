@@ -1,8 +1,12 @@
 import 'dart:convert';
 
+import 'package:ebox_frontend_web_inventory/controller/controllers.dart';
+import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:http/http.dart' as http;
 
 import '../core/constants/base_url.dart';
+import 'package:get/get.dart';
 
 class RemoteSupplierService {
   var client = http.Client();
@@ -39,6 +43,33 @@ class RemoteSupplierService {
       },
       body: jsonEncode(body),
     );
+    print(response.statusCode);
+    if (response.statusCode == 500) {
+      Get.snackbar('Something wrong!', 'You need to input new supplier name!',
+          colorText: Colors.white,
+          margin: REdgeInsets.all(15.r),
+          backgroundColor: Colors.redAccent,
+          snackPosition: SnackPosition.BOTTOM,
+          duration: const Duration(seconds: 2));
+    } else if (response.statusCode == 200) {
+      Get.snackbar('Added Supplier!', 'You have been add supplier'.tr,
+          colorText: Colors.white,
+          margin: REdgeInsets.all(15.r),
+          backgroundColor: Colors.green,
+          snackPosition: SnackPosition.BOTTOM,
+          duration: const Duration(seconds: 2));
+
+      Get.offAndToNamed('/navigation');
+    } else {
+      Get.snackbar('Something wrong!', 'Add supplier is not working right now',
+          colorText: Colors.white,
+          margin: REdgeInsets.all(15.r),
+          backgroundColor: Colors.redAccent,
+          snackPosition: SnackPosition.BOTTOM,
+          duration: const Duration(seconds: 2));
+    }
+
+    supplierController.getSuppliers();
     return response;
   }
 
@@ -74,6 +105,34 @@ class RemoteSupplierService {
       },
       body: jsonEncode(body),
     );
+    print(response.statusCode);
+    if (response.statusCode == 500) {
+      Get.snackbar('Something wrong!', 'You need to input new supplier name!',
+          colorText: Colors.white,
+          margin: REdgeInsets.all(15.r),
+          backgroundColor: Colors.redAccent,
+          snackPosition: SnackPosition.BOTTOM,
+          duration: const Duration(seconds: 2));
+    } else if (response.statusCode == 200) {
+      Get.snackbar('Updated Supplier!', 'You have been update supplier'.tr,
+          colorText: Colors.white,
+          margin: REdgeInsets.all(15.r),
+          backgroundColor: Colors.green,
+          snackPosition: SnackPosition.BOTTOM,
+          duration: const Duration(seconds: 2));
+
+      Get.offAndToNamed('/navigation');
+    } else {
+      Get.snackbar(
+          'Something wrong!', 'Update supplier is not working right now',
+          colorText: Colors.white,
+          margin: REdgeInsets.all(15.r),
+          backgroundColor: Colors.redAccent,
+          snackPosition: SnackPosition.BOTTOM,
+          duration: const Duration(seconds: 2));
+    }
+
+    supplierController.getSuppliers();
     return response;
   }
 
@@ -91,6 +150,23 @@ class RemoteSupplierService {
   static Future<dynamic> deleteById({required int id}) async {
     var response =
         await http.Client().get(Uri.parse('$baseUrl/api/supplier/delete/$id'));
+    if (response.statusCode == 200) {
+      Get.snackbar('Deleted Supplier!', 'You have been delete supplier'.tr,
+          colorText: Colors.white,
+          margin: REdgeInsets.all(15.r),
+          backgroundColor: Colors.green,
+          snackPosition: SnackPosition.BOTTOM,
+          duration: const Duration(seconds: 2));
+    } else {
+      Get.snackbar(
+          'Something wrong!', 'Delete supplier is not working right now',
+          colorText: Colors.white,
+          margin: REdgeInsets.all(15.r),
+          backgroundColor: Colors.redAccent,
+          snackPosition: SnackPosition.BOTTOM,
+          duration: const Duration(seconds: 2));
+    }
+    supplierController.getSuppliers();
     return response;
   }
 
@@ -102,6 +178,17 @@ class RemoteSupplierService {
 
   Future<dynamic> getByName({required String name}) async {
     var response = await client.get(Uri.parse('$baseUrl/api/supplier/$name'));
+    if (response.statusCode == 200) {
+      supplierController.getSupplierByName(name: name);
+    } else {
+      Get.snackbar('Something wrong!', 'Supplier is not working right now',
+          colorText: Colors.white,
+          margin: REdgeInsets.all(15.r),
+          backgroundColor: Colors.redAccent,
+          snackPosition: SnackPosition.BOTTOM,
+          duration: const Duration(seconds: 2));
+    }
+    print(response.statusCode);
     return response;
   }
 }

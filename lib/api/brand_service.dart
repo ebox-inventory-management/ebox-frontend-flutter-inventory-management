@@ -1,7 +1,10 @@
 import 'dart:convert';
 
+import 'package:ebox_frontend_web_inventory/controller/controllers.dart';
+import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:http/http.dart' as http;
-
+import 'package:get/get.dart';
 import '../core/constants/base_url.dart';
 
 class RemoteBrandService {
@@ -21,6 +24,33 @@ class RemoteBrandService {
       },
       body: jsonEncode(body),
     );
+    print(response.statusCode);
+    if (response.statusCode == 500) {
+      Get.snackbar('Something wrong!', 'You need to input new brand name!',
+          colorText: Colors.white,
+          margin: REdgeInsets.all(15.r),
+          backgroundColor: Colors.redAccent,
+          snackPosition: SnackPosition.BOTTOM,
+          duration: const Duration(seconds: 2));
+    } else if (response.statusCode == 200) {
+      Get.snackbar('Added Brand!', 'You have been add brand'.tr,
+          colorText: Colors.white,
+          margin: REdgeInsets.all(15.r),
+          backgroundColor: Colors.green,
+          snackPosition: SnackPosition.BOTTOM,
+          duration: const Duration(seconds: 2));
+
+      Get.offAndToNamed('/navigation');
+    } else {
+      Get.snackbar('Something wrong!', 'Add brand is not working right now',
+          colorText: Colors.white,
+          margin: REdgeInsets.all(15.r),
+          backgroundColor: Colors.redAccent,
+          snackPosition: SnackPosition.BOTTOM,
+          duration: const Duration(seconds: 2));
+    }
+
+    brandController.getBrands();
     return response;
   }
 
@@ -38,6 +68,33 @@ class RemoteBrandService {
       },
       body: jsonEncode(body),
     );
+    print(response.statusCode);
+    if (response.statusCode == 500) {
+      Get.snackbar('Something wrong!', 'You need to input new brand name!',
+          colorText: Colors.white,
+          margin: REdgeInsets.all(15.r),
+          backgroundColor: Colors.redAccent,
+          snackPosition: SnackPosition.BOTTOM,
+          duration: const Duration(seconds: 2));
+    } else if (response.statusCode == 200) {
+      Get.snackbar('Updated Brand!', 'You have been update brand'.tr,
+          colorText: Colors.white,
+          margin: REdgeInsets.all(15.r),
+          backgroundColor: Colors.green,
+          snackPosition: SnackPosition.BOTTOM,
+          duration: const Duration(seconds: 2));
+
+      Get.offAndToNamed('/navigation');
+    } else {
+      Get.snackbar('Something wrong!', 'Update brand is not working right now',
+          colorText: Colors.white,
+          margin: REdgeInsets.all(15.r),
+          backgroundColor: Colors.redAccent,
+          snackPosition: SnackPosition.BOTTOM,
+          duration: const Duration(seconds: 2));
+    }
+
+    brandController.getBrands();
     return response;
   }
 
@@ -59,6 +116,16 @@ class RemoteBrandService {
 
   Future<dynamic> getByName({required String name}) async {
     var response = await client.get(Uri.parse('$baseUrl/api/brand/$name'));
+    if (response.statusCode == 200) {
+      brandController.getBrandByName(name: name);
+    } else {
+      Get.snackbar('Something wrong!', 'Brand is not working right now',
+          colorText: Colors.white,
+          margin: REdgeInsets.all(15.r),
+          backgroundColor: Colors.redAccent,
+          snackPosition: SnackPosition.BOTTOM,
+          duration: const Duration(seconds: 2));
+    }
     print(response.statusCode);
     return response;
   }
@@ -66,6 +133,22 @@ class RemoteBrandService {
   static Future<dynamic> deleteById({required int id}) async {
     var response =
         await http.Client().get(Uri.parse('$baseUrl/api/brand/delete/$id'));
+    if (response.statusCode == 200) {
+      Get.snackbar('Deleted Brand!', 'You have been delete brand'.tr,
+          colorText: Colors.white,
+          margin: REdgeInsets.all(15.r),
+          backgroundColor: Colors.green,
+          snackPosition: SnackPosition.BOTTOM,
+          duration: const Duration(seconds: 2));
+    } else {
+      Get.snackbar('Something wrong!', 'Delete brand is not working right now',
+          colorText: Colors.white,
+          margin: REdgeInsets.all(15.r),
+          backgroundColor: Colors.redAccent,
+          snackPosition: SnackPosition.BOTTOM,
+          duration: const Duration(seconds: 2));
+    }
+    categoryController.getCategories();
     return response;
   }
 }

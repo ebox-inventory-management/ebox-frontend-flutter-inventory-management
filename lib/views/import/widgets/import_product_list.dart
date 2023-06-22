@@ -4,7 +4,7 @@ import 'package:ebox_frontend_web_inventory/views/import/widgets/import_product_
 import 'package:ebox_frontend_web_inventory/views/product/widgets/product_card.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-
+import 'package:get/get.dart';
 import '../../../controller/controllers.dart';
 import '../../../model/products.dart';
 
@@ -21,7 +21,8 @@ class ImportProductList extends StatelessWidget {
       shrinkWrap: true,
       itemBuilder: (context, index) {
         productController.getProductsById(id: imports[index].product_id);
-        return ImportProductCard(import: imports[index]);
+
+        return ImportProductCard(import: imports.reversed.toList()[index]);
       },
       separatorBuilder: (BuildContext context, int index) {
         return SizedBox(

@@ -40,7 +40,6 @@ class BrandController extends GetxController {
   }
 
   void create({
-    required int id,
     required String name,
   }) async {
     try {
