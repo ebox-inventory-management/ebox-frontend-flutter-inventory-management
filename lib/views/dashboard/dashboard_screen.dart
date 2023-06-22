@@ -243,7 +243,10 @@ class _DashBoardScreenState extends State<DashBoardScreen> {
                   child: Padding(
                     padding: REdgeInsets.all(15.r),
                     child: SfCartesianChart(
-                      title: ChartTitle(text: 'Income and Expense'),
+                      title: ChartTitle(
+                          text: 'Income and Expense',
+                          textStyle: TextStyle(
+                              fontSize: 16.sp, fontWeight: FontWeight.bold)),
                       primaryXAxis:
                           DateTimeAxis(rangePadding: ChartRangePadding.none),
                       legend: Legend(isVisible: true),
@@ -278,64 +281,6 @@ class _DashBoardScreenState extends State<DashBoardScreen> {
                   ),
                 ),
               ),
-              const Divider(),
-              Padding(
-                padding: REdgeInsets.only(top: 15.w, bottom: 15.w),
-                child: Row(
-                  crossAxisAlignment: CrossAxisAlignment.center,
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: [
-                    Row(
-                      children: [
-                        Icon(
-                          Icons.attach_money_sharp,
-                          color: Colors.orange,
-                          size: 30.r,
-                        ),
-                        SizedBox(
-                          width: 5.w,
-                        ),
-                        Text(
-                          'Latest Import (5 Products)',
-                          style: TextStyle(
-                              fontWeight: FontWeight.w500,
-                              color: Colors.orange,
-                              fontSize: 20.sp),
-                        ),
-                      ],
-                    ),
-                    SizedBox(),
-                  ],
-                ),
-              ),
-              Obx(() {
-                if (productController.isProductsLoading.value) {
-                  return const Center(child: CircularProgressIndicator());
-                } else {
-                  if (productController.productsList.isNotEmpty) {
-                    return ProductList(
-                        products: productController.productsList);
-                  } else {
-                    return Center(
-                      child: Column(
-                        children: [
-                          Image.network(
-                            'https://firebasestorage.googleapis.com/v0/b/ebox-inventory-management.appspot.com/o/empty.png?alt=media&token=06b30b38-cac0-490e-ac6a-6373fe120a16',
-                            scale: 4,
-                          ),
-                          Text(
-                            'Product Not Found!',
-                            style: TextStyle(
-                                color: Colors.grey,
-                                fontWeight: FontWeight.bold,
-                                fontSize: 30.sp),
-                          ),
-                        ],
-                      ),
-                    );
-                  }
-                }
-              }),
             ],
           ),
         ),

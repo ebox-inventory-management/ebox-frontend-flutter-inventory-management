@@ -24,9 +24,6 @@ class _ImportProductAddState extends State<ImportProductAdd> {
 
   String? selectedValueProductImport;
 
-  Color backgroundColor = Colors.grey;
-  Color foregroundColor = Colors.white;
-
   TextEditingController importQuantityController = TextEditingController();
 
   @override
@@ -95,14 +92,6 @@ class _ImportProductAddState extends State<ImportProductAdd> {
                             FilteringTextInputFormatter.allow(
                                 RegExp(r'[0-9,-]')),
                           ],
-                          onChanged: (val) {
-                            setState(() {
-                              backgroundColor =
-                                  val.isNotEmpty ? Colors.orange : Colors.grey;
-                              foregroundColor =
-                                  val.isNotEmpty ? Colors.white : Colors.white;
-                            });
-                          },
                           decoration: InputDecoration(
                             border: OutlineInputBorder(
                               borderRadius: BorderRadius.circular(10.0.r),
@@ -143,7 +132,6 @@ class _ImportProductAddState extends State<ImportProductAdd> {
                             selectedValueProductImport = index;
                             productController.getProductsByName(
                                 name: selectedValueProductImport!);
-                            print(productController.product.value!.id);
                           });
                         },
                       ),
@@ -162,23 +150,19 @@ class _ImportProductAddState extends State<ImportProductAdd> {
                                 duration: const Duration(seconds: 2));
                             return;
                           } else {
-                            Get.snackbar('Imported Product!',
-                                'You have been import product'.tr,
-                                colorText: Colors.white,
-                                margin: REdgeInsets.all(15),
-                                backgroundColor: Colors.green,
-                                snackPosition: SnackPosition.BOTTOM,
-                                duration: const Duration(seconds: 2));
                             importController.create(
                                 productId: productController.product.value!.id,
                                 product_quantity:
                                     int.parse(importQuantityController.text));
-                            Get.back();
                           }
                         },
                         style: TextButton.styleFrom(
-                            foregroundColor: foregroundColor,
-                            backgroundColor: backgroundColor,
+                            foregroundColor: Colors.white,
+                            backgroundColor:
+                                importQuantityController.text.isEmpty ||
+                                        selectedValueProductImport == null
+                                    ? Colors.grey
+                                    : Colors.orange,
                             shape: RoundedRectangleBorder(
                                 borderRadius:
                                     BorderRadius.all(Radius.circular(15.r)))),

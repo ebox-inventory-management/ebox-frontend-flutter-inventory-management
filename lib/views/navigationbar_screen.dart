@@ -7,7 +7,6 @@ import 'package:ebox_frontend_web_inventory/views/export/export_screen.dart';
 import 'package:ebox_frontend_web_inventory/views/import/import_screen.dart';
 import 'package:ebox_frontend_web_inventory/views/product/widgets/product_add.dart';
 import 'package:ebox_frontend_web_inventory/views/product/product_screen.dart';
-import 'package:ebox_frontend_web_inventory/views/quantity_adjustments/quantity_adjustment_screen.dart';
 import 'package:ebox_frontend_web_inventory/views/suppliers/supplier_screen.dart';
 import 'package:ebox_frontend_web_inventory/views/user/user_screen.dart';
 import 'package:flutter/material.dart';
@@ -188,32 +187,28 @@ class CustomeSidebarX extends StatelessWidget {
           label: 'Export',
         ),
         const SidebarXItem(
-          icon: Icons.list_alt_sharp,
-          label: 'Quantity Adjustment',
-        ),
-        const SidebarXItem(
           icon: Icons.factory,
-          label: 'Suppliers',
+          label: 'Supplier',
         ),
         const SidebarXItem(
           icon: Icons.groups,
-          label: 'Customers',
+          label: 'Customer',
         ),
         const SidebarXItem(
           icon: Icons.category,
-          label: 'Categories',
+          label: 'Category',
         ),
         const SidebarXItem(
           icon: Icons.branding_watermark,
-          label: 'Brands',
+          label: 'Brand',
         ),
         const SidebarXItem(
           icon: Icons.person,
-          label: 'Users',
+          label: 'User',
         ),
         const SidebarXItem(
           icon: Icons.notifications,
-          label: 'Alerts',
+          label: 'Alert',
         ),
         SidebarXItem(
           icon: Icons.exit_to_app,
@@ -269,18 +264,16 @@ class _ScreensExample extends StatelessWidget {
           case 3:
             return ExportScreen();
           case 4:
-            return QuantityAdjustmentScreen();
-          case 5:
             return SupplierScreen();
-          case 6:
+          case 5:
             return CustomerScreen();
-          case 7:
+          case 6:
             return CategoryScreen();
-          case 8:
+          case 7:
             return BrandScreen();
-          case 9:
+          case 8:
             return UserScreen();
-          case 10:
+          case 9:
             return AlertScreen();
 
           default:
@@ -304,20 +297,18 @@ String _getTitleByIndex(int index) {
     case 3:
       return 'Export';
     case 4:
-      return 'Quantity adjustments';
+      return 'Supplier';
     case 5:
-      return 'Suppliers';
+      return 'Customer';
     case 6:
-      return 'Customers';
+      return 'Category';
     case 7:
-      return 'Categories';
+      return 'Brand';
     case 8:
-      return 'Brands';
+      return 'User';
     case 9:
-      return 'Users';
+      return 'Alert';
     case 10:
-      return 'Alerts';
-    case 11:
       return 'Exit';
 
     default:

@@ -4,6 +4,7 @@ import 'package:dropdown_button2/custom_dropdown_button2.dart';
 import 'package:file_picker/file_picker.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 import 'package:intl/intl.dart';
@@ -18,9 +19,6 @@ class SupplierAdd extends StatefulWidget {
 }
 
 class _SupplierAddState extends State<SupplierAdd> {
-  Color backgroundColor = Colors.grey;
-  Color foregroundColor = Colors.white;
-
   // Variable to hold the selected image file
   PlatformFile? _imageFile;
 
@@ -199,16 +197,16 @@ class _SupplierAddState extends State<SupplierAdd> {
                                 width: 0.4.sw,
                                 child: TextFormField(
                                   controller: nameController,
-                                  onChanged: (val) {
-                                    setState(() {
-                                      backgroundColor = val.isNotEmpty
-                                          ? Colors.orange
-                                          : Colors.grey;
-                                      foregroundColor = val.isNotEmpty
-                                          ? Colors.white
-                                          : Colors.white;
-                                    });
-                                  },
+                                  // onChanged: (val) {
+                                  //   setState(() {
+                                  //     backgroundColor = val.isNotEmpty
+                                  //         ? Colors.orange
+                                  //         : Colors.grey;
+                                  //     foregroundColor = val.isNotEmpty
+                                  //         ? Colors.white
+                                  //         : Colors.white;
+                                  //   });
+                                  // },
                                   textInputAction: TextInputAction.next,
                                   obscureText: false,
                                   decoration: InputDecoration(
@@ -257,6 +255,10 @@ class _SupplierAddState extends State<SupplierAdd> {
                                   controller: phoneController,
                                   textInputAction: TextInputAction.next,
                                   obscureText: false,
+                                  inputFormatters: <TextInputFormatter>[
+                                    FilteringTextInputFormatter.allow(
+                                        RegExp(r'[0-9,-]')),
+                                  ],
                                   decoration: InputDecoration(
                                     border: OutlineInputBorder(
                                       borderRadius:
@@ -413,11 +415,10 @@ class _SupplierAddState extends State<SupplierAdd> {
                         onPressed: () {
                           if (bankNameController.text.isEmpty ||
                               addressController.text.isEmpty ||
-                              photoController.text.isEmpty ||
                               phoneController.text.isEmpty ||
-                              bankNameController.text.isEmpty ||
                               bankNumberController.text.isEmpty ||
-                              bankNumberController.text.isEmpty ||
+                              nameController.text.isEmpty ||
+                              cityController.text.isEmpty ||
                               shopNameController.text.isEmpty ||
                               typeController.text.isEmpty) {
                             Get.snackbar('Something wrong!',
@@ -429,13 +430,6 @@ class _SupplierAddState extends State<SupplierAdd> {
                                 duration: const Duration(seconds: 2));
                             return;
                           } else {
-                            Get.snackbar('Added Supplier!',
-                                'You have been add supplier'.tr,
-                                colorText: Colors.white,
-                                margin: REdgeInsets.all(15),
-                                backgroundColor: Colors.green,
-                                snackPosition: SnackPosition.BOTTOM,
-                                duration: const Duration(seconds: 2));
                             supplierController.create(
                                 address: addressController.text,
                                 bank_name: bankNameController.text,
@@ -450,8 +444,17 @@ class _SupplierAddState extends State<SupplierAdd> {
                           }
                         },
                         style: TextButton.styleFrom(
-                            foregroundColor: foregroundColor,
-                            backgroundColor: backgroundColor,
+                            foregroundColor: Colors.white,
+                            backgroundColor: bankNameController.text.isEmpty ||
+                                    addressController.text.isEmpty ||
+                                    phoneController.text.isEmpty ||
+                                    bankNumberController.text.isEmpty ||
+                                    nameController.text.isEmpty ||
+                                    cityController.text.isEmpty ||
+                                    shopNameController.text.isEmpty ||
+                                    typeController.text.isEmpty
+                                ? Colors.grey
+                                : Colors.orange,
                             shape: RoundedRectangleBorder(
                                 borderRadius:
                                     BorderRadius.all(Radius.circular(15.r)))),

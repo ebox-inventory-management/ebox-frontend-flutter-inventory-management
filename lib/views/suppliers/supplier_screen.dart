@@ -120,24 +120,30 @@ class SupplierScreen extends StatelessWidget {
                       style: TextButton.styleFrom(
                         foregroundColor: Colors.white,
                         backgroundColor: Colors.orange,
+                        shape: RoundedRectangleBorder(
+                            borderRadius:
+                                BorderRadius.all(Radius.circular(15.r))),
                       ),
-                      child: Row(
-                        children: [
-                          Icon(
-                            Icons.add,
-                            size: 30.r,
-                          ),
-                          SizedBox(
-                            width: 5.w,
-                          ),
-                          Text(
-                            'Add Supplier',
-                            style: TextStyle(
-                              fontWeight: FontWeight.w500,
-                              fontSize: 16.sp,
+                      child: Padding(
+                        padding: REdgeInsets.all(15.r),
+                        child: Row(
+                          children: [
+                            Icon(
+                              Icons.add,
+                              size: 30.r,
                             ),
-                          ),
-                        ],
+                            SizedBox(
+                              width: 5.w,
+                            ),
+                            Text(
+                              'Add Supplier',
+                              style: TextStyle(
+                                fontWeight: FontWeight.w500,
+                                fontSize: 14.sp,
+                              ),
+                            ),
+                          ],
+                        ),
                       ))
                 ],
               ),

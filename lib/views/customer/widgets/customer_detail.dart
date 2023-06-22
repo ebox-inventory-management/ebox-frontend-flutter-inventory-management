@@ -9,10 +9,11 @@ import 'package:intl/intl.dart';
 
 import '../../../controller/controllers.dart';
 import '../../../model/brand.dart';
+import '../../../model/customers.dart';
 
-class SupplierDetail extends StatelessWidget {
-  final Suppliers suppliers;
-  const SupplierDetail({super.key, required this.suppliers});
+class CustomerDetail extends StatelessWidget {
+  final Customers customers;
+  const CustomerDetail({super.key, required this.customers});
 
   @override
   Widget build(BuildContext context) {
@@ -77,7 +78,7 @@ class SupplierDetail extends StatelessWidget {
                                         Radius.circular(10.r))),
                                 child: Center(
                                   child: Text(
-                                    'Create Date: ${suppliers.created_at}',
+                                    'Create Date: ${customers.created_at}',
                                     style: TextStyle(
                                         fontSize: 16.sp, color: Colors.white),
                                   ),
@@ -95,7 +96,7 @@ class SupplierDetail extends StatelessWidget {
                                         Radius.circular(10.r))),
                                 child: Center(
                                   child: Text(
-                                    'Update Date: ${suppliers.created_at}',
+                                    'Update Date: ${customers.created_at}',
                                     style: TextStyle(
                                         fontSize: 16.sp, color: Colors.white),
                                   ),
@@ -113,7 +114,7 @@ class SupplierDetail extends StatelessWidget {
                             SizedBox(
                               width: 450.w,
                               child: Text(
-                                suppliers.name,
+                                customers.name,
                                 overflow: TextOverflow.ellipsis,
                                 style: TextStyle(
                                     fontWeight: FontWeight.bold,
@@ -140,7 +141,7 @@ class SupplierDetail extends StatelessWidget {
                                       BorderRadius.all(Radius.circular(10.r))),
                               child: Center(
                                 child: Text(
-                                  suppliers.phone,
+                                  customers.phone,
                                   style: TextStyle(
                                       fontSize: 16.sp, color: Colors.white),
                                 ),
@@ -166,7 +167,7 @@ class SupplierDetail extends StatelessWidget {
                                       BorderRadius.all(Radius.circular(10.r))),
                               child: Center(
                                 child: Text(
-                                  suppliers.email,
+                                  customers.email,
                                   style: TextStyle(
                                       fontSize: 16.sp, color: Colors.white),
                                 ),
@@ -192,7 +193,7 @@ class SupplierDetail extends StatelessWidget {
                                       BorderRadius.all(Radius.circular(10.r))),
                               child: Center(
                                 child: Text(
-                                  suppliers.address,
+                                  customers.address,
                                   style: TextStyle(
                                       fontSize: 16.sp, color: Colors.white),
                                 ),
@@ -218,33 +219,7 @@ class SupplierDetail extends StatelessWidget {
                                       BorderRadius.all(Radius.circular(10.r))),
                               child: Center(
                                 child: Text(
-                                  suppliers.city,
-                                  style: TextStyle(
-                                      fontSize: 16.sp, color: Colors.white),
-                                ),
-                              ),
-                            ),
-                            SizedBox(
-                              height: 30.w,
-                            ),
-                            Text(
-                              'Type',
-                              style: TextStyle(
-                                  fontWeight: FontWeight.w500, fontSize: 16.sp),
-                            ),
-                            SizedBox(
-                              height: 10.w,
-                            ),
-                            Container(
-                              width: 400.w,
-                              height: 50.w,
-                              decoration: BoxDecoration(
-                                  color: Colors.orangeAccent,
-                                  borderRadius:
-                                      BorderRadius.all(Radius.circular(10.r))),
-                              child: Center(
-                                child: Text(
-                                  suppliers.type,
+                                  customers.city,
                                   style: TextStyle(
                                       fontSize: 16.sp, color: Colors.white),
                                 ),
@@ -270,7 +245,7 @@ class SupplierDetail extends StatelessWidget {
                                       BorderRadius.all(Radius.circular(10.r))),
                               child: Center(
                                 child: Text(
-                                  suppliers.shop_name,
+                                  customers.shop_name,
                                   style: TextStyle(
                                       fontSize: 16.sp, color: Colors.white),
                                 ),
@@ -296,7 +271,7 @@ class SupplierDetail extends StatelessWidget {
                                       BorderRadius.all(Radius.circular(10.r))),
                               child: Center(
                                 child: Text(
-                                  suppliers.bank_name,
+                                  customers.bank_name,
                                   style: TextStyle(
                                       fontSize: 16.sp, color: Colors.white),
                                 ),
@@ -322,7 +297,7 @@ class SupplierDetail extends StatelessWidget {
                                       BorderRadius.all(Radius.circular(10.r))),
                               child: Center(
                                 child: Text(
-                                  suppliers.bank_number,
+                                  customers.bank_number,
                                   style: TextStyle(
                                       fontSize: 16.sp, color: Colors.white),
                                 ),

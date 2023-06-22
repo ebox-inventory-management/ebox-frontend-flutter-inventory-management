@@ -17,9 +17,6 @@ class SupplierCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    supplierController.getSupplierById(id: suppliers.supplier_id[index]);
-    categoryController.getCategoryById(id: suppliers.category_id[index]);
-    brandController.getBrandById(id: suppliers.brand_id[index]);
     return GestureDetector(
       onTap: () {
         Get.dialog(SupplierDetail(
@@ -88,13 +85,6 @@ class SupplierCard extends StatelessWidget {
                                   .tr,
                           btnCancelOnPress: () {},
                           btnOkOnPress: () {
-                            Get.snackbar('Deleted!', ''.tr,
-                                colorText: Colors.white,
-                                margin: REdgeInsets.all(15),
-                                backgroundColor: Colors.green,
-                                snackPosition: SnackPosition.BOTTOM,
-                                duration: const Duration(seconds: 2));
-
                             supplierController.delete(id: suppliers.id);
                           },
                         ).show();

@@ -1,6 +1,5 @@
 import 'package:collection/collection.dart';
 import 'package:dropdown_button2/custom_dropdown_button2.dart';
-import 'package:ebox_frontend_web_inventory/model/suppliers.dart';
 
 import 'package:file_picker/file_picker.dart';
 import 'package:flutter/foundation.dart';
@@ -12,15 +11,14 @@ import 'package:intl/intl.dart';
 
 import '../../../controller/controllers.dart';
 
-class SupplierEdit extends StatefulWidget {
-  final Suppliers suppliers;
-  const SupplierEdit({super.key, required this.suppliers});
+class CustomerAdd extends StatefulWidget {
+  const CustomerAdd({super.key});
 
   @override
-  State<SupplierEdit> createState() => _SupplierEditState();
+  State<CustomerAdd> createState() => _CustomerAddState();
 }
 
-class _SupplierEditState extends State<SupplierEdit> {
+class _CustomerAddState extends State<CustomerAdd> {
   // Variable to hold the selected image file
   PlatformFile? _imageFile;
 
@@ -58,7 +56,6 @@ class _SupplierEditState extends State<SupplierEdit> {
   TextEditingController phoneController = TextEditingController();
   TextEditingController photoController = TextEditingController();
   TextEditingController shopNameController = TextEditingController();
-  TextEditingController typeController = TextEditingController();
 
   @override
   void dispose() {
@@ -72,7 +69,6 @@ class _SupplierEditState extends State<SupplierEdit> {
     phoneController.dispose();
     photoController.dispose();
     shopNameController.dispose();
-    typeController.dispose();
   }
 
   @override
@@ -97,7 +93,7 @@ class _SupplierEditState extends State<SupplierEdit> {
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [
                         Text(
-                          'Add Supplier',
+                          'Add Customer',
                           style: TextStyle(
                               fontWeight: FontWeight.bold, fontSize: 30.sp),
                         ),
@@ -127,7 +123,7 @@ class _SupplierEditState extends State<SupplierEdit> {
                             Padding(
                               padding: REdgeInsets.only(bottom: 15.r),
                               child: Text(
-                                'Supplier Image',
+                                'Customer Image',
                                 style: TextStyle(
                                     fontWeight: FontWeight.bold,
                                     fontSize: 14.sp),
@@ -188,7 +184,7 @@ class _SupplierEditState extends State<SupplierEdit> {
                               height: 30.w,
                             ),
                             Text(
-                              'Supplier Name',
+                              'Customer Name',
                               style: TextStyle(
                                   fontWeight: FontWeight.bold, fontSize: 14.sp),
                             ),
@@ -212,8 +208,6 @@ class _SupplierEditState extends State<SupplierEdit> {
                                   textInputAction: TextInputAction.next,
                                   obscureText: false,
                                   decoration: InputDecoration(
-                                    hintText: widget.suppliers.name,
-                                    hintStyle: TextStyle(fontSize: 16.sp),
                                     border: OutlineInputBorder(
                                       borderRadius:
                                           BorderRadius.circular(10.0.r),
@@ -237,8 +231,6 @@ class _SupplierEditState extends State<SupplierEdit> {
                                   textInputAction: TextInputAction.next,
                                   obscureText: false,
                                   decoration: InputDecoration(
-                                    hintText: widget.suppliers.email,
-                                    hintStyle: TextStyle(fontSize: 16.sp),
                                     border: OutlineInputBorder(
                                       borderRadius:
                                           BorderRadius.circular(10.0.r),
@@ -266,8 +258,6 @@ class _SupplierEditState extends State<SupplierEdit> {
                                         RegExp(r'[0-9,-]')),
                                   ],
                                   decoration: InputDecoration(
-                                    hintText: widget.suppliers.phone,
-                                    hintStyle: TextStyle(fontSize: 16.sp),
                                     border: OutlineInputBorder(
                                       borderRadius:
                                           BorderRadius.circular(10.0.r),
@@ -291,8 +281,6 @@ class _SupplierEditState extends State<SupplierEdit> {
                                   textInputAction: TextInputAction.next,
                                   obscureText: false,
                                   decoration: InputDecoration(
-                                    hintText: widget.suppliers.address,
-                                    hintStyle: TextStyle(fontSize: 16.sp),
                                     border: OutlineInputBorder(
                                       borderRadius:
                                           BorderRadius.circular(10.0.r),
@@ -316,33 +304,6 @@ class _SupplierEditState extends State<SupplierEdit> {
                                   textInputAction: TextInputAction.next,
                                   obscureText: false,
                                   decoration: InputDecoration(
-                                    hintText: widget.suppliers.city,
-                                    hintStyle: TextStyle(fontSize: 16.sp),
-                                    border: OutlineInputBorder(
-                                      borderRadius:
-                                          BorderRadius.circular(10.0.r),
-                                    ),
-                                  ),
-                                ),
-                              ),
-                            ),
-                            Text(
-                              'Type',
-                              style: TextStyle(
-                                  fontWeight: FontWeight.bold, fontSize: 14.sp),
-                            ),
-                            Padding(
-                              padding:
-                                  REdgeInsets.only(bottom: 30.r, top: 10.r),
-                              child: SizedBox(
-                                width: 0.4.sw,
-                                child: TextFormField(
-                                  controller: typeController,
-                                  textInputAction: TextInputAction.next,
-                                  obscureText: false,
-                                  decoration: InputDecoration(
-                                    hintText: widget.suppliers.type,
-                                    hintStyle: TextStyle(fontSize: 16.sp),
                                     border: OutlineInputBorder(
                                       borderRadius:
                                           BorderRadius.circular(10.0.r),
@@ -366,8 +327,6 @@ class _SupplierEditState extends State<SupplierEdit> {
                                   textInputAction: TextInputAction.next,
                                   obscureText: false,
                                   decoration: InputDecoration(
-                                    hintText: widget.suppliers.shop_name,
-                                    hintStyle: TextStyle(fontSize: 16.sp),
                                     border: OutlineInputBorder(
                                       borderRadius:
                                           BorderRadius.circular(10.0.r),
@@ -391,8 +350,6 @@ class _SupplierEditState extends State<SupplierEdit> {
                                   textInputAction: TextInputAction.next,
                                   obscureText: false,
                                   decoration: InputDecoration(
-                                    hintText: widget.suppliers.bank_name,
-                                    hintStyle: TextStyle(fontSize: 16.sp),
                                     border: OutlineInputBorder(
                                       borderRadius:
                                           BorderRadius.circular(10.0.r),
@@ -416,8 +373,6 @@ class _SupplierEditState extends State<SupplierEdit> {
                                   textInputAction: TextInputAction.next,
                                   obscureText: false,
                                   decoration: InputDecoration(
-                                    hintText: widget.suppliers.bank_number,
-                                    hintStyle: TextStyle(fontSize: 16.sp),
                                     border: OutlineInputBorder(
                                       borderRadius:
                                           BorderRadius.circular(10.0.r),
@@ -439,10 +394,9 @@ class _SupplierEditState extends State<SupplierEdit> {
                               bankNumberController.text.isEmpty ||
                               nameController.text.isEmpty ||
                               cityController.text.isEmpty ||
-                              shopNameController.text.isEmpty ||
-                              typeController.text.isEmpty) {
+                              shopNameController.text.isEmpty) {
                             Get.snackbar('Something wrong!',
-                                'You need to input all supplier information to update',
+                                'You need to input all customer information to add',
                                 colorText: Colors.white,
                                 margin: REdgeInsets.all(15),
                                 backgroundColor: Colors.redAccent,
@@ -450,23 +404,30 @@ class _SupplierEditState extends State<SupplierEdit> {
                                 duration: const Duration(seconds: 2));
                             return;
                           } else {
-                            supplierController.updateSupplier(
-                                address: addressController.text,
-                                bank_name: bankNameController.text,
-                                bank_number: bankNameController.text,
-                                city: cityController.text,
-                                email: emailController.text,
-                                name: nameController.text,
-                                phone: phoneController.text,
-                                photo: '',
-                                shop_name: shopNameController.text,
-                                type: typeController.text,
-                                id: widget.suppliers.id);
+                            customerController.create(
+                              address: addressController.text,
+                              bank_name: bankNameController.text,
+                              bank_number: bankNameController.text,
+                              city: cityController.text,
+                              email: emailController.text,
+                              name: nameController.text,
+                              phone: phoneController.text,
+                              photo: '',
+                              shop_name: shopNameController.text,
+                            );
                           }
                         },
                         style: TextButton.styleFrom(
                             foregroundColor: Colors.white,
-                            backgroundColor: Colors.orange,
+                            backgroundColor: bankNameController.text.isEmpty ||
+                                    addressController.text.isEmpty ||
+                                    phoneController.text.isEmpty ||
+                                    bankNumberController.text.isEmpty ||
+                                    nameController.text.isEmpty ||
+                                    cityController.text.isEmpty ||
+                                    shopNameController.text.isEmpty
+                                ? Colors.grey
+                                : Colors.orange,
                             shape: RoundedRectangleBorder(
                                 borderRadius:
                                     BorderRadius.all(Radius.circular(15.r)))),
@@ -474,7 +435,7 @@ class _SupplierEditState extends State<SupplierEdit> {
                           padding: REdgeInsets.only(
                               top: 15.r, bottom: 15.r, left: 30.r, right: 30.r),
                           child: Text(
-                            'Update',
+                            'Add',
                             style: TextStyle(fontSize: 20.sp),
                           ),
                         ),

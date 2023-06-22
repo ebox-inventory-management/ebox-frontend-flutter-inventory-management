@@ -8,6 +8,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
 import '../api/category_service.dart';
+import 'controllers.dart';
 
 class CategoryController extends GetxController {
   RxList<Categories> categoriesList =
@@ -39,7 +40,6 @@ class CategoryController extends GetxController {
   }
 
   void create({
-    required int id,
     required String name,
   }) async {
     try {

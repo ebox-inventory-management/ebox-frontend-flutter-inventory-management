@@ -121,6 +121,21 @@ class CustomerController extends GetxController {
     }
   }
 
+  void getCustomerByKeyword({required String keyword}) async {
+    try {
+      isCustomersLoading(true);
+      //call api
+      var result = await RemoteCustomerService().getByKeyword(keyword: keyword);
+
+      if (result != null) {
+        //assign api result
+        customersList.assignAll(customersListFromJson(result.body));
+      }
+    } finally {
+      isCustomersLoading(false);
+    }
+  }
+
   void getCustomerByName({required String keyword}) async {
     try {
       isCustomersLoading(true);

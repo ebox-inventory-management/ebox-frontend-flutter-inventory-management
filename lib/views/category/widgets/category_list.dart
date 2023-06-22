@@ -1,12 +1,13 @@
 import 'package:ebox_frontend_web_inventory/model/categories.dart';
-import 'package:ebox_frontend_web_inventory/model/supplier.dart';
+import 'package:ebox_frontend_web_inventory/model/customers.dart';
+import 'package:ebox_frontend_web_inventory/model/suppliers.dart';
 import 'package:ebox_frontend_web_inventory/views/product/widgets/product_card.dart';
+import 'package:ebox_frontend_web_inventory/views/suppliers/widgets/supplier_card.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 import '../../../controller/controllers.dart';
 import '../../../model/products.dart';
-import '../../../model/suppliers.dart';
 import 'category_card.dart';
 
 class CategoryList extends StatelessWidget {
@@ -27,7 +28,9 @@ class CategoryList extends StatelessWidget {
         );
       },
       separatorBuilder: (BuildContext context, int index) {
-        return Divider();
+        return SizedBox(
+          height: 15.w,
+        );
       },
     );
   }
