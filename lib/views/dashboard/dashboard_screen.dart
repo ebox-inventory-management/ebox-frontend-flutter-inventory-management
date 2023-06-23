@@ -1,6 +1,7 @@
 import 'package:dropdown_button2/custom_dropdown_button2.dart';
 import 'package:ebox_frontend_web_inventory/controller/income_controller.dart';
 import 'package:ebox_frontend_web_inventory/model/chart_data_incomes.dart';
+import 'package:ebox_frontend_web_inventory/views/dashboard/widgets/product_alert_list.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:syncfusion_flutter_charts/charts.dart';
@@ -87,7 +88,7 @@ class _DashBoardScreenState extends State<DashBoardScreen> {
                     CustomDropdownButton2(
                       buttonWidth: 0.2.sw,
                       buttonHeight: 40.w,
-                      hint: 'Choose Incomes',
+                      hint: 'Choose Date',
                       dropdownItems: total,
                       value: selectedValueTotal,
                       buttonDecoration: BoxDecoration(
@@ -281,6 +282,63 @@ class _DashBoardScreenState extends State<DashBoardScreen> {
                   ),
                 ),
               ),
+              Padding(
+                padding: REdgeInsets.only(bottom: 15.r, top: 15.r),
+                child: Row(
+                  crossAxisAlignment: CrossAxisAlignment.center,
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    Row(
+                      children: [
+                        Icon(
+                          Icons.notifications,
+                          color: Colors.red,
+                          size: 30.r,
+                        ),
+                        SizedBox(
+                          width: 5.w,
+                        ),
+                        Text(
+                          'Product Quantity Alert',
+                          style: TextStyle(
+                              fontWeight: FontWeight.w500,
+                              color: Colors.red,
+                              fontSize: 20.sp),
+                        ),
+                      ],
+                    ),
+                    SizedBox()
+                  ],
+                ),
+              ),
+              Obx(() {
+                if (productController.isProductsLoading.value) {
+                  return const Center(child: CircularProgressIndicator());
+                } else {
+                  if (productController.productsList.isNotEmpty) {
+                    return ProductAlertList(
+                        products: productController.productsList);
+                  } else {
+                    return Center(
+                      child: Column(
+                        children: [
+                          Image.network(
+                            'https://firebasestorage.googleapis.com/v0/b/ebox-inventory-management.appspot.com/o/empty.png?alt=media&token=06b30b38-cac0-490e-ac6a-6373fe120a16',
+                            scale: 4,
+                          ),
+                          Text(
+                            'Product Not Found!',
+                            style: TextStyle(
+                                color: Colors.grey,
+                                fontWeight: FontWeight.bold,
+                                fontSize: 30.sp),
+                          ),
+                        ],
+                      ),
+                    );
+                  }
+                }
+              }),
             ],
           ),
         ),
