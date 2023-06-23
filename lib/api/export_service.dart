@@ -38,6 +38,7 @@ class RemoteExportService {
           backgroundColor: Colors.green,
           snackPosition: SnackPosition.BOTTOM,
           duration: const Duration(seconds: 2));
+
       Get.offAndToNamed('/navigation');
     } else {
       Get.snackbar(
@@ -49,6 +50,12 @@ class RemoteExportService {
           duration: const Duration(seconds: 2));
     }
     exportController.getExports();
+    productController.getProducts();
+
+    dashboardController.getChartDataIncome();
+    incomeController.getIncomeToday();
+    expenseController.getExpenseToday();
+    revenueController.getRevenueToday();
     print(response.statusCode);
     return response;
   }

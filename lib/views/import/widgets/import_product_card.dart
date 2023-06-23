@@ -17,7 +17,7 @@ class ImportProductCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    TextEditingController quantityController = TextEditingController();
+    productController.getProductsById(id: import.product_id);
 
     return GestureDetector(
       onTap: () => Get.dialog(

@@ -41,7 +41,7 @@ class ExportScreen extends StatelessWidget {
               ],
             ),
             Padding(
-              padding: REdgeInsets.only(top: 15.w, bottom: 15.r),
+              padding: REdgeInsets.only(bottom: 15.r),
               child: Divider(
                 color: Colors.black.withOpacity(0.1),
                 thickness: 5.w,

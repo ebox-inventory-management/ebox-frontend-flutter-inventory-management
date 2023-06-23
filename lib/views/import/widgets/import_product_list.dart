@@ -20,8 +20,6 @@ class ImportProductList extends StatelessWidget {
       itemCount: imports.length,
       shrinkWrap: true,
       itemBuilder: (context, index) {
-        productController.getProductsById(id: imports[index].product_id);
-
         return ImportProductCard(import: imports.reversed.toList()[index]);
       },
       separatorBuilder: (BuildContext context, int index) {

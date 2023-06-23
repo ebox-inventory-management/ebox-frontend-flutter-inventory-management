@@ -23,7 +23,7 @@ class ExportProductList extends StatelessWidget {
       shrinkWrap: true,
       itemBuilder: (context, index) {
         productController.getProductsById(id: exports[index].product_id);
-        return ExportProductCard(export: exports[index]);
+        return ExportProductCard(export: exports.reversed.toList()[index]);
       },
       separatorBuilder: (BuildContext context, int index) {
         return SizedBox(

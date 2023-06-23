@@ -48,6 +48,11 @@ class RemoteImportService {
           duration: const Duration(seconds: 2));
     }
     importController.getImports();
+    productController.getProducts();
+    dashboardController.getChartDataExpense();
+    incomeController.getIncomeToday();
+    expenseController.getExpenseToday();
+    revenueController.getRevenueToday();
     print(response.statusCode);
     return response;
   }
