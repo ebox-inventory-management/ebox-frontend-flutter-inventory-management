@@ -136,7 +136,7 @@ class CustomeSidebarX extends StatelessWidget {
       footerDivider: Divider(),
       headerBuilder: (context, extended) {
         return Padding(
-          padding: REdgeInsets.all(16.0),
+          padding: REdgeInsets.all(16.0.r),
           child: Column(
             children: [
               CircleAvatar(
