@@ -30,6 +30,20 @@ class _DashBoardScreenState extends State<DashBoardScreen> {
   String? tempRevenue = revenueController.revenueToday.value?.today_revenue;
 
   @override
+  void initState() {
+    importController;
+    exportController;
+    incomeController;
+    expenseController;
+    revenueController;
+    categoryController;
+    brandController;
+    supplierController;
+    dashboardController;
+    super.initState();
+  }
+
+  @override
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: Colors.grey[100],
@@ -248,37 +262,17 @@ class _DashBoardScreenState extends State<DashBoardScreen> {
                         text: 'Import and Export (Product Quantity)',
                         textStyle: TextStyle(
                             fontSize: 16.sp, fontWeight: FontWeight.bold)),
-                    primaryXAxis:
-                        DateTimeAxis(rangePadding: ChartRangePadding.none),
+                    primaryXAxis: DateTimeAxis(),
+                    primaryYAxis: NumericAxis(),
                     legend: Legend(isVisible: true),
+                    tooltipBehavior: TooltipBehavior(enable: true),
+                    zoomPanBehavior: ZoomPanBehavior(
+                      enableDoubleTapZooming: true,
+                    ),
                     series: <ChartSeries<dynamic, DateTime>>[
-                      LineSeries<ChartDataExport, DateTime>(
-                          dataSource: dashboardController.chartDataExportList,
-                          color: Colors.blueAccent,
-                          isVisible: true,
-                          isVisibleInLegend: true,
-                          yAxisName: 'Export',
-                          xAxisName: 'Time',
-                          xValueMapper: (ChartDataExport data, _) =>
-                              data.created_at,
-                          yValueMapper: (ChartDataExport data, _) =>
-                              data.total_export_price,
-                          name: 'Exports',
-                          width: 2.w,
-                          enableTooltip: true,
-                          markerSettings: const MarkerSettings(
-                              isVisible: true,
-                              height: 4,
-                              width: 4,
-                              shape: DataMarkerType.circle,
-                              color: Colors.white,
-                              borderColor: Colors.black),
-                          dataLabelSettings: const DataLabelSettings(
-                            isVisible: true,
-                          )),
                       LineSeries<ChartDataImport, DateTime>(
                           dataSource: dashboardController.chartDataImportList,
-                          color: Colors.redAccent,
+                          color: Colors.blueAccent,
                           isVisible: true,
                           isVisibleInLegend: true,
                           yAxisName: 'Import',
@@ -288,12 +282,34 @@ class _DashBoardScreenState extends State<DashBoardScreen> {
                           yValueMapper: (ChartDataImport data, _) =>
                               data.total_import_price,
                           name: 'Import',
-                          width: 2.w,
                           enableTooltip: true,
                           markerSettings: MarkerSettings(
                               isVisible: true,
                               height: 4.w,
                               width: 4.w,
+                              shape: DataMarkerType.circle,
+                              color: Colors.white,
+                              borderColor: Colors.black),
+                          dataLabelSettings: const DataLabelSettings(
+                            isVisible: true,
+                          )),
+                      LineSeries<ChartDataExport, DateTime>(
+                          dataSource: dashboardController.chartDataExportList,
+                          color: Colors.redAccent,
+                          isVisible: true,
+                          isVisibleInLegend: true,
+                          yAxisName: 'Export',
+                          xAxisName: 'Time',
+                          xValueMapper: (ChartDataExport data, _) =>
+                              data.created_at,
+                          yValueMapper: (ChartDataExport data, _) =>
+                              data.total_export_price,
+                          name: 'Exports',
+                          enableTooltip: true,
+                          markerSettings: const MarkerSettings(
+                              isVisible: true,
+                              height: 4,
+                              width: 4,
                               shape: DataMarkerType.circle,
                               color: Colors.white,
                               borderColor: Colors.black),
@@ -319,39 +335,18 @@ class _DashBoardScreenState extends State<DashBoardScreen> {
                             text: 'Import and Export (Product Quantity)',
                             textStyle: TextStyle(
                                 fontSize: 16.sp, fontWeight: FontWeight.bold)),
-                        primaryXAxis:
-                            DateTimeAxis(rangePadding: ChartRangePadding.none),
                         legend: Legend(isVisible: true),
+                        primaryXAxis: DateTimeCategoryAxis(),
+                        primaryYAxis: NumericAxis(),
+                        tooltipBehavior: TooltipBehavior(enable: true),
+                        zoomPanBehavior: ZoomPanBehavior(
+                          enableDoubleTapZooming: true,
+                        ),
                         series: <ChartSeries<dynamic, DateTime>>[
-                          LineSeries<ChartDataExport, DateTime>(
-                              dataSource:
-                                  dashboardController.chartDataExportList,
-                              color: Colors.blueAccent,
-                              isVisible: true,
-                              isVisibleInLegend: true,
-                              yAxisName: 'Export',
-                              xAxisName: 'Time',
-                              xValueMapper: (ChartDataExport data, _) =>
-                                  data.created_at,
-                              yValueMapper: (ChartDataExport data, _) =>
-                                  data.total_export_price,
-                              name: 'Exports',
-                              width: 2.w,
-                              enableTooltip: true,
-                              markerSettings: const MarkerSettings(
-                                  isVisible: true,
-                                  height: 4,
-                                  width: 4,
-                                  shape: DataMarkerType.circle,
-                                  color: Colors.white,
-                                  borderColor: Colors.black),
-                              dataLabelSettings: const DataLabelSettings(
-                                isVisible: true,
-                              )),
-                          LineSeries<ChartDataImport, DateTime>(
+                          BarSeries<ChartDataImport, DateTime>(
                               dataSource:
                                   dashboardController.chartDataImportList,
-                              color: Colors.redAccent,
+                              color: Colors.blueAccent,
                               isVisible: true,
                               isVisibleInLegend: true,
                               yAxisName: 'Import',
@@ -361,12 +356,35 @@ class _DashBoardScreenState extends State<DashBoardScreen> {
                               yValueMapper: (ChartDataImport data, _) =>
                                   data.total_import_price,
                               name: 'Import',
-                              width: 2.w,
                               enableTooltip: true,
                               markerSettings: MarkerSettings(
                                   isVisible: true,
                                   height: 4.w,
                                   width: 4.w,
+                                  shape: DataMarkerType.circle,
+                                  color: Colors.white,
+                                  borderColor: Colors.black),
+                              dataLabelSettings: const DataLabelSettings(
+                                isVisible: true,
+                              )),
+                          BarSeries<ChartDataExport, DateTime>(
+                              dataSource:
+                                  dashboardController.chartDataExportList,
+                              color: Colors.redAccent,
+                              isVisible: true,
+                              isVisibleInLegend: true,
+                              yAxisName: 'Export',
+                              xAxisName: 'Time',
+                              xValueMapper: (ChartDataExport data, _) =>
+                                  data.created_at,
+                              yValueMapper: (ChartDataExport data, _) =>
+                                  data.total_export_price,
+                              name: 'Export',
+                              enableTooltip: true,
+                              markerSettings: const MarkerSettings(
+                                  isVisible: true,
+                                  height: 4,
+                                  width: 4,
                                   shape: DataMarkerType.circle,
                                   color: Colors.white,
                                   borderColor: Colors.black),
@@ -434,7 +452,7 @@ class _DashBoardScreenState extends State<DashBoardScreen> {
                           width: 5.w,
                         ),
                         Text(
-                          'Alert Product quantity less than 5',
+                          'All these product have less than 5',
                           style: TextStyle(
                               fontWeight: FontWeight.w500,
                               color: Colors.red,
