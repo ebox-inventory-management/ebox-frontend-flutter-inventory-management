@@ -1,54 +1,72 @@
 import 'package:ebox_frontend_web_inventory/api/import_service.dart';
 import 'package:ebox_frontend_web_inventory/api/product_service.dart';
+import 'package:ebox_frontend_web_inventory/model/chart_data_product_quantity.dart';
 import 'package:get/get.dart';
 import '../api/export_service.dart';
-import '../model/chart_data_expenses.dart';
-import '../model/chart_data_incomes.dart';
+import '../model/chart_data_import.dart';
+import '../model/chart_data_expense.dart';
 import '../views/dashboard/dashboard_screen.dart';
 
 class DashboardController extends GetxController {
-  RxList<ChartDataExpenses> chartDataExpenseList =
-      List<ChartDataExpenses>.empty(growable: true).obs;
-  RxList<ChartDataIncomes> chartDataIncomeList =
-      List<ChartDataIncomes>.empty(growable: true).obs;
+  RxList<ChartDataImport> chartDataImportList =
+      List<ChartDataImport>.empty(growable: true).obs;
+  RxList<ChartDataExport> chartDataExportList =
+      List<ChartDataExport>.empty(growable: true).obs;
+  RxList<ChartDataProductQuantity> chartDataProductQuantity =
+      List<ChartDataProductQuantity>.empty(growable: true).obs;
 
-  RxBool isChartDataExpenseLoading = false.obs;
-  RxBool isChartDataIncomeLoading = false.obs;
+  RxBool isChartDataImportLoading = false.obs;
+  RxBool isChartDataExportLoading = false.obs;
+  RxBool isChartDataProductQuantityLoading = false.obs;
 
   @override
   void onInit() async {
-    getChartDataExpense();
-    getChartDataIncome();
+    getChartDataImport();
+    getChartDataExport();
+    getChartDataProductQuantity();
     super.onInit();
   }
 
-  void getChartDataExpense() async {
+  void getChartDataProductQuantity() async {
     try {
-      isChartDataExpenseLoading(true);
+      isChartDataProductQuantityLoading(true);
+      //call api
+      var result = await RemoteProductService().get();
+      if (result != null) {
+        //assign api result
+        chartDataProductQuantity
+            .assignAll(chartDataProductQuantityListFromJson(result.body));
+      }
+    } finally {
+      isChartDataProductQuantityLoading(false);
+    }
+  }
+
+  void getChartDataImport() async {
+    try {
+      isChartDataImportLoading(true);
       //call api
       var result = await RemoteImportService().get();
       if (result != null) {
         //assign api result
-        chartDataExpenseList
-            .assignAll(chartDataExpensesListFromJson(result.body));
+        chartDataImportList.assignAll(chartDataImportListFromJson(result.body));
       }
     } finally {
-      isChartDataExpenseLoading(false);
+      isChartDataImportLoading(false);
     }
   }
 
-  void getChartDataIncome() async {
+  void getChartDataExport() async {
     try {
-      isChartDataIncomeLoading(true);
+      isChartDataExportLoading(true);
       //call api
       var result = await RemoteExportService().get();
       if (result != null) {
-        //assign api result
-        chartDataIncomeList
-            .assignAll(chartDataIncomesListFromJson(result.body));
+        //assign api results
+        chartDataExportList.assignAll(chartDataExportListFromJson(result.body));
       }
     } finally {
-      isChartDataIncomeLoading(false);
+      isChartDataExportLoading(false);
     }
   }
 }
