@@ -1,21 +1,21 @@
 import 'dart:convert';
 
-List<ChartDataExpenses> chartDataExpensesListFromJson(String val) =>
-    List<ChartDataExpenses>.from(json
+List<ChartDataImport> chartDataImportListFromJson(String val) =>
+    List<ChartDataImport>.from(json
         .decode(val)['imports']
-        .map((data) => ChartDataExpenses.fromJson(data)));
+        .map((data) => ChartDataImport.fromJson(data)));
 
-class ChartDataExpenses {
+class ChartDataImport {
   final int total_import_price;
   final DateTime created_at;
 
-  ChartDataExpenses({
+  ChartDataImport({
     required this.total_import_price,
     required this.created_at,
   });
 
-  factory ChartDataExpenses.fromJson(Map<dynamic, dynamic> data) =>
-      ChartDataExpenses(
+  factory ChartDataImport.fromJson(Map<dynamic, dynamic> data) =>
+      ChartDataImport(
         total_import_price: data['total_import_price'] ?? 0,
         created_at: DateTime.parse(data['created_at'].toString()),
       );

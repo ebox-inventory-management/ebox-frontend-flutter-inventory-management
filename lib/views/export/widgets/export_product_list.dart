@@ -22,7 +22,6 @@ class ExportProductList extends StatelessWidget {
       itemCount: exports.length,
       shrinkWrap: true,
       itemBuilder: (context, index) {
-        productController.getProductsById(id: exports[index].product_id);
         return ExportProductCard(export: exports.reversed.toList()[index]);
       },
       separatorBuilder: (BuildContext context, int index) {
