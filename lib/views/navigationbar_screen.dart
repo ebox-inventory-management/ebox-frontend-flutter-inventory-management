@@ -206,10 +206,6 @@ class CustomeSidebarX extends StatelessWidget {
           icon: Icons.person,
           label: 'User',
         ),
-        const SidebarXItem(
-          icon: Icons.notifications,
-          label: 'Alert',
-        ),
         SidebarXItem(
           icon: Icons.exit_to_app,
           label: 'Exit',
@@ -273,8 +269,6 @@ class _ScreensExample extends StatelessWidget {
             return BrandScreen();
           case 8:
             return UserScreen();
-          case 9:
-            return AlertScreen();
 
           default:
             return Center(
@@ -306,9 +300,8 @@ String _getTitleByIndex(int index) {
       return 'Brand';
     case 8:
       return 'User';
+
     case 9:
-      return 'Alert';
-    case 10:
       return 'Exit';
 
     default:

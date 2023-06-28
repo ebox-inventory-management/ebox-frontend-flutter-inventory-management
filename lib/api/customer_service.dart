@@ -1,6 +1,7 @@
 import 'dart:convert';
 
 import 'package:ebox_frontend_web_inventory/controller/controllers.dart';
+import 'package:file_picker/file_picker.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:http/http.dart' as http;
@@ -25,10 +26,12 @@ class RemoteCustomerService {
     required String address,
     required String city,
     required String shop_name,
-    required String photo,
+    required PlatformFile photo,
     required String bank_name,
     required String bank_number,
   }) async {
+    final base64Image = base64Encode(photo.bytes!);
+
     var body = {
       "name": name,
       "email": email,
@@ -36,7 +39,7 @@ class RemoteCustomerService {
       "address": address,
       "city": city,
       "shop_name": shop_name,
-      "photo": photo,
+      "photo": base64Image,
       "bank_name": bank_name,
       "bank_number": bank_number
     };
@@ -85,10 +88,12 @@ class RemoteCustomerService {
     required String address,
     required String city,
     required String shop_name,
-    required String photo,
+    required PlatformFile photo,
     required String bank_name,
     required String bank_number,
   }) async {
+    final base64Image = base64Encode(photo.bytes!);
+
     var body = {
       "name": name,
       "email": email,
@@ -96,7 +101,7 @@ class RemoteCustomerService {
       "address": address,
       "city": city,
       "shop_name": shop_name,
-      "photo": photo,
+      "photo": base64Image,
       "bank_name": bank_name,
       "bank_number": bank_number
     };
@@ -150,8 +155,8 @@ class RemoteCustomerService {
   }
 
   static Future<dynamic> deleteById({required int id}) async {
-    var response =
-        await http.Client().get(Uri.parse('$baseUrl/api/customer/delete/$id'));
+    var response = await http.Client()
+        .delete(Uri.parse('$baseUrl/api/customer/delete/$id'));
     if (response.statusCode == 200) {
       Get.snackbar('Deleted Customer!', 'You have been delete customer'.tr,
           colorText: Colors.white,

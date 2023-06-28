@@ -1,5 +1,7 @@
 import 'dart:convert';
 import 'dart:ui';
+import 'package:file_picker/file_picker.dart';
+import 'package:http/http.dart' as http;
 
 import 'package:collection/collection.dart';
 import 'package:ebox_frontend_web_inventory/model/product.dart';
@@ -30,8 +32,11 @@ class ProductController extends GetxController {
     super.onInit();
   }
 
-  void deleteProduct({required int id}) async {
-    await RemoteProductService.delete(id: id);
+  void deleteProduct({
+    required int id,
+    required String name,
+  }) async {
+    await RemoteProductService.delete(id: id, name: name);
   }
 
   void updateProduct({
@@ -42,7 +47,7 @@ class ProductController extends GetxController {
     required String product_code,
     required String product_garage,
     required String product_route,
-    required String product_image,
+    required PlatformFile product_image,
     required String expire_date,
     required int import_price,
     required int export_price,
@@ -75,7 +80,7 @@ class ProductController extends GetxController {
     required String product_code,
     required String product_garage,
     required String product_route,
-    required String product_image,
+    required PlatformFile product_image,
     required String expire_date,
     required int import_price,
     required int export_price,

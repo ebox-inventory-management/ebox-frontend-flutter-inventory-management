@@ -1,5 +1,7 @@
 import 'dart:convert';
 
+import '../core/constants/base_url.dart';
+
 Customer customerListFromJson(String val) =>
     Customer.fromJson(json.decode(val)['customer']);
 
@@ -42,7 +44,7 @@ class Customer {
         address: data['address'] ?? 'Not Yet',
         city: data['city'] ?? 'Not Yet',
         shop_name: data['shop_name'] ?? 'Not Yet',
-        photo: data['photo'] ?? 'Not Yet',
+        photo: '$baseUrl/images/customers/${data['photo']}',
         bank_name: data['bank_name'] ?? 'Not Yet',
         bank_number: data['bank_number'] ?? 'Not Yet',
       );

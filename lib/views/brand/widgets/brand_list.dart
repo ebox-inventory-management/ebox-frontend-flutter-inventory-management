@@ -24,7 +24,7 @@ class BrandList extends StatelessWidget {
       shrinkWrap: true,
       itemBuilder: (context, index) {
         return BrandCard(
-          brands: brands[index],
+          brands: brands.reversed.toList()[index],
           index: index,
         );
       },

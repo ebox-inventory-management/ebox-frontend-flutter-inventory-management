@@ -126,13 +126,12 @@ class RemoteBrandService {
           snackPosition: SnackPosition.BOTTOM,
           duration: const Duration(seconds: 2));
     }
-    print(response.statusCode);
     return response;
   }
 
   static Future<dynamic> deleteById({required int id}) async {
     var response =
-        await http.Client().get(Uri.parse('$baseUrl/api/brand/delete/$id'));
+        await http.Client().delete(Uri.parse('$baseUrl/api/brand/delete/$id'));
     if (response.statusCode == 200) {
       Get.snackbar('Deleted Brand!', 'You have been delete brand'.tr,
           colorText: Colors.white,
@@ -148,7 +147,7 @@ class RemoteBrandService {
           snackPosition: SnackPosition.BOTTOM,
           duration: const Duration(seconds: 2));
     }
-    categoryController.getCategories();
+    brandController.getBrands();
     return response;
   }
 }

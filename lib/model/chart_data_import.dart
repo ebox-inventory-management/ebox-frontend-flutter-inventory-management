@@ -6,17 +6,23 @@ List<ChartDataImport> chartDataImportListFromJson(String val) =>
         .map((data) => ChartDataImport.fromJson(data)));
 
 class ChartDataImport {
-  final int total_import_price;
+  final int import_quantity;
+  final int total_export_price;
+  final String product_name;
   final DateTime created_at;
 
   ChartDataImport({
-    required this.total_import_price,
+    required this.import_quantity,
     required this.created_at,
+    required this.total_export_price,
+    required this.product_name,
   });
 
   factory ChartDataImport.fromJson(Map<dynamic, dynamic> data) =>
       ChartDataImport(
-        total_import_price: data['total_import_price'] ?? 0,
+        import_quantity: data['import_quantity'] ?? 0,
         created_at: DateTime.parse(data['created_at'].toString()),
+        product_name: data['product_name'] ?? 'Not Yet',
+        total_export_price: data['total_export_price'] ?? 0,
       );
 }

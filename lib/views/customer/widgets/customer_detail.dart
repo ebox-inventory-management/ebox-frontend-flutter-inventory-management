@@ -1,4 +1,5 @@
 import 'package:ebox_frontend_web_inventory/model/category.dart';
+import 'package:ebox_frontend_web_inventory/model/customers.dart';
 import 'package:ebox_frontend_web_inventory/model/products.dart';
 import 'package:ebox_frontend_web_inventory/model/supplier.dart';
 import 'package:ebox_frontend_web_inventory/model/suppliers.dart';
@@ -9,7 +10,6 @@ import 'package:intl/intl.dart';
 
 import '../../../controller/controllers.dart';
 import '../../../model/brand.dart';
-import '../../../model/customers.dart';
 
 class CustomerDetail extends StatelessWidget {
   final Customers customers;
@@ -24,16 +24,20 @@ class CustomerDetail extends StatelessWidget {
         decoration: BoxDecoration(
             color: Colors.white,
             borderRadius: BorderRadius.all(Radius.circular(15.r))),
-        child: Padding(
-          padding: REdgeInsets.all(30.r),
-          child: SingleChildScrollView(
+        child: SingleChildScrollView(
+          child: Padding(
+            padding: REdgeInsets.all(30.r),
             child: Column(
                 crossAxisAlignment: CrossAxisAlignment.center,
                 children: [
                   Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
-                      SizedBox(),
-                      Spacer(),
+                      Text(
+                        'Supplier Detail',
+                        style: TextStyle(
+                            fontWeight: FontWeight.bold, fontSize: 30.sp),
+                      ),
                       IconButton(
                           onPressed: () {
                             Get.back();
@@ -45,67 +49,17 @@ class CustomerDetail extends StatelessWidget {
                           ))
                     ],
                   ),
+                  Padding(
+                    padding: REdgeInsets.only(top: 15.w, bottom: 15.r),
+                    child: Divider(
+                      color: Colors.black.withOpacity(0.1),
+                      thickness: 5.w,
+                    ),
+                  ),
                   Row(
-                    mainAxisAlignment: MainAxisAlignment.start,
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
-                      Column(
-                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                        crossAxisAlignment: CrossAxisAlignment.center,
-                        children: [
-                          Container(
-                            width: 700.w,
-                            height: 700.w,
-                            decoration: BoxDecoration(
-                                borderRadius:
-                                    BorderRadius.all(Radius.circular(15.r)),
-                                image: DecorationImage(
-                                    image: NetworkImage(
-                                        'https://images.unsplash.com/photo-1503023345310-bd7c1de61c7d?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8Mnx8aHVtYW58ZW58MHx8MHx8fDA%3D&w=1000&q=80'),
-                                    fit: BoxFit.cover)),
-                          ),
-                          SizedBox(
-                            height: 15.w,
-                          ),
-                          Row(
-                            children: [
-                              Container(
-                                width: 300.w,
-                                height: 50.w,
-                                decoration: BoxDecoration(
-                                    color: Colors.grey,
-                                    borderRadius: BorderRadius.all(
-                                        Radius.circular(10.r))),
-                                child: Center(
-                                  child: Text(
-                                    'Create Date: ${customers.created_at}',
-                                    style: TextStyle(
-                                        fontSize: 16.sp, color: Colors.white),
-                                  ),
-                                ),
-                              ),
-                              SizedBox(
-                                width: 30.w,
-                              ),
-                              Container(
-                                width: 300.w,
-                                height: 50.w,
-                                decoration: BoxDecoration(
-                                    color: Colors.blueAccent,
-                                    borderRadius: BorderRadius.all(
-                                        Radius.circular(10.r))),
-                                child: Center(
-                                  child: Text(
-                                    'Update Date: ${customers.created_at}',
-                                    style: TextStyle(
-                                        fontSize: 16.sp, color: Colors.white),
-                                  ),
-                                ),
-                              ),
-                            ],
-                          ),
-                        ],
-                      ),
                       Padding(
                         padding: REdgeInsets.only(left: 30.r, right: 30.r),
                         child: Column(
@@ -305,6 +259,57 @@ class CustomerDetail extends StatelessWidget {
                             ),
                           ],
                         ),
+                      ),
+                      Column(
+                        crossAxisAlignment: CrossAxisAlignment.end,
+                        children: [
+                          Container(
+                            width: 0.4.sw,
+                            height: 0.4.sw,
+                            decoration: BoxDecoration(
+                                borderRadius:
+                                    BorderRadius.all(Radius.circular(15.r)),
+                                image: DecorationImage(
+                                    image: NetworkImage(customers.photo),
+                                    fit: BoxFit.cover)),
+                          ),
+                          SizedBox(
+                            height: 30.w,
+                          ),
+                          Container(
+                            width: 0.4.sw,
+                            height: 50.w,
+                            decoration: BoxDecoration(
+                                color: Colors.grey,
+                                borderRadius:
+                                    BorderRadius.all(Radius.circular(10.r))),
+                            child: Center(
+                              child: Text(
+                                'Create Date: ${customers.created_at}',
+                                style: TextStyle(
+                                    fontSize: 16.sp, color: Colors.white),
+                              ),
+                            ),
+                          ),
+                          SizedBox(
+                            height: 15.w,
+                          ),
+                          Container(
+                            width: 0.4.sw,
+                            height: 50.w,
+                            decoration: BoxDecoration(
+                                color: Colors.blueAccent,
+                                borderRadius:
+                                    BorderRadius.all(Radius.circular(10.r))),
+                            child: Center(
+                              child: Text(
+                                'Update Date: ${customers.created_at}',
+                                style: TextStyle(
+                                    fontSize: 16.sp, color: Colors.white),
+                              ),
+                            ),
+                          ),
+                        ],
                       ),
                     ],
                   )

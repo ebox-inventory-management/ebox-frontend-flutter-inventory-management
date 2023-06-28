@@ -1,4 +1,5 @@
 import 'dart:convert';
+import 'package:ebox_frontend_web_inventory/model/users.dart';
 import 'package:ebox_frontend_web_inventory/views/authentication/sign_in_screen.dart';
 import 'package:ebox_frontend_web_inventory/views/navigationbar_screen.dart';
 import 'package:flutter/material.dart';
@@ -11,13 +12,52 @@ import '../api/auth_service.dart';
 
 class AuthController extends GetxController {
   Rxn<User> user = Rxn<User>();
+  RxList<Users> usersList = List<Users>.empty(growable: true).obs;
+
   var token;
+
+  TextEditingController searchUsersController = TextEditingController();
+  RxString searchVal = ''.obs;
+
+  RxBool isUserLoading = false.obs;
+  RxBool isUsersLoading = false.obs;
 
   @override
   void onInit() async {
     super.onInit();
-
+    getUsers();
     checkToken();
+  }
+
+  void getUsersByKeyword({required String keyword}) async {
+    try {
+      isUsersLoading(true);
+      //call api
+      var result = await RemoteAuthService().getByKeyword(keyword: keyword);
+
+      if (result != null) {
+        //assign api result
+        usersList.assignAll(usersListFromJson(result.body));
+      }
+    } finally {
+      isUsersLoading(false);
+    }
+  }
+
+  void getUsers() async {
+    try {
+      isUsersLoading(true);
+      //call api
+      var result = await RemoteAuthService().getUsers();
+      if (result != null) {
+        //assign api result
+        usersList.assignAll(usersListFromJson(result.body));
+
+        //save api result to local db
+      }
+    } finally {
+      isUsersLoading(false);
+    }
   }
 
   void checkToken() async {

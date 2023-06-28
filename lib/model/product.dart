@@ -1,5 +1,7 @@
 import 'dart:convert';
 
+import '../core/constants/base_url.dart';
+
 Product productListFromJson(String val) =>
     Product.fromJson(json.decode(val)['product']);
 
@@ -15,8 +17,8 @@ class Product {
   final int import_price;
   final int export_price;
   final int product_amount;
-  final DateTime created_at;
-  final DateTime updated_at;
+  final String created_at;
+  final String updated_at;
   final int category_id;
   final int supplier_id;
   final int brand_id;
@@ -46,16 +48,16 @@ class Product {
         brand_id: data['brand_id'] ?? 'Not Yet',
         import_price: data['import_price'] ?? 0,
         category_id: data['category_id'],
-        created_at: DateTime.parse(data['created_at'].toString()),
+        created_at: data['created_at'],
         expire_date: data['expire_date'] ?? 'Not Yet',
         export_price: data['export_price'] ?? 0,
         product_code: data['product_code'] ?? 'Not Yet',
         product_quantity: data['product_quantity'] ?? 0,
         product_garage: data['product_garage'] ?? 'Not Yet',
         product_amount: data['product_amount'] ?? 0,
-        product_image: data['product_image'] ?? 'Not Yet',
+        product_image: '$baseUrl/images/products/${data['product_image']}',
         product_route: data['product_route'] ?? 'Not Yet',
         supplier_id: data['supplier_id'],
-        updated_at: DateTime.parse(data['updated_at'].toString()),
+        updated_at: data['updated_at'],
       );
 }

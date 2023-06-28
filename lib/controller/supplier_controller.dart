@@ -5,6 +5,7 @@ import 'package:ebox_frontend_web_inventory/model/brands.dart';
 import 'package:ebox_frontend_web_inventory/model/category.dart';
 import 'package:ebox_frontend_web_inventory/model/supplier.dart';
 import 'package:ebox_frontend_web_inventory/model/suppliers.dart';
+import 'package:file_picker/file_picker.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
@@ -38,7 +39,7 @@ class SupplierController extends GetxController {
     required String city,
     required String type,
     required String shop_name,
-    required String photo,
+    required PlatformFile photo,
     required String bank_name,
     required String bank_number,
   }) async {
@@ -68,7 +69,7 @@ class SupplierController extends GetxController {
     required String city,
     required String type,
     required String shop_name,
-    required String photo,
+    required PlatformFile photo,
     required String bank_name,
     required String bank_number,
   }) async {

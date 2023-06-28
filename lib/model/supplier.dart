@@ -1,5 +1,7 @@
 import 'dart:convert';
 
+import '../core/constants/base_url.dart';
+
 Supplier supplierListFromJson(String val) =>
     Supplier.fromJson(json.decode(val)['supplier']);
 
@@ -100,7 +102,7 @@ class Supplier {
         address: data['address'] ?? 'Not Yet',
         city: data['city'] ?? 'Not Yet',
         shop_name: data['shop_name'] ?? 'Not Yet',
-        photo: data['photo'] ?? 'Not Yet',
+        photo: '$baseUrl/images/suppliers/${data['photo']}',
         bank_name: data['bank_name'] ?? 'Not Yet',
         bank_number: data['bank_number'] ?? 'Not Yet',
         type: data['type'] ?? 'Not Yet',
