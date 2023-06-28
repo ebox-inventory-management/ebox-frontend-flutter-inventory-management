@@ -102,7 +102,6 @@ class RemoteCategoryService {
 
   Future<dynamic> get() async {
     var response = await client.get(Uri.parse(remoteUrl));
-    print(response.statusCode);
 
     return response;
   }
@@ -131,13 +130,12 @@ class RemoteCategoryService {
           snackPosition: SnackPosition.BOTTOM,
           duration: const Duration(seconds: 2));
     }
-    print(response.statusCode);
     return response;
   }
 
   static Future<dynamic> deleteById({required int id}) async {
-    var response =
-        await http.Client().get(Uri.parse('$baseUrl/api/category/delete/$id'));
+    var response = await http.Client()
+        .delete(Uri.parse('$baseUrl/api/category/delete/$id'));
     if (response.statusCode == 200) {
       Get.snackbar('Deleted Category!', 'You have been delete category'.tr,
           colorText: Colors.white,

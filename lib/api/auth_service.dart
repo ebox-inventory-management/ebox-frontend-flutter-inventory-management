@@ -46,4 +46,17 @@ class RemoteAuthService {
     );
     return response;
   }
+
+  Future<dynamic> getUsers() async {
+    var response = await client.get(
+      Uri.parse('$baseUrl/api/show'),
+    );
+    return response;
+  }
+
+  Future<dynamic> getByKeyword({required String keyword}) async {
+    var response =
+        await client.get(Uri.parse('$baseUrl/api/user/search/$keyword'));
+    return response;
+  }
 }

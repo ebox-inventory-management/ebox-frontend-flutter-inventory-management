@@ -1,20 +1,26 @@
+import 'dart:convert';
+import 'dart:html';
+
 import 'package:collection/collection.dart';
+import 'package:dio/dio.dart';
 import 'package:dropdown_button2/custom_dropdown_button2.dart';
+import 'package:ebox_frontend_web_inventory/api/product_service.dart';
+import 'package:ebox_frontend_web_inventory/core/constants/base_url.dart';
+import 'package:http/http.dart' as http;
 
 import 'package:file_picker/file_picker.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:get/get.dart';
 import 'package:intl/intl.dart';
-
+import 'package:get/get.dart';
 import '../../../controller/controllers.dart';
 import '../../../model/products.dart';
 
 class ProductEdit extends StatefulWidget {
-  final Products product;
-
-  const ProductEdit({super.key, required this.product});
+  final Products products;
+  const ProductEdit({super.key, required this.products});
 
   @override
   State<ProductEdit> createState() => _ProductEditState();
@@ -66,7 +72,6 @@ class _ProductEditState extends State<ProductEdit> {
 
   // Variable to hold the selected image file
   PlatformFile? _imageFile;
-
   // Method to pick and display an image file
   Future<void> _pickImage() async {
     try {
@@ -82,6 +87,10 @@ class _ProductEditState extends State<ProductEdit> {
       setState(() {
         _imageFile = result.files.first;
       });
+      // final base64Image = base64Encode(_imageFile!.bytes!);
+      // print('image: $base64Image');
+      // final base64DecondeImage = base64Decode(base64Image);
+      // print(base64DecondeImage);
     } catch (e) {
       // If there is an error, show a snackbar with the error message
       ScaffoldMessenger.of(context).showSnackBar(
@@ -113,6 +122,18 @@ class _ProductEditState extends State<ProductEdit> {
   }
 
   @override
+  void initState() {
+    super.initState();
+    productNameController.text = widget.products.product_name;
+    productCodeController.text = widget.products.product_code;
+    productGarageController.text = widget.products.product_garage;
+    productRouteController.text = widget.products.product_route;
+    expireDateController.text = widget.products.expire_date;
+    importPriceController.text = widget.products.import_price.toString();
+    exportPriceController.text = widget.products.export_price.toString();
+  }
+
+  @override
   Widget build(BuildContext context) {
     return Center(
       child: Container(
@@ -122,17 +143,18 @@ class _ProductEditState extends State<ProductEdit> {
           decoration: BoxDecoration(
               color: Colors.white,
               borderRadius: BorderRadius.all(Radius.circular(15.w))),
-          child: Padding(
-            padding: REdgeInsets.all(30.r),
-            child: SingleChildScrollView(
+          child: SingleChildScrollView(
+            child: Padding(
+              padding: REdgeInsets.all(30.r),
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   Row(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
                       Text(
-                        'Edit ${widget.product.product_name}',
+                        'Edit Product',
                         style: TextStyle(
                             fontWeight: FontWeight.bold, fontSize: 30.sp),
                       ),
@@ -155,9 +177,280 @@ class _ProductEditState extends State<ProductEdit> {
                     ),
                   ),
                   Row(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
                       Column(
                         crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          Text(
+                            'Product Name',
+                            style: TextStyle(
+                                fontWeight: FontWeight.bold, fontSize: 14.sp),
+                          ),
+                          Padding(
+                            padding: REdgeInsets.only(bottom: 30.r, top: 10.r),
+                            child: SizedBox(
+                              width: 0.4.sw,
+                              child: TextFormField(
+                                controller: productNameController,
+                                textInputAction: TextInputAction.next,
+                                obscureText: false,
+                                decoration: InputDecoration(
+                                  hintText: widget.products.product_name,
+                                  hintStyle: TextStyle(
+                                    fontSize: 14.sp,
+                                  ),
+                                  border: OutlineInputBorder(
+                                    borderRadius: BorderRadius.circular(10.0.r),
+                                  ),
+                                ),
+                              ),
+                            ),
+                          ),
+                          Text(
+                            'Import Price',
+                            style: TextStyle(
+                                fontWeight: FontWeight.bold, fontSize: 14.sp),
+                          ),
+                          Padding(
+                            padding: REdgeInsets.only(bottom: 30.r, top: 10.r),
+                            child: SizedBox(
+                              width: 0.4.sw,
+                              child: TextFormField(
+                                controller: importPriceController,
+                                keyboardType: TextInputType.number,
+                                inputFormatters: <TextInputFormatter>[
+                                  FilteringTextInputFormatter.digitsOnly
+                                ],
+                                decoration: InputDecoration(
+                                  hintText:
+                                      widget.products.import_price.toString(),
+                                  hintStyle: TextStyle(
+                                    fontSize: 14.sp,
+                                  ),
+                                  border: OutlineInputBorder(
+                                    borderRadius: BorderRadius.circular(10.0.r),
+                                  ),
+                                ),
+                              ),
+                            ),
+                          ),
+                          Text(
+                            'Export Price',
+                            style: TextStyle(
+                                fontWeight: FontWeight.bold, fontSize: 14.sp),
+                          ),
+                          Padding(
+                            padding: REdgeInsets.only(bottom: 30.r, top: 10.r),
+                            child: SizedBox(
+                              width: 0.4.sw,
+                              child: TextFormField(
+                                controller: exportPriceController,
+                                keyboardType: TextInputType.number,
+                                inputFormatters: <TextInputFormatter>[
+                                  FilteringTextInputFormatter.digitsOnly
+                                ],
+                                decoration: InputDecoration(
+                                  hintText:
+                                      widget.products.export_price.toString(),
+                                  hintStyle: TextStyle(
+                                    fontSize: 14.sp,
+                                  ),
+                                  border: OutlineInputBorder(
+                                    borderRadius: BorderRadius.circular(10.0.r),
+                                  ),
+                                ),
+                              ),
+                            ),
+                          ),
+                          Text(
+                            'Product Code',
+                            style: TextStyle(
+                                fontWeight: FontWeight.bold, fontSize: 14.sp),
+                          ),
+                          Padding(
+                            padding: REdgeInsets.only(bottom: 30.r, top: 10.r),
+                            child: SizedBox(
+                              width: 0.4.sw,
+                              child: TextFormField(
+                                controller: productCodeController,
+                                textInputAction: TextInputAction.next,
+                                obscureText: false,
+                                decoration: InputDecoration(
+                                  hintText: widget.products.product_code,
+                                  hintStyle: TextStyle(
+                                    fontSize: 14.sp,
+                                  ),
+                                  border: OutlineInputBorder(
+                                    borderRadius: BorderRadius.circular(10.0.r),
+                                  ),
+                                ),
+                              ),
+                            ),
+                          ),
+                          Text(
+                            'Product Garage',
+                            style: TextStyle(
+                                fontWeight: FontWeight.bold, fontSize: 14.sp),
+                          ),
+                          Padding(
+                            padding: REdgeInsets.only(bottom: 30.r, top: 10.r),
+                            child: SizedBox(
+                              width: 0.4.sw,
+                              child: TextFormField(
+                                controller: productGarageController,
+                                textInputAction: TextInputAction.next,
+                                obscureText: false,
+                                decoration: InputDecoration(
+                                  hintText: widget.products.product_garage,
+                                  hintStyle: TextStyle(
+                                    fontSize: 14.sp,
+                                  ),
+                                  border: OutlineInputBorder(
+                                    borderRadius: BorderRadius.circular(10.0.r),
+                                  ),
+                                ),
+                              ),
+                            ),
+                          ),
+                          Text(
+                            'Product Route',
+                            style: TextStyle(
+                                fontWeight: FontWeight.bold, fontSize: 14.sp),
+                          ),
+                          Padding(
+                            padding: REdgeInsets.only(bottom: 30.r, top: 10.r),
+                            child: SizedBox(
+                              width: 0.4.sw,
+                              child: TextFormField(
+                                controller: productRouteController,
+                                textInputAction: TextInputAction.next,
+                                obscureText: false,
+                                decoration: InputDecoration(
+                                  hintText: widget.products.product_route,
+                                  hintStyle: TextStyle(
+                                    fontSize: 14.sp,
+                                  ),
+                                  border: OutlineInputBorder(
+                                    borderRadius: BorderRadius.circular(10.0.r),
+                                  ),
+                                ),
+                              ),
+                            ),
+                          ),
+                          Text(
+                            'Category',
+                            style: TextStyle(
+                                fontWeight: FontWeight.bold, fontSize: 14.sp),
+                          ),
+                          Padding(
+                            padding: REdgeInsets.only(top: 15.r, bottom: 30.r),
+                            child: CustomDropdownButton2(
+                              buttonWidth: 0.2.sw,
+                              buttonHeight: 40.w,
+                              hint: 'Choose Category',
+                              dropdownItems: categoriesName,
+                              value: selectedValueCategory,
+                              buttonDecoration: BoxDecoration(
+                                borderRadius: BorderRadius.circular(15.r),
+                                color: Colors.grey[100],
+                              ),
+                              dropdownWidth: 0.2.sw,
+                              dropdownDecoration: BoxDecoration(
+                                borderRadius: BorderRadius.circular(15.r),
+                                color: Colors.white,
+                              ),
+                              icon: Icon(
+                                Icons.arrow_drop_down,
+                                size: 40.r,
+                                color: Colors.orange,
+                              ),
+                              onChanged: (index) {
+                                setState(() {
+                                  selectedValueCategory = index;
+                                  categoryController.getCategoryByName(
+                                      name: selectedValueCategory!);
+                                });
+                              },
+                            ),
+                          ),
+                          Text(
+                            'Brand',
+                            style: TextStyle(
+                                fontWeight: FontWeight.bold, fontSize: 14.sp),
+                          ),
+                          Padding(
+                            padding: REdgeInsets.only(top: 15.r, bottom: 30.r),
+                            child: CustomDropdownButton2(
+                              buttonWidth: 0.2.sw,
+                              buttonHeight: 40.w,
+                              hint: 'Choose Brand',
+                              dropdownItems: brandsName,
+                              value: selectedValueBrand,
+                              buttonDecoration: BoxDecoration(
+                                borderRadius: BorderRadius.circular(15.r),
+                                color: Colors.grey[100],
+                              ),
+                              dropdownWidth: 0.2.sw,
+                              dropdownDecoration: BoxDecoration(
+                                borderRadius: BorderRadius.circular(15.r),
+                                color: Colors.white,
+                              ),
+                              icon: Icon(
+                                Icons.arrow_drop_down,
+                                size: 40.r,
+                                color: Colors.orange,
+                              ),
+                              onChanged: (index) {
+                                setState(() {
+                                  selectedValueBrand = index;
+                                  brandController.getBrandByName(
+                                      name: selectedValueBrand!);
+                                });
+                              },
+                            ),
+                          ),
+                          Text(
+                            'Supplier',
+                            style: TextStyle(
+                                fontWeight: FontWeight.bold, fontSize: 14.sp),
+                          ),
+                          Padding(
+                            padding: REdgeInsets.only(top: 15.r, bottom: 30.r),
+                            child: CustomDropdownButton2(
+                              buttonWidth: 0.2.sw,
+                              buttonHeight: 40.w,
+                              hint: 'Choose Supplier',
+                              dropdownItems: suppliersName,
+                              value: selectedValueSupplier,
+                              buttonDecoration: BoxDecoration(
+                                borderRadius: BorderRadius.circular(15.r),
+                                color: Colors.grey[100],
+                              ),
+                              dropdownWidth: 0.2.sw,
+                              dropdownDecoration: BoxDecoration(
+                                borderRadius: BorderRadius.circular(15.r),
+                                color: Colors.white,
+                              ),
+                              icon: Icon(
+                                Icons.arrow_drop_down,
+                                size: 40.r,
+                                color: Colors.orange,
+                              ),
+                              onChanged: (index) {
+                                setState(() {
+                                  selectedValueSupplier = index;
+                                  supplierController.getSupplierByName(
+                                      name: selectedValueSupplier!);
+                                });
+                              },
+                            ),
+                          ),
+                        ],
+                      ),
+                      Column(
+                        crossAxisAlignment: CrossAxisAlignment.end,
                         children: [
                           Padding(
                             padding: REdgeInsets.only(bottom: 15.r),
@@ -169,8 +462,8 @@ class _ProductEditState extends State<ProductEdit> {
                           ),
                           // If image file is not null, display it using Image widget
                           Container(
-                            width: 500.w,
-                            height: 500.w,
+                            width: 0.4.sw,
+                            height: 0.4.sw,
                             decoration: BoxDecoration(
                               borderRadius: BorderRadius.circular(
                                 15.r,
@@ -178,7 +471,7 @@ class _ProductEditState extends State<ProductEdit> {
                             ),
                             child: _imageFile == null
                                 ? Image.network(
-                                    'https://shop.mevid.hu/wp-content/uploads/2019/11/image.jpg',
+                                    widget.products.product_image,
                                     fit: BoxFit.cover,
                                   )
                                 : Image.memory(
@@ -216,263 +509,6 @@ class _ProductEditState extends State<ProductEdit> {
                             height: 30.w,
                           ),
                           Text(
-                            'Category',
-                            style: TextStyle(
-                                fontWeight: FontWeight.bold, fontSize: 14.sp),
-                          ),
-                          Padding(
-                            padding: REdgeInsets.only(top: 15.r, bottom: 30.r),
-                            child: CustomDropdownButton2(
-                              buttonWidth: 0.2.sw,
-                              buttonHeight: 40.w,
-                              hint: categoryController.category.value!.name,
-                              dropdownItems: categoriesName,
-                              value: selectedValueCategory,
-                              buttonDecoration: BoxDecoration(
-                                borderRadius: BorderRadius.circular(15.r),
-                                color: Colors.grey[100],
-                              ),
-                              dropdownWidth: 0.2.sw,
-                              dropdownDecoration: BoxDecoration(
-                                borderRadius: BorderRadius.circular(15.r),
-                                color: Colors.white,
-                              ),
-                              icon: Icon(
-                                Icons.arrow_drop_down,
-                                size: 40.r,
-                                color: Colors.orange,
-                              ),
-                              onChanged: (index) {
-                                setState(() {
-                                  selectedValueCategory = index;
-                                  categoryController.getCategoryByName(
-                                      name: selectedValueCategory!);
-                                });
-                              },
-                            ),
-                          ),
-                          Text(
-                            'Brand',
-                            style: TextStyle(
-                                fontWeight: FontWeight.bold, fontSize: 14.sp),
-                          ),
-                          Padding(
-                            padding: REdgeInsets.only(top: 15.r, bottom: 30.r),
-                            child: CustomDropdownButton2(
-                              buttonWidth: 0.2.sw,
-                              buttonHeight: 40.w,
-                              hint: brandController.brand.value!.name,
-                              dropdownItems: brandsName,
-                              value: selectedValueBrand,
-                              buttonDecoration: BoxDecoration(
-                                borderRadius: BorderRadius.circular(15.r),
-                                color: Colors.grey[100],
-                              ),
-                              dropdownWidth: 0.2.sw,
-                              dropdownDecoration: BoxDecoration(
-                                borderRadius: BorderRadius.circular(15.r),
-                                color: Colors.white,
-                              ),
-                              icon: Icon(
-                                Icons.arrow_drop_down,
-                                size: 40.r,
-                                color: Colors.orange,
-                              ),
-                              onChanged: (index) {
-                                setState(() {
-                                  selectedValueBrand = index;
-                                  brandController.getBrandByName(
-                                      name: selectedValueBrand!);
-                                });
-                              },
-                            ),
-                          ),
-                          Text(
-                            'Supplier',
-                            style: TextStyle(
-                                fontWeight: FontWeight.bold, fontSize: 14.sp),
-                          ),
-                          Padding(
-                            padding: REdgeInsets.only(top: 15.r, bottom: 30.r),
-                            child: CustomDropdownButton2(
-                              buttonWidth: 0.2.sw,
-                              buttonHeight: 40.w,
-                              hint: supplierController.supplier.value!.name,
-                              dropdownItems: suppliersName,
-                              value: selectedValueSupplier,
-                              buttonDecoration: BoxDecoration(
-                                borderRadius: BorderRadius.circular(15.r),
-                                color: Colors.grey[100],
-                              ),
-                              dropdownWidth: 0.2.sw,
-                              dropdownDecoration: BoxDecoration(
-                                borderRadius: BorderRadius.circular(15.r),
-                                color: Colors.white,
-                              ),
-                              icon: Icon(
-                                Icons.arrow_drop_down,
-                                size: 40.r,
-                                color: Colors.orange,
-                              ),
-                              onChanged: (index) {
-                                setState(() {
-                                  selectedValueSupplier = index;
-                                  supplierController.getSupplierByName(
-                                      name: selectedValueSupplier!);
-                                });
-                              },
-                            ),
-                          ),
-                        ],
-                      ),
-                      Spacer(),
-                      Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          SizedBox(
-                            height: 30.w,
-                          ),
-                          Text(
-                            'Product Name',
-                            style: TextStyle(
-                                fontWeight: FontWeight.bold, fontSize: 14.sp),
-                          ),
-                          Padding(
-                            padding: REdgeInsets.only(bottom: 30.r, top: 10.r),
-                            child: SizedBox(
-                              width: 0.4.sw,
-                              child: TextFormField(
-                                controller: productNameController,
-                                textInputAction: TextInputAction.next,
-                                obscureText: false,
-                                decoration: InputDecoration(
-                                  hintText: widget.product.product_name,
-                                  hintStyle: TextStyle(fontSize: 16.sp),
-                                  border: OutlineInputBorder(
-                                    borderRadius: BorderRadius.circular(10.0.r),
-                                  ),
-                                ),
-                              ),
-                            ),
-                          ),
-                          Text(
-                            'Import Price',
-                            style: TextStyle(
-                                fontWeight: FontWeight.bold, fontSize: 14.sp),
-                          ),
-                          Padding(
-                            padding: REdgeInsets.only(bottom: 30.r, top: 10.r),
-                            child: SizedBox(
-                              width: 0.4.sw,
-                              child: TextFormField(
-                                controller: importPriceController,
-                                textInputAction: TextInputAction.next,
-                                obscureText: false,
-                                decoration: InputDecoration(
-                                  hintText:
-                                      widget.product.import_price.toString(),
-                                  hintStyle: TextStyle(fontSize: 16.sp),
-                                  border: OutlineInputBorder(
-                                    borderRadius: BorderRadius.circular(10.0.r),
-                                  ),
-                                ),
-                              ),
-                            ),
-                          ),
-                          Text(
-                            'Export Price',
-                            style: TextStyle(
-                                fontWeight: FontWeight.bold, fontSize: 14.sp),
-                          ),
-                          Padding(
-                            padding: REdgeInsets.only(bottom: 30.r, top: 10.r),
-                            child: SizedBox(
-                              width: 0.4.sw,
-                              child: TextFormField(
-                                controller: exportPriceController,
-                                textInputAction: TextInputAction.next,
-                                obscureText: false,
-                                decoration: InputDecoration(
-                                  hintText:
-                                      widget.product.export_price.toString(),
-                                  hintStyle: TextStyle(fontSize: 16.sp),
-                                  border: OutlineInputBorder(
-                                    borderRadius: BorderRadius.circular(10.0.r),
-                                  ),
-                                ),
-                              ),
-                            ),
-                          ),
-                          Text(
-                            'Product Code',
-                            style: TextStyle(
-                                fontWeight: FontWeight.bold, fontSize: 14.sp),
-                          ),
-                          Padding(
-                            padding: REdgeInsets.only(bottom: 30.r, top: 10.r),
-                            child: SizedBox(
-                              width: 0.4.sw,
-                              child: TextFormField(
-                                controller: productCodeController,
-                                textInputAction: TextInputAction.next,
-                                obscureText: false,
-                                decoration: InputDecoration(
-                                  hintText: widget.product.product_code,
-                                  hintStyle: TextStyle(fontSize: 16.sp),
-                                  border: OutlineInputBorder(
-                                    borderRadius: BorderRadius.circular(10.0.r),
-                                  ),
-                                ),
-                              ),
-                            ),
-                          ),
-                          Text(
-                            'Product Garage',
-                            style: TextStyle(
-                                fontWeight: FontWeight.bold, fontSize: 14.sp),
-                          ),
-                          Padding(
-                            padding: REdgeInsets.only(bottom: 30.r, top: 10.r),
-                            child: SizedBox(
-                              width: 0.4.sw,
-                              child: TextFormField(
-                                controller: productGarageController,
-                                textInputAction: TextInputAction.next,
-                                obscureText: false,
-                                decoration: InputDecoration(
-                                  hintText: widget.product.product_garage,
-                                  hintStyle: TextStyle(fontSize: 16.sp),
-                                  border: OutlineInputBorder(
-                                    borderRadius: BorderRadius.circular(10.0.r),
-                                  ),
-                                ),
-                              ),
-                            ),
-                          ),
-                          Text(
-                            'Product Route',
-                            style: TextStyle(
-                                fontWeight: FontWeight.bold, fontSize: 14.sp),
-                          ),
-                          Padding(
-                            padding: REdgeInsets.only(bottom: 30.r, top: 10.r),
-                            child: SizedBox(
-                              width: 0.4.sw,
-                              child: TextFormField(
-                                controller: productRouteController,
-                                textInputAction: TextInputAction.next,
-                                obscureText: false,
-                                decoration: InputDecoration(
-                                  hintText: widget.product.product_route,
-                                  hintStyle: TextStyle(fontSize: 16.sp),
-                                  border: OutlineInputBorder(
-                                    borderRadius: BorderRadius.circular(10.0.r),
-                                  ),
-                                ),
-                              ),
-                            ),
-                          ),
-                          Text(
                             'Expire Date',
                             style: TextStyle(
                                 fontWeight: FontWeight.bold, fontSize: 14.sp),
@@ -481,24 +517,8 @@ class _ProductEditState extends State<ProductEdit> {
                             padding: REdgeInsets.only(bottom: 15, top: 10),
                             child: Row(
                               children: [
-                                GestureDetector(
-                                  onTap: () => _selectExpireDate(context),
-                                  child: Center(
-                                    child: CircleAvatar(
-                                        radius: 30.r,
-                                        backgroundColor: Colors.orange,
-                                        foregroundColor: Colors.white,
-                                        child: Icon(
-                                          Icons.edit,
-                                          size: 25.r,
-                                        )),
-                                  ),
-                                ),
                                 SizedBox(
-                                  width: 15.w,
-                                ),
-                                SizedBox(
-                                  width: 270.w,
+                                  width: 200.w,
                                   child: TextFormField(
                                     controller: expireDateController,
                                     keyboardType: TextInputType.datetime,
@@ -524,6 +544,22 @@ class _ProductEditState extends State<ProductEdit> {
                                     ),
                                   ),
                                 ),
+                                SizedBox(
+                                  width: 15.w,
+                                ),
+                                GestureDetector(
+                                  onTap: () => _selectExpireDate(context),
+                                  child: Center(
+                                    child: CircleAvatar(
+                                        radius: 30.r,
+                                        backgroundColor: Colors.orange,
+                                        foregroundColor: Colors.white,
+                                        child: Icon(
+                                          Icons.edit,
+                                          size: 25.r,
+                                        )),
+                                  ),
+                                ),
                               ],
                             ),
                           ),
@@ -534,54 +570,43 @@ class _ProductEditState extends State<ProductEdit> {
                   Center(
                     child: TextButton(
                       onPressed: () {
-                        if (productCodeController.text.isEmpty ||
-                            productNameController.text.isEmpty ||
-                            exportPriceController.text.isEmpty ||
-                            importPriceController.text.isEmpty ||
-                            productCodeController.text.isEmpty ||
-                            productGarageController.text.isEmpty ||
-                            productGarageController.text.isEmpty ||
-                            _selectedExpireDate == null ||
-                            selectedValueCategory == null ||
-                            selectedValueSupplier == null ||
-                            selectedValueBrand == null) {
+                        if (_imageFile == null ||
+                            productNameController.text ==
+                                widget.products.product_name) {
                           Get.snackbar('Something wrong!',
-                              'You need to input all product information to update',
+                              'You need to change name product and update image again to update ${widget.products.product_name}',
                               colorText: Colors.white,
-                              margin: REdgeInsets.all(15),
+                              margin: REdgeInsets.all(15.r),
                               backgroundColor: Colors.redAccent,
                               snackPosition: SnackPosition.BOTTOM,
                               duration: const Duration(seconds: 2));
                           return;
                         } else {
                           productController.updateProduct(
-                            category_id: categoryController.category.value!.id,
-                            supplier_id: supplierController.supplier.value!.id,
-                            brand_id: brandController.brand.value!.id,
+                            category_id:
+                                categoryController.category.value?.id ??
+                                    widget.products.category_id,
+                            supplier_id:
+                                supplierController.supplier.value?.id ??
+                                    widget.products.supplier_id,
+                            brand_id: brandController.brand.value?.id ??
+                                widget.products.brand_id,
                             product_name: productNameController.text,
                             product_code: productCodeController.text,
                             product_garage: productGarageController.text,
                             product_route: productRouteController.text,
-                            product_image: 'image',
+                            product_image: _imageFile!,
                             expire_date: _selectedExpireDate.toString(),
                             import_price: int.parse(importPriceController.text),
                             export_price: int.parse(exportPriceController.text),
-                            id: widget.product.id,
+                            id: widget.products.id,
                           );
                         }
                       },
                       style: TextButton.styleFrom(
                           foregroundColor: Colors.white,
-                          backgroundColor: productCodeController.text.isEmpty ||
-                                  productNameController.text.isEmpty ||
-                                  exportPriceController.text.isEmpty ||
-                                  importPriceController.text.isEmpty ||
-                                  productCodeController.text.isEmpty ||
-                                  productGarageController.text.isEmpty ||
-                                  productGarageController.text.isEmpty ||
-                                  selectedValueCategory == null ||
-                                  selectedValueSupplier == null ||
-                                  selectedValueBrand == null
+                          backgroundColor: productNameController.text ==
+                                  widget.products.product_name
                               ? Colors.grey
                               : Colors.orange,
                           shape: RoundedRectangleBorder(

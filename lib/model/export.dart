@@ -8,6 +8,8 @@ class Export {
   final int export_quantity;
   final int total_export_price;
   final int product_id;
+  final String product_name;
+
   final DateTime created_at;
   final DateTime updated_at;
 
@@ -18,6 +20,7 @@ class Export {
     required this.export_quantity,
     required this.total_export_price,
     required this.product_id,
+    required this.product_name,
   });
 
   factory Export.fromJson(Map<dynamic, dynamic> data) => Export(
@@ -27,5 +30,6 @@ class Export {
         product_id: data['product_id'] ?? 0,
         created_at: DateTime.parse(data['created_at'].toString()),
         updated_at: DateTime.parse(data['updated_at'].toString()),
+        product_name: data['product_name'] ?? 'Not Yet',
       );
 }

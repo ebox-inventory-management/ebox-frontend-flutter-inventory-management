@@ -1,5 +1,7 @@
 import 'dart:convert';
 
+import '../core/constants/base_url.dart';
+
 List<Suppliers> suppliersListFromJson(String val) => List<Suppliers>.from(
     json.decode(val)['suppliers'].map((data) => Suppliers.fromJson(data)));
 
@@ -15,8 +17,8 @@ class Suppliers {
   final String bank_name;
   final String bank_number;
   final String type;
-  final DateTime created_at;
-  final DateTime updated_at;
+  final String created_at;
+  final String updated_at;
   final List<int> product_id;
   final List<String> product_name;
   final List<String> product_code;
@@ -65,8 +67,8 @@ class Suppliers {
   factory Suppliers.fromJson(Map<dynamic, dynamic> data) => Suppliers(
         id: data['id'],
         name: data['name'] ?? 'Not Yet',
-        created_at: DateTime.parse(data['created_at'].toString()),
-        updated_at: DateTime.parse(data['updated_at'].toString()),
+        created_at: data['created_at'],
+        updated_at: data['updated_at'],
         product_id:
             List<int>.from(data['products'].map((data) => data['id'] ?? 0)),
         product_name: List<String>.from(
@@ -100,7 +102,7 @@ class Suppliers {
         address: data['address'] ?? 'Not Yet',
         city: data['city'] ?? 'Not Yet',
         shop_name: data['shop_name'] ?? 'Not Yet',
-        photo: data['photo'] ?? 'Not Yet',
+        photo: '$baseUrl/images/suppliers/${data['photo']}',
         bank_name: data['bank_name'] ?? 'Not Yet',
         bank_number: data['bank_number'] ?? 'Not Yet',
         type: data['type'] ?? 'Not Yet',

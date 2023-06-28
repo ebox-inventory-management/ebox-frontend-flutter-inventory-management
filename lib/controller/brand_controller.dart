@@ -18,6 +18,7 @@ class BrandController extends GetxController {
   RxBool isBrandsLoading = false.obs;
   TextEditingController searchBrandsController = TextEditingController();
   RxString searchVal = ''.obs;
+
   @override
   void onInit() async {
     getBrands();

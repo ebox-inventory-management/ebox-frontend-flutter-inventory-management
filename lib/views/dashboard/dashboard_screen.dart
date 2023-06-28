@@ -1,6 +1,6 @@
 import 'package:dropdown_button2/custom_dropdown_button2.dart';
 import 'package:ebox_frontend_web_inventory/controller/income_controller.dart';
-import 'package:ebox_frontend_web_inventory/model/chart_data_expense.dart';
+import 'package:ebox_frontend_web_inventory/model/chart_data_export.dart';
 import 'package:ebox_frontend_web_inventory/model/chart_data_product_quantity.dart';
 import 'package:ebox_frontend_web_inventory/views/dashboard/widgets/product_alert_list.dart';
 import 'package:flutter/material.dart';
@@ -259,7 +259,7 @@ class _DashBoardScreenState extends State<DashBoardScreen> {
                   padding: REdgeInsets.all(15.r),
                   child: SfCartesianChart(
                     title: ChartTitle(
-                        text: 'Import and Export (Product Quantity)',
+                        text: 'Import and Export (Quantity)',
                         textStyle: TextStyle(
                             fontSize: 16.sp, fontWeight: FontWeight.bold)),
                     primaryXAxis: DateTimeAxis(),
@@ -280,7 +280,7 @@ class _DashBoardScreenState extends State<DashBoardScreen> {
                           xValueMapper: (ChartDataImport data, _) =>
                               data.created_at,
                           yValueMapper: (ChartDataImport data, _) =>
-                              data.total_import_price,
+                              data.import_quantity,
                           name: 'Import',
                           enableTooltip: true,
                           markerSettings: MarkerSettings(
@@ -303,13 +303,13 @@ class _DashBoardScreenState extends State<DashBoardScreen> {
                           xValueMapper: (ChartDataExport data, _) =>
                               data.created_at,
                           yValueMapper: (ChartDataExport data, _) =>
-                              data.total_export_price,
-                          name: 'Exports',
+                              data.export_quantity,
+                          name: 'Export',
                           enableTooltip: true,
-                          markerSettings: const MarkerSettings(
+                          markerSettings: MarkerSettings(
                               isVisible: true,
-                              height: 4,
-                              width: 4,
+                              height: 4.w,
+                              width: 4.w,
                               shape: DataMarkerType.circle,
                               color: Colors.white,
                               borderColor: Colors.black),
@@ -332,11 +332,11 @@ class _DashBoardScreenState extends State<DashBoardScreen> {
                       padding: REdgeInsets.all(15.r),
                       child: SfCartesianChart(
                         title: ChartTitle(
-                            text: 'Import and Export (Product Quantity)',
+                            text: 'Import (Quantity)',
                             textStyle: TextStyle(
                                 fontSize: 16.sp, fontWeight: FontWeight.bold)),
                         legend: Legend(isVisible: true),
-                        primaryXAxis: DateTimeCategoryAxis(),
+                        primaryXAxis: DateTimeAxis(),
                         primaryYAxis: NumericAxis(),
                         tooltipBehavior: TooltipBehavior(enable: true),
                         zoomPanBehavior: ZoomPanBehavior(
@@ -354,37 +354,13 @@ class _DashBoardScreenState extends State<DashBoardScreen> {
                               xValueMapper: (ChartDataImport data, _) =>
                                   data.created_at,
                               yValueMapper: (ChartDataImport data, _) =>
-                                  data.total_import_price,
+                                  data.import_quantity,
                               name: 'Import',
                               enableTooltip: true,
                               markerSettings: MarkerSettings(
                                   isVisible: true,
                                   height: 4.w,
                                   width: 4.w,
-                                  shape: DataMarkerType.circle,
-                                  color: Colors.white,
-                                  borderColor: Colors.black),
-                              dataLabelSettings: const DataLabelSettings(
-                                isVisible: true,
-                              )),
-                          BarSeries<ChartDataExport, DateTime>(
-                              dataSource:
-                                  dashboardController.chartDataExportList,
-                              color: Colors.redAccent,
-                              isVisible: true,
-                              isVisibleInLegend: true,
-                              yAxisName: 'Export',
-                              xAxisName: 'Time',
-                              xValueMapper: (ChartDataExport data, _) =>
-                                  data.created_at,
-                              yValueMapper: (ChartDataExport data, _) =>
-                                  data.total_export_price,
-                              name: 'Export',
-                              enableTooltip: true,
-                              markerSettings: const MarkerSettings(
-                                  isVisible: true,
-                                  height: 4,
-                                  width: 4,
                                   shape: DataMarkerType.circle,
                                   color: Colors.white,
                                   borderColor: Colors.black),
@@ -407,7 +383,7 @@ class _DashBoardScreenState extends State<DashBoardScreen> {
                         padding: REdgeInsets.all(15.r),
                         child: SfCircularChart(
                           title: ChartTitle(
-                              text: 'Product Quantity',
+                              text: 'Import (Quantity)',
                               textStyle: TextStyle(
                                   fontSize: 16.sp,
                                   fontWeight: FontWeight.bold)),
@@ -415,19 +391,17 @@ class _DashBoardScreenState extends State<DashBoardScreen> {
                           selectionGesture: ActivationMode.singleTap,
                           series: <CircularSeries>[
                             // Render pie chart
-                            PieSeries<ChartDataProductQuantity, String>(
+                            PieSeries<ChartDataImport, String>(
                                 explode: true,
                                 explodeIndex: 0,
-                                dataSource: dashboardController
-                                    .chartDataProductQuantity,
+                                dataSource:
+                                    dashboardController.chartDataImportList,
                                 dataLabelSettings:
                                     DataLabelSettings(isVisible: true),
-                                xValueMapper:
-                                    (ChartDataProductQuantity data, _) =>
-                                        data.product_name,
-                                yValueMapper:
-                                    (ChartDataProductQuantity data, _) =>
-                                        data.product_quantity)
+                                xValueMapper: (ChartDataImport data, _) =>
+                                    data.product_name,
+                                yValueMapper: (ChartDataImport data, _) =>
+                                    data.import_quantity)
                           ],
                         ),
                       ),

@@ -4,7 +4,7 @@ import 'package:ebox_frontend_web_inventory/model/chart_data_product_quantity.da
 import 'package:get/get.dart';
 import '../api/export_service.dart';
 import '../model/chart_data_import.dart';
-import '../model/chart_data_expense.dart';
+import '../model/chart_data_export.dart';
 import '../views/dashboard/dashboard_screen.dart';
 
 class DashboardController extends GetxController {

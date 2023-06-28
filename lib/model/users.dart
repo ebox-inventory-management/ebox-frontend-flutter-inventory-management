@@ -2,16 +2,17 @@ import 'dart:convert';
 
 import '../core/constants/base_url.dart';
 
-User userFromJson(String str) => User.fromJson(json.decode(str));
+List<Users> usersListFromJson(String val) => List<Users>.from(
+    json.decode(val)['users'].map((data) => Users.fromJson(data)));
 
-class User {
+class Users {
   String id;
   String name;
   String email;
   String image;
   String created_at;
   String updated_at;
-  User({
+  Users({
     required this.id,
     required this.email,
     required this.name,
@@ -20,7 +21,7 @@ class User {
     required this.updated_at,
   });
 
-  factory User.fromJson(Map<dynamic, dynamic> data) => User(
+  factory Users.fromJson(Map<dynamic, dynamic> data) => Users(
         id: data['id'].toString(),
         email: data['email'] ?? 'Not Yet',
         name: data['name'] ?? 'Not Yet',

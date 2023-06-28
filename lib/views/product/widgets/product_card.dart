@@ -7,6 +7,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 
+import '../../../core/constants/base_url.dart';
+
 class ProductCard extends StatefulWidget {
   final Products product;
 
@@ -46,9 +48,8 @@ class _ProductCardState extends State<ProductCard> {
               height: 100.w,
               decoration: BoxDecoration(
                   borderRadius: BorderRadius.all(Radius.circular(15.r)),
-                  image: const DecorationImage(
-                      image: NetworkImage(
-                          'https://images.unsplash.com/photo-1503023345310-bd7c1de61c7d?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8Mnx8aHVtYW58ZW58MHx8MHx8fDA%3D&w=1000&q=80'),
+                  image: DecorationImage(
+                      image: NetworkImage(widget.product.product_image),
                       fit: BoxFit.cover)),
             ),
             Padding(
@@ -79,7 +80,7 @@ class _ProductCardState extends State<ProductCard> {
                 children: [
                   IconButton(
                       onPressed: () {
-                        Get.dialog(ProductEdit(product: widget.product));
+                        Get.dialog(ProductEdit(products: widget.product));
                       },
                       icon: Icon(Icons.edit, color: Colors.blue, size: 25.r)),
                   IconButton(
@@ -96,7 +97,8 @@ class _ProductCardState extends State<ProductCard> {
                           btnCancelOnPress: () {},
                           btnOkOnPress: () {
                             productController.deleteProduct(
-                                id: widget.product.id);
+                                id: widget.product.id,
+                                name: widget.product.product_name);
                           },
                         ).show();
                       },
