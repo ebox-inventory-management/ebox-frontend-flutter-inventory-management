@@ -6,7 +6,7 @@ List<Users> usersListFromJson(String val) => List<Users>.from(
     json.decode(val)['users'].map((data) => Users.fromJson(data)));
 
 class Users {
-  String id;
+  int id;
   String name;
   String email;
   String image;
@@ -22,10 +22,10 @@ class Users {
   });
 
   factory Users.fromJson(Map<dynamic, dynamic> data) => Users(
-        id: data['id'].toString(),
+        id: data['id'],
         email: data['email'] ?? 'Not Yet',
         name: data['name'] ?? 'Not Yet',
-        image: '$baseUrl/images/users/${data['image']}',
+        image: data['image'],
         created_at: data['created_at'],
         updated_at: data['updated_at'],
       );

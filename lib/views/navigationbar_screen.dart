@@ -8,6 +8,7 @@ import 'package:ebox_frontend_web_inventory/views/import/import_screen.dart';
 import 'package:ebox_frontend_web_inventory/views/product/widgets/product_add.dart';
 import 'package:ebox_frontend_web_inventory/views/product/product_screen.dart';
 import 'package:ebox_frontend_web_inventory/views/suppliers/supplier_screen.dart';
+import 'package:ebox_frontend_web_inventory/views/user/user_edit.dart';
 import 'package:ebox_frontend_web_inventory/views/user/user_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/src/widgets/container.dart';
@@ -17,7 +18,6 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 import 'package:sidebarx/sidebarx.dart';
 
-import 'alert/alert_screen.dart';
 import 'brand/brand_screen.dart';
 import 'customer/customer_screen.dart';
 
@@ -135,38 +135,51 @@ class CustomeSidebarX extends StatelessWidget {
       ),
       footerDivider: Divider(),
       headerBuilder: (context, extended) {
-        return Padding(
-          padding: REdgeInsets.all(16.0.r),
-          child: Column(
-            children: [
-              CircleAvatar(
-                radius: 60.r,
-                foregroundImage: NetworkImage(profileImage),
-              ),
-              SizedBox(
-                height: 15.h,
-              ),
-              Text(
-                name,
-                maxLines: 2,
-                overflow: TextOverflow.ellipsis,
-                style: TextStyle(fontSize: 20.sp, fontWeight: FontWeight.w500),
-              ),
-              SizedBox(
-                height: 5.h,
-              ),
-              Text(
-                'Role: Not Yet',
-                maxLines: 2,
-                overflow: TextOverflow.ellipsis,
-                style: TextStyle(
-                    fontSize: 14.sp,
-                    fontWeight: FontWeight.w500,
-                    color: Colors.grey),
-              ),
-              Divider(),
-            ],
-          ),
+        return Column(
+          crossAxisAlignment: CrossAxisAlignment.center,
+          children: [
+            Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: [
+                SizedBox(),
+                IconButton(
+                    onPressed: () {
+                      Get.dialog(UserEdit());
+                    },
+                    icon: Icon(
+                      Icons.edit,
+                      size: 25.r,
+                      color: Colors.blueAccent,
+                    )),
+              ],
+            ),
+            CircleAvatar(
+              radius: 60.r,
+              foregroundImage: NetworkImage(profileImage),
+            ),
+            SizedBox(
+              height: 15.h,
+            ),
+            Text(
+              name,
+              maxLines: 2,
+              overflow: TextOverflow.ellipsis,
+              style: TextStyle(fontSize: 20.sp, fontWeight: FontWeight.w500),
+            ),
+            SizedBox(
+              height: 5.h,
+            ),
+            Text(
+              'Role: Not Yet',
+              maxLines: 2,
+              overflow: TextOverflow.ellipsis,
+              style: TextStyle(
+                  fontSize: 14.sp,
+                  fontWeight: FontWeight.w500,
+                  color: Colors.grey),
+            ),
+            Divider(),
+          ],
         );
       },
       items: [

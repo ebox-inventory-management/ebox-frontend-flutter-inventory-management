@@ -102,7 +102,7 @@ class Suppliers {
         address: data['address'] ?? 'Not Yet',
         city: data['city'] ?? 'Not Yet',
         shop_name: data['shop_name'] ?? 'Not Yet',
-        photo: '$baseUrl/images/suppliers/${data['photo']}',
+        photo: data['photo'],
         bank_name: data['bank_name'] ?? 'Not Yet',
         bank_number: data['bank_number'] ?? 'Not Yet',
         type: data['type'] ?? 'Not Yet',

@@ -14,9 +14,9 @@ class ProductScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: Colors.grey[100],
-      body: Padding(
-        padding: REdgeInsets.all(30.r),
-        child: SingleChildScrollView(
+      body: SingleChildScrollView(
+        child: Padding(
+          padding: REdgeInsets.all(30.w),
           child:
               Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
             Row(
@@ -116,7 +116,7 @@ class ProductScreen extends StatelessWidget {
                       },
                       style: TextButton.styleFrom(
                         foregroundColor: Colors.white,
-                        backgroundColor: Colors.orange,
+                        backgroundColor: Colors.green,
                         shape: RoundedRectangleBorder(
                             borderRadius:
                                 BorderRadius.all(Radius.circular(15.r))),

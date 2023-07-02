@@ -1,5 +1,7 @@
 import 'dart:convert';
 
+import '../core/constants/base_url.dart';
+
 List<Export> exportListFromJson(String val) => List<Export>.from(
     json.decode(val)['exports'].map((data) => Export.fromJson(data)));
 
@@ -9,7 +11,7 @@ class Export {
   final int total_export_price;
   final int product_id;
   final String product_name;
-
+  final String product_image;
   final DateTime created_at;
   final DateTime updated_at;
 
@@ -21,6 +23,7 @@ class Export {
     required this.total_export_price,
     required this.product_id,
     required this.product_name,
+    required this.product_image,
   });
 
   factory Export.fromJson(Map<dynamic, dynamic> data) => Export(
@@ -31,5 +34,6 @@ class Export {
         created_at: DateTime.parse(data['created_at'].toString()),
         updated_at: DateTime.parse(data['updated_at'].toString()),
         product_name: data['product_name'] ?? 'Not Yet',
+        product_image: data['product_image'],
       );
 }

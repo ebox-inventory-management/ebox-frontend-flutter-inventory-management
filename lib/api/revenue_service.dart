@@ -26,4 +26,10 @@ class RemoteRevenueService {
     var response = await client.get(Uri.parse('$remoteUrl/year'));
     return response;
   }
+
+  Future<dynamic> getRange({required String start, required String end}) async {
+    var response =
+        await client.get(Uri.parse('$baseUrl/api/revenues/$start/$end'));
+    return response;
+  }
 }

@@ -55,7 +55,7 @@ class Product {
         product_quantity: data['product_quantity'] ?? 0,
         product_garage: data['product_garage'] ?? 'Not Yet',
         product_amount: data['product_amount'] ?? 0,
-        product_image: '$baseUrl/images/products/${data['product_image']}',
+        product_image: data['product_image'],
         product_route: data['product_route'] ?? 'Not Yet',
         supplier_id: data['supplier_id'],
         updated_at: data['updated_at'],

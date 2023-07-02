@@ -2,9 +2,13 @@ import 'package:dropdown_button2/custom_dropdown_button2.dart';
 import 'package:ebox_frontend_web_inventory/controller/income_controller.dart';
 import 'package:ebox_frontend_web_inventory/model/chart_data_export.dart';
 import 'package:ebox_frontend_web_inventory/model/chart_data_product_quantity.dart';
+import 'package:ebox_frontend_web_inventory/model/range_expenses.dart';
+import 'package:ebox_frontend_web_inventory/model/range_incomes.dart';
+import 'package:ebox_frontend_web_inventory/model/range_revenue.dart';
 import 'package:ebox_frontend_web_inventory/views/dashboard/widgets/product_alert_list.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:intl/intl.dart';
 import 'package:syncfusion_flutter_charts/charts.dart';
 import 'package:syncfusion_flutter_charts/sparkcharts.dart';
 import 'package:get/get.dart';
@@ -21,7 +25,7 @@ class DashBoardScreen extends StatefulWidget {
 }
 
 class _DashBoardScreenState extends State<DashBoardScreen> {
-  List<String> total = ['TODAY', 'MONTH', 'YEAR'];
+  List<String> total = ['TODAY', 'THIS MONTH', 'THIS YEAR'];
 
   String? selectedValueTotal = 'TODAY';
 
@@ -29,27 +33,87 @@ class _DashBoardScreenState extends State<DashBoardScreen> {
   String? tempExpenses = expenseController.expenseToday.value?.today_expense;
   String? tempRevenue = revenueController.revenueToday.value?.today_revenue;
 
+  TextEditingController startDateController = TextEditingController();
+  TextEditingController endDateController = TextEditingController();
+
+  DateTime? _selectedStartDate;
+  DateTime? _selectedEndDate;
+  DateTime now = DateTime.now();
+
   @override
   void initState() {
-    importController;
-    exportController;
-    incomeController;
-    expenseController;
-    revenueController;
-    categoryController;
-    brandController;
-    supplierController;
-    dashboardController;
     super.initState();
+    _selectedStartDate = DateTime(now.year, now.month - 1, now.day);
+    _selectedEndDate = DateTime(now.year, now.month, now.day + 1);
+  }
+
+  Future<void> _selectStartDate(BuildContext context) async {
+    final DateTime? picked = await showDatePicker(
+      builder: (context, child) {
+        return Theme(
+          data: Theme.of(context).copyWith(
+            colorScheme: const ColorScheme.light(
+              primary: Colors.orange,
+              onSurface: Colors.orange,
+            ),
+            textButtonTheme: TextButtonThemeData(
+              style: TextButton.styleFrom(
+                foregroundColor: Colors.orange,
+              ),
+            ),
+          ),
+          child: child!,
+        );
+      },
+      context: context,
+      initialDate: DateTime(now.year, now.month - 1, now.day),
+      firstDate: DateTime(2000),
+      lastDate: DateTime(2100),
+    );
+    if (picked != null && picked != _selectedStartDate) {
+      setState(() {
+        _selectedStartDate = picked;
+      });
+    }
+  }
+
+  Future<void> _selectEndDate(BuildContext context) async {
+    final DateTime? picked = await showDatePicker(
+      builder: (context, child) {
+        return Theme(
+          data: Theme.of(context).copyWith(
+            colorScheme: const ColorScheme.light(
+              primary: Colors.orange,
+              onSurface: Colors.orange,
+            ),
+            textButtonTheme: TextButtonThemeData(
+              style: TextButton.styleFrom(
+                foregroundColor: Colors.orange,
+              ),
+            ),
+          ),
+          child: child!,
+        );
+      },
+      context: context,
+      initialDate: DateTime(now.year, now.month, now.day + 1),
+      firstDate: DateTime(2000),
+      lastDate: DateTime(2100),
+    );
+    if (picked != null && picked != _selectedEndDate) {
+      setState(() {
+        _selectedEndDate = picked;
+      });
+    }
   }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: Colors.grey[100],
-      body: Padding(
-        padding: REdgeInsets.all(30),
-        child: SingleChildScrollView(
+      body: SingleChildScrollView(
+        child: Padding(
+          padding: REdgeInsets.all(30.w),
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
@@ -129,7 +193,7 @@ class _DashBoardScreenState extends State<DashBoardScreen> {
                               .expenseToday.value?.today_expense;
                           tempRevenue = revenueController
                               .revenueToday.value?.today_revenue;
-                        } else if (selectedValueTotal == 'MONTH') {
+                        } else if (selectedValueTotal == 'THIS MONTH') {
                           tempIncomes = incomeController
                               .incomesMonth.value?.total
                               .toString();
@@ -139,7 +203,7 @@ class _DashBoardScreenState extends State<DashBoardScreen> {
                           tempRevenue = revenueController
                               .revenueMonth.value?.total
                               .toString();
-                        } else if (selectedValueTotal == 'YEAR') {
+                        } else if (selectedValueTotal == 'THIS YEAR') {
                           tempIncomes = incomeController
                               .incomesYear.value?.total
                               .toString();
@@ -251,6 +315,159 @@ class _DashBoardScreenState extends State<DashBoardScreen> {
                   ],
                 ),
               ),
+              Padding(
+                padding: REdgeInsets.only(top: 15.r, bottom: 15.r),
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    Row(
+                      children: [
+                        Icon(
+                          Icons.multiline_chart,
+                          color: Colors.orange,
+                          size: 30.r,
+                        ),
+                        SizedBox(
+                          width: 5.w,
+                        ),
+                        Text(
+                          'Graph',
+                          style: TextStyle(
+                              fontWeight: FontWeight.w500,
+                              color: Colors.orange,
+                              fontSize: 20.sp),
+                        ),
+                      ],
+                    ),
+                    Row(
+                      children: [
+                        SizedBox(
+                          width: 200.w,
+                          child: TextFormField(
+                            controller: startDateController,
+                            keyboardType: TextInputType.datetime,
+                            textInputAction: TextInputAction.done,
+                            obscureText: false,
+                            readOnly: true,
+                            onTap: () async {
+                              _selectStartDate(context);
+                            },
+                            decoration: InputDecoration(
+                              filled: true,
+                              fillColor: Colors.white,
+                              focusedBorder: OutlineInputBorder(
+                                  borderSide:
+                                      const BorderSide(color: Colors.white),
+                                  borderRadius: BorderRadius.circular(10.r)),
+                              enabledBorder: OutlineInputBorder(
+                                  borderSide:
+                                      const BorderSide(color: Colors.white),
+                                  borderRadius: BorderRadius.circular(10.r)),
+                              border: OutlineInputBorder(
+                                borderRadius: BorderRadius.circular(10.0.r),
+                              ),
+                              hintText: _selectedStartDate == null
+                                  ? DateFormat('dd / MMMM / yyyy').format(
+                                      DateTime(
+                                          now.year, now.month - 1, now.day),
+                                    )
+                                  : DateFormat('dd / MMMM / yyyy')
+                                      .format(_selectedStartDate!),
+                              hintStyle: TextStyle(fontSize: 14.sp),
+                              labelStyle: TextStyle(fontSize: 14.sp),
+                              suffixIcon: Icon(
+                                Icons.date_range,
+                                size: 25.r,
+                              ),
+                              suffixIconColor: Colors.orange,
+                            ),
+                          ),
+                        ),
+                        Padding(
+                          padding: REdgeInsets.only(left: 15.r, right: 15.r),
+                          child: Text(
+                            'To',
+                            style: TextStyle(
+                                fontSize: 16.sp,
+                                color: Colors.grey,
+                                fontWeight: FontWeight.bold),
+                          ),
+                        ),
+                        SizedBox(
+                          width: 200.w,
+                          child: TextFormField(
+                            controller: endDateController,
+                            keyboardType: TextInputType.datetime,
+                            textInputAction: TextInputAction.done,
+                            obscureText: false,
+                            readOnly: true,
+                            onTap: () async {
+                              _selectEndDate(context);
+                            },
+                            decoration: InputDecoration(
+                              filled: true,
+                              fillColor: Colors.white,
+                              focusedBorder: OutlineInputBorder(
+                                  borderSide:
+                                      const BorderSide(color: Colors.white),
+                                  borderRadius: BorderRadius.circular(10.r)),
+                              enabledBorder: OutlineInputBorder(
+                                  borderSide:
+                                      const BorderSide(color: Colors.white),
+                                  borderRadius: BorderRadius.circular(10.r)),
+                              border: OutlineInputBorder(
+                                borderRadius: BorderRadius.circular(10.0.r),
+                              ),
+                              hintText: _selectedEndDate == null
+                                  ? DateFormat('dd / MMMM / yyyy')
+                                      .format(DateTime.now())
+                                  : DateFormat('dd / MMMM / yyyy')
+                                      .format(_selectedEndDate!),
+                              hintStyle: TextStyle(fontSize: 14.sp),
+                              labelStyle: TextStyle(fontSize: 14.sp),
+                              suffixIcon: Icon(
+                                Icons.date_range,
+                                size: 25.r,
+                              ),
+                              suffixIconColor: Colors.orange,
+                            ),
+                          ),
+                        ),
+                        SizedBox(
+                          width: 15.w,
+                        ),
+                        IconButton(
+                            onPressed: () {
+                              if (_selectedStartDate == null ||
+                                  _selectedEndDate == null) {
+                                Get.snackbar('Something wrong!',
+                                    'You need to choose the date first!',
+                                    colorText: Colors.white,
+                                    margin: REdgeInsets.all(15.r),
+                                    backgroundColor: Colors.redAccent,
+                                    snackPosition: SnackPosition.BOTTOM,
+                                    duration: const Duration(seconds: 2));
+                              }
+                              setState(() {
+                                incomeController.getRange(
+                                    start: DateTime(
+                                            now.year, now.month - 1, now.day)
+                                        .toString(),
+                                    end: DateTime(
+                                            now.year, now.month, now.day + 1)
+                                        .toString());
+                              });
+                            },
+                            icon: Icon(
+                              Icons.search,
+                              size: 25.r,
+                              color: Colors.orange,
+                            ))
+                      ],
+                    ),
+                  ],
+                ),
+              ),
               Container(
                 decoration: BoxDecoration(
                     color: Colors.white,
@@ -259,7 +476,7 @@ class _DashBoardScreenState extends State<DashBoardScreen> {
                   padding: REdgeInsets.all(15.r),
                   child: SfCartesianChart(
                     title: ChartTitle(
-                        text: 'Import and Export (Quantity)',
+                        text: 'Income, Expense and Revenue',
                         textStyle: TextStyle(
                             fontSize: 16.sp, fontWeight: FontWeight.bold)),
                     primaryXAxis: DateTimeAxis(),
@@ -270,18 +487,18 @@ class _DashBoardScreenState extends State<DashBoardScreen> {
                       enableDoubleTapZooming: true,
                     ),
                     series: <ChartSeries<dynamic, DateTime>>[
-                      LineSeries<ChartDataImport, DateTime>(
-                          dataSource: dashboardController.chartDataImportList,
+                      LineSeries<RangeIncomes, DateTime>(
+                          dataSource: incomeController.rangeIncomesList,
                           color: Colors.blueAccent,
                           isVisible: true,
                           isVisibleInLegend: true,
-                          yAxisName: 'Import',
+                          yAxisName: 'Income',
                           xAxisName: 'Time',
-                          xValueMapper: (ChartDataImport data, _) =>
+                          xValueMapper: (RangeIncomes data, _) =>
                               data.created_at,
-                          yValueMapper: (ChartDataImport data, _) =>
-                              data.import_quantity,
-                          name: 'Import',
+                          yValueMapper: (RangeIncomes data, _) =>
+                              data.income_amount,
+                          name: 'Income',
                           enableTooltip: true,
                           markerSettings: MarkerSettings(
                               isVisible: true,
@@ -293,18 +510,40 @@ class _DashBoardScreenState extends State<DashBoardScreen> {
                           dataLabelSettings: const DataLabelSettings(
                             isVisible: true,
                           )),
-                      LineSeries<ChartDataExport, DateTime>(
-                          dataSource: dashboardController.chartDataExportList,
+                      LineSeries<RangeExpenses, DateTime>(
+                          dataSource: expenseController.rangeExpensesList,
                           color: Colors.redAccent,
                           isVisible: true,
                           isVisibleInLegend: true,
-                          yAxisName: 'Export',
+                          yAxisName: 'Expense',
                           xAxisName: 'Time',
-                          xValueMapper: (ChartDataExport data, _) =>
+                          xValueMapper: (RangeExpenses data, _) =>
                               data.created_at,
-                          yValueMapper: (ChartDataExport data, _) =>
-                              data.export_quantity,
-                          name: 'Export',
+                          yValueMapper: (RangeExpenses data, _) =>
+                              data.income_amount,
+                          name: 'Expense',
+                          enableTooltip: true,
+                          markerSettings: MarkerSettings(
+                              isVisible: true,
+                              height: 4.w,
+                              width: 4.w,
+                              shape: DataMarkerType.circle,
+                              color: Colors.white,
+                              borderColor: Colors.black),
+                          dataLabelSettings: const DataLabelSettings(
+                            isVisible: true,
+                          )),
+                      LineSeries<RangeRevenues, DateTime>(
+                          dataSource: revenueController.rangeRevenuesList,
+                          color: Colors.yellowAccent,
+                          isVisible: true,
+                          isVisibleInLegend: true,
+                          yAxisName: 'Revenue',
+                          xAxisName: 'Time',
+                          xValueMapper: (RangeRevenues data, _) =>
+                              data.created_at,
+                          yValueMapper: (RangeRevenues data, _) => data.revenue,
+                          name: 'Revenue',
                           enableTooltip: true,
                           markerSettings: MarkerSettings(
                               isVisible: true,
@@ -332,7 +571,7 @@ class _DashBoardScreenState extends State<DashBoardScreen> {
                       padding: REdgeInsets.all(15.r),
                       child: SfCartesianChart(
                         title: ChartTitle(
-                            text: 'Import (Quantity)',
+                            text: 'Import and Export (Product Quantity)',
                             textStyle: TextStyle(
                                 fontSize: 16.sp, fontWeight: FontWeight.bold)),
                         legend: Legend(isVisible: true),
@@ -343,7 +582,7 @@ class _DashBoardScreenState extends State<DashBoardScreen> {
                           enableDoubleTapZooming: true,
                         ),
                         series: <ChartSeries<dynamic, DateTime>>[
-                          BarSeries<ChartDataImport, DateTime>(
+                          LineSeries<ChartDataImport, DateTime>(
                               dataSource:
                                   dashboardController.chartDataImportList,
                               color: Colors.blueAccent,
@@ -356,6 +595,30 @@ class _DashBoardScreenState extends State<DashBoardScreen> {
                               yValueMapper: (ChartDataImport data, _) =>
                                   data.import_quantity,
                               name: 'Import',
+                              enableTooltip: true,
+                              markerSettings: MarkerSettings(
+                                  isVisible: true,
+                                  height: 4.w,
+                                  width: 4.w,
+                                  shape: DataMarkerType.circle,
+                                  color: Colors.white,
+                                  borderColor: Colors.black),
+                              dataLabelSettings: const DataLabelSettings(
+                                isVisible: true,
+                              )),
+                          LineSeries<ChartDataExport, DateTime>(
+                              dataSource:
+                                  dashboardController.chartDataExportList,
+                              color: Colors.redAccent,
+                              isVisible: true,
+                              isVisibleInLegend: true,
+                              yAxisName: 'Export',
+                              xAxisName: 'Time',
+                              xValueMapper: (ChartDataExport data, _) =>
+                                  data.created_at,
+                              yValueMapper: (ChartDataExport data, _) =>
+                                  data.export_quantity,
+                              name: 'Export',
                               enableTooltip: true,
                               markerSettings: MarkerSettings(
                                   isVisible: true,
@@ -401,7 +664,7 @@ class _DashBoardScreenState extends State<DashBoardScreen> {
                                 xValueMapper: (ChartDataImport data, _) =>
                                     data.product_name,
                                 yValueMapper: (ChartDataImport data, _) =>
-                                    data.import_quantity)
+                                    data.import_quantity),
                           ],
                         ),
                       ),
@@ -409,60 +672,48 @@ class _DashBoardScreenState extends State<DashBoardScreen> {
                   ),
                 ],
               ),
-              Padding(
-                padding: REdgeInsets.only(bottom: 15.r, top: 15.r),
-                child: Row(
-                  crossAxisAlignment: CrossAxisAlignment.center,
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: [
-                    Row(
-                      children: [
-                        Icon(
-                          Icons.notifications,
-                          color: Colors.red,
-                          size: 30.r,
-                        ),
-                        SizedBox(
-                          width: 5.w,
-                        ),
-                        Text(
-                          'All these product have less than 5',
-                          style: TextStyle(
-                              fontWeight: FontWeight.w500,
-                              color: Colors.red,
-                              fontSize: 20.sp),
-                        ),
-                      ],
-                    ),
-                    SizedBox()
-                  ],
-                ),
-              ),
               Obx(() {
                 if (productController.isProductsLoading.value) {
                   return const Center(child: CircularProgressIndicator());
                 } else {
                   if (productController.productsList.isNotEmpty) {
-                    return ProductAlertList(
-                        products: productController.productsList);
-                  } else {
-                    return Center(
-                      child: Column(
-                        children: [
-                          Image.network(
-                            'https://firebasestorage.googleapis.com/v0/b/ebox-inventory-management.appspot.com/o/empty.png?alt=media&token=06b30b38-cac0-490e-ac6a-6373fe120a16',
-                            scale: 4,
+                    return Column(
+                      children: [
+                        Padding(
+                          padding: REdgeInsets.only(bottom: 15.r, top: 15.r),
+                          child: Row(
+                            crossAxisAlignment: CrossAxisAlignment.center,
+                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                            children: [
+                              Row(
+                                children: [
+                                  Icon(
+                                    Icons.notifications,
+                                    color: Colors.red,
+                                    size: 30.r,
+                                  ),
+                                  SizedBox(
+                                    width: 5.w,
+                                  ),
+                                  Text(
+                                    'All these product have less than 5',
+                                    style: TextStyle(
+                                        fontWeight: FontWeight.w500,
+                                        color: Colors.red,
+                                        fontSize: 20.sp),
+                                  ),
+                                ],
+                              ),
+                              SizedBox()
+                            ],
                           ),
-                          Text(
-                            'Product Not Found!',
-                            style: TextStyle(
-                                color: Colors.grey,
-                                fontWeight: FontWeight.bold,
-                                fontSize: 30.sp),
-                          ),
-                        ],
-                      ),
+                        ),
+                        ProductAlertList(
+                            products: productController.productsList),
+                      ],
                     );
+                  } else {
+                    return SizedBox();
                   }
                 }
               }),

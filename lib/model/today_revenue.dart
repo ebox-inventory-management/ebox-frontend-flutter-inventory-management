@@ -11,6 +11,6 @@ class TodayRevenue {
   });
 
   factory TodayRevenue.fromJson(Map<String, dynamic> data) => TodayRevenue(
-        today_revenue: data['today_expense'].toString(),
+        today_revenue: data['today_revenue'].toString(),
       );
 }

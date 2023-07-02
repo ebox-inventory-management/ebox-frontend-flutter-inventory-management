@@ -2,6 +2,7 @@ import 'dart:convert';
 import 'package:ebox_frontend_web_inventory/model/users.dart';
 import 'package:ebox_frontend_web_inventory/views/authentication/sign_in_screen.dart';
 import 'package:ebox_frontend_web_inventory/views/navigationbar_screen.dart';
+import 'package:file_picker/file_picker.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_easyloading/flutter_easyloading.dart';
 import 'package:get/get.dart';
@@ -25,8 +26,37 @@ class AuthController extends GetxController {
   @override
   void onInit() async {
     super.onInit();
-    getUsers();
     checkToken();
+    getUsers();
+  }
+
+  void checkToken() async {
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    token = prefs.getString('token');
+    var userResult = await RemoteAuthService().getUser(token: token);
+    if (userResult.statusCode == 200) {
+      user.value = userFromJson(userResult.body);
+      Get.offAllNamed('/navigation');
+    } else {
+      Get.offAllNamed('/signin');
+      EasyLoading.showError('Something wrong. Try to sign in again!');
+    }
+  }
+
+  void updateUser({
+    required int id,
+    required String name,
+    required String email,
+    required PlatformFile image,
+  }) async {
+    try {
+      var userResult = await RemoteAuthService()
+          .update(id: id, name: name, email: email, image: image);
+
+      user.value = userFromJson(userResult.body);
+    } catch (e) {
+      debugPrint(e.toString());
+    }
   }
 
   void getUsersByKeyword({required String keyword}) async {
@@ -60,22 +90,12 @@ class AuthController extends GetxController {
     }
   }
 
-  void checkToken() async {
-    SharedPreferences prefs = await SharedPreferences.getInstance();
-    token = prefs.getString('token');
-    var userResult = await RemoteAuthService().getUser(token: token);
-    if (userResult.statusCode == 200) {
-      user.value = userFromJson(userResult.body);
-      Get.offAllNamed('/navigation');
-    } else {
-      EasyLoading.showError('Something wrong. Try again!');
-    }
-  }
-
   void signUp(
       {required String name,
       required String email,
-      required String password}) async {
+      required PlatformFile image,
+      required String password,
+      required String password_confirmation}) async {
     try {
       EasyLoading.show(
         status: 'Loading...',
@@ -86,6 +106,8 @@ class AuthController extends GetxController {
         email: email,
         password: password,
         name: name,
+        image: image,
+        password_confirmation: password_confirmation,
       );
       if (result.statusCode == 200) {
         String token = json.decode(result.body)['token'];
@@ -140,7 +162,7 @@ class AuthController extends GetxController {
           EasyLoading.showError('Something wrong. Try again!');
         }
       } else {
-        EasyLoading.showError('Password wrong');
+        EasyLoading.showError('Something wrong. Try again!');
       }
     } catch (e) {
       debugPrint(e.toString());

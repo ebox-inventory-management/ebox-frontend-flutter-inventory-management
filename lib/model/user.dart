@@ -5,7 +5,7 @@ import '../core/constants/base_url.dart';
 User userFromJson(String str) => User.fromJson(json.decode(str));
 
 class User {
-  String id;
+  int id;
   String name;
   String email;
   String image;
@@ -21,10 +21,10 @@ class User {
   });
 
   factory User.fromJson(Map<dynamic, dynamic> data) => User(
-        id: data['id'].toString(),
+        id: data['id'],
         email: data['email'] ?? 'Not Yet',
         name: data['name'] ?? 'Not Yet',
-        image: '$baseUrl/images/users/${data['image']}',
+        image: data['image'],
         created_at: data['created_at'],
         updated_at: data['updated_at'],
       );

@@ -26,6 +26,15 @@ class ExportProductCard extends StatelessWidget {
           color: Colors.white),
       child: Row(
         children: [
+          Container(
+            width: 100.w,
+            height: 100.w,
+            decoration: BoxDecoration(
+                borderRadius: BorderRadius.all(Radius.circular(15.r)),
+                image: DecorationImage(
+                    image: NetworkImage(export.product_image),
+                    fit: BoxFit.cover)),
+          ),
           Padding(
             padding: REdgeInsets.only(left: 15.r, top: 10.r, bottom: 10.r),
             child: Column(

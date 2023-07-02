@@ -25,4 +25,10 @@ class RemoteIncomeService {
     var response = await client.get(Uri.parse('$baseUrl/api/income/year'));
     return response;
   }
+
+  Future<dynamic> getRange({required String start, required String end}) async {
+    var response =
+        await client.get(Uri.parse('$baseUrl/api/incomes/$start/$end'));
+    return response;
+  }
 }

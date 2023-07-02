@@ -13,6 +13,7 @@ import 'package:get/get.dart';
 class RemoteExportService {
   var client = http.Client();
   var remoteUrl = '$baseUrl/api/exports';
+  DateTime now = DateTime.now();
 
   Future<dynamic> get() async {
     var response = await client.get(Uri.parse(remoteUrl));
@@ -51,11 +52,19 @@ class RemoteExportService {
     }
     exportController.getExports();
     productController.getProducts();
-
     dashboardController.getChartDataExport();
     incomeController.getIncomeToday();
     expenseController.getExpenseToday();
     revenueController.getRevenueToday();
+    incomeController.getRange(
+        start: DateTime(now.year, now.month - 1, now.day).toString(),
+        end: DateTime(now.year, now.month, now.day + 1).toString());
+    expenseController.getRange(
+        start: DateTime(now.year, now.month - 1, now.day).toString(),
+        end: DateTime(now.year, now.month, now.day + 1).toString());
+    revenueController.getRange(
+        start: DateTime(now.year, now.month - 1, now.day).toString(),
+        end: DateTime(now.year, now.month, now.day + 1).toString());
     print(response.statusCode);
     return response;
   }
