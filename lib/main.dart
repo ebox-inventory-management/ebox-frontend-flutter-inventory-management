@@ -14,15 +14,12 @@ import 'controller/controllers.dart';
 var token;
 
 Future<void> main() async {
-  importController;
-  exportController;
-  incomeController;
-  expenseController;
-  revenueController;
-  categoryController;
-  brandController;
-  supplierController;
-  dashboardController;
+  incomeController.getIncomeToday();
+  expenseController.getExpenseToday();
+  revenueController.getRevenueToday();
+
+  dashboardController.getChartDataExport();
+  dashboardController.getChartDataImport();
   SharedPreferences pref = await SharedPreferences.getInstance();
   token = pref.getString('token');
   debugPrint('Token: $token');
