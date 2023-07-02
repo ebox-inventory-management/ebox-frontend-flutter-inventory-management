@@ -43,6 +43,7 @@ class _DashBoardScreenState extends State<DashBoardScreen> {
   @override
   void initState() {
     super.initState();
+
     _selectedStartDate = DateTime(now.year, now.month - 1, now.day);
     _selectedEndDate = DateTime(now.year, now.month, now.day + 1);
   }
@@ -646,7 +647,7 @@ class _DashBoardScreenState extends State<DashBoardScreen> {
                         padding: REdgeInsets.all(15.r),
                         child: SfCircularChart(
                           title: ChartTitle(
-                              text: 'Import (Quantity)',
+                              text: 'Product (Quantity)',
                               textStyle: TextStyle(
                                   fontSize: 16.sp,
                                   fontWeight: FontWeight.bold)),
@@ -654,17 +655,19 @@ class _DashBoardScreenState extends State<DashBoardScreen> {
                           selectionGesture: ActivationMode.singleTap,
                           series: <CircularSeries>[
                             // Render pie chart
-                            PieSeries<ChartDataImport, String>(
+                            PieSeries<ChartDataProductQuantity, String>(
                                 explode: true,
                                 explodeIndex: 0,
-                                dataSource:
-                                    dashboardController.chartDataImportList,
+                                dataSource: dashboardController
+                                    .chartDataProductQuantity,
                                 dataLabelSettings:
                                     DataLabelSettings(isVisible: true),
-                                xValueMapper: (ChartDataImport data, _) =>
-                                    data.product_name,
-                                yValueMapper: (ChartDataImport data, _) =>
-                                    data.import_quantity),
+                                xValueMapper:
+                                    (ChartDataProductQuantity data, _) =>
+                                        data.product_name,
+                                yValueMapper:
+                                    (ChartDataProductQuantity data, _) =>
+                                        data.product_quantity),
                           ],
                         ),
                       ),
