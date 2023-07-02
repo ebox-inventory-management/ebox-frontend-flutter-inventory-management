@@ -15,7 +15,8 @@ class SignInScreen extends StatelessWidget {
     return Scaffold(
       body: SingleChildScrollView(
         child: Padding(
-          padding: REdgeInsets.all(100.0),
+          padding: REdgeInsets.only(
+              left: 200.w, right: 200.w, top: 30.w, bottom: 30.w),
           child:
               Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
             Center(
@@ -83,9 +84,20 @@ class SignInScreen extends StatelessWidget {
                             backgroundColor:
                                 MaterialStateProperty.all(Colors.orange)),
                         onPressed: () {
-                          authController.signIn(
-                              email: emailController.text,
-                              password: passwordController.text);
+                          if (emailController.text.isEmpty ||
+                              passwordController.text.isEmpty) {
+                            Get.snackbar('Something wrong!',
+                                'You need to input all information to sign up',
+                                colorText: Colors.white,
+                                margin: REdgeInsets.all(15.r),
+                                backgroundColor: Colors.redAccent,
+                                snackPosition: SnackPosition.BOTTOM,
+                                duration: const Duration(seconds: 2));
+                          } else {
+                            authController.signIn(
+                                email: emailController.text,
+                                password: passwordController.text);
+                          }
                         },
                         child: Padding(
                           padding: REdgeInsets.all(15),

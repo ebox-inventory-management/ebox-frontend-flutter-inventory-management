@@ -1,5 +1,8 @@
+import 'dart:convert';
+
 import 'package:collection/collection.dart';
 import 'package:dropdown_button2/custom_dropdown_button2.dart';
+import 'package:ebox_frontend_web_inventory/model/suppliers.dart';
 
 import 'package:file_picker/file_picker.dart';
 import 'package:flutter/foundation.dart';
@@ -11,14 +14,16 @@ import 'package:intl/intl.dart';
 
 import '../../../controller/controllers.dart';
 
-class CustomerAdd extends StatefulWidget {
-  const CustomerAdd({super.key});
+class UserEdit extends StatefulWidget {
+  const UserEdit({
+    super.key,
+  });
 
   @override
-  State<CustomerAdd> createState() => _CustomerAddState();
+  State<UserEdit> createState() => _UserEditState();
 }
 
-class _CustomerAddState extends State<CustomerAdd> {
+class _UserEditState extends State<UserEdit> {
   // Variable to hold the selected image file
   PlatformFile? _imageFile;
 
@@ -47,28 +52,23 @@ class _CustomerAddState extends State<CustomerAdd> {
     }
   }
 
-  TextEditingController addressController = TextEditingController();
-  TextEditingController bankNameController = TextEditingController();
-  TextEditingController bankNumberController = TextEditingController();
-  TextEditingController cityController = TextEditingController();
   TextEditingController emailController = TextEditingController();
   TextEditingController nameController = TextEditingController();
-  TextEditingController phoneController = TextEditingController();
-  TextEditingController photoController = TextEditingController();
-  TextEditingController shopNameController = TextEditingController();
 
   @override
   void dispose() {
     super.dispose();
-    addressController.dispose();
-    bankNameController.dispose();
-    bankNumberController.dispose();
-    cityController.dispose();
+
     emailController.dispose();
     nameController.dispose();
-    phoneController.dispose();
-    photoController.dispose();
-    shopNameController.dispose();
+  }
+
+  @override
+  void initState() {
+    super.initState();
+
+    emailController.text = authController.user.value!.email;
+    nameController.text = authController.user.value!.name;
   }
 
   @override
@@ -91,7 +91,7 @@ class _CustomerAddState extends State<CustomerAdd> {
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
                       Text(
-                        'Add Customer',
+                        'Edit User',
                         style: TextStyle(
                             fontWeight: FontWeight.bold, fontSize: 30.sp),
                       ),
@@ -121,7 +121,7 @@ class _CustomerAddState extends State<CustomerAdd> {
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
                           Text(
-                            'Customer Name',
+                            'Username',
                             style: TextStyle(
                                 fontWeight: FontWeight.bold, fontSize: 14.sp),
                           ),
@@ -144,6 +144,8 @@ class _CustomerAddState extends State<CustomerAdd> {
                                 textInputAction: TextInputAction.next,
                                 obscureText: false,
                                 decoration: InputDecoration(
+                                  hintText: authController.user.value!.name,
+                                  hintStyle: TextStyle(fontSize: 16.sp),
                                   border: OutlineInputBorder(
                                     borderRadius: BorderRadius.circular(10.0.r),
                                   ),
@@ -165,136 +167,8 @@ class _CustomerAddState extends State<CustomerAdd> {
                                 textInputAction: TextInputAction.next,
                                 obscureText: false,
                                 decoration: InputDecoration(
-                                  border: OutlineInputBorder(
-                                    borderRadius: BorderRadius.circular(10.0.r),
-                                  ),
-                                ),
-                              ),
-                            ),
-                          ),
-                          Text(
-                            'Phone',
-                            style: TextStyle(
-                                fontWeight: FontWeight.bold, fontSize: 14.sp),
-                          ),
-                          Padding(
-                            padding: REdgeInsets.only(bottom: 30.r, top: 10.r),
-                            child: SizedBox(
-                              width: 0.4.sw,
-                              child: TextFormField(
-                                controller: phoneController,
-                                textInputAction: TextInputAction.next,
-                                obscureText: false,
-                                inputFormatters: <TextInputFormatter>[
-                                  FilteringTextInputFormatter.allow(
-                                      RegExp(r'[0-9,-]')),
-                                ],
-                                decoration: InputDecoration(
-                                  border: OutlineInputBorder(
-                                    borderRadius: BorderRadius.circular(10.0.r),
-                                  ),
-                                ),
-                              ),
-                            ),
-                          ),
-                          Text(
-                            'Address',
-                            style: TextStyle(
-                                fontWeight: FontWeight.bold, fontSize: 14.sp),
-                          ),
-                          Padding(
-                            padding: REdgeInsets.only(bottom: 30.r, top: 10.r),
-                            child: SizedBox(
-                              width: 0.4.sw,
-                              child: TextFormField(
-                                controller: addressController,
-                                textInputAction: TextInputAction.next,
-                                obscureText: false,
-                                decoration: InputDecoration(
-                                  border: OutlineInputBorder(
-                                    borderRadius: BorderRadius.circular(10.0.r),
-                                  ),
-                                ),
-                              ),
-                            ),
-                          ),
-                          Text(
-                            'City',
-                            style: TextStyle(
-                                fontWeight: FontWeight.bold, fontSize: 14.sp),
-                          ),
-                          Padding(
-                            padding: REdgeInsets.only(bottom: 30.r, top: 10.r),
-                            child: SizedBox(
-                              width: 0.4.sw,
-                              child: TextFormField(
-                                controller: cityController,
-                                textInputAction: TextInputAction.next,
-                                obscureText: false,
-                                decoration: InputDecoration(
-                                  border: OutlineInputBorder(
-                                    borderRadius: BorderRadius.circular(10.0.r),
-                                  ),
-                                ),
-                              ),
-                            ),
-                          ),
-                          Text(
-                            'Shop Name',
-                            style: TextStyle(
-                                fontWeight: FontWeight.bold, fontSize: 14.sp),
-                          ),
-                          Padding(
-                            padding: REdgeInsets.only(bottom: 30.r, top: 10.r),
-                            child: SizedBox(
-                              width: 0.4.sw,
-                              child: TextFormField(
-                                controller: shopNameController,
-                                textInputAction: TextInputAction.next,
-                                obscureText: false,
-                                decoration: InputDecoration(
-                                  border: OutlineInputBorder(
-                                    borderRadius: BorderRadius.circular(10.0.r),
-                                  ),
-                                ),
-                              ),
-                            ),
-                          ),
-                          Text(
-                            'Bank Name',
-                            style: TextStyle(
-                                fontWeight: FontWeight.bold, fontSize: 14.sp),
-                          ),
-                          Padding(
-                            padding: REdgeInsets.only(bottom: 30.r, top: 10.r),
-                            child: SizedBox(
-                              width: 0.4.sw,
-                              child: TextFormField(
-                                controller: bankNameController,
-                                textInputAction: TextInputAction.next,
-                                obscureText: false,
-                                decoration: InputDecoration(
-                                  border: OutlineInputBorder(
-                                    borderRadius: BorderRadius.circular(10.0.r),
-                                  ),
-                                ),
-                              ),
-                            ),
-                          ),
-                          Text(
-                            'Bank Number',
-                            style: TextStyle(
-                                fontWeight: FontWeight.bold, fontSize: 14.sp),
-                          ),
-                          Padding(
-                            padding: REdgeInsets.only(bottom: 30.r, top: 10.r),
-                            child: SizedBox(
-                              width: 0.4.sw,
-                              child: TextFormField(
-                                controller: bankNumberController,
-                                textInputAction: TextInputAction.next,
-                                obscureText: false,
-                                decoration: InputDecoration(
+                                  hintText: authController.user.value!.email,
+                                  hintStyle: TextStyle(fontSize: 16.sp),
                                   border: OutlineInputBorder(
                                     borderRadius: BorderRadius.circular(10.0.r),
                                   ),
@@ -310,15 +184,15 @@ class _CustomerAddState extends State<CustomerAdd> {
                           Padding(
                             padding: REdgeInsets.only(bottom: 15.r),
                             child: Text(
-                              'Customer Image',
+                              'Profile Image',
                               style: TextStyle(
                                   fontWeight: FontWeight.bold, fontSize: 14.sp),
                             ),
                           ),
                           // If image file is not null, display it using Image widget
                           Container(
-                            width: 0.4.sw,
-                            height: 0.4.sw,
+                            width: 500.w,
+                            height: 500.w,
                             decoration: BoxDecoration(
                               borderRadius: BorderRadius.circular(
                                 15.r,
@@ -326,7 +200,7 @@ class _CustomerAddState extends State<CustomerAdd> {
                             ),
                             child: _imageFile == null
                                 ? Image.network(
-                                    'https://shop.mevid.hu/wp-content/uploads/2019/11/image.jpg',
+                                    authController.user.value!.image,
                                     fit: BoxFit.cover,
                                   )
                                 : Image.memory(
@@ -367,16 +241,11 @@ class _CustomerAddState extends State<CustomerAdd> {
                   Center(
                     child: TextButton(
                       onPressed: () {
-                        if (bankNameController.text.isEmpty ||
-                            addressController.text.isEmpty ||
-                            phoneController.text.isEmpty ||
-                            bankNumberController.text.isEmpty ||
-                            nameController.text.isEmpty ||
-                            cityController.text.isEmpty ||
+                        if (nameController.text.isEmpty ||
                             _imageFile == null ||
-                            shopNameController.text.isEmpty) {
+                            emailController.text.isEmpty) {
                           Get.snackbar('Something wrong!',
-                              'You need to input all customer information to add',
+                              'You need to input all supplier information to update',
                               colorText: Colors.white,
                               margin: REdgeInsets.all(15),
                               backgroundColor: Colors.redAccent,
@@ -384,31 +253,20 @@ class _CustomerAddState extends State<CustomerAdd> {
                               duration: const Duration(seconds: 2));
                           return;
                         } else {
-                          customerController.create(
-                            address: addressController.text,
-                            bank_name: bankNameController.text,
-                            bank_number: bankNameController.text,
-                            city: cityController.text,
-                            email: emailController.text,
-                            name: nameController.text,
-                            phone: phoneController.text,
-                            photo: _imageFile!,
-                            shop_name: shopNameController.text,
-                          );
+                          authController.updateUser(
+                              email: emailController.text,
+                              name: nameController.text,
+                              image: _imageFile!,
+                              id: authController.user.value!.id);
                         }
                       },
                       style: TextButton.styleFrom(
                           foregroundColor: Colors.white,
-                          backgroundColor: bankNameController.text.isEmpty ||
-                                  addressController.text.isEmpty ||
-                                  phoneController.text.isEmpty ||
-                                  bankNumberController.text.isEmpty ||
-                                  nameController.text.isEmpty ||
-                                  cityController.text.isEmpty ||
+                          backgroundColor: nameController.text.isEmpty ||
                                   _imageFile == null ||
-                                  shopNameController.text.isEmpty
+                                  emailController.text.isEmpty
                               ? Colors.grey
-                              : Colors.green,
+                              : Colors.orange,
                           shape: RoundedRectangleBorder(
                               borderRadius:
                                   BorderRadius.all(Radius.circular(15.r)))),
@@ -416,7 +274,7 @@ class _CustomerAddState extends State<CustomerAdd> {
                         padding: REdgeInsets.only(
                             top: 15.r, bottom: 15.r, left: 30.r, right: 30.r),
                         child: Text(
-                          'Add',
+                          'Update',
                           style: TextStyle(fontSize: 20.sp),
                         ),
                       ),

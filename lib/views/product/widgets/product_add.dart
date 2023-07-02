@@ -579,7 +579,7 @@ class _ProductAddState extends State<ProductAdd> {
                                   selectedValueSupplier == null ||
                                   selectedValueBrand == null
                               ? Colors.grey
-                              : Colors.orange,
+                              : Colors.green,
                           shape: RoundedRectangleBorder(
                               borderRadius:
                                   BorderRadius.all(Radius.circular(15.r)))),

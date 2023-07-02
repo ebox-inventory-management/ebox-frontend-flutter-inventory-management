@@ -164,7 +164,7 @@ class _ExportProductAddState extends State<ExportProductAdd> {
                                 exportQuantityController.text.isEmpty ||
                                         selectedValueProduct == null
                                     ? Colors.grey
-                                    : Colors.orange,
+                                    : Colors.green,
                             shape: RoundedRectangleBorder(
                                 borderRadius:
                                     BorderRadius.all(Radius.circular(15.r)))),

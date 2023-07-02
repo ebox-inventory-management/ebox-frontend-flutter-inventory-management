@@ -85,7 +85,7 @@ class _BrandAddState extends State<BrandAdd> {
                         onChanged: (val) {
                           setState(() {
                             backgroundColor =
-                                val.isNotEmpty ? Colors.orange : Colors.grey;
+                                val.isNotEmpty ? Colors.green : Colors.grey;
                           });
                         },
                         textInputAction: TextInputAction.next,

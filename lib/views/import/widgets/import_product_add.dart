@@ -162,7 +162,7 @@ class _ImportProductAddState extends State<ImportProductAdd> {
                                 importQuantityController.text.isEmpty ||
                                         selectedValueProductImport == null
                                     ? Colors.grey
-                                    : Colors.orange,
+                                    : Colors.green,
                             shape: RoundedRectangleBorder(
                                 borderRadius:
                                     BorderRadius.all(Radius.circular(15.r)))),
