@@ -67,13 +67,20 @@ class _DashBoardScreenState extends State<DashBoardScreen> {
         );
       },
       context: context,
-      initialDate: DateTime(now.year, now.month - 1, now.day),
+      initialDate:
+          _selectedStartDate ?? DateTime(now.year, now.month - 1, now.day),
       firstDate: DateTime(2000),
       lastDate: DateTime(2100),
     );
     if (picked != null && picked != _selectedStartDate) {
       setState(() {
         _selectedStartDate = picked;
+        incomeController.getRange(
+            start: picked.toString(), end: _selectedEndDate.toString());
+        expenseController.getRange(
+            start: picked.toString(), end: _selectedEndDate.toString());
+        revenueController.getRange(
+            start: picked.toString(), end: _selectedEndDate.toString());
       });
     }
   }
@@ -97,13 +104,20 @@ class _DashBoardScreenState extends State<DashBoardScreen> {
         );
       },
       context: context,
-      initialDate: DateTime(now.year, now.month, now.day + 1),
+      initialDate:
+          _selectedEndDate ?? DateTime(now.year, now.month, now.day + 1),
       firstDate: DateTime(2000),
       lastDate: DateTime(2100),
     );
     if (picked != null && picked != _selectedEndDate) {
       setState(() {
         _selectedEndDate = picked;
+        incomeController.getRange(
+            start: _selectedStartDate.toString(), end: picked.toString());
+        expenseController.getRange(
+            start: _selectedStartDate.toString(), end: picked.toString());
+        revenueController.getRange(
+            start: _selectedStartDate.toString(), end: picked.toString());
       });
     }
   }
@@ -396,7 +410,7 @@ class _DashBoardScreenState extends State<DashBoardScreen> {
                         ),
                         SizedBox(
                           width: 200.w,
-                          child: TextFormField(
+                          child: TextField(
                             controller: endDateController,
                             keyboardType: TextInputType.datetime,
                             textInputAction: TextInputAction.done,
@@ -439,24 +453,17 @@ class _DashBoardScreenState extends State<DashBoardScreen> {
                         ),
                         IconButton(
                             onPressed: () {
-                              if (_selectedStartDate == null ||
-                                  _selectedEndDate == null) {
-                                Get.snackbar('Something wrong!',
-                                    'You need to choose the date first!',
-                                    colorText: Colors.white,
-                                    margin: REdgeInsets.all(15.r),
-                                    backgroundColor: Colors.redAccent,
-                                    snackPosition: SnackPosition.BOTTOM,
-                                    duration: const Duration(seconds: 2));
-                              }
                               setState(() {
-                                incomeController.getRange(
-                                    start: DateTime(
-                                            now.year, now.month - 1, now.day)
-                                        .toString(),
-                                    end: DateTime(
-                                            now.year, now.month, now.day + 1)
-                                        .toString());
+                                if (_selectedStartDate!
+                                    .isAfter(_selectedEndDate!)) {
+                                  Get.snackbar('Something wrong!',
+                                      'The start date must be before the end date',
+                                      colorText: Colors.white,
+                                      margin: REdgeInsets.all(15.r),
+                                      backgroundColor: Colors.redAccent,
+                                      snackPosition: SnackPosition.BOTTOM,
+                                      duration: const Duration(seconds: 2));
+                                }
                               });
                             },
                             icon: Icon(
@@ -480,7 +487,7 @@ class _DashBoardScreenState extends State<DashBoardScreen> {
                         text: 'Income, Expense and Revenue',
                         textStyle: TextStyle(
                             fontSize: 16.sp, fontWeight: FontWeight.bold)),
-                    primaryXAxis: DateTimeAxis(),
+                    primaryXAxis: DateTimeAxis(name: 'Date'),
                     primaryYAxis: NumericAxis(),
                     legend: Legend(isVisible: true),
                     tooltipBehavior: TooltipBehavior(enable: true),
@@ -521,7 +528,7 @@ class _DashBoardScreenState extends State<DashBoardScreen> {
                           xValueMapper: (RangeExpenses data, _) =>
                               data.created_at,
                           yValueMapper: (RangeExpenses data, _) =>
-                              data.income_amount,
+                              data.expense_amount,
                           name: 'Expense',
                           enableTooltip: true,
                           markerSettings: MarkerSettings(
