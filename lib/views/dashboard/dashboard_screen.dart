@@ -330,6 +330,7 @@ class _DashBoardScreenState extends State<DashBoardScreen> {
                   ],
                 ),
               ),
+              Divider(),
               Padding(
                 padding: REdgeInsets.only(top: 15.r, bottom: 15.r),
                 child: Row(
@@ -338,7 +339,7 @@ class _DashBoardScreenState extends State<DashBoardScreen> {
                     Row(
                       children: [
                         Icon(
-                          Icons.multiline_chart,
+                          Icons.show_chart,
                           color: Colors.orange,
                           size: 30.r,
                         ),
@@ -346,7 +347,7 @@ class _DashBoardScreenState extends State<DashBoardScreen> {
                           width: 5.w,
                         ),
                         Text(
-                          'Graph',
+                          'Graph: Income, Expense and Revenue ',
                           style: TextStyle(
                               fontWeight: FontWeight.w500,
                               color: Colors.orange,
@@ -567,6 +568,38 @@ class _DashBoardScreenState extends State<DashBoardScreen> {
                   ),
                 ),
               ),
+              SizedBox(
+                height: 15.r,
+              ),
+              Divider(),
+              Padding(
+                padding: REdgeInsets.only(top: 15.r, bottom: 15.r),
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    Row(
+                      children: [
+                        Icon(
+                          Icons.show_chart,
+                          color: Colors.orange,
+                          size: 30.r,
+                        ),
+                        SizedBox(
+                          width: 5.w,
+                        ),
+                        Text(
+                          'Graph: Import and Export',
+                          style: TextStyle(
+                              fontWeight: FontWeight.w500,
+                              color: Colors.orange,
+                              fontSize: 20.sp),
+                        ),
+                      ],
+                    ),
+                    SizedBox(),
+                  ],
+                ),
+              ),
               Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
@@ -579,7 +612,7 @@ class _DashBoardScreenState extends State<DashBoardScreen> {
                       padding: REdgeInsets.all(15.r),
                       child: SfCartesianChart(
                         title: ChartTitle(
-                            text: 'Import and Export (Product Quantity)',
+                            text: 'Import and Export',
                             textStyle: TextStyle(
                                 fontSize: 16.sp, fontWeight: FontWeight.bold)),
                         legend: Legend(isVisible: true),
@@ -654,7 +687,7 @@ class _DashBoardScreenState extends State<DashBoardScreen> {
                         padding: REdgeInsets.all(15.r),
                         child: SfCircularChart(
                           title: ChartTitle(
-                              text: 'Product (Quantity)',
+                              text: 'Product Quantity',
                               textStyle: TextStyle(
                                   fontSize: 16.sp,
                                   fontWeight: FontWeight.bold)),

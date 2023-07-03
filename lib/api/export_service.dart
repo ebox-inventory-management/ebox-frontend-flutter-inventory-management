@@ -53,6 +53,7 @@ class RemoteExportService {
     exportController.getExports();
     productController.getProducts();
     dashboardController.getChartDataExport();
+    dashboardController.getChartDataProductQuantity();
     incomeController.getIncomeToday();
     expenseController.getExpenseToday();
     revenueController.getRevenueToday();
