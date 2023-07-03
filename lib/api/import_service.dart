@@ -51,6 +51,7 @@ class RemoteImportService {
     importController.getImports();
     productController.getProducts();
     dashboardController.getChartDataImport();
+    dashboardController.getChartDataProductQuantity();
     incomeController.getIncomeToday();
     expenseController.getExpenseToday();
     revenueController.getRevenueToday();

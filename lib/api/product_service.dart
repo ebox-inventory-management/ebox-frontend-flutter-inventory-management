@@ -16,8 +16,11 @@ import 'package:http_parser/http_parser.dart';
 class RemoteProductService {
   var client = http.Client();
   var remoteUrl = '$baseUrl/api/products';
+  DateTime now = DateTime.now();
 
   static Future<dynamic> delete({required int id, required String name}) async {
+    DateTime now = DateTime.now();
+
     var response = await http.Client().delete(
       Uri.parse('$baseUrl/api/product/delete/$id'),
     );
@@ -37,7 +40,24 @@ class RemoteProductService {
           duration: const Duration(seconds: 2));
     }
     productController.getProducts();
-
+    exportController.getExports();
+    importController.getImports();
+    productController.getProducts();
+    dashboardController.getChartDataExport();
+    dashboardController.getChartDataImport();
+    dashboardController.getChartDataProductQuantity();
+    incomeController.getIncomeToday();
+    expenseController.getExpenseToday();
+    revenueController.getRevenueToday();
+    incomeController.getRange(
+        start: DateTime(now.year, now.month - 1, now.day).toString(),
+        end: DateTime(now.year, now.month, now.day + 1).toString());
+    expenseController.getRange(
+        start: DateTime(now.year, now.month - 1, now.day).toString(),
+        end: DateTime(now.year, now.month, now.day + 1).toString());
+    revenueController.getRange(
+        start: DateTime(now.year, now.month - 1, now.day).toString(),
+        end: DateTime(now.year, now.month, now.day + 1).toString());
     print(response.statusCode);
 
     return response;
@@ -107,7 +127,24 @@ class RemoteProductService {
     }
 
     productController.getProducts();
-
+    exportController.getExports();
+    importController.getImports();
+    productController.getProducts();
+    dashboardController.getChartDataExport();
+    dashboardController.getChartDataImport();
+    dashboardController.getChartDataProductQuantity();
+    incomeController.getIncomeToday();
+    expenseController.getExpenseToday();
+    revenueController.getRevenueToday();
+    incomeController.getRange(
+        start: DateTime(now.year, now.month - 1, now.day).toString(),
+        end: DateTime(now.year, now.month, now.day + 1).toString());
+    expenseController.getRange(
+        start: DateTime(now.year, now.month - 1, now.day).toString(),
+        end: DateTime(now.year, now.month, now.day + 1).toString());
+    revenueController.getRange(
+        start: DateTime(now.year, now.month - 1, now.day).toString(),
+        end: DateTime(now.year, now.month, now.day + 1).toString());
     print(response.statusCode);
     return response;
   }
