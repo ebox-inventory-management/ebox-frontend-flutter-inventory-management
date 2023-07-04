@@ -6,6 +6,7 @@ import 'package:ebox_frontend_web_inventory/model/categories.dart';
 import 'package:ebox_frontend_web_inventory/model/category.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 import '../api/brand_service.dart';
 import '../api/category_service.dart';
@@ -18,6 +19,7 @@ class BrandController extends GetxController {
   RxBool isBrandsLoading = false.obs;
   TextEditingController searchBrandsController = TextEditingController();
   RxString searchVal = ''.obs;
+  var token;
 
   @override
   void onInit() async {
@@ -26,15 +28,19 @@ class BrandController extends GetxController {
   }
 
   void deleteBrand({required int id}) async {
-    await RemoteBrandService.deleteById(id: id);
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    token = prefs.getString('token');
+    await RemoteBrandService.deleteById(id: id, token: token);
   }
 
   void updateBrand({
     required int id,
     required String name,
   }) async {
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    token = prefs.getString('token');
     try {
-      await RemoteBrandService().update(id: id, name: name);
+      await RemoteBrandService().update(id: id, name: name, token: token);
     } catch (e) {
       debugPrint(e.toString());
     }
@@ -43,8 +49,10 @@ class BrandController extends GetxController {
   void create({
     required String name,
   }) async {
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    token = prefs.getString('token');
     try {
-      await RemoteBrandService().create(name: name);
+      await RemoteBrandService().create(name: name, token: token);
     } catch (e) {
       debugPrint(e.toString());
     }
@@ -52,9 +60,11 @@ class BrandController extends GetxController {
 
   void getBrands() async {
     try {
+      SharedPreferences prefs = await SharedPreferences.getInstance();
+      token = prefs.getString('token');
       isBrandsLoading(true);
       //call api
-      var result = await RemoteBrandService().get();
+      var result = await RemoteBrandService().get(token: token);
       if (result != null) {
         //assign api result
         brandsList.assignAll(brandsListFromJson(result.body));
@@ -68,9 +78,11 @@ class BrandController extends GetxController {
 
   void getBrandById({required int id}) async {
     try {
+      SharedPreferences prefs = await SharedPreferences.getInstance();
+      token = prefs.getString('token');
       isBrandLoading(true);
       //call api
-      var result = await RemoteBrandService().getById(id: id);
+      var result = await RemoteBrandService().getById(id: id, token: token);
 
       if (result != null) {
         //assign api result
@@ -84,9 +96,12 @@ class BrandController extends GetxController {
 
   void getBrandsByKeyword({required String keyword}) async {
     try {
+      SharedPreferences prefs = await SharedPreferences.getInstance();
+      token = prefs.getString('token');
       isBrandsLoading(true);
       //call api
-      var result = await RemoteBrandService().getByKeyword(keyword: keyword);
+      var result = await RemoteBrandService()
+          .getByKeyword(keyword: keyword, token: token);
 
       if (result != null) {
         //assign api result
@@ -99,9 +114,12 @@ class BrandController extends GetxController {
 
   void getBrandByName({required String name}) async {
     try {
+      SharedPreferences prefs = await SharedPreferences.getInstance();
+      token = prefs.getString('token');
       isBrandLoading(true);
       //call api
-      var result = await RemoteBrandService().getByName(name: name);
+      var result =
+          await RemoteBrandService().getByName(name: name, token: token);
 
       if (result != null) {
         //assign api result

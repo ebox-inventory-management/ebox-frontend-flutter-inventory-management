@@ -9,6 +9,7 @@ import 'package:ebox_frontend_web_inventory/model/customers.dart';
 import 'package:file_picker/file_picker.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 import '../api/brand_service.dart';
 import '../api/category_service.dart';
@@ -22,6 +23,7 @@ class CustomerController extends GetxController {
   RxBool isCustomersLoading = false.obs;
   TextEditingController searchCustomersController = TextEditingController();
   RxString searchVal = ''.obs;
+  var token;
   @override
   void onInit() async {
     getCustomers();
@@ -29,7 +31,9 @@ class CustomerController extends GetxController {
   }
 
   void delete({required int id}) async {
-    await RemoteCustomerService.deleteById(id: id);
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    token = prefs.getString('token');
+    await RemoteCustomerService.deleteById(id: id, token: token);
   }
 
   void updateCustomer({
@@ -45,6 +49,8 @@ class CustomerController extends GetxController {
     required String bank_number,
   }) async {
     try {
+      SharedPreferences prefs = await SharedPreferences.getInstance();
+      token = prefs.getString('token');
       await RemoteCustomerService().update(
         id: id,
         name: name,
@@ -56,6 +62,7 @@ class CustomerController extends GetxController {
         phone: phone,
         photo: photo,
         shop_name: shop_name,
+        token: token,
       );
     } catch (e) {
       debugPrint(e.toString());
@@ -74,6 +81,8 @@ class CustomerController extends GetxController {
     required String bank_number,
   }) async {
     try {
+      SharedPreferences prefs = await SharedPreferences.getInstance();
+      token = prefs.getString('token');
       await RemoteCustomerService().create(
         name: name,
         address: address,
@@ -84,6 +93,7 @@ class CustomerController extends GetxController {
         phone: phone,
         photo: photo,
         shop_name: shop_name,
+        token: token,
       );
     } catch (e) {
       debugPrint(e.toString());
@@ -92,9 +102,11 @@ class CustomerController extends GetxController {
 
   void getCustomers() async {
     try {
+      SharedPreferences prefs = await SharedPreferences.getInstance();
+      token = prefs.getString('token');
       isCustomersLoading(true);
       //call api
-      var result = await RemoteCustomerService().get();
+      var result = await RemoteCustomerService().get(token: token);
       if (result != null) {
         //assign api result
         customersList.assignAll(customersListFromJson(result.body));
@@ -108,9 +120,11 @@ class CustomerController extends GetxController {
 
   void getCustomerById({required int id}) async {
     try {
+      SharedPreferences prefs = await SharedPreferences.getInstance();
+      token = prefs.getString('token');
       isCustomerLoading(true);
       //call api
-      var result = await RemoteCustomerService().getById(id: id);
+      var result = await RemoteCustomerService().getById(id: id, token: token);
 
       if (result != null) {
         //assign api result
@@ -124,9 +138,12 @@ class CustomerController extends GetxController {
 
   void getCustomerByKeyword({required String keyword}) async {
     try {
+      SharedPreferences prefs = await SharedPreferences.getInstance();
+      token = prefs.getString('token');
       isCustomersLoading(true);
       //call api
-      var result = await RemoteCustomerService().getByKeyword(keyword: keyword);
+      var result = await RemoteCustomerService()
+          .getByKeyword(keyword: keyword, token: token);
 
       if (result != null) {
         //assign api result
@@ -139,9 +156,12 @@ class CustomerController extends GetxController {
 
   void getCustomerByName({required String keyword}) async {
     try {
+      SharedPreferences prefs = await SharedPreferences.getInstance();
+      token = prefs.getString('token');
       isCustomersLoading(true);
       //call api
-      var result = await RemoteCustomerService().getByName(keyword: keyword);
+      var result = await RemoteCustomerService()
+          .getByName(keyword: keyword, token: token);
 
       if (result != null) {
         //assign api result

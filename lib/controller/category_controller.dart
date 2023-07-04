@@ -6,6 +6,7 @@ import 'package:ebox_frontend_web_inventory/model/categories.dart';
 import 'package:ebox_frontend_web_inventory/model/category.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 import '../api/category_service.dart';
 import 'controllers.dart';
@@ -18,6 +19,7 @@ class CategoryController extends GetxController {
   RxBool isCategoriesLoading = false.obs;
   TextEditingController searchCategoriesController = TextEditingController();
   RxString searchVal = ''.obs;
+  var token;
   @override
   void onInit() async {
     getCategories();
@@ -25,15 +27,19 @@ class CategoryController extends GetxController {
   }
 
   void delete({required int id}) async {
-    await RemoteCategoryService.deleteById(id: id);
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    token = prefs.getString('token');
+    await RemoteCategoryService.deleteById(id: id, token: token);
   }
 
   void updateCategory({
     required int id,
     required String name,
   }) async {
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    token = prefs.getString('token');
     try {
-      await RemoteCategoryService().update(id: id, name: name);
+      await RemoteCategoryService().update(id: id, name: name, token: token);
     } catch (e) {
       debugPrint(e.toString());
     }
@@ -42,8 +48,10 @@ class CategoryController extends GetxController {
   void create({
     required String name,
   }) async {
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    token = prefs.getString('token');
     try {
-      await RemoteCategoryService().create(name: name);
+      await RemoteCategoryService().create(name: name, token: token);
     } catch (e) {
       debugPrint(e.toString());
     }
@@ -51,9 +59,11 @@ class CategoryController extends GetxController {
 
   void getCategories() async {
     try {
+      SharedPreferences prefs = await SharedPreferences.getInstance();
+      token = prefs.getString('token');
       isCategoriesLoading(true);
       //call api
-      var result = await RemoteCategoryService().get();
+      var result = await RemoteCategoryService().get(token: token);
       if (result != null) {
         //assign api result
         categoriesList.assignAll(categoriesListFromJson(result.body));
@@ -65,9 +75,11 @@ class CategoryController extends GetxController {
 
   void getCategoryById({required int id}) async {
     try {
+      SharedPreferences prefs = await SharedPreferences.getInstance();
+      token = prefs.getString('token');
       isCategoryLoading(true);
       //call api
-      var result = await RemoteCategoryService().getById(id: id);
+      var result = await RemoteCategoryService().getById(id: id, token: token);
 
       if (result != null) {
         //assign api result
@@ -80,9 +92,12 @@ class CategoryController extends GetxController {
 
   void getCategoryByKeyword({required String keyword}) async {
     try {
+      SharedPreferences prefs = await SharedPreferences.getInstance();
+      token = prefs.getString('token');
       isCategoriesLoading(true);
       //call api
-      var result = await RemoteCategoryService().getByKeyword(keyword: keyword);
+      var result = await RemoteCategoryService()
+          .getByKeyword(keyword: keyword, token: token);
 
       if (result != null) {
         //assign api result
@@ -95,9 +110,12 @@ class CategoryController extends GetxController {
 
   void getCategoryByName({required String name}) async {
     try {
+      SharedPreferences prefs = await SharedPreferences.getInstance();
+      token = prefs.getString('token');
       isCategoryLoading(true);
       //call api
-      var result = await RemoteCategoryService().getByName(name: name);
+      var result =
+          await RemoteCategoryService().getByName(name: name, token: token);
 
       if (result != null) {
         //assign api result

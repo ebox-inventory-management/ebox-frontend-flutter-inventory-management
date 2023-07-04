@@ -16,7 +16,7 @@ import 'package:shared_preferences/shared_preferences.dart';
 class ImportController extends GetxController {
   RxList<Import> importList = List<Import>.empty(growable: true).obs;
   RxBool isImportLoading = false.obs;
-
+  var token;
   @override
   void onInit() async {
     getImports();
@@ -28,8 +28,12 @@ class ImportController extends GetxController {
     required int product_quantity,
   }) async {
     try {
-      await RemoteImportService()
-          .create(productId: productId, product_quantity: product_quantity);
+      SharedPreferences prefs = await SharedPreferences.getInstance();
+      token = prefs.getString('token');
+      await RemoteImportService().create(
+          productId: productId,
+          product_quantity: product_quantity,
+          token: token);
     } catch (e) {
       debugPrint(e.toString());
     }
@@ -37,9 +41,11 @@ class ImportController extends GetxController {
 
   void getImports() async {
     try {
+      SharedPreferences prefs = await SharedPreferences.getInstance();
+      token = prefs.getString('token');
       isImportLoading(true);
       //call api
-      var result = await RemoteImportService().get();
+      var result = await RemoteImportService().get(token: token);
       if (result != null) {
         //assign api result
         importList.assignAll(importListFromJson(result.body));

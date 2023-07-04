@@ -250,7 +250,8 @@ class _SignUpScreenState extends State<SignUpScreen> {
                                     name: usernameController.text,
                                     image: _imageFile!,
                                     password_confirmation:
-                                        passwordConfirmationController.text);
+                                        passwordConfirmationController.text,
+                                    role: 'staff');
                               } else {
                                 Get.snackbar('Something wrong!',
                                     'You need to input password and password confirmation is the same',

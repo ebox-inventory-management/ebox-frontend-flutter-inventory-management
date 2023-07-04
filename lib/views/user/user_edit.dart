@@ -3,6 +3,7 @@ import 'dart:convert';
 import 'package:collection/collection.dart';
 import 'package:dropdown_button2/custom_dropdown_button2.dart';
 import 'package:ebox_frontend_web_inventory/model/suppliers.dart';
+import 'package:ebox_frontend_web_inventory/model/users.dart';
 
 import 'package:file_picker/file_picker.dart';
 import 'package:flutter/foundation.dart';
@@ -15,8 +16,10 @@ import 'package:intl/intl.dart';
 import '../../../controller/controllers.dart';
 
 class UserEdit extends StatefulWidget {
+  final Users users;
   const UserEdit({
     super.key,
+    required this.users,
   });
 
   @override
@@ -24,6 +27,9 @@ class UserEdit extends StatefulWidget {
 }
 
 class _UserEditState extends State<UserEdit> {
+  List<String> role = ['admin', 'staff'];
+  String? selectedValueRole;
+
   // Variable to hold the selected image file
   PlatformFile? _imageFile;
 
@@ -58,7 +64,6 @@ class _UserEditState extends State<UserEdit> {
   @override
   void dispose() {
     super.dispose();
-
     emailController.dispose();
     nameController.dispose();
   }
@@ -66,9 +71,9 @@ class _UserEditState extends State<UserEdit> {
   @override
   void initState() {
     super.initState();
-
-    emailController.text = authController.user.value!.email;
-    nameController.text = authController.user.value!.name;
+    selectedValueRole = widget.users.role;
+    emailController.text = widget.users.email;
+    nameController.text = widget.users.name;
   }
 
   @override
@@ -144,7 +149,7 @@ class _UserEditState extends State<UserEdit> {
                                 textInputAction: TextInputAction.next,
                                 obscureText: false,
                                 decoration: InputDecoration(
-                                  hintText: authController.user.value!.name,
+                                  hintText: widget.users.name,
                                   hintStyle: TextStyle(fontSize: 16.sp),
                                   border: OutlineInputBorder(
                                     borderRadius: BorderRadius.circular(10.0.r),
@@ -167,13 +172,42 @@ class _UserEditState extends State<UserEdit> {
                                 textInputAction: TextInputAction.next,
                                 obscureText: false,
                                 decoration: InputDecoration(
-                                  hintText: authController.user.value!.email,
+                                  hintText: widget.users.email,
                                   hintStyle: TextStyle(fontSize: 16.sp),
                                   border: OutlineInputBorder(
                                     borderRadius: BorderRadius.circular(10.0.r),
                                   ),
                                 ),
                               ),
+                            ),
+                          ),
+                          Padding(
+                            padding: REdgeInsets.only(top: 15.r, bottom: 30.r),
+                            child: CustomDropdownButton2(
+                              buttonWidth: 0.2.sw,
+                              buttonHeight: 40.w,
+                              hint: 'Choose Supplier',
+                              dropdownItems: role,
+                              value: selectedValueRole,
+                              buttonDecoration: BoxDecoration(
+                                borderRadius: BorderRadius.circular(15.r),
+                                color: Colors.grey[100],
+                              ),
+                              dropdownWidth: 0.2.sw,
+                              dropdownDecoration: BoxDecoration(
+                                borderRadius: BorderRadius.circular(15.r),
+                                color: Colors.white,
+                              ),
+                              icon: Icon(
+                                Icons.arrow_drop_down,
+                                size: 40.r,
+                                color: Colors.orange,
+                              ),
+                              onChanged: (index) {
+                                setState(() {
+                                  selectedValueRole = index;
+                                });
+                              },
                             ),
                           ),
                         ],
@@ -200,7 +234,7 @@ class _UserEditState extends State<UserEdit> {
                             ),
                             child: _imageFile == null
                                 ? Image.network(
-                                    authController.user.value!.image,
+                                    widget.users.image,
                                     fit: BoxFit.cover,
                                   )
                                 : Image.memory(
@@ -257,7 +291,8 @@ class _UserEditState extends State<UserEdit> {
                               email: emailController.text,
                               name: nameController.text,
                               image: _imageFile!,
-                              id: authController.user.value!.id);
+                              id: widget.users.id,
+                              role: selectedValueRole!);
                         }
                       },
                       style: TextButton.styleFrom(

@@ -6,30 +6,71 @@ class RemoteRevenueService {
   var client = http.Client();
   var remoteUrl = '$baseUrl/api/revenues';
 
-  Future<dynamic> get() async {
-    var response = await client.get(Uri.parse(remoteUrl));
+  Future<dynamic> get({
+    required String token,
+  }) async {
+    var response = await client.get(
+      Uri.parse(remoteUrl),
+      headers: {
+        "Content-Type": "application/json",
+        "Authorization": "Bearer $token"
+      },
+    );
     return response;
   }
 
-  Future<dynamic> getToday() async {
-    var response = await client.get(Uri.parse('$remoteUrl/today'));
+  Future<dynamic> getToday({
+    required String token,
+  }) async {
+    var response = await client.get(
+      Uri.parse('$remoteUrl/today'),
+      headers: {
+        "Content-Type": "application/json",
+        "Authorization": "Bearer $token"
+      },
+    );
     return response;
   }
 
-  Future<dynamic> getThisMonth() async {
-    var response = await client.get(Uri.parse('$remoteUrl/month'));
+  Future<dynamic> getThisMonth({
+    required String token,
+  }) async {
+    var response = await client.get(
+      Uri.parse('$remoteUrl/month'),
+      headers: {
+        "Content-Type": "application/json",
+        "Authorization": "Bearer $token"
+      },
+    );
 
     return response;
   }
 
-  Future<dynamic> getThisYear() async {
-    var response = await client.get(Uri.parse('$remoteUrl/year'));
+  Future<dynamic> getThisYear({
+    required String token,
+  }) async {
+    var response = await client.get(
+      Uri.parse('$remoteUrl/year'),
+      headers: {
+        "Content-Type": "application/json",
+        "Authorization": "Bearer $token"
+      },
+    );
     return response;
   }
 
-  Future<dynamic> getRange({required String start, required String end}) async {
-    var response =
-        await client.get(Uri.parse('$baseUrl/api/revenues/$start/$end'));
+  Future<dynamic> getRange({
+    required String start,
+    required String end,
+    required String token,
+  }) async {
+    var response = await client.get(
+      Uri.parse('$baseUrl/api/revenues/$start/$end'),
+      headers: {
+        "Content-Type": "application/json",
+        "Authorization": "Bearer $token"
+      },
+    );
     return response;
   }
 }

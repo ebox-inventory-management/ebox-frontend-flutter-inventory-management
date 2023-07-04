@@ -11,18 +11,41 @@ import '../core/constants/base_url.dart';
 class RemoteAuthService {
   var client = http.Client();
 
+  Future<dynamic> signOut({
+    required String token,
+  }) async {
+    var response = await client.post(
+      Uri.parse('$baseUrl/api/logout'),
+      headers: {
+        "Content-Type": "application/json",
+        "Authorization": "Bearer $token"
+      },
+    );
+    return response;
+  }
+
   Future<dynamic> update({
     required String email,
     required String name,
+    required String role,
     required PlatformFile image,
     required int id,
+    required String token,
   }) async {
     final base64Image = base64Encode(image.bytes!);
 
-    var body = {"name": name, "email": email, "image": base64Image};
+    var body = {
+      "name": name,
+      "email": email,
+      "image": base64Image,
+      "role": role
+    };
     var response = await client.post(
       Uri.parse('$baseUrl/api/user/$id'),
-      headers: {"Content-Type": "application/json"},
+      headers: {
+        "Content-Type": "application/json",
+        "Authorization": "Bearer $token"
+      },
       body: jsonEncode(body),
     );
     if (response.statusCode == 200) {
@@ -41,9 +64,9 @@ class RemoteAuthService {
           snackPosition: SnackPosition.BOTTOM,
           duration: const Duration(seconds: 2));
     }
-
     authController.getUsers();
     authController.checkToken();
+
     print(response.body);
     print(response.statusCode);
     return response;
@@ -53,6 +76,7 @@ class RemoteAuthService {
       {required String email,
       required String name,
       required String password,
+      required String role,
       required PlatformFile image,
       required String password_confirmation}) async {
     final base64Image = base64Encode(image.bytes!);
@@ -60,6 +84,7 @@ class RemoteAuthService {
     var body = {
       "name": name,
       "email": email,
+      "role": role,
       "password": password,
       "password_confirmation": password_confirmation,
       "image": base64Image
@@ -136,16 +161,60 @@ class RemoteAuthService {
     return response;
   }
 
-  Future<dynamic> getUsers() async {
+  Future<dynamic> getUsers({
+    required String token,
+  }) async {
     var response = await client.get(
-      Uri.parse('$baseUrl/api/show'),
+      Uri.parse('$baseUrl/api/user/show'),
+      headers: {
+        "Content-Type": "application/json",
+        "Authorization": "Bearer $token"
+      },
     );
     return response;
   }
 
-  Future<dynamic> getByKeyword({required String keyword}) async {
-    var response =
-        await client.get(Uri.parse('$baseUrl/api/user/search/$keyword'));
+  Future<dynamic> getByKeyword({
+    required String keyword,
+    required String token,
+  }) async {
+    var response = await client.get(
+      Uri.parse('$baseUrl/api/user/search/$keyword'),
+      headers: {
+        "Content-Type": "application/json",
+        "Authorization": "Bearer $token"
+      },
+    );
+    return response;
+  }
+
+  static Future<dynamic> deleteById({
+    required int id,
+    required String token,
+  }) async {
+    var response = await http.Client().delete(
+      Uri.parse('$baseUrl/api/user/delete/$id'),
+      headers: {
+        "Content-Type": "application/json",
+        "Authorization": "Bearer $token"
+      },
+    );
+    if (response.statusCode == 200) {
+      Get.snackbar('Deleted User!', 'You have been delete user'.tr,
+          colorText: Colors.white,
+          margin: REdgeInsets.all(15.r),
+          backgroundColor: Colors.green,
+          snackPosition: SnackPosition.BOTTOM,
+          duration: const Duration(seconds: 2));
+    } else {
+      Get.snackbar('Something wrong!', 'Delete user is not working right now',
+          colorText: Colors.white,
+          margin: REdgeInsets.all(15.r),
+          backgroundColor: Colors.redAccent,
+          snackPosition: SnackPosition.BOTTOM,
+          duration: const Duration(seconds: 2));
+    }
+    authController.getUsers();
     return response;
   }
 }
