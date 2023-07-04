@@ -13,6 +13,7 @@ class RemoteBrandService {
 
   Future<dynamic> create({
     required String name,
+    required String token,
   }) async {
     var body = {
       "name": name,
@@ -21,6 +22,7 @@ class RemoteBrandService {
       Uri.parse('$baseUrl/api/brand/add'),
       headers: {
         "Content-Type": "application/json",
+        "Authorization": "Bearer $token"
       },
       body: jsonEncode(body),
     );
@@ -41,6 +43,13 @@ class RemoteBrandService {
           duration: const Duration(seconds: 2));
 
       Get.offAndToNamed('/navigation');
+    } else if (response.statusCode == 400) {
+      Get.snackbar('Something wrong!', 'Only admin can access',
+          colorText: Colors.white,
+          margin: REdgeInsets.all(15.r),
+          backgroundColor: Colors.redAccent,
+          snackPosition: SnackPosition.BOTTOM,
+          duration: const Duration(seconds: 2));
     } else {
       Get.snackbar('Something wrong!', 'Add brand is not working right now',
           colorText: Colors.white,
@@ -57,6 +66,7 @@ class RemoteBrandService {
   Future<dynamic> update({
     required int id,
     required String name,
+    required String token,
   }) async {
     var body = {
       "name": name,
@@ -65,6 +75,7 @@ class RemoteBrandService {
       Uri.parse('$baseUrl/api/brand/update/$id'),
       headers: {
         "Content-Type": "application/json",
+        "Authorization": "Bearer $token"
       },
       body: jsonEncode(body),
     );
@@ -98,24 +109,58 @@ class RemoteBrandService {
     return response;
   }
 
-  Future<dynamic> get() async {
-    var response = await client.get(Uri.parse(remoteUrl));
+  Future<dynamic> get({
+    required String token,
+  }) async {
+    var response = await client.get(
+      Uri.parse(remoteUrl),
+      headers: {
+        "Content-Type": "application/json",
+        "Authorization": "Bearer $token"
+      },
+    );
     return response;
   }
 
-  Future<dynamic> getById({required int id}) async {
-    var response = await client.get(Uri.parse('$baseUrl/api/brand/view/$id'));
+  Future<dynamic> getById({
+    required int id,
+    required String token,
+  }) async {
+    var response = await client.get(
+      Uri.parse('$baseUrl/api/brand/view/$id'),
+      headers: {
+        "Content-Type": "application/json",
+        "Authorization": "Bearer $token"
+      },
+    );
     return response;
   }
 
-  Future<dynamic> getByKeyword({required String keyword}) async {
-    var response =
-        await client.get(Uri.parse('$baseUrl/api/brand/search/$keyword'));
+  Future<dynamic> getByKeyword({
+    required String keyword,
+    required String token,
+  }) async {
+    var response = await client.get(
+      Uri.parse('$baseUrl/api/brand/search/$keyword'),
+      headers: {
+        "Content-Type": "application/json",
+        "Authorization": "Bearer $token"
+      },
+    );
     return response;
   }
 
-  Future<dynamic> getByName({required String name}) async {
-    var response = await client.get(Uri.parse('$baseUrl/api/brand/$name'));
+  Future<dynamic> getByName({
+    required String name,
+    required String token,
+  }) async {
+    var response = await client.get(
+      Uri.parse('$baseUrl/api/brand/$name'),
+      headers: {
+        "Content-Type": "application/json",
+        "Authorization": "Bearer $token"
+      },
+    );
     if (response.statusCode == 200) {
       brandController.getBrandByName(name: name);
     } else {
@@ -129,14 +174,29 @@ class RemoteBrandService {
     return response;
   }
 
-  static Future<dynamic> deleteById({required int id}) async {
-    var response =
-        await http.Client().delete(Uri.parse('$baseUrl/api/brand/delete/$id'));
+  static Future<dynamic> deleteById({
+    required int id,
+    required String token,
+  }) async {
+    var response = await http.Client().delete(
+      Uri.parse('$baseUrl/api/brand/delete/$id'),
+      headers: {
+        "Content-Type": "application/json",
+        "Authorization": "Bearer $token"
+      },
+    );
     if (response.statusCode == 200) {
       Get.snackbar('Deleted Brand!', 'You have been delete brand'.tr,
           colorText: Colors.white,
           margin: REdgeInsets.all(15.r),
           backgroundColor: Colors.green,
+          snackPosition: SnackPosition.BOTTOM,
+          duration: const Duration(seconds: 2));
+    } else if (response.statusCode == 400) {
+      Get.snackbar('Something wrong!', 'Only admin can access',
+          colorText: Colors.white,
+          margin: REdgeInsets.all(15.r),
+          backgroundColor: Colors.redAccent,
           snackPosition: SnackPosition.BOTTOM,
           duration: const Duration(seconds: 2));
     } else {

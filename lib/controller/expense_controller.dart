@@ -8,6 +8,7 @@ import 'package:ebox_frontend_web_inventory/model/range_expenses.dart';
 import 'package:ebox_frontend_web_inventory/model/today_expense.dart';
 import 'package:ebox_frontend_web_inventory/model/total_amount.dart';
 import 'package:get/get.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 import '../api/category_service.dart';
 import '../api/income_service.dart';
@@ -25,7 +26,7 @@ class ExpenseController extends GetxController {
   RxBool isExpenseYearLoading = false.obs;
   RxBool isRangeExpensesLoading = false.obs;
   DateTime now = DateTime.now();
-
+  var token;
   @override
   void onInit() async {
     getExpenseToday();
@@ -39,9 +40,12 @@ class ExpenseController extends GetxController {
 
   void getRange({required String start, required String end}) async {
     try {
+      SharedPreferences prefs = await SharedPreferences.getInstance();
+      token = prefs.getString('token');
       isRangeExpensesLoading(true);
       //call api
-      var result = await RemoteIncomeService().getRange(end: end, start: start);
+      var result = await RemoteIncomeService()
+          .getRange(end: end, start: start, token: token);
 
       if (result != null) {
         //assign api result
@@ -54,9 +58,11 @@ class ExpenseController extends GetxController {
 
   void getExpenseToday() async {
     try {
+      SharedPreferences prefs = await SharedPreferences.getInstance();
+      token = prefs.getString('token');
       isExpenseTodayLoading(true);
       //call api
-      var result = await RemoteExpenseService().getToday();
+      var result = await RemoteExpenseService().getToday(token: token);
 
       if (result != null) {
         //assign api result
@@ -69,9 +75,11 @@ class ExpenseController extends GetxController {
 
   void getExpenseThisMonth() async {
     try {
+      SharedPreferences prefs = await SharedPreferences.getInstance();
+      token = prefs.getString('token');
       isExpenseMonthLoading(true);
       //call api
-      var result = await RemoteExpenseService().getThisMonth();
+      var result = await RemoteExpenseService().getThisMonth(token: token);
       if (result != null) {
         //assign api result
         expenseMonth.value = totalAmountListFromJson(result.body);
@@ -83,9 +91,11 @@ class ExpenseController extends GetxController {
 
   void getExpenseThisYear() async {
     try {
+      SharedPreferences prefs = await SharedPreferences.getInstance();
+      token = prefs.getString('token');
       isExpenseYearLoading(true);
       //call api
-      var result = await RemoteExpenseService().getThisYear();
+      var result = await RemoteExpenseService().getThisYear(token: token);
 
       if (result != null) {
         //assign api result

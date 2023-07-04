@@ -6,6 +6,7 @@ import 'package:ebox_frontend_web_inventory/model/category.dart';
 import 'package:ebox_frontend_web_inventory/model/range_incomes.dart';
 import 'package:ebox_frontend_web_inventory/model/total_amount.dart';
 import 'package:get/get.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 import '../api/category_service.dart';
 import '../api/income_service.dart';
@@ -24,7 +25,7 @@ class IncomeController extends GetxController {
   RxBool isIncomeYearLoading = false.obs;
   RxBool isRangeIncomesLoading = false.obs;
   DateTime now = DateTime.now();
-
+  var token;
   @override
   void onInit() async {
     getIncomeToday();
@@ -38,9 +39,12 @@ class IncomeController extends GetxController {
 
   void getRange({required String start, required String end}) async {
     try {
+      SharedPreferences prefs = await SharedPreferences.getInstance();
+      token = prefs.getString('token');
       isRangeIncomesLoading(true);
       //call api
-      var result = await RemoteIncomeService().getRange(end: end, start: start);
+      var result = await RemoteIncomeService()
+          .getRange(end: end, start: start, token: token);
 
       if (result != null) {
         //assign api result
@@ -53,9 +57,11 @@ class IncomeController extends GetxController {
 
   void getIncomeToday() async {
     try {
+      SharedPreferences prefs = await SharedPreferences.getInstance();
+      token = prefs.getString('token');
       isIncomeTodayLoading(true);
       //call api
-      var result = await RemoteIncomeService().getToday();
+      var result = await RemoteIncomeService().getToday(token: token);
 
       if (result != null) {
         //assign api result
@@ -68,9 +74,11 @@ class IncomeController extends GetxController {
 
   void getIncomeThisMonth() async {
     try {
+      SharedPreferences prefs = await SharedPreferences.getInstance();
+      token = prefs.getString('token');
       isIncomesMonthLoading(true);
       //call api
-      var result = await RemoteIncomeService().getThisMonth();
+      var result = await RemoteIncomeService().getThisMonth(token: token);
       if (result != null) {
         //assign api result
         incomesMonth.value = totalAmountListFromJson(result.body);
@@ -82,9 +90,11 @@ class IncomeController extends GetxController {
 
   void getIncomeThisYear() async {
     try {
+      SharedPreferences prefs = await SharedPreferences.getInstance();
+      token = prefs.getString('token');
       isIncomeYearLoading(true);
       //call api
-      var result = await RemoteIncomeService().getThisYear();
+      var result = await RemoteIncomeService().getThisYear(token: token);
 
       if (result != null) {
         //assign api result

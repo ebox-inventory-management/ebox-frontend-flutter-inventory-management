@@ -55,7 +55,8 @@ class Products {
         product_quantity: data['product_quantity'] ?? 0,
         product_garage: data['product_garage'] ?? 'Not Yet',
         product_amount: data['product_amount'] ?? 0,
-        product_image: data['product_image'],
+        product_image: data['product_image'] ??
+            'https://shop.mevid.hu/wp-content/uploads/2019/11/image.jpg',
         product_route: data['product_route'] ?? 'Not Yet',
         supplier_id: data['supplier_id'],
         updated_at: data['updated_at'],

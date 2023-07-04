@@ -26,6 +26,7 @@ class ProductController extends GetxController {
   TextEditingController searchProductsController = TextEditingController();
   RxString searchVal = ''.obs;
 
+  var token;
   @override
   void onInit() async {
     getProducts();
@@ -36,7 +37,7 @@ class ProductController extends GetxController {
     required int id,
     required String name,
   }) async {
-    await RemoteProductService.delete(id: id, name: name);
+    await RemoteProductService.delete(id: id, name: name, token: token);
   }
 
   void updateProduct({
@@ -54,6 +55,8 @@ class ProductController extends GetxController {
     required int id,
   }) async {
     try {
+      SharedPreferences prefs = await SharedPreferences.getInstance();
+      token = prefs.getString('token');
       await RemoteProductService().update(
           category_id: category_id,
           supplier_id: supplier_id,
@@ -66,7 +69,8 @@ class ProductController extends GetxController {
           product_route: product_route,
           import_price: import_price,
           expire_date: expire_date,
-          id: id);
+          id: id,
+          token: token);
     } catch (e) {
       debugPrint(e.toString());
     }
@@ -86,6 +90,8 @@ class ProductController extends GetxController {
     required int export_price,
   }) async {
     try {
+      SharedPreferences prefs = await SharedPreferences.getInstance();
+      token = prefs.getString('token');
       await RemoteProductService().create(
         category_id: category_id,
         supplier_id: supplier_id,
@@ -98,6 +104,7 @@ class ProductController extends GetxController {
         product_route: product_route,
         import_price: import_price,
         expire_date: expire_date,
+        token: token,
       );
     } catch (e) {
       debugPrint(e.toString());
@@ -106,9 +113,11 @@ class ProductController extends GetxController {
 
   void getProducts() async {
     try {
+      SharedPreferences prefs = await SharedPreferences.getInstance();
+      token = prefs.getString('token');
       isProductsLoading(true);
       //call api
-      var result = await RemoteProductService().get();
+      var result = await RemoteProductService().get(token: token);
 
       if (result != null) {
         //assign api result
@@ -121,9 +130,11 @@ class ProductController extends GetxController {
 
   void getProductsById({required int id}) async {
     try {
+      SharedPreferences prefs = await SharedPreferences.getInstance();
+      token = prefs.getString('token');
       isProductLoading(true);
       //call api
-      var result = await RemoteProductService().getById(id: id);
+      var result = await RemoteProductService().getById(id: id, token: token);
 
       if (result != null) {
         //assign api result
@@ -136,9 +147,12 @@ class ProductController extends GetxController {
 
   void getProductsByKeyword({required String keyword}) async {
     try {
+      SharedPreferences prefs = await SharedPreferences.getInstance();
+      token = prefs.getString('token');
       isProductsLoading(true);
       //call api
-      var result = await RemoteProductService().getByKeyword(keyword: keyword);
+      var result = await RemoteProductService()
+          .getByKeyword(keyword: keyword, token: token);
 
       if (result != null) {
         //assign api result
@@ -151,9 +165,12 @@ class ProductController extends GetxController {
 
   void getProductsByName({required String name}) async {
     try {
+      SharedPreferences prefs = await SharedPreferences.getInstance();
+      token = prefs.getString('token');
       isProductLoading(true);
       //call api
-      var result = await RemoteProductService().getByName(name: name);
+      var result =
+          await RemoteProductService().getByName(name: name, token: token);
 
       if (result != null) {
         //assign api result

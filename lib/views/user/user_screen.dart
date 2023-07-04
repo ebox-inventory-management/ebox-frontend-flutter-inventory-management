@@ -107,29 +107,49 @@ class UserScreen extends StatelessWidget {
               height: 30.w,
             ),
             Obx(() {
-              if (authController.isUsersLoading.value) {
-                return const Center(child: CircularProgressIndicator());
+              if (authController.user.value!.role != 'admin') {
+                return Center(
+                  child: Column(
+                    children: [
+                      Image.network(
+                        'https://firebasestorage.googleapis.com/v0/b/ebox-inventory-management.appspot.com/o/error.png?alt=media&token=b17d0ed1-2620-4fc0-8989-20e3f17433d2',
+                        scale: 4,
+                      ),
+                      Text(
+                        'Error, You are not admin!',
+                        style: TextStyle(
+                            color: Colors.grey,
+                            fontWeight: FontWeight.bold,
+                            fontSize: 30.sp),
+                      ),
+                    ],
+                  ),
+                );
               } else {
-                if (authController.usersList.isNotEmpty) {
-                  return UserList(users: authController.usersList);
+                if (authController.isUsersLoading.value) {
+                  return const Center(child: CircularProgressIndicator());
                 } else {
-                  return Center(
-                    child: Column(
-                      children: [
-                        Image.network(
-                          'https://firebasestorage.googleapis.com/v0/b/ebox-inventory-management.appspot.com/o/supplier.png?alt=media&token=0de506d7-66c6-4efb-95a3-d28840f46691',
-                          scale: 4,
-                        ),
-                        Text(
-                          'User Not Found!',
-                          style: TextStyle(
-                              color: Colors.grey,
-                              fontWeight: FontWeight.bold,
-                              fontSize: 30.sp),
-                        ),
-                      ],
-                    ),
-                  );
+                  if (authController.usersList.isNotEmpty) {
+                    return UserList(users: authController.usersList);
+                  } else {
+                    return Center(
+                      child: Column(
+                        children: [
+                          Image.network(
+                            'https://firebasestorage.googleapis.com/v0/b/ebox-inventory-management.appspot.com/o/supplier.png?alt=media&token=0de506d7-66c6-4efb-95a3-d28840f46691',
+                            scale: 4,
+                          ),
+                          Text(
+                            'User Not Found!',
+                            style: TextStyle(
+                                color: Colors.grey,
+                                fontWeight: FontWeight.bold,
+                                fontSize: 30.sp),
+                          ),
+                        ],
+                      ),
+                    );
+                  }
                 }
               }
             }),

@@ -18,17 +18,32 @@ class RemoteProductService {
   var remoteUrl = '$baseUrl/api/products';
   DateTime now = DateTime.now();
 
-  static Future<dynamic> delete({required int id, required String name}) async {
+  static Future<dynamic> delete({
+    required int id,
+    required String name,
+    required String token,
+  }) async {
     DateTime now = DateTime.now();
 
     var response = await http.Client().delete(
       Uri.parse('$baseUrl/api/product/delete/$id'),
+      headers: {
+        "Content-Type": "application/json",
+        "Authorization": "Bearer $token"
+      },
     );
     if (response.statusCode == 200) {
       Get.snackbar('Deleted Product!', 'You have been delete $name'.tr,
           colorText: Colors.white,
           margin: REdgeInsets.all(15.r),
           backgroundColor: Colors.green,
+          snackPosition: SnackPosition.BOTTOM,
+          duration: const Duration(seconds: 2));
+    } else if (response.statusCode == 400) {
+      Get.snackbar('Something wrong!', 'Only admin can access',
+          colorText: Colors.white,
+          margin: REdgeInsets.all(15.r),
+          backgroundColor: Colors.redAccent,
           snackPosition: SnackPosition.BOTTOM,
           duration: const Duration(seconds: 2));
     } else {
@@ -76,6 +91,7 @@ class RemoteProductService {
     required int import_price,
     required int export_price,
     required int id,
+    required String token,
   }) async {
     final base64Image = base64Encode(product_image.bytes!);
 
@@ -97,6 +113,7 @@ class RemoteProductService {
       Uri.parse('$baseUrl/api/product/update/$id'),
       headers: {
         "Content-Type": "application/json",
+        "Authorization": "Bearer $token"
       },
       body: jsonEncode(body),
     );
@@ -116,6 +133,13 @@ class RemoteProductService {
           duration: const Duration(seconds: 2));
 
       Get.offAndToNamed('/navigation');
+    } else if (response.statusCode == 400) {
+      Get.snackbar('Something wrong!', 'Only admin can access',
+          colorText: Colors.white,
+          margin: REdgeInsets.all(15.r),
+          backgroundColor: Colors.redAccent,
+          snackPosition: SnackPosition.BOTTOM,
+          duration: const Duration(seconds: 2));
     } else {
       Get.snackbar(
           'Something wrong!', 'Update product is not working right now',
@@ -149,27 +173,60 @@ class RemoteProductService {
     return response;
   }
 
-  Future<dynamic> get() async {
-    var response = await client.get(Uri.parse(remoteUrl));
+  Future<dynamic> get({
+    required String token,
+  }) async {
+    var response = await client.get(
+      Uri.parse(remoteUrl),
+      headers: {
+        "Content-Type": "application/json",
+        "Authorization": "Bearer $token"
+      },
+    );
     print(response.statusCode);
 
     return response;
   }
 
-  Future<dynamic> getById({required int id}) async {
-    var response = await client.get(Uri.parse('$baseUrl/api/product/view/$id'));
+  Future<dynamic> getById({
+    required int id,
+    required String token,
+  }) async {
+    var response = await client.get(
+      Uri.parse('$baseUrl/api/product/view/$id'),
+      headers: {
+        "Content-Type": "application/json",
+        "Authorization": "Bearer $token"
+      },
+    );
     return response;
   }
 
-  Future<dynamic> getByKeyword({required String keyword}) async {
-    var response =
-        await client.get(Uri.parse('$baseUrl/api/product/search/$keyword'));
+  Future<dynamic> getByKeyword({
+    required String keyword,
+    required String token,
+  }) async {
+    var response = await client.get(
+      Uri.parse('$baseUrl/api/product/search/$keyword'),
+      headers: {
+        "Content-Type": "application/json",
+        "Authorization": "Bearer $token"
+      },
+    );
     return response;
   }
 
-  Future<dynamic> getByName({required String name}) async {
-    var response =
-        await client.get(Uri.parse('$baseUrl/api/product/name/$name'));
+  Future<dynamic> getByName({
+    required String name,
+    required String token,
+  }) async {
+    var response = await client.get(
+      Uri.parse('$baseUrl/api/product/name/$name'),
+      headers: {
+        "Content-Type": "application/json",
+        "Authorization": "Bearer $token"
+      },
+    );
     return response;
   }
 
@@ -185,6 +242,7 @@ class RemoteProductService {
     required String expire_date,
     required int import_price,
     required int export_price,
+    required String token,
   }) async {
     final base64Image = base64Encode(product_image.bytes!);
     var body = {
@@ -205,6 +263,7 @@ class RemoteProductService {
       Uri.parse('$baseUrl/api/product/add'),
       headers: {
         "Content-Type": "application/json",
+        "Authorization": "Bearer $token"
       },
       body: jsonEncode(body),
     );

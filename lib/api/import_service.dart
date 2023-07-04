@@ -13,20 +13,30 @@ class RemoteImportService {
   var remoteUrl = '$baseUrl/api/imports';
   DateTime now = DateTime.now();
 
-  Future<dynamic> get() async {
-    var response = await client.get(Uri.parse(remoteUrl));
+  Future<dynamic> get({
+    required String token,
+  }) async {
+    var response = await client.get(
+      Uri.parse(remoteUrl),
+      headers: {
+        "Content-Type": "application/json",
+        "Authorization": "Bearer $token"
+      },
+    );
     return response;
   }
 
   Future<dynamic> create({
     required int product_quantity,
     required int productId,
+    required String token,
   }) async {
     var body = {"product_quantity": product_quantity};
     var response = await client.post(
       Uri.parse('$baseUrl/api/import/add/$productId'),
       headers: {
         "Content-Type": "application/json",
+        "Authorization": "Bearer $token"
       },
       body: jsonEncode(body),
     );
@@ -39,6 +49,13 @@ class RemoteImportService {
           snackPosition: SnackPosition.BOTTOM,
           duration: const Duration(seconds: 2));
       Get.offAndToNamed('/navigation');
+    } else if (response.statusCode == 400) {
+      Get.snackbar('Something wrong!', 'Only admin can access',
+          colorText: Colors.white,
+          margin: REdgeInsets.all(15.r),
+          backgroundColor: Colors.redAccent,
+          snackPosition: SnackPosition.BOTTOM,
+          duration: const Duration(seconds: 2));
     } else {
       Get.snackbar(
           'Something wrong!', 'Import product is not working right now',

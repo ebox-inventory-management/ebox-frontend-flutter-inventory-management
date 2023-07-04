@@ -30,6 +30,12 @@ class AuthController extends GetxController {
     getUsers();
   }
 
+  void deleteUser({required int id}) async {
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    token = prefs.getString('token');
+    await RemoteAuthService.deleteById(id: id, token: token);
+  }
+
   void checkToken() async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
     token = prefs.getString('token');
@@ -47,11 +53,19 @@ class AuthController extends GetxController {
     required int id,
     required String name,
     required String email,
+    required String role,
     required PlatformFile image,
   }) async {
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    token = prefs.getString('token');
     try {
-      var userResult = await RemoteAuthService()
-          .update(id: id, name: name, email: email, image: image);
+      var userResult = await RemoteAuthService().update(
+          id: id,
+          name: name,
+          email: email,
+          image: image,
+          token: token,
+          role: role);
 
       user.value = userFromJson(userResult.body);
     } catch (e) {
@@ -60,10 +74,13 @@ class AuthController extends GetxController {
   }
 
   void getUsersByKeyword({required String keyword}) async {
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    token = prefs.getString('token');
     try {
       isUsersLoading(true);
       //call api
-      var result = await RemoteAuthService().getByKeyword(keyword: keyword);
+      var result = await RemoteAuthService()
+          .getByKeyword(keyword: keyword, token: token);
 
       if (result != null) {
         //assign api result
@@ -75,10 +92,12 @@ class AuthController extends GetxController {
   }
 
   void getUsers() async {
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    token = prefs.getString('token');
     try {
       isUsersLoading(true);
       //call api
-      var result = await RemoteAuthService().getUsers();
+      var result = await RemoteAuthService().getUsers(token: token);
       if (result != null) {
         //assign api result
         usersList.assignAll(usersListFromJson(result.body));
@@ -93,6 +112,7 @@ class AuthController extends GetxController {
   void signUp(
       {required String name,
       required String email,
+      required String role,
       required PlatformFile image,
       required String password,
       required String password_confirmation}) async {
@@ -108,6 +128,7 @@ class AuthController extends GetxController {
         name: name,
         image: image,
         password_confirmation: password_confirmation,
+        role: role,
       );
       if (result.statusCode == 200) {
         String token = json.decode(result.body)['token'];
@@ -174,6 +195,8 @@ class AuthController extends GetxController {
 
   void signOut() async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
+    token = prefs.getString('token');
+    RemoteAuthService().signOut(token: token);
     prefs.remove('token');
     user.value = null;
     Get.offAllNamed('/signin');

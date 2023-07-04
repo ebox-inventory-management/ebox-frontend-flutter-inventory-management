@@ -8,6 +8,7 @@ import 'package:ebox_frontend_web_inventory/model/suppliers.dart';
 import 'package:file_picker/file_picker.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 import '../api/category_service.dart';
 import '../api/supplier_service.dart';
@@ -20,6 +21,7 @@ class SupplierController extends GetxController {
   RxBool isSupplierLoading = false.obs;
   TextEditingController searchSuppliersController = TextEditingController();
   RxString searchVal = ''.obs;
+  var token;
   @override
   void onInit() async {
     getSuppliers();
@@ -27,7 +29,9 @@ class SupplierController extends GetxController {
   }
 
   void delete({required int id}) async {
-    await RemoteSupplierService.deleteById(id: id);
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    token = prefs.getString('token');
+    await RemoteSupplierService.deleteById(id: id, token: token);
   }
 
   void updateSupplier({
@@ -44,6 +48,8 @@ class SupplierController extends GetxController {
     required String bank_number,
   }) async {
     try {
+      SharedPreferences prefs = await SharedPreferences.getInstance();
+      token = prefs.getString('token');
       await RemoteSupplierService().update(
           id: id,
           name: name,
@@ -55,7 +61,8 @@ class SupplierController extends GetxController {
           phone: phone,
           photo: photo,
           shop_name: shop_name,
-          type: type);
+          type: type,
+          token: token);
     } catch (e) {
       debugPrint(e.toString());
     }
@@ -74,6 +81,8 @@ class SupplierController extends GetxController {
     required String bank_number,
   }) async {
     try {
+      SharedPreferences prefs = await SharedPreferences.getInstance();
+      token = prefs.getString('token');
       await RemoteSupplierService().create(
           name: name,
           address: address,
@@ -84,7 +93,8 @@ class SupplierController extends GetxController {
           phone: phone,
           photo: photo,
           shop_name: shop_name,
-          type: type);
+          type: type,
+          token: token);
     } catch (e) {
       debugPrint(e.toString());
     }
@@ -92,9 +102,11 @@ class SupplierController extends GetxController {
 
   void getSuppliers() async {
     try {
+      SharedPreferences prefs = await SharedPreferences.getInstance();
+      token = prefs.getString('token');
       isSuppliersLoading(true);
       //call api
-      var result = await RemoteSupplierService().get();
+      var result = await RemoteSupplierService().get(token: token);
       if (result != null) {
         //assign api result
         suppliersList.assignAll(suppliersListFromJson(result.body));
@@ -106,9 +118,11 @@ class SupplierController extends GetxController {
 
   void getSupplierById({required int id}) async {
     try {
+      SharedPreferences prefs = await SharedPreferences.getInstance();
+      token = prefs.getString('token');
       isSupplierLoading(true);
       //call api
-      var result = await RemoteSupplierService().getById(id: id);
+      var result = await RemoteSupplierService().getById(id: id, token: token);
 
       if (result != null) {
         //assign api result
@@ -121,9 +135,12 @@ class SupplierController extends GetxController {
 
   void getSupplierByName({required String name}) async {
     try {
+      SharedPreferences prefs = await SharedPreferences.getInstance();
+      token = prefs.getString('token');
       isSupplierLoading(true);
       //call api
-      var result = await RemoteSupplierService().getByName(name: name);
+      var result =
+          await RemoteSupplierService().getByName(name: name, token: token);
 
       if (result != null) {
         //assign api result
@@ -136,9 +153,12 @@ class SupplierController extends GetxController {
 
   void getSupplierByKeyword({required String keyword}) async {
     try {
+      SharedPreferences prefs = await SharedPreferences.getInstance();
+      token = prefs.getString('token');
       isSuppliersLoading(true);
       //call api
-      var result = await RemoteSupplierService().getByKeyword(keyword: keyword);
+      var result = await RemoteSupplierService()
+          .getByKeyword(keyword: keyword, token: token);
 
       if (result != null) {
         //assign api result

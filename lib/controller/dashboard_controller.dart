@@ -2,6 +2,7 @@ import 'package:ebox_frontend_web_inventory/api/import_service.dart';
 import 'package:ebox_frontend_web_inventory/api/product_service.dart';
 import 'package:ebox_frontend_web_inventory/model/chart_data_product_quantity.dart';
 import 'package:get/get.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 import '../api/export_service.dart';
 import '../model/chart_data_import.dart';
 import '../model/chart_data_export.dart';
@@ -19,6 +20,7 @@ class DashboardController extends GetxController {
   RxBool isChartDataExportLoading = false.obs;
   RxBool isChartDataProductQuantityLoading = false.obs;
 
+  var token;
   @override
   void onInit() async {
     getChartDataImport();
@@ -29,9 +31,11 @@ class DashboardController extends GetxController {
 
   void getChartDataProductQuantity() async {
     try {
+      SharedPreferences prefs = await SharedPreferences.getInstance();
+      token = prefs.getString('token');
       isChartDataProductQuantityLoading(true);
       //call api
-      var result = await RemoteProductService().get();
+      var result = await RemoteProductService().get(token: token);
       if (result != null) {
         //assign api result
         chartDataProductQuantity
@@ -44,9 +48,11 @@ class DashboardController extends GetxController {
 
   void getChartDataImport() async {
     try {
+      SharedPreferences prefs = await SharedPreferences.getInstance();
+      token = prefs.getString('token');
       isChartDataImportLoading(true);
       //call api
-      var result = await RemoteImportService().get();
+      var result = await RemoteImportService().get(token: token);
       if (result != null) {
         //assign api result
         chartDataImportList.assignAll(chartDataImportListFromJson(result.body));
@@ -58,9 +64,11 @@ class DashboardController extends GetxController {
 
   void getChartDataExport() async {
     try {
+      SharedPreferences prefs = await SharedPreferences.getInstance();
+      token = prefs.getString('token');
       isChartDataExportLoading(true);
       //call api
-      var result = await RemoteExportService().get();
+      var result = await RemoteExportService().get(token: token);
       if (result != null) {
         //assign api results
         chartDataExportList.assignAll(chartDataExportListFromJson(result.body));

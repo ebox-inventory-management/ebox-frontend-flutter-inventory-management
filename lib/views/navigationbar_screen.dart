@@ -138,20 +138,8 @@ class CustomeSidebarX extends StatelessWidget {
         return Column(
           crossAxisAlignment: CrossAxisAlignment.center,
           children: [
-            Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: [
-                SizedBox(),
-                IconButton(
-                    onPressed: () {
-                      Get.dialog(UserEdit());
-                    },
-                    icon: Icon(
-                      Icons.edit,
-                      size: 25.r,
-                      color: Colors.blueAccent,
-                    )),
-              ],
+            SizedBox(
+              height: 15.h,
             ),
             CircleAvatar(
               radius: 60.r,
@@ -170,7 +158,7 @@ class CustomeSidebarX extends StatelessWidget {
               height: 5.h,
             ),
             Text(
-              'Role: Not Yet',
+              'Role: ${authController.user.value?.role ?? 'Not Yet'}',
               maxLines: 2,
               overflow: TextOverflow.ellipsis,
               style: TextStyle(
@@ -285,7 +273,10 @@ class _ScreensExample extends StatelessWidget {
 
           default:
             return Center(
-              child: Text('Not Found Screen!'),
+              child: Image.network(
+                'https://firebasestorage.googleapis.com/v0/b/ebox-inventory-management.appspot.com/o/404.png?alt=media&token=0eef86c3-f26b-4ca5-bbb0-fbbe5ed6e903',
+                scale: 2,
+              ),
             );
         }
       },

@@ -11,6 +11,7 @@ import 'package:ebox_frontend_web_inventory/views/product/widgets/product_detail
 import 'package:ebox_frontend_web_inventory/views/product/widgets/product_edit.dart';
 import 'package:ebox_frontend_web_inventory/views/suppliers/widgets/supplier_detail.dart';
 import 'package:ebox_frontend_web_inventory/views/suppliers/widgets/supplier_edit.dart';
+import 'package:ebox_frontend_web_inventory/views/user/user_edit.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
@@ -56,9 +57,52 @@ class UserCard extends StatelessWidget {
                   'Email: ${users.email}',
                   style: TextStyle(fontSize: 14.sp, color: Colors.grey),
                 ),
+                SizedBox(
+                  height: 5.h,
+                ),
+                Text(
+                  'Role: ${users.role}',
+                  style: TextStyle(fontSize: 14.sp, color: Colors.grey),
+                ),
               ],
             ),
           ),
+          Spacer(),
+          Padding(
+            padding: REdgeInsets.all(15.r),
+            child: Row(
+              children: [
+                IconButton(
+                    onPressed: () {
+                      Get.dialog(UserEdit(users: users));
+                    },
+                    icon: Icon(Icons.edit, color: Colors.blue, size: 25.r)),
+                IconButton(
+                    onPressed: () {
+                      AwesomeDialog(
+                        context: context,
+                        width: 600.w,
+                        dialogType: DialogType.warning,
+                        animType: AnimType.bottomSlide,
+                        title: 'WARNING'.tr,
+                        desc:
+                            'Are you sure you want to delete ${users.name}?'.tr,
+                        btnCancelOnPress: () {},
+                        btnOkOnPress: () {
+                          authController.deleteUser(
+                            id: users.id,
+                          );
+                        },
+                      ).show();
+                    },
+                    icon: Icon(
+                      Icons.delete,
+                      color: Colors.red,
+                      size: 25.r,
+                    ))
+              ],
+            ),
+          )
         ],
       ),
     );

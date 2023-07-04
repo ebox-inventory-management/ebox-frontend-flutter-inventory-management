@@ -44,7 +44,8 @@ class Customers {
         address: data['address'] ?? 'Not Yet',
         city: data['city'] ?? 'Not Yet',
         shop_name: data['shop_name'] ?? 'Not Yet',
-        photo: data['photo'],
+        photo: data['photo'] ??
+            'https://shop.mevid.hu/wp-content/uploads/2019/11/image.jpg',
         bank_name: data['bank_name'] ?? 'Not Yet',
         bank_number: data['bank_number'] ?? 'Not Yet',
       );

@@ -13,9 +13,17 @@ class RemoteCustomerService {
   var client = http.Client();
   var remoteUrl = '$baseUrl/api/customers';
 
-  Future<dynamic> getByKeyword({required String keyword}) async {
-    var response =
-        await client.get(Uri.parse('$baseUrl/api/customer/search/$keyword'));
+  Future<dynamic> getByKeyword({
+    required String keyword,
+    required String token,
+  }) async {
+    var response = await client.get(
+      Uri.parse('$baseUrl/api/customer/search/$keyword'),
+      headers: {
+        "Content-Type": "application/json",
+        "Authorization": "Bearer $token"
+      },
+    );
     return response;
   }
 
@@ -29,6 +37,7 @@ class RemoteCustomerService {
     required PlatformFile photo,
     required String bank_name,
     required String bank_number,
+    required String token,
   }) async {
     final base64Image = base64Encode(photo.bytes!);
 
@@ -47,12 +56,20 @@ class RemoteCustomerService {
       Uri.parse('$baseUrl/api/customer/add'),
       headers: {
         "Content-Type": "application/json",
+        "Authorization": "Bearer $token"
       },
       body: jsonEncode(body),
     );
     print(response.statusCode);
     if (response.statusCode == 500) {
       Get.snackbar('Something wrong!', 'You need to input new customer name!',
+          colorText: Colors.white,
+          margin: REdgeInsets.all(15.r),
+          backgroundColor: Colors.redAccent,
+          snackPosition: SnackPosition.BOTTOM,
+          duration: const Duration(seconds: 2));
+    } else if (response.statusCode == 400) {
+      Get.snackbar('Something wrong!', 'Only admin can access',
           colorText: Colors.white,
           margin: REdgeInsets.all(15.r),
           backgroundColor: Colors.redAccent,
@@ -91,6 +108,7 @@ class RemoteCustomerService {
     required PlatformFile photo,
     required String bank_name,
     required String bank_number,
+    required String token,
   }) async {
     final base64Image = base64Encode(photo.bytes!);
 
@@ -109,6 +127,7 @@ class RemoteCustomerService {
       Uri.parse('$baseUrl/api/customer/update/$id'),
       headers: {
         "Content-Type": "application/json",
+        "Authorization": "Bearer $token"
       },
       body: jsonEncode(body),
     );
@@ -143,25 +162,56 @@ class RemoteCustomerService {
     return response;
   }
 
-  Future<dynamic> get() async {
-    var response = await client.get(Uri.parse(remoteUrl));
+  Future<dynamic> get({
+    required String token,
+  }) async {
+    var response = await client.get(
+      Uri.parse(remoteUrl),
+      headers: {
+        "Content-Type": "application/json",
+        "Authorization": "Bearer $token"
+      },
+    );
     return response;
   }
 
-  Future<dynamic> getById({required int id}) async {
-    var response =
-        await client.get(Uri.parse('$baseUrl/api/customer/view/$id'));
+  Future<dynamic> getById({
+    required int id,
+    required String token,
+  }) async {
+    var response = await client.get(
+      Uri.parse('$baseUrl/api/customer/view/$id'),
+      headers: {
+        "Content-Type": "application/json",
+        "Authorization": "Bearer $token"
+      },
+    );
     return response;
   }
 
-  static Future<dynamic> deleteById({required int id}) async {
-    var response = await http.Client()
-        .delete(Uri.parse('$baseUrl/api/customer/delete/$id'));
+  static Future<dynamic> deleteById({
+    required int id,
+    required String token,
+  }) async {
+    var response = await http.Client().delete(
+      Uri.parse('$baseUrl/api/customer/delete/$id'),
+      headers: {
+        "Content-Type": "application/json",
+        "Authorization": "Bearer $token"
+      },
+    );
     if (response.statusCode == 200) {
       Get.snackbar('Deleted Customer!', 'You have been delete customer'.tr,
           colorText: Colors.white,
           margin: REdgeInsets.all(15.r),
           backgroundColor: Colors.green,
+          snackPosition: SnackPosition.BOTTOM,
+          duration: const Duration(seconds: 2));
+    } else if (response.statusCode == 400) {
+      Get.snackbar('Something wrong!', 'Only admin can access',
+          colorText: Colors.white,
+          margin: REdgeInsets.all(15.r),
+          backgroundColor: Colors.redAccent,
           snackPosition: SnackPosition.BOTTOM,
           duration: const Duration(seconds: 2));
     } else {
@@ -177,9 +227,17 @@ class RemoteCustomerService {
     return response;
   }
 
-  Future<dynamic> getByName({required String keyword}) async {
-    var response =
-        await client.get(Uri.parse('$baseUrl/api/customer/search/$keyword'));
+  Future<dynamic> getByName({
+    required String keyword,
+    required String token,
+  }) async {
+    var response = await client.get(
+      Uri.parse('$baseUrl/api/customer/search/$keyword'),
+      headers: {
+        "Content-Type": "application/json",
+        "Authorization": "Bearer $token"
+      },
+    );
     return response;
   }
 }

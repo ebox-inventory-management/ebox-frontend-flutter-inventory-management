@@ -7,6 +7,7 @@ import 'package:ebox_frontend_web_inventory/model/category.dart';
 import 'package:ebox_frontend_web_inventory/model/today_expense.dart';
 import 'package:ebox_frontend_web_inventory/model/total_amount.dart';
 import 'package:get/get.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 import '../api/category_service.dart';
 import '../api/income_service.dart';
@@ -27,7 +28,7 @@ class RevenueController extends GetxController {
   RxBool isRevenueYearLoading = false.obs;
   RxBool isRangeRevenuesLoading = false.obs;
   DateTime now = DateTime.now();
-
+  var token;
   @override
   void onInit() async {
     getRevenueToday();
@@ -41,10 +42,12 @@ class RevenueController extends GetxController {
 
   void getRange({required String start, required String end}) async {
     try {
+      SharedPreferences prefs = await SharedPreferences.getInstance();
+      token = prefs.getString('token');
       isRangeRevenuesLoading(true);
       //call api
-      var result =
-          await RemoteRevenueService().getRange(end: end, start: start);
+      var result = await RemoteRevenueService()
+          .getRange(end: end, start: start, token: token);
 
       if (result != null) {
         //assign api result
@@ -57,9 +60,11 @@ class RevenueController extends GetxController {
 
   void getRevenueToday() async {
     try {
+      SharedPreferences prefs = await SharedPreferences.getInstance();
+      token = prefs.getString('token');
       isRevenueTodayLoading(true);
       //call api
-      var result = await RemoteRevenueService().getToday();
+      var result = await RemoteRevenueService().getToday(token: token);
 
       if (result != null) {
         //assign api result
@@ -72,9 +77,11 @@ class RevenueController extends GetxController {
 
   void getRevenueThisMonth() async {
     try {
+      SharedPreferences prefs = await SharedPreferences.getInstance();
+      token = prefs.getString('token');
       isRevenueMonthLoading(true);
       //call api
-      var result = await RemoteRevenueService().getThisMonth();
+      var result = await RemoteRevenueService().getThisMonth(token: token);
       if (result != null) {
         //assign api result
         revenueMonth.value = totalAmountListFromJson(result.body);
@@ -86,9 +93,11 @@ class RevenueController extends GetxController {
 
   void getRevenueThisYear() async {
     try {
+      SharedPreferences prefs = await SharedPreferences.getInstance();
+      token = prefs.getString('token');
       isRevenueYearLoading(true);
       //call api
-      var result = await RemoteRevenueService().getThisYear();
+      var result = await RemoteRevenueService().getThisYear(token: token);
 
       if (result != null) {
         //assign api result
