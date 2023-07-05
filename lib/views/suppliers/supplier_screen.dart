@@ -106,13 +106,7 @@ class SupplierScreen extends StatelessWidget {
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
-                  Text(
-                    'All Suppliers',
-                    style: TextStyle(
-                        fontWeight: FontWeight.w600,
-                        fontSize: 20.sp,
-                        color: Colors.grey),
-                  ),
+                  SizedBox(),
                   TextButton(
                       onPressed: () {
                         Get.dialog(const SupplierAdd());

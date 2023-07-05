@@ -110,13 +110,7 @@ class BrandScreen extends StatelessWidget {
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
-                  Text(
-                    'All Brands',
-                    style: TextStyle(
-                        fontWeight: FontWeight.w600,
-                        fontSize: 20.sp,
-                        color: Colors.grey),
-                  ),
+                  SizedBox(),
                   TextButton(
                       onPressed: () {
                         Get.dialog(const BrandAdd());

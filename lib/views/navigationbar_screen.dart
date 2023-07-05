@@ -19,6 +19,7 @@ import 'package:get/get.dart';
 import 'package:sidebarx/sidebarx.dart';
 
 import 'brand/brand_screen.dart';
+import 'compound_products/compound_product_screen.dart';
 import 'customer/customer_screen.dart';
 
 class NavigationBarScreen extends StatelessWidget {
@@ -88,7 +89,7 @@ class CustomeSidebarX extends StatelessWidget {
     return SidebarX(
       controller: _controller,
       theme: SidebarXTheme(
-        margin: REdgeInsets.all(10),
+        margin: REdgeInsets.all(10.r),
         decoration: BoxDecoration(
           color: Colors.white,
           borderRadius: BorderRadius.circular(20.r),
@@ -188,6 +189,10 @@ class CustomeSidebarX extends StatelessWidget {
           label: 'Export',
         ),
         const SidebarXItem(
+          icon: Icons.list_alt,
+          label: 'Compound Products',
+        ),
+        const SidebarXItem(
           icon: Icons.factory,
           label: 'Supplier',
         ),
@@ -261,14 +266,16 @@ class _ScreensExample extends StatelessWidget {
           case 3:
             return ExportScreen();
           case 4:
-            return SupplierScreen();
+            return CompoundProductScreen();
           case 5:
-            return CustomerScreen();
+            return SupplierScreen();
           case 6:
-            return CategoryScreen();
+            return CustomerScreen();
           case 7:
-            return BrandScreen();
+            return CategoryScreen();
           case 8:
+            return BrandScreen();
+          case 9:
             return UserScreen();
 
           default:
@@ -295,17 +302,19 @@ String _getTitleByIndex(int index) {
     case 3:
       return 'Export';
     case 4:
-      return 'Supplier';
+      return 'Export';
     case 5:
-      return 'Customer';
+      return 'Supplier';
     case 6:
-      return 'Category';
+      return 'Customer';
     case 7:
-      return 'Brand';
+      return 'Category';
     case 8:
+      return 'Brand';
+    case 9:
       return 'User';
 
-    case 9:
+    case 10:
       return 'Exit';
 
     default:

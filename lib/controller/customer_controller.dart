@@ -8,6 +8,7 @@ import 'package:ebox_frontend_web_inventory/model/customer.dart';
 import 'package:ebox_frontend_web_inventory/model/customers.dart';
 import 'package:file_picker/file_picker.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_easyloading/flutter_easyloading.dart';
 import 'package:get/get.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
@@ -49,6 +50,10 @@ class CustomerController extends GetxController {
     required String bank_number,
   }) async {
     try {
+      EasyLoading.show(
+        status: 'Loading...',
+        dismissOnTap: false,
+      );
       SharedPreferences prefs = await SharedPreferences.getInstance();
       token = prefs.getString('token');
       await RemoteCustomerService().update(
@@ -64,8 +69,12 @@ class CustomerController extends GetxController {
         shop_name: shop_name,
         token: token,
       );
+      EasyLoading.dismiss();
     } catch (e) {
       debugPrint(e.toString());
+      EasyLoading.showError('Something wrong!');
+    } finally {
+      EasyLoading.dismiss();
     }
   }
 
@@ -81,6 +90,10 @@ class CustomerController extends GetxController {
     required String bank_number,
   }) async {
     try {
+      EasyLoading.show(
+        status: 'Loading...',
+        dismissOnTap: false,
+      );
       SharedPreferences prefs = await SharedPreferences.getInstance();
       token = prefs.getString('token');
       await RemoteCustomerService().create(
@@ -95,8 +108,12 @@ class CustomerController extends GetxController {
         shop_name: shop_name,
         token: token,
       );
+      EasyLoading.dismiss();
     } catch (e) {
       debugPrint(e.toString());
+      EasyLoading.showError('Something wrong!');
+    } finally {
+      EasyLoading.dismiss();
     }
   }
 

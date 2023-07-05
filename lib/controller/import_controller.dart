@@ -28,14 +28,22 @@ class ImportController extends GetxController {
     required int product_quantity,
   }) async {
     try {
+      EasyLoading.show(
+        status: 'Loading...',
+        dismissOnTap: false,
+      );
       SharedPreferences prefs = await SharedPreferences.getInstance();
       token = prefs.getString('token');
       await RemoteImportService().create(
           productId: productId,
           product_quantity: product_quantity,
           token: token);
+      EasyLoading.dismiss();
     } catch (e) {
       debugPrint(e.toString());
+      EasyLoading.showError('Something wrong!');
+    } finally {
+      EasyLoading.dismiss();
     }
   }
 

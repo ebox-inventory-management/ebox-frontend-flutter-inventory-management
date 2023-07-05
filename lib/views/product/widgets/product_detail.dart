@@ -5,6 +5,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 import 'package:intl/intl.dart';
+import 'package:qr_flutter/qr_flutter.dart';
 
 import '../../../controller/controllers.dart';
 import '../../../model/brand.dart';
@@ -135,6 +136,14 @@ class ProductDetail extends StatelessWidget {
                             'Product Route: ${product.product_route}',
                             style:
                                 TextStyle(fontSize: 16.sp, color: Colors.grey),
+                          ),
+                          SizedBox(
+                            height: 30.w,
+                          ),
+                          QrImage(
+                            data: product.product_url,
+                            version: QrVersions.auto,
+                            size: 200.w,
                           ),
                           SizedBox(
                             height: 30.w,
