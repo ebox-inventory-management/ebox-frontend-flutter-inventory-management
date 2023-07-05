@@ -570,11 +570,9 @@ class _ProductEditState extends State<ProductEdit> {
                   Center(
                     child: TextButton(
                       onPressed: () {
-                        if (_imageFile == null ||
-                            productNameController.text ==
-                                widget.products.product_name) {
+                        if (_imageFile == null) {
                           Get.snackbar('Something wrong!',
-                              'You need to change name product and update image again to update ${widget.products.product_name}',
+                              'You need to update image again to update ${widget.products.product_name}',
                               colorText: Colors.white,
                               margin: REdgeInsets.all(15.r),
                               backgroundColor: Colors.redAccent,
@@ -596,7 +594,7 @@ class _ProductEditState extends State<ProductEdit> {
                             product_garage: productGarageController.text,
                             product_route: productRouteController.text,
                             product_image: _imageFile!,
-                            expire_date: _selectedExpireDate.toString(),
+                            expire_date: expireDateController.text,
                             import_price: int.parse(importPriceController.text),
                             export_price: int.parse(exportPriceController.text),
                             id: widget.products.id,

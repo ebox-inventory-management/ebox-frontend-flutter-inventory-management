@@ -55,6 +55,10 @@ class ProductController extends GetxController {
     required int id,
   }) async {
     try {
+      EasyLoading.show(
+        status: 'Loading...',
+        dismissOnTap: false,
+      );
       SharedPreferences prefs = await SharedPreferences.getInstance();
       token = prefs.getString('token');
       await RemoteProductService().update(
@@ -71,8 +75,12 @@ class ProductController extends GetxController {
           expire_date: expire_date,
           id: id,
           token: token);
+      EasyLoading.dismiss();
     } catch (e) {
       debugPrint(e.toString());
+      EasyLoading.showError('Something wrong!');
+    } finally {
+      EasyLoading.dismiss();
     }
   }
 
@@ -90,6 +98,10 @@ class ProductController extends GetxController {
     required int export_price,
   }) async {
     try {
+      EasyLoading.show(
+        status: 'Loading...',
+        dismissOnTap: false,
+      );
       SharedPreferences prefs = await SharedPreferences.getInstance();
       token = prefs.getString('token');
       await RemoteProductService().create(
@@ -106,8 +118,12 @@ class ProductController extends GetxController {
         expire_date: expire_date,
         token: token,
       );
+      EasyLoading.dismiss();
     } catch (e) {
       debugPrint(e.toString());
+      EasyLoading.showError('Something wrong!');
+    } finally {
+      EasyLoading.dismiss();
     }
   }
 

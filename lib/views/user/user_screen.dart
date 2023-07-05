@@ -116,7 +116,7 @@ class UserScreen extends StatelessWidget {
                         scale: 4,
                       ),
                       Text(
-                        'Error, You are not admin!',
+                        'Error, Only admin can view this page!',
                         style: TextStyle(
                             color: Colors.grey,
                             fontWeight: FontWeight.bold,

@@ -59,6 +59,10 @@ class AuthController extends GetxController {
     SharedPreferences prefs = await SharedPreferences.getInstance();
     token = prefs.getString('token');
     try {
+      EasyLoading.show(
+        status: 'Loading...',
+        dismissOnTap: false,
+      );
       var userResult = await RemoteAuthService().update(
           id: id,
           name: name,
@@ -68,8 +72,12 @@ class AuthController extends GetxController {
           role: role);
 
       user.value = userFromJson(userResult.body);
+      EasyLoading.dismiss();
     } catch (e) {
       debugPrint(e.toString());
+      EasyLoading.dismiss();
+    } finally {
+      EasyLoading.dismiss();
     }
   }
 
@@ -194,11 +202,22 @@ class AuthController extends GetxController {
   }
 
   void signOut() async {
-    SharedPreferences prefs = await SharedPreferences.getInstance();
-    token = prefs.getString('token');
-    RemoteAuthService().signOut(token: token);
-    prefs.remove('token');
-    user.value = null;
-    Get.offAllNamed('/signin');
+    try {
+      EasyLoading.show(
+        status: 'Loading...',
+        dismissOnTap: false,
+      );
+      SharedPreferences prefs = await SharedPreferences.getInstance();
+      token = prefs.getString('token');
+      RemoteAuthService().signOut(token: token);
+      prefs.remove('token');
+      user.value = null;
+      Get.offAllNamed('/signin');
+    } catch (e) {
+      debugPrint(e.toString());
+      EasyLoading.showError('Something wrong!');
+    } finally {
+      EasyLoading.dismiss();
+    }
   }
 }

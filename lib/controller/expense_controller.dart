@@ -44,7 +44,7 @@ class ExpenseController extends GetxController {
       token = prefs.getString('token');
       isRangeExpensesLoading(true);
       //call api
-      var result = await RemoteIncomeService()
+      var result = await RemoteExpenseService()
           .getRange(end: end, start: start, token: token);
 
       if (result != null) {

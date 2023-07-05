@@ -49,6 +49,7 @@ dependencies:
   flutter_snake_navigationbar: ^0.6.1
   dio: ^5.2.1+1
   email_validator: ^2.1.17
+  qr_flutter: ^4.0.0
 
 dev_dependencies:
   flutter_test:

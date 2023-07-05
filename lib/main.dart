@@ -17,7 +17,6 @@ Future<void> main() async {
   incomeController.getIncomeToday();
   expenseController.getExpenseToday();
   revenueController.getRevenueToday();
-
   dashboardController.getChartDataExport();
   dashboardController.getChartDataImport();
   SharedPreferences pref = await SharedPreferences.getInstance();

@@ -22,7 +22,7 @@ class RangeExpenses {
 
   factory RangeExpenses.fromJson(Map<dynamic, dynamic> data) => RangeExpenses(
         id: data['id'],
-        expense_amount: data['income_amount'],
+        expense_amount: data['expense_amount'],
         created_at: DateTime.parse(data['created_at'].toString()),
         updated_at: DateTime.parse(data['updated_at'].toString()),
       );

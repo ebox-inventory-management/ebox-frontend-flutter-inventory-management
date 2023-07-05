@@ -5,6 +5,7 @@ import 'package:ebox_frontend_web_inventory/model/brands.dart';
 import 'package:ebox_frontend_web_inventory/model/categories.dart';
 import 'package:ebox_frontend_web_inventory/model/category.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_easyloading/flutter_easyloading.dart';
 import 'package:get/get.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
@@ -39,9 +40,17 @@ class CategoryController extends GetxController {
     SharedPreferences prefs = await SharedPreferences.getInstance();
     token = prefs.getString('token');
     try {
+      EasyLoading.show(
+        status: 'Loading...',
+        dismissOnTap: false,
+      );
       await RemoteCategoryService().update(id: id, name: name, token: token);
+      EasyLoading.dismiss();
     } catch (e) {
       debugPrint(e.toString());
+      EasyLoading.showError('Something wrong!');
+    } finally {
+      EasyLoading.dismiss();
     }
   }
 
@@ -51,9 +60,17 @@ class CategoryController extends GetxController {
     SharedPreferences prefs = await SharedPreferences.getInstance();
     token = prefs.getString('token');
     try {
+      EasyLoading.show(
+        status: 'Loading...',
+        dismissOnTap: false,
+      );
       await RemoteCategoryService().create(name: name, token: token);
+      EasyLoading.dismiss();
     } catch (e) {
       debugPrint(e.toString());
+      EasyLoading.showError('Something wrong!');
+    } finally {
+      EasyLoading.dismiss();
     }
   }
 
