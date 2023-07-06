@@ -14,11 +14,24 @@ import 'controller/controllers.dart';
 var token;
 
 Future<void> main() async {
+  DateTime now = DateTime.now();
+
   incomeController.getIncomeToday();
   expenseController.getExpenseToday();
   revenueController.getRevenueToday();
   dashboardController.getChartDataExport();
   dashboardController.getChartDataImport();
+  productController.getProducts();
+  dashboardController.getChartDataProductQuantity();
+  incomeController.getRange(
+      start: DateTime(now.year, now.month, now.day).toString(),
+      end: DateTime(now.year, now.month, now.day + 1).toString());
+  expenseController.getRange(
+      start: DateTime(now.year, now.month, now.day).toString(),
+      end: DateTime(now.year, now.month, now.day + 1).toString());
+  revenueController.getRange(
+      start: DateTime(now.year, now.month, now.day).toString(),
+      end: DateTime(now.year, now.month, now.day + 1).toString());
   SharedPreferences pref = await SharedPreferences.getInstance();
   token = pref.getString('token');
   debugPrint('Token: $token');

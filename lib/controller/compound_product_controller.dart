@@ -1,6 +1,7 @@
 import 'dart:convert';
 import 'dart:ui';
 import 'package:awesome_dialog/awesome_dialog.dart';
+import 'package:ebox_frontend_web_inventory/model/add_product_compound.dart';
 import 'package:ebox_frontend_web_inventory/model/compound_product.dart';
 import 'package:ebox_frontend_web_inventory/model/compound_products.dart';
 import 'package:file_picker/file_picker.dart';
@@ -74,7 +75,7 @@ class CompoundProductController extends GetxController {
     required String name,
     required int price,
     required String description,
-    required List<ProductCompound> productCompound,
+    required List<AddProductCompound> productCompound,
   }) async {
     try {
       EasyLoading.show(
@@ -88,7 +89,7 @@ class CompoundProductController extends GetxController {
         description: description,
         name: name,
         price: price,
-        productCompound: productCompound,
+        productsCompound: productCompound,
       );
       EasyLoading.dismiss();
     } catch (e) {
@@ -157,7 +158,7 @@ class CompoundProductController extends GetxController {
   get productsCompound => _productsCompound;
 
   get totalPrice => _productsCompound.entries
-      .map((data) => data.key.price * data.value)
+      .map((data) => data.key.export_price * data.value)
       .toList()
       .reduce((value, element) => value + element);
 
@@ -171,8 +172,16 @@ class CompoundProductController extends GetxController {
       _productsCompound.entries.map((data) => data.key.id).toList();
 
   /// display productsCompound name with quantity of them
-  get productsCompoundWithQuantity => _productsCompound.entries
-      .map((data) => '${data.key.namedata} * ${data.value}, ')
+  get productsCompoundNameWithQuantity => _productsCompound.entries
+      .map((data) => '${data.key.product_name} X ${data.value}\n')
       .toList()
       .reduce((value, element) => value + element);
+
+  get productsCompoundIdWithQuantity => _productsCompound.entries
+      .map((data) => '{"id":${data.key.id}, "product_quantity":${data.value}}');
+
+  get productWithQuantityJson => _productsCompound.entries
+      .map((data) =>
+          AddProductCompound(id: data.key.id, product_quantity: data.value))
+      .toList();
 }

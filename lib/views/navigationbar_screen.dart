@@ -22,14 +22,47 @@ import 'brand/brand_screen.dart';
 import 'compound_products/compound_product_screen.dart';
 import 'customer/customer_screen.dart';
 
-class NavigationBarScreen extends StatelessWidget {
+class NavigationBarScreen extends StatefulWidget {
   NavigationBarScreen({
     Key? key,
   }) : super(key: key);
 
+  @override
+  State<NavigationBarScreen> createState() => _NavigationBarScreenState();
+}
+
+class _NavigationBarScreenState extends State<NavigationBarScreen> {
   final _controller = SidebarXController(selectedIndex: 0, extended: true);
 
   final _key = GlobalKey<ScaffoldState>();
+  DateTime now = DateTime.now();
+
+  @override
+  void initState() {
+    super.initState();
+    incomeController.getIncomeToday();
+    incomeController.getIncomeThisMonth();
+    incomeController.getIncomeThisYear();
+    expenseController.getExpenseToday();
+    expenseController.getExpenseThisMonth();
+    expenseController.getExpenseThisYear();
+    revenueController.getRevenueToday();
+    revenueController.getRevenueThisMonth();
+    revenueController.getRevenueThisYear();
+    dashboardController.getChartDataExport();
+    dashboardController.getChartDataImport();
+    productController.getProducts();
+    dashboardController.getChartDataProductQuantity();
+    incomeController.getRange(
+        start: DateTime(now.year, now.month, now.day).toString(),
+        end: DateTime(now.year, now.month, now.day + 1).toString());
+    expenseController.getRange(
+        start: DateTime(now.year, now.month, now.day).toString(),
+        end: DateTime(now.year, now.month, now.day + 1).toString());
+    revenueController.getRange(
+        start: DateTime(now.year, now.month, now.day).toString(),
+        end: DateTime(now.year, now.month, now.day + 1).toString());
+  }
 
   @override
   Widget build(BuildContext context) {

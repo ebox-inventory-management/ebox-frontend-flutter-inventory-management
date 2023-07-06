@@ -1,3 +1,5 @@
+import 'package:awesome_dialog/awesome_dialog.dart';
+import 'package:ebox_frontend_web_inventory/api/auth_service.dart';
 import 'package:ebox_frontend_web_inventory/controller/controllers.dart';
 import 'package:ebox_frontend_web_inventory/views/authentication/sign_up_screen.dart';
 import 'package:flutter/material.dart';
@@ -95,8 +97,9 @@ class SignInScreen extends StatelessWidget {
                                 duration: const Duration(seconds: 2));
                           } else {
                             authController.signIn(
-                                email: emailController.text,
-                                password: passwordController.text);
+                              email: emailController.text,
+                              password: passwordController.text,
+                            );
                           }
                         },
                         child: Padding(

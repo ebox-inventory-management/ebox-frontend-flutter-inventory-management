@@ -83,7 +83,7 @@ class CompoundProductDetail extends StatelessWidget {
                             height: 15.w,
                           ),
                           Text(
-                            compoundProducts.price.toString(),
+                            '\$${compoundProducts.price}',
                             overflow: TextOverflow.ellipsis,
                             style: TextStyle(
                                 fontWeight: FontWeight.w500,
@@ -189,6 +189,8 @@ class CompoundProductDetail extends StatelessWidget {
                                       brand_id:
                                           compoundProducts.brand_id[index]),
                                   price: compoundProducts.price,
+                                  quantity: compoundProducts
+                                      .pivot_compound_product_quantity[index],
                                 );
                               },
                               separatorBuilder:

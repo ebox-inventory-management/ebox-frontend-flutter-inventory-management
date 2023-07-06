@@ -44,7 +44,7 @@ class _DashBoardScreenState extends State<DashBoardScreen> {
   void initState() {
     super.initState();
 
-    _selectedStartDate = DateTime(now.year, now.month - 1, now.day);
+    _selectedStartDate = DateTime(now.year, now.month, now.day);
     _selectedEndDate = DateTime(now.year, now.month, now.day + 1);
   }
 
@@ -67,8 +67,7 @@ class _DashBoardScreenState extends State<DashBoardScreen> {
         );
       },
       context: context,
-      initialDate:
-          _selectedStartDate ?? DateTime(now.year, now.month - 1, now.day),
+      initialDate: _selectedStartDate ?? DateTime(now.year, now.month, now.day),
       firstDate: DateTime(2000),
       lastDate: DateTime(2100),
     );
@@ -347,7 +346,7 @@ class _DashBoardScreenState extends State<DashBoardScreen> {
                           width: 5.w,
                         ),
                         Text(
-                          'Graph: Income, Expense and Revenue ',
+                          'Graph',
                           style: TextStyle(
                               fontWeight: FontWeight.w500,
                               color: Colors.orange,
@@ -384,8 +383,7 @@ class _DashBoardScreenState extends State<DashBoardScreen> {
                               ),
                               hintText: _selectedStartDate == null
                                   ? DateFormat('dd / MMMM / yyyy').format(
-                                      DateTime(
-                                          now.year, now.month - 1, now.day),
+                                      DateTime(now.year, now.month, now.day),
                                     )
                                   : DateFormat('dd / MMMM / yyyy')
                                       .format(_selectedStartDate!),
@@ -488,7 +486,10 @@ class _DashBoardScreenState extends State<DashBoardScreen> {
                         text: 'Income, Expense and Revenue',
                         textStyle: TextStyle(
                             fontSize: 16.sp, fontWeight: FontWeight.bold)),
-                    primaryXAxis: DateTimeAxis(name: 'Date'),
+                    primaryXAxis: DateTimeAxis(
+                        rangePadding: ChartRangePadding.auto,
+                        minimum: _selectedStartDate,
+                        maximum: _selectedEndDate),
                     primaryYAxis: NumericAxis(),
                     legend: Legend(isVisible: true),
                     tooltipBehavior: TooltipBehavior(enable: true),
@@ -568,38 +569,6 @@ class _DashBoardScreenState extends State<DashBoardScreen> {
                   ),
                 ),
               ),
-              SizedBox(
-                height: 15.r,
-              ),
-              Divider(),
-              Padding(
-                padding: REdgeInsets.only(top: 15.r, bottom: 15.r),
-                child: Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: [
-                    Row(
-                      children: [
-                        Icon(
-                          Icons.show_chart,
-                          color: Colors.orange,
-                          size: 30.r,
-                        ),
-                        SizedBox(
-                          width: 5.w,
-                        ),
-                        Text(
-                          'Graph: Import and Export',
-                          style: TextStyle(
-                              fontWeight: FontWeight.w500,
-                              color: Colors.orange,
-                              fontSize: 20.sp),
-                        ),
-                      ],
-                    ),
-                    SizedBox(),
-                  ],
-                ),
-              ),
               Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
@@ -616,7 +585,10 @@ class _DashBoardScreenState extends State<DashBoardScreen> {
                             textStyle: TextStyle(
                                 fontSize: 16.sp, fontWeight: FontWeight.bold)),
                         legend: Legend(isVisible: true),
-                        primaryXAxis: DateTimeAxis(),
+                        primaryXAxis: DateTimeAxis(
+                            rangePadding: ChartRangePadding.auto,
+                            minimum: _selectedStartDate,
+                            maximum: _selectedEndDate),
                         primaryYAxis: NumericAxis(),
                         tooltipBehavior: TooltipBehavior(enable: true),
                         zoomPanBehavior: ZoomPanBehavior(

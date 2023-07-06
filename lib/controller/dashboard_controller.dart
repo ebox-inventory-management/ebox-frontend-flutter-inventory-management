@@ -7,6 +7,7 @@ import '../api/export_service.dart';
 import '../model/chart_data_import.dart';
 import '../model/chart_data_export.dart';
 import '../views/dashboard/dashboard_screen.dart';
+import 'controllers.dart';
 
 class DashboardController extends GetxController {
   RxList<ChartDataImport> chartDataImportList =
@@ -19,6 +20,7 @@ class DashboardController extends GetxController {
   RxBool isChartDataImportLoading = false.obs;
   RxBool isChartDataExportLoading = false.obs;
   RxBool isChartDataProductQuantityLoading = false.obs;
+  DateTime now = DateTime.now();
 
   var token;
   @override
@@ -26,6 +28,7 @@ class DashboardController extends GetxController {
     getChartDataImport();
     getChartDataExport();
     getChartDataProductQuantity();
+
     super.onInit();
   }
 

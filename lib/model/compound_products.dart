@@ -31,17 +31,17 @@ class CompoundProducts {
   final List<int> category_id;
   final List<int> supplier_id;
   final List<int> brand_id;
-  final List<int> compound_id;
-  final List<int> products_id;
-  final List<int> compound_product_quantity;
+  final List<int> pivot_compound_id;
+  final List<int> pivot_products_id;
+  final List<int> pivot_compound_product_quantity;
 
   CompoundProducts({
     required this.created_at,
     required this.updated_at,
     required this.product_url,
-    required this.compound_id,
-    required this.products_id,
-    required this.compound_product_quantity,
+    required this.pivot_compound_id,
+    required this.pivot_products_id,
+    required this.pivot_compound_product_quantity,
     required this.id,
     required this.name,
     required this.price,
@@ -107,11 +107,11 @@ class CompoundProducts {
             data['products'].map((data) => data['supplier_id'] ?? 'Not Yet')),
         product_updated_at: List<String>.from(
             data['products'].map((data) => data['updated_at'] ?? 'Not Yet')),
-        compound_id: List<int>.from(
+        pivot_compound_id: List<int>.from(
             data['products'].map((data) => data['pivot']['compound_id'] ?? 0)),
-        products_id: List<int>.from(
+        pivot_products_id: List<int>.from(
             data['products'].map((data) => data['pivot']['products_id'] ?? 0)),
-        compound_product_quantity: List<int>.from(data['products']
+        pivot_compound_product_quantity: List<int>.from(data['products']
             .map((data) => data['pivot']['product_quantity'] ?? 0)),
       );
 }

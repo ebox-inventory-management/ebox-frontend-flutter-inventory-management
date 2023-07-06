@@ -12,11 +12,13 @@ import 'package:get/get.dart';
 class ProductCompoundCard extends StatefulWidget {
   final Products product;
   final int price;
+  final int quantity;
 
   const ProductCompoundCard({
     super.key,
     required this.product,
     required this.price,
+    required this.quantity,
   });
 
   @override
@@ -72,7 +74,7 @@ class _ProductCompoundCardState extends State<ProductCompoundCard> {
                     height: 5.h,
                   ),
                   Text(
-                    'Quantity: ${widget.product.product_quantity}',
+                    'Quantity: ${widget.quantity}',
                     style: TextStyle(fontSize: 14.sp, color: Colors.grey),
                   ),
                 ],
@@ -80,12 +82,15 @@ class _ProductCompoundCardState extends State<ProductCompoundCard> {
             ),
             Spacer(),
             Text(
-              widget.price.toString(),
+              '\$${widget.product.export_price}',
               style: TextStyle(
                   color: Colors.red,
-                  fontWeight: FontWeight.bold,
+                  fontWeight: FontWeight.w500,
                   fontSize: 20.sp),
             ),
+            SizedBox(
+              width: 15.r,
+            )
           ],
         ),
       ),
