@@ -1,5 +1,6 @@
 import 'dart:convert';
 
+import 'package:awesome_dialog/awesome_dialog.dart';
 import 'package:ebox_frontend_web_inventory/controller/controllers.dart';
 import 'package:file_picker/file_picker.dart';
 import 'package:flutter/material.dart';
@@ -128,14 +129,6 @@ class RemoteAuthService {
     );
     print(response.statusCode);
     if (response.statusCode == 200) {
-      Get.snackbar(
-          'SignIn Successful!', 'Welcome to eBox Inventory Management'.tr,
-          colorText: Colors.white,
-          margin: REdgeInsets.all(15.r),
-          backgroundColor: Colors.green,
-          snackPosition: SnackPosition.BOTTOM,
-          duration: const Duration(seconds: 2));
-
       Get.offAndToNamed('/navigation');
     } else {
       Get.snackbar('Something wrong!', 'SignIn is not working right now',

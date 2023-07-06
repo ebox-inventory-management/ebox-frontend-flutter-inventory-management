@@ -73,13 +73,13 @@ class RemoteImportService {
     expenseController.getExpenseToday();
     revenueController.getRevenueToday();
     incomeController.getRange(
-        start: DateTime(now.year, now.month - 1, now.day).toString(),
+        start: DateTime(now.year, now.month, now.day).toString(),
         end: DateTime(now.year, now.month, now.day + 1).toString());
     expenseController.getRange(
-        start: DateTime(now.year, now.month - 1, now.day).toString(),
+        start: DateTime(now.year, now.month, now.day).toString(),
         end: DateTime(now.year, now.month, now.day + 1).toString());
     revenueController.getRange(
-        start: DateTime(now.year, now.month - 1, now.day).toString(),
+        start: DateTime(now.year, now.month, now.day).toString(),
         end: DateTime(now.year, now.month, now.day + 1).toString());
     print(response.statusCode);
     return response;

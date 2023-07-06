@@ -62,7 +62,7 @@ class _SelectedProductCompoundCardState
                   height: 5.h,
                 ),
                 Text(
-                  '\$ ${widget.productCompound.export_price}',
+                  '\$${widget.productCompound.export_price}',
                   style: TextStyle(
                       fontSize: 24.sp,
                       color: Colors.red,

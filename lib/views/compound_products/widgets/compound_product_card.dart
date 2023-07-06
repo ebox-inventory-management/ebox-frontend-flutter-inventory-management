@@ -49,16 +49,6 @@ class _CompoundProductCardState extends State<CompoundProductCard> {
             color: Colors.white),
         child: Row(
           children: [
-            Container(
-              width: 100.w,
-              height: 100.w,
-              decoration: BoxDecoration(
-                  borderRadius: BorderRadius.all(Radius.circular(15.r)),
-                  image: DecorationImage(
-                      image: NetworkImage(
-                          widget.compoundProducts.product_image[widget.index]),
-                      fit: BoxFit.cover)),
-            ),
             Padding(
               padding: REdgeInsets.only(left: 15.r, top: 10.r, bottom: 10.r),
               child: Column(
@@ -74,8 +64,12 @@ class _CompoundProductCardState extends State<CompoundProductCard> {
                     height: 5.h,
                   ),
                   Text(
-                    widget.compoundProducts.price.toString(),
-                    style: TextStyle(fontSize: 14.sp, color: Colors.grey),
+                    '\$${widget.compoundProducts.price}',
+                    overflow: TextOverflow.ellipsis,
+                    style: TextStyle(
+                        fontSize: 20.sp,
+                        color: Colors.red,
+                        fontWeight: FontWeight.w500),
                   ),
                 ],
               ),

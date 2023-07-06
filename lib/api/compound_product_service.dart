@@ -13,6 +13,7 @@ import 'dart:io' as io;
 import 'package:dio/dio.dart' as dio;
 import 'package:http_parser/http_parser.dart';
 
+import '../model/add_product_compound.dart';
 import '../model/product_compound.dart';
 
 class RemoteCompoundProductService {
@@ -110,13 +111,13 @@ class RemoteCompoundProductService {
     required int price,
     required String description,
     required String token,
-    required List<ProductCompound> productCompound,
+    required List<AddProductCompound> productsCompound,
   }) async {
     var body = {
       "name": name,
       "price": price,
       "description": description,
-      "products": productCompound,
+      "products": productsCompound
     };
 
     var response = await client.post(
@@ -159,6 +160,7 @@ class RemoteCompoundProductService {
     print(response.statusCode);
 
     compoundProductController.getCompoundProducts();
+    compoundProductController.productsCompound == null;
     return response;
   }
 }

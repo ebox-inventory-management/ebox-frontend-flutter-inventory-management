@@ -3,7 +3,7 @@ import 'package:ebox_frontend_web_inventory/model/suppliers.dart';
 import 'package:ebox_frontend_web_inventory/views/product/widgets/product_card.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-
+import 'package:get/get.dart';
 import '../../../controller/controllers.dart';
 import '../../../model/products.dart';
 import 'compound_product_card.dart';
@@ -21,7 +21,7 @@ class CompoundProductList extends StatelessWidget {
       shrinkWrap: true,
       itemBuilder: (context, index) {
         return CompoundProductCard(
-          compoundProducts: compoundProductList.reversed.toList()[index],
+          compoundProducts: compoundProductList[index],
           index: index,
         );
       },

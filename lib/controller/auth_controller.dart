@@ -164,7 +164,10 @@ class AuthController extends GetxController {
     }
   }
 
-  void signIn({required String email, required String password}) async {
+  void signIn({
+    required String email,
+    required String password,
+  }) async {
     try {
       EasyLoading.show(
         status: 'Loading...',
