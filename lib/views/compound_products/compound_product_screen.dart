@@ -157,8 +157,8 @@ class CompoundProductScreen extends StatelessWidget {
                   return Center(
                     child: Column(
                       children: [
-                        Image.network(
-                          'https://firebasestorage.googleapis.com/v0/b/ebox-inventory-management.appspot.com/o/empty.png?alt=media&token=06b30b38-cac0-490e-ac6a-6373fe120a16',
+                        Image.asset(
+                          'assets/images/empty.png',
                           scale: 4,
                         ),
                         Text(

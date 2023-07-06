@@ -215,6 +215,7 @@ class AuthController extends GetxController {
       RemoteAuthService().signOut(token: token);
       prefs.remove('token');
       user.value = null;
+      token = null;
       Get.offAllNamed('/signin');
     } catch (e) {
       debugPrint(e.toString());

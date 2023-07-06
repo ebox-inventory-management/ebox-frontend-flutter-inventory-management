@@ -16,6 +16,7 @@ import 'package:flutter/src/widgets/framework.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 import 'package:get/get.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 import 'package:sidebarx/sidebarx.dart';
 
 import 'brand/brand_screen.dart';
@@ -68,39 +69,80 @@ class _NavigationBarScreenState extends State<NavigationBarScreen> {
   Widget build(BuildContext context) {
     return Builder(
       builder: (context) {
-        final isSmallScreen = MediaQuery.of(context).size.width < 600;
-        return Scaffold(
-          backgroundColor: Colors.grey[100],
-          key: _key,
-          appBar: isSmallScreen
-              ? AppBar(
-                  backgroundColor: Colors.white,
-                  title: Text(_getTitleByIndex(_controller.selectedIndex)),
-                  leading: IconButton(
+        return Obx(() {
+          if (authController.user.value == null) {
+            return Center(
+              child: Column(
+                children: [
+                  Image.asset(
+                    'assets/images/empty.png',
+                    scale: 4,
+                  ),
+                  Text(
+                    'You need to sign in first!',
+                    style: TextStyle(
+                        color: Colors.grey,
+                        fontWeight: FontWeight.bold,
+                        fontSize: 30.sp),
+                  ),
+                  SizedBox(
+                    height: 15.w,
+                  ),
+                  TextButton(
                     onPressed: () {
-                      // if (!Platform.isAndroid && !Platform.isIOS) {
-                      //   _controller.setExtended(true);
-                      // }
-                      _key.currentState?.openDrawer();
+                      Get.toNamed('/signin');
                     },
-                    icon: const Icon(Icons.menu),
-                  ),
-                )
-              : null,
-          drawer: CustomeSidebarX(controller: _controller),
-          body: Row(
-            children: [
-              if (!isSmallScreen) CustomeSidebarX(controller: _controller),
-              Expanded(
-                child: Center(
-                  child: _ScreensExample(
-                    controller: _controller,
-                  ),
-                ),
+                    style: TextButton.styleFrom(
+                        backgroundColor: Colors.orange,
+                        foregroundColor: Colors.white),
+                    child: Padding(
+                      padding: REdgeInsets.all(15.r),
+                      child: Text(
+                        'Click here to sign in',
+                        style: TextStyle(
+                            fontWeight: FontWeight.bold, fontSize: 30.sp),
+                      ),
+                    ),
+                  )
+                ],
               ),
-            ],
-          ),
-        );
+            );
+          } else {
+            final isSmallScreen = MediaQuery.of(context).size.width < 600;
+            return Scaffold(
+              backgroundColor: Colors.grey[100],
+              key: _key,
+              appBar: isSmallScreen
+                  ? AppBar(
+                      backgroundColor: Colors.white,
+                      title: Text(_getTitleByIndex(_controller.selectedIndex)),
+                      leading: IconButton(
+                        onPressed: () {
+                          // if (!Platform.isAndroid && !Platform.isIOS) {
+                          //   _controller.setExtended(true);
+                          // }
+                          _key.currentState?.openDrawer();
+                        },
+                        icon: const Icon(Icons.menu),
+                      ),
+                    )
+                  : null,
+              drawer: CustomeSidebarX(controller: _controller),
+              body: Row(
+                children: [
+                  if (!isSmallScreen) CustomeSidebarX(controller: _controller),
+                  Expanded(
+                    child: Center(
+                      child: _ScreensExample(
+                        controller: _controller,
+                      ),
+                    ),
+                  ),
+                ],
+              ),
+            );
+          }
+        });
       },
     );
   }
