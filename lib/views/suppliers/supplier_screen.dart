@@ -153,8 +153,8 @@ class SupplierScreen extends StatelessWidget {
                   return Center(
                     child: Column(
                       children: [
-                        Image.network(
-                          'https://firebasestorage.googleapis.com/v0/b/ebox-inventory-management.appspot.com/o/supplier.png?alt=media&token=0de506d7-66c6-4efb-95a3-d28840f46691',
+                        Image.asset(
+                          'assets/images/empty.png',
                           scale: 4,
                         ),
                         Text(

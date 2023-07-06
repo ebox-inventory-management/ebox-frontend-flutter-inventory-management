@@ -103,8 +103,8 @@ class ImportScreen extends StatelessWidget {
                   return Center(
                     child: Column(
                       children: [
-                        Image.network(
-                          'https://firebasestorage.googleapis.com/v0/b/ebox-inventory-management.appspot.com/o/import.png?alt=media&token=a4bec55a-9e0f-40de-a868-34b8cb6bda77',
+                        Image.asset(
+                          'assets/images/empty.png',
                           scale: 4,
                         ),
                         Text(

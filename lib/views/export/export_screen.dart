@@ -105,8 +105,8 @@ class ExportScreen extends StatelessWidget {
                   return Center(
                     child: Column(
                       children: [
-                        Image.network(
-                          'https://firebasestorage.googleapis.com/v0/b/ebox-inventory-management.appspot.com/o/delivery.png?alt=media&token=d7d350d3-a537-4fee-aa4c-87b0de4f4801',
+                        Image.asset(
+                          'assets/images/empty.png',
                           scale: 4,
                         ),
                         Text(
