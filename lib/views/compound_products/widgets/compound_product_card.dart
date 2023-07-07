@@ -9,6 +9,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 
+import 'compound_product_edit.dart';
+
 class CompoundProductCard extends StatefulWidget {
   final Compounds compoundProducts;
   final int index;
@@ -73,6 +75,12 @@ class _CompoundProductCardState extends State<CompoundProductCard> {
               padding: REdgeInsets.all(15.r),
               child: Row(
                 children: [
+                  IconButton(
+                      onPressed: () {
+                        Get.dialog(CompoundProductEdit(
+                            compounds: widget.compoundProducts));
+                      },
+                      icon: Icon(Icons.edit, color: Colors.blue, size: 25.r)),
                   IconButton(
                       onPressed: () {
                         AwesomeDialog(

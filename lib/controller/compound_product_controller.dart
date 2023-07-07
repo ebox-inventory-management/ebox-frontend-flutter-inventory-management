@@ -70,6 +70,34 @@ class CompoundProductController extends GetxController {
     await RemoteCompoundProductService.delete(id: id, name: name, token: token);
   }
 
+  void updateCompoundProduct({
+    required int id,
+    required String name,
+    required String description,
+    required String price,
+  }) async {
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    token = prefs.getString('token');
+    try {
+      EasyLoading.show(
+        status: 'Loading...',
+        dismissOnTap: false,
+      );
+      await RemoteCompoundProductService().update(
+          id: id,
+          name: name,
+          token: token,
+          description: description,
+          price: price);
+      EasyLoading.dismiss();
+    } catch (e) {
+      debugPrint(e.toString());
+      EasyLoading.showError('Something wrong!');
+    } finally {
+      EasyLoading.dismiss();
+    }
+  }
+
   void createCompoundProduct({
     required String name,
     required int price,
