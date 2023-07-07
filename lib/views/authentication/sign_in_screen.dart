@@ -89,7 +89,7 @@ class SignInScreen extends StatelessWidget {
                           if (emailController.text.isEmpty ||
                               passwordController.text.isEmpty) {
                             Get.snackbar('Something wrong!',
-                                'You need to input all information to sign up',
+                                'You need to input all information to sign in',
                                 colorText: Colors.white,
                                 margin: REdgeInsets.all(15.r),
                                 backgroundColor: Colors.redAccent,

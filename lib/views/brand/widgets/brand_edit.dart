@@ -103,7 +103,7 @@ class _BrandEditState extends State<BrandEdit> {
                                 onChanged: (val) {
                                   setState(() {
                                     backgroundColor = val.isNotEmpty
-                                        ? Colors.orange
+                                        ? Colors.green
                                         : Colors.grey;
                                   });
                                 },

@@ -196,6 +196,9 @@ class _ProductEditState extends State<ProductEdit> {
                                 controller: productNameController,
                                 textInputAction: TextInputAction.next,
                                 obscureText: false,
+                                onChanged: (value) {
+                                  setState(() {});
+                                },
                                 decoration: InputDecoration(
                                   hintText: widget.products.product_name,
                                   hintStyle: TextStyle(
@@ -220,6 +223,9 @@ class _ProductEditState extends State<ProductEdit> {
                               child: TextFormField(
                                 controller: importPriceController,
                                 keyboardType: TextInputType.number,
+                                onChanged: (value) {
+                                  setState(() {});
+                                },
                                 inputFormatters: <TextInputFormatter>[
                                   FilteringTextInputFormatter.digitsOnly
                                 ],
@@ -248,6 +254,9 @@ class _ProductEditState extends State<ProductEdit> {
                               child: TextFormField(
                                 controller: exportPriceController,
                                 keyboardType: TextInputType.number,
+                                onChanged: (value) {
+                                  setState(() {});
+                                },
                                 inputFormatters: <TextInputFormatter>[
                                   FilteringTextInputFormatter.digitsOnly
                                 ],
@@ -275,6 +284,9 @@ class _ProductEditState extends State<ProductEdit> {
                               width: 0.4.sw,
                               child: TextFormField(
                                 controller: productCodeController,
+                                onChanged: (value) {
+                                  setState(() {});
+                                },
                                 textInputAction: TextInputAction.next,
                                 obscureText: false,
                                 decoration: InputDecoration(
@@ -300,6 +312,9 @@ class _ProductEditState extends State<ProductEdit> {
                               width: 0.4.sw,
                               child: TextFormField(
                                 controller: productGarageController,
+                                onChanged: (value) {
+                                  setState(() {});
+                                },
                                 textInputAction: TextInputAction.next,
                                 obscureText: false,
                                 decoration: InputDecoration(
@@ -325,6 +340,9 @@ class _ProductEditState extends State<ProductEdit> {
                               width: 0.4.sw,
                               child: TextFormField(
                                 controller: productRouteController,
+                                onChanged: (value) {
+                                  setState(() {});
+                                },
                                 textInputAction: TextInputAction.next,
                                 obscureText: false,
                                 decoration: InputDecoration(
@@ -525,6 +543,9 @@ class _ProductEditState extends State<ProductEdit> {
                                     textInputAction: TextInputAction.done,
                                     obscureText: false,
                                     readOnly: true,
+                                    onChanged: (value) {
+                                      setState(() {});
+                                    },
                                     onTap: () async {
                                       _selectExpireDate(context);
                                     },
@@ -572,7 +593,7 @@ class _ProductEditState extends State<ProductEdit> {
                       onPressed: () {
                         if (_imageFile == null) {
                           Get.snackbar('Something wrong!',
-                              'You need to update image again to update ${widget.products.product_name}',
+                              'You need to change image to update ${widget.products.product_name}',
                               colorText: Colors.white,
                               margin: REdgeInsets.all(15.r),
                               backgroundColor: Colors.redAccent,
@@ -603,10 +624,8 @@ class _ProductEditState extends State<ProductEdit> {
                       },
                       style: TextButton.styleFrom(
                           foregroundColor: Colors.white,
-                          backgroundColor: productNameController.text ==
-                                  widget.products.product_name
-                              ? Colors.grey
-                              : Colors.orange,
+                          backgroundColor:
+                              _imageFile == null ? Colors.grey : Colors.green,
                           shape: RoundedRectangleBorder(
                               borderRadius:
                                   BorderRadius.all(Radius.circular(15.r)))),

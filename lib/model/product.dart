@@ -7,6 +7,8 @@ Product productListFromJson(String val) =>
 
 class Product {
   final int id;
+  final String unit;
+
   final String product_name;
   final String product_url;
   final int product_quantity;
@@ -26,6 +28,7 @@ class Product {
 
   Product({
     required this.id,
+    required this.unit,
     required this.product_name,
     required this.product_url,
     required this.product_amount,
@@ -46,6 +49,7 @@ class Product {
 
   factory Product.fromJson(Map<dynamic, dynamic> data) => Product(
         id: data['id'],
+        unit: data['unit'] ?? 'Not Yet',
         product_name: data['product_name'] ?? 'Not Yet',
         product_url: data['url'] ?? 'Not Yet',
         brand_id: data['brand_id'] ?? 'Not Yet',

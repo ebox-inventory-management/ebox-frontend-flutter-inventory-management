@@ -108,6 +108,9 @@ class _CompoundProductAddState extends State<CompoundProductAdd> {
                                       controller: nameController,
                                       textInputAction: TextInputAction.next,
                                       obscureText: false,
+                                      onChanged: (value) {
+                                        setState(() {});
+                                      },
                                       decoration: InputDecoration(
                                         border: OutlineInputBorder(
                                           borderRadius:
@@ -136,6 +139,9 @@ class _CompoundProductAddState extends State<CompoundProductAdd> {
                                     child: TextFormField(
                                       controller: descriptionController,
                                       textInputAction: TextInputAction.next,
+                                      onChanged: (value) {
+                                        setState(() {});
+                                      },
                                       obscureText: false,
                                       decoration: InputDecoration(
                                         border: OutlineInputBorder(

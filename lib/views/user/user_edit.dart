@@ -148,6 +148,9 @@ class _UserEditState extends State<UserEdit> {
                                 // },
                                 textInputAction: TextInputAction.next,
                                 obscureText: false,
+                                onChanged: (index) {
+                                  setState(() {});
+                                },
                                 decoration: InputDecoration(
                                   hintText: widget.users.name,
                                   hintStyle: TextStyle(fontSize: 16.sp),
@@ -171,6 +174,9 @@ class _UserEditState extends State<UserEdit> {
                                 controller: emailController,
                                 textInputAction: TextInputAction.next,
                                 obscureText: false,
+                                onChanged: (index) {
+                                  setState(() {});
+                                },
                                 decoration: InputDecoration(
                                   hintText: widget.users.email,
                                   hintStyle: TextStyle(fontSize: 16.sp),
@@ -279,7 +285,7 @@ class _UserEditState extends State<UserEdit> {
                             _imageFile == null ||
                             emailController.text.isEmpty) {
                           Get.snackbar('Something wrong!',
-                              'You need to input all supplier information to update',
+                              'You need to input all user information to update',
                               colorText: Colors.white,
                               margin: REdgeInsets.all(15),
                               backgroundColor: Colors.redAccent,
@@ -301,7 +307,7 @@ class _UserEditState extends State<UserEdit> {
                                   _imageFile == null ||
                                   emailController.text.isEmpty
                               ? Colors.grey
-                              : Colors.orange,
+                              : Colors.green,
                           shape: RoundedRectangleBorder(
                               borderRadius:
                                   BorderRadius.all(Radius.circular(15.r)))),

@@ -98,7 +98,7 @@ class _CategoryEditState extends State<CategoryEdit> {
                                 onChanged: (val) {
                                   setState(() {
                                     backgroundColor = val.isNotEmpty
-                                        ? Colors.orange
+                                        ? Colors.green
                                         : Colors.grey;
                                   });
                                 },

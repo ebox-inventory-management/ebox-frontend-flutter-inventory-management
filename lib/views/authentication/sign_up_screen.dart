@@ -161,6 +161,9 @@ class _SignUpScreenState extends State<SignUpScreen> {
                     EmailValidator.validate(emailController.text)
                         ? null
                         : "Please enter a valid email",
+                onChanged: (value) {
+                  setState(() {});
+                },
                 decoration: InputDecoration(
                     floatingLabelBehavior: FloatingLabelBehavior.never,
                     contentPadding:
@@ -185,6 +188,9 @@ class _SignUpScreenState extends State<SignUpScreen> {
                 controller: passwordController,
                 enableSuggestions: false,
                 autocorrect: false,
+                onChanged: (value) {
+                  setState(() {});
+                },
                 decoration: InputDecoration(
                     floatingLabelBehavior: FloatingLabelBehavior.never,
                     contentPadding:
@@ -209,6 +215,9 @@ class _SignUpScreenState extends State<SignUpScreen> {
                 enableSuggestions: false,
                 autocorrect: false,
                 controller: passwordConfirmationController,
+                onChanged: (value) {
+                  setState(() {});
+                },
                 decoration: InputDecoration(
                     floatingLabelBehavior: FloatingLabelBehavior.never,
                     contentPadding:
@@ -245,13 +254,13 @@ class _SignUpScreenState extends State<SignUpScreen> {
                               if (passwordController.text ==
                                   passwordConfirmationController.text) {
                                 authController.signUp(
-                                    email: emailController.text,
-                                    password: passwordController.text,
-                                    name: usernameController.text,
-                                    image: _imageFile!,
-                                    password_confirmation:
-                                        passwordConfirmationController.text,
-                                    role: 'staff');
+                                  email: emailController.text,
+                                  password: passwordController.text,
+                                  name: usernameController.text,
+                                  image: _imageFile!,
+                                  password_confirmation:
+                                      passwordConfirmationController.text,
+                                );
                               } else {
                                 Get.snackbar('Something wrong!',
                                     'You need to input password and password confirmation is the same',

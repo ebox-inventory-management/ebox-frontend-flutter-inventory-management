@@ -111,8 +111,8 @@ class UserScreen extends StatelessWidget {
                 return Center(
                   child: Column(
                     children: [
-                      Image.network(
-                        'https://firebasestorage.googleapis.com/v0/b/ebox-inventory-management.appspot.com/o/error.png?alt=media&token=b17d0ed1-2620-4fc0-8989-20e3f17433d2',
+                      Image.asset(
+                        'assets/images/error.png',
                         scale: 4,
                       ),
                       Text(

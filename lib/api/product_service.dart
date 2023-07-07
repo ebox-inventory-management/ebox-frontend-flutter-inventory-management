@@ -61,6 +61,7 @@ class RemoteProductService {
     dashboardController.getChartDataExport();
     dashboardController.getChartDataImport();
     dashboardController.getChartDataProductQuantity();
+    compoundProductController.getCompoundProducts();
     incomeController.getIncomeToday();
     expenseController.getExpenseToday();
     revenueController.getRevenueToday();

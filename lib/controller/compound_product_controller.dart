@@ -23,8 +23,8 @@ import '../api/product_service.dart';
 import 'controllers.dart';
 
 class CompoundProductController extends GetxController {
-  RxList<CompoundProducts> compoundProductsList =
-      List<CompoundProducts>.empty(growable: true).obs;
+  RxList<Compounds> compoundProductsList =
+      List<Compounds>.empty(growable: true).obs;
   Rxn<CompoundProduct> compoundProduct = Rxn<CompoundProduct>();
 
   RxBool isCompoundProductsLoading = false.obs;
@@ -35,7 +35,6 @@ class CompoundProductController extends GetxController {
   RxString searchVal = ''.obs;
 
   final _productsCompound = {}.obs;
-  Rxn<Products> product = Rxn<Products>();
 
   var token;
 

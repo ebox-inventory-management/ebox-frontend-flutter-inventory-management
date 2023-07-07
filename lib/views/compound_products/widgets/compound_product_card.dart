@@ -10,7 +10,7 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 
 class CompoundProductCard extends StatefulWidget {
-  final CompoundProducts compoundProducts;
+  final Compounds compoundProducts;
   final int index;
 
   const CompoundProductCard(
@@ -24,12 +24,6 @@ class _CompoundProductCardState extends State<CompoundProductCard> {
   @override
   initState() {
     super.initState();
-    supplierController.getSupplierById(
-        id: widget.compoundProducts.supplier_id[widget.index]);
-    categoryController.getCategoryById(
-        id: widget.compoundProducts.category_id[widget.index]);
-    brandController.getBrandById(
-        id: widget.compoundProducts.brand_id[widget.index]);
   }
 
   @override
@@ -56,7 +50,7 @@ class _CompoundProductCardState extends State<CompoundProductCard> {
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
                   Text(
-                    widget.compoundProducts.name,
+                    widget.compoundProducts.name!,
                     style:
                         TextStyle(fontSize: 24.sp, fontWeight: FontWeight.w500),
                   ),
@@ -93,8 +87,8 @@ class _CompoundProductCardState extends State<CompoundProductCard> {
                           btnCancelOnPress: () {},
                           btnOkOnPress: () {
                             compoundProductController.deleteCompoundProduct(
-                                id: widget.compoundProducts.id,
-                                name: widget.compoundProducts.name);
+                                id: widget.compoundProducts.id!,
+                                name: widget.compoundProducts.name!);
                           },
                         ).show();
                       },

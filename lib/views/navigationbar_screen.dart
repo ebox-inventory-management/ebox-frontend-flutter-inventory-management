@@ -52,6 +52,14 @@ class _NavigationBarScreenState extends State<NavigationBarScreen> {
     revenueController.getRevenueThisYear();
     dashboardController.getChartDataExport();
     dashboardController.getChartDataImport();
+    compoundProductController.getCompoundProducts();
+    supplierController.getSuppliers();
+    customerController.getCustomers();
+    categoryController.getCategories();
+    brandController.getBrands();
+    importController.getImports();
+    exportController.getExports();
+    authController.getUsers();
     productController.getProducts();
     dashboardController.getChartDataProductQuantity();
     incomeController.getRange(
@@ -355,8 +363,8 @@ class _ScreensExample extends StatelessWidget {
 
           default:
             return Center(
-              child: Image.network(
-                'https://firebasestorage.googleapis.com/v0/b/ebox-inventory-management.appspot.com/o/404.png?alt=media&token=0eef86c3-f26b-4ca5-bbb0-fbbe5ed6e903',
+              child: Image.asset(
+                'assets/images/404.png',
                 scale: 2,
               ),
             );

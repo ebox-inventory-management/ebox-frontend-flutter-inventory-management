@@ -90,6 +90,9 @@ class _ExportProductAddState extends State<ExportProductAdd> {
                           textInputAction: TextInputAction.next,
                           obscureText: false,
                           keyboardType: TextInputType.number,
+                          onChanged: (value) {
+                            setState(() {});
+                          },
                           inputFormatters: <TextInputFormatter>[
                             FilteringTextInputFormatter.allow(
                                 RegExp(r'[0-9,-]')),

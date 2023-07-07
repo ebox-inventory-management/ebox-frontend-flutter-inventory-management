@@ -9,7 +9,7 @@ import '../../../model/products.dart';
 import 'compound_product_card.dart';
 
 class CompoundProductList extends StatelessWidget {
-  final List<CompoundProducts> compoundProductList;
+  final List<Compounds> compoundProductList;
   const CompoundProductList({super.key, required this.compoundProductList});
 
   @override
