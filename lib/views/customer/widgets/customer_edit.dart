@@ -157,6 +157,9 @@ class _CustomerEditState extends State<CustomerEdit> {
                                 // },
                                 textInputAction: TextInputAction.next,
                                 obscureText: false,
+                                onChanged: (value) {
+                                  setState(() {});
+                                },
                                 decoration: InputDecoration(
                                   hintText: widget.customers.name,
                                   hintStyle: TextStyle(fontSize: 16.sp),
@@ -180,6 +183,9 @@ class _CustomerEditState extends State<CustomerEdit> {
                                 controller: emailController,
                                 textInputAction: TextInputAction.next,
                                 obscureText: false,
+                                onChanged: (value) {
+                                  setState(() {});
+                                },
                                 decoration: InputDecoration(
                                   hintText: widget.customers.email,
                                   hintStyle: TextStyle(fontSize: 16.sp),
@@ -203,6 +209,9 @@ class _CustomerEditState extends State<CustomerEdit> {
                                 controller: phoneController,
                                 textInputAction: TextInputAction.next,
                                 obscureText: false,
+                                onChanged: (value) {
+                                  setState(() {});
+                                },
                                 inputFormatters: <TextInputFormatter>[
                                   FilteringTextInputFormatter.allow(
                                       RegExp(r'[0-9,-]')),
@@ -230,6 +239,9 @@ class _CustomerEditState extends State<CustomerEdit> {
                                 controller: addressController,
                                 textInputAction: TextInputAction.next,
                                 obscureText: false,
+                                onChanged: (value) {
+                                  setState(() {});
+                                },
                                 decoration: InputDecoration(
                                   hintText: widget.customers.address,
                                   hintStyle: TextStyle(fontSize: 16.sp),
@@ -253,6 +265,9 @@ class _CustomerEditState extends State<CustomerEdit> {
                                 controller: cityController,
                                 textInputAction: TextInputAction.next,
                                 obscureText: false,
+                                onChanged: (value) {
+                                  setState(() {});
+                                },
                                 decoration: InputDecoration(
                                   hintText: widget.customers.city,
                                   hintStyle: TextStyle(fontSize: 16.sp),
@@ -276,6 +291,9 @@ class _CustomerEditState extends State<CustomerEdit> {
                                 controller: shopNameController,
                                 textInputAction: TextInputAction.next,
                                 obscureText: false,
+                                onChanged: (value) {
+                                  setState(() {});
+                                },
                                 decoration: InputDecoration(
                                   hintText: widget.customers.shop_name,
                                   hintStyle: TextStyle(fontSize: 16.sp),
@@ -299,6 +317,9 @@ class _CustomerEditState extends State<CustomerEdit> {
                                 controller: bankNameController,
                                 textInputAction: TextInputAction.next,
                                 obscureText: false,
+                                onChanged: (value) {
+                                  setState(() {});
+                                },
                                 decoration: InputDecoration(
                                   hintText: widget.customers.bank_name,
                                   hintStyle: TextStyle(fontSize: 16.sp),
@@ -322,6 +343,9 @@ class _CustomerEditState extends State<CustomerEdit> {
                                 controller: bankNumberController,
                                 textInputAction: TextInputAction.next,
                                 obscureText: false,
+                                onChanged: (value) {
+                                  setState(() {});
+                                },
                                 decoration: InputDecoration(
                                   hintText: widget.customers.bank_number,
                                   hintStyle: TextStyle(fontSize: 16.sp),

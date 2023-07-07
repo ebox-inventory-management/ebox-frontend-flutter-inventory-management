@@ -4,6 +4,7 @@ import 'package:ebox_frontend_web_inventory/model/product.dart';
 import 'package:ebox_frontend_web_inventory/model/products.dart';
 import 'package:ebox_frontend_web_inventory/model/supplier.dart';
 import 'package:ebox_frontend_web_inventory/views/compound_products/widgets/product_compound/product_compound_card.dart';
+import 'package:ebox_frontend_web_inventory/views/compound_products/widgets/product_compound/product_compound_list.dart';
 
 import 'package:ebox_frontend_web_inventory/views/product/widgets/product_list.dart';
 import 'package:flutter/material.dart';
@@ -16,7 +17,7 @@ import '../../../model/brand.dart';
 import '../../product/widgets/product_card.dart';
 
 class CompoundProductDetail extends StatelessWidget {
-  final CompoundProducts compoundProducts;
+  final Compounds compoundProducts;
   final int index;
   const CompoundProductDetail(
       {super.key, required this.compoundProducts, required this.index});
@@ -73,7 +74,7 @@ class CompoundProductDetail extends StatelessWidget {
                           SizedBox(
                             width: 450.w,
                             child: Text(
-                              compoundProducts.name,
+                              compoundProducts.name!,
                               overflow: TextOverflow.ellipsis,
                               style: TextStyle(
                                   fontWeight: FontWeight.bold, fontSize: 30.sp),
@@ -94,7 +95,7 @@ class CompoundProductDetail extends StatelessWidget {
                             height: 30.w,
                           ),
                           Text(
-                            compoundProducts.description,
+                            compoundProducts.description!,
                             style:
                                 TextStyle(fontSize: 16.sp, color: Colors.grey),
                           ),
@@ -110,7 +111,7 @@ class CompoundProductDetail extends StatelessWidget {
                                     BorderRadius.all(Radius.circular(10.r))),
                             child: Center(
                               child: Text(
-                                'Create Date: ${compoundProducts.created_at}',
+                                'Create Date: ${compoundProducts.createdAt}',
                                 style: TextStyle(
                                     fontSize: 16.sp, color: Colors.white),
                               ),
@@ -128,7 +129,7 @@ class CompoundProductDetail extends StatelessWidget {
                                     BorderRadius.all(Radius.circular(10.r))),
                             child: Center(
                               child: Text(
-                                'Update Date: ${compoundProducts.updated_at}',
+                                'Update Date: ${compoundProducts.updatedAt}',
                                 style: TextStyle(
                                     fontSize: 16.sp, color: Colors.white),
                               ),
@@ -136,72 +137,8 @@ class CompoundProductDetail extends StatelessWidget {
                           ),
                         ],
                       ),
-                      Container(
-                        width: 0.4.sw,
-                        decoration: BoxDecoration(
-                            color: Colors.grey[100],
-                            borderRadius:
-                                BorderRadius.all(Radius.circular(15.r))),
-                        child: Column(
-                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                          crossAxisAlignment: CrossAxisAlignment.end,
-                          children: [
-                            ListView.separated(
-                              physics: const BouncingScrollPhysics(),
-                              scrollDirection: Axis.vertical,
-                              itemCount: compoundProducts.product_id.length,
-                              shrinkWrap: true,
-                              padding: REdgeInsets.all(15.r),
-                              itemBuilder: (context, index) {
-                                return ProductCompoundCard(
-                                  product: Products(
-                                      id: compoundProducts.product_id[index],
-                                      product_name:
-                                          compoundProducts.product_name[index],
-                                      product_url:
-                                          compoundProducts.product_url[index],
-                                      product_amount: compoundProducts
-                                          .product_amount[index],
-                                      product_code:
-                                          compoundProducts.product_code[index],
-                                      product_quantity: compoundProducts
-                                          .product_quantity[index],
-                                      product_garage: compoundProducts
-                                          .product_garage[index],
-                                      product_route:
-                                          compoundProducts.product_route[index],
-                                      product_image:
-                                          compoundProducts.product_image[index],
-                                      expire_date:
-                                          compoundProducts.expire_date[index],
-                                      import_price:
-                                          compoundProducts.import_price[index],
-                                      export_price:
-                                          compoundProducts.export_price[index],
-                                      created_at: compoundProducts
-                                          .product_created_at[index],
-                                      updated_at: compoundProducts
-                                          .product_updated_at[index],
-                                      category_id:
-                                          compoundProducts.category_id[index],
-                                      supplier_id:
-                                          compoundProducts.supplier_id[index],
-                                      brand_id:
-                                          compoundProducts.brand_id[index]),
-                                  price: compoundProducts.price,
-                                  quantity: compoundProducts
-                                      .pivot_compound_product_quantity[index],
-                                );
-                              },
-                              separatorBuilder:
-                                  (BuildContext context, int index) {
-                                return SizedBox(
-                                  height: 15.w,
-                                );
-                              },
-                            )
-                          ],
-                        ),
+                      ProductCompoundList(
+                        productsCompounds: compoundProducts.products!,
                       ),
                     ],
                   )

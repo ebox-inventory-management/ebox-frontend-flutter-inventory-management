@@ -50,6 +50,8 @@ dependencies:
   dio: ^5.2.1+1
   email_validator: ^2.1.17
   qr_flutter: ^4.0.0
+  url_launcher: ^6.1.11
+  web_scraper: ^0.1.4
 
 dev_dependencies:
   flutter_test:

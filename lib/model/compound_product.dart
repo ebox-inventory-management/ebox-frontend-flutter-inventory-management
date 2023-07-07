@@ -12,6 +12,7 @@ class CompoundProduct {
   final String description;
   final List<int> product_id;
   final List<String> product_url;
+  final List<String> unit;
 
   final List<String> product_name;
   final List<int> product_quantity;
@@ -33,6 +34,7 @@ class CompoundProduct {
   final List<int> compound_product_quantity;
 
   CompoundProduct({
+    required this.unit,
     required this.compound_id,
     required this.product_url,
     required this.products_id,
@@ -69,6 +71,8 @@ class CompoundProduct {
             List<int>.from(data['products'].map((data) => data['id'] ?? 0)),
         product_name: List<String>.from(
             data['products'].map((data) => data['product_name'] ?? 'Not Yet')),
+        unit: List<String>.from(
+            data['products'].map((data) => data['unit'] ?? 'Not Yet')),
         brand_id: List<int>.from(
             data['products'].map((data) => data['brand_id'] ?? 0)),
         import_price: List<int>.from(

@@ -145,6 +145,9 @@ class _SupplierAddState extends State<SupplierAdd> {
                                 // },
                                 textInputAction: TextInputAction.next,
                                 obscureText: false,
+                                onChanged: (index) {
+                                  setState(() {});
+                                },
                                 decoration: InputDecoration(
                                   border: OutlineInputBorder(
                                     borderRadius: BorderRadius.circular(10.0.r),
@@ -166,6 +169,9 @@ class _SupplierAddState extends State<SupplierAdd> {
                                 controller: emailController,
                                 textInputAction: TextInputAction.next,
                                 obscureText: false,
+                                onChanged: (index) {
+                                  setState(() {});
+                                },
                                 decoration: InputDecoration(
                                   border: OutlineInputBorder(
                                     borderRadius: BorderRadius.circular(10.0.r),
@@ -187,6 +193,9 @@ class _SupplierAddState extends State<SupplierAdd> {
                                 controller: phoneController,
                                 textInputAction: TextInputAction.next,
                                 obscureText: false,
+                                onChanged: (index) {
+                                  setState(() {});
+                                },
                                 inputFormatters: <TextInputFormatter>[
                                   FilteringTextInputFormatter.allow(
                                       RegExp(r'[0-9,-]')),
@@ -212,6 +221,9 @@ class _SupplierAddState extends State<SupplierAdd> {
                                 controller: addressController,
                                 textInputAction: TextInputAction.next,
                                 obscureText: false,
+                                onChanged: (index) {
+                                  setState(() {});
+                                },
                                 decoration: InputDecoration(
                                   border: OutlineInputBorder(
                                     borderRadius: BorderRadius.circular(10.0.r),
@@ -233,6 +245,9 @@ class _SupplierAddState extends State<SupplierAdd> {
                                 controller: cityController,
                                 textInputAction: TextInputAction.next,
                                 obscureText: false,
+                                onChanged: (index) {
+                                  setState(() {});
+                                },
                                 decoration: InputDecoration(
                                   border: OutlineInputBorder(
                                     borderRadius: BorderRadius.circular(10.0.r),
@@ -254,6 +269,9 @@ class _SupplierAddState extends State<SupplierAdd> {
                                 controller: typeController,
                                 textInputAction: TextInputAction.next,
                                 obscureText: false,
+                                onChanged: (index) {
+                                  setState(() {});
+                                },
                                 decoration: InputDecoration(
                                   border: OutlineInputBorder(
                                     borderRadius: BorderRadius.circular(10.0.r),
@@ -275,6 +293,9 @@ class _SupplierAddState extends State<SupplierAdd> {
                                 controller: shopNameController,
                                 textInputAction: TextInputAction.next,
                                 obscureText: false,
+                                onChanged: (index) {
+                                  setState(() {});
+                                },
                                 decoration: InputDecoration(
                                   border: OutlineInputBorder(
                                     borderRadius: BorderRadius.circular(10.0.r),
@@ -296,6 +317,9 @@ class _SupplierAddState extends State<SupplierAdd> {
                                 controller: bankNameController,
                                 textInputAction: TextInputAction.next,
                                 obscureText: false,
+                                onChanged: (index) {
+                                  setState(() {});
+                                },
                                 decoration: InputDecoration(
                                   border: OutlineInputBorder(
                                     borderRadius: BorderRadius.circular(10.0.r),
@@ -317,6 +341,9 @@ class _SupplierAddState extends State<SupplierAdd> {
                                 controller: bankNumberController,
                                 textInputAction: TextInputAction.next,
                                 obscureText: false,
+                                onChanged: (index) {
+                                  setState(() {});
+                                },
                                 decoration: InputDecoration(
                                   border: OutlineInputBorder(
                                     borderRadius: BorderRadius.circular(10.0.r),

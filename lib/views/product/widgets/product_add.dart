@@ -182,6 +182,9 @@ class _ProductAddState extends State<ProductAdd> {
                                 controller: productNameController,
                                 textInputAction: TextInputAction.next,
                                 obscureText: false,
+                                onChanged: (value) {
+                                  setState(() {});
+                                },
                                 decoration: InputDecoration(
                                   border: OutlineInputBorder(
                                     borderRadius: BorderRadius.circular(10.0.r),
@@ -202,6 +205,9 @@ class _ProductAddState extends State<ProductAdd> {
                               child: TextFormField(
                                 controller: importPriceController,
                                 keyboardType: TextInputType.number,
+                                onChanged: (value) {
+                                  setState(() {});
+                                },
                                 inputFormatters: <TextInputFormatter>[
                                   FilteringTextInputFormatter.digitsOnly
                                 ],
@@ -225,6 +231,9 @@ class _ProductAddState extends State<ProductAdd> {
                               child: TextFormField(
                                 controller: exportPriceController,
                                 keyboardType: TextInputType.number,
+                                onChanged: (value) {
+                                  setState(() {});
+                                },
                                 inputFormatters: <TextInputFormatter>[
                                   FilteringTextInputFormatter.digitsOnly
                                 ],
@@ -248,6 +257,9 @@ class _ProductAddState extends State<ProductAdd> {
                               child: TextFormField(
                                 controller: productCodeController,
                                 textInputAction: TextInputAction.next,
+                                onChanged: (value) {
+                                  setState(() {});
+                                },
                                 obscureText: false,
                                 decoration: InputDecoration(
                                   border: OutlineInputBorder(
@@ -268,6 +280,9 @@ class _ProductAddState extends State<ProductAdd> {
                               width: 0.4.sw,
                               child: TextFormField(
                                 controller: productGarageController,
+                                onChanged: (value) {
+                                  setState(() {});
+                                },
                                 textInputAction: TextInputAction.next,
                                 obscureText: false,
                                 decoration: InputDecoration(
@@ -289,6 +304,9 @@ class _ProductAddState extends State<ProductAdd> {
                               width: 0.4.sw,
                               child: TextFormField(
                                 controller: productRouteController,
+                                onChanged: (value) {
+                                  setState(() {});
+                                },
                                 textInputAction: TextInputAction.next,
                                 obscureText: false,
                                 decoration: InputDecoration(
@@ -487,6 +505,9 @@ class _ProductAddState extends State<ProductAdd> {
                                     readOnly: true,
                                     onTap: () async {
                                       _selectExpireDate(context);
+                                    },
+                                    onChanged: (value) {
+                                      setState(() {});
                                     },
                                     decoration: InputDecoration(
                                       fillColor: Colors.white,

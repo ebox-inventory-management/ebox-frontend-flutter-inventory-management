@@ -120,7 +120,6 @@ class AuthController extends GetxController {
   void signUp(
       {required String name,
       required String email,
-      required String role,
       required PlatformFile image,
       required String password,
       required String password_confirmation}) async {
@@ -136,7 +135,6 @@ class AuthController extends GetxController {
         name: name,
         image: image,
         password_confirmation: password_confirmation,
-        role: role,
       );
       if (result.statusCode == 200) {
         String token = json.decode(result.body)['token'];

@@ -92,6 +92,9 @@ class _ImportProductAddState extends State<ImportProductAdd> {
                             FilteringTextInputFormatter.allow(
                                 RegExp(r'[0-9,-]')),
                           ],
+                          onChanged: (value) {
+                            setState(() {});
+                          },
                           decoration: InputDecoration(
                             border: OutlineInputBorder(
                               borderRadius: BorderRadius.circular(10.0.r),

@@ -422,17 +422,18 @@ class _SupplierEditState extends State<SupplierEdit> {
                   Center(
                     child: TextButton(
                       onPressed: () {
-                        if (bankNameController.text.isEmpty ||
+                        if (_imageFile == null ||
                             addressController.text.isEmpty ||
-                            phoneController.text.isEmpty ||
+                            bankNameController.text.isEmpty ||
                             bankNumberController.text.isEmpty ||
-                            nameController.text.isEmpty ||
                             cityController.text.isEmpty ||
+                            emailController.text.isEmpty ||
+                            nameController.text.isEmpty ||
+                            phoneController.text.isEmpty ||
                             shopNameController.text.isEmpty ||
-                            _imageFile == null ||
                             typeController.text.isEmpty) {
                           Get.snackbar('Something wrong!',
-                              'You need to input all supplier information to update',
+                              'You need to change image to update ${widget.suppliers.name}',
                               colorText: Colors.white,
                               margin: REdgeInsets.all(15),
                               backgroundColor: Colors.redAccent,
@@ -456,17 +457,18 @@ class _SupplierEditState extends State<SupplierEdit> {
                       },
                       style: TextButton.styleFrom(
                           foregroundColor: Colors.white,
-                          backgroundColor: bankNameController.text.isEmpty ||
+                          backgroundColor: _imageFile == null ||
                                   addressController.text.isEmpty ||
-                                  phoneController.text.isEmpty ||
+                                  bankNameController.text.isEmpty ||
                                   bankNumberController.text.isEmpty ||
-                                  nameController.text.isEmpty ||
                                   cityController.text.isEmpty ||
+                                  emailController.text.isEmpty ||
+                                  nameController.text.isEmpty ||
+                                  phoneController.text.isEmpty ||
                                   shopNameController.text.isEmpty ||
-                                  _imageFile == null ||
                                   typeController.text.isEmpty
                               ? Colors.grey
-                              : Colors.orange,
+                              : Colors.green,
                           shape: RoundedRectangleBorder(
                               borderRadius:
                                   BorderRadius.all(Radius.circular(15.r)))),
