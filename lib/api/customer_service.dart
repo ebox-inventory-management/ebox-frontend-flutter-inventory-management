@@ -139,6 +139,13 @@ class RemoteCustomerService {
           backgroundColor: Colors.redAccent,
           snackPosition: SnackPosition.BOTTOM,
           duration: const Duration(seconds: 2));
+    } else if (response.statusCode == 400) {
+      Get.snackbar('Something wrong!', 'Only admin can access',
+          colorText: Colors.white,
+          margin: REdgeInsets.all(15.r),
+          backgroundColor: Colors.redAccent,
+          snackPosition: SnackPosition.BOTTOM,
+          duration: const Duration(seconds: 2));
     } else if (response.statusCode == 200) {
       Get.snackbar('Updated Customer!', 'You have been update customer'.tr,
           colorText: Colors.white,

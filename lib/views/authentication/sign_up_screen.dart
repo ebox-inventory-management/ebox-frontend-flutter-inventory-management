@@ -237,11 +237,10 @@ class _SignUpScreenState extends State<SignUpScreen> {
                               backgroundColor:
                                   MaterialStateProperty.all(Colors.orange)),
                           onPressed: () {
-                            if (emailController.text.isEmail ||
-                                passwordController.text.isValidPassword ||
+                            if (emailController.text.isEmpty ||
+                                passwordController.text.isEmpty ||
                                 usernameController.text.isEmpty ||
-                                passwordConfirmationController
-                                    .text.isValidPassword ||
+                                passwordConfirmationController.text.isEmpty ||
                                 _imageFile == null) {
                               Get.snackbar('Something wrong!',
                                   'You need to input all information to sign up',
