@@ -84,6 +84,7 @@ class RemoteProductService {
     required int supplier_id,
     required int brand_id,
     required String product_name,
+    required String description,
     required String product_code,
     required String product_garage,
     required String product_route,
@@ -97,6 +98,7 @@ class RemoteProductService {
     final base64Image = base64Encode(product_image.bytes!);
 
     var body = {
+      "description": description,
       "category_id": category_id,
       "supplier_id": supplier_id,
       "brand_id": brand_id,
@@ -236,6 +238,7 @@ class RemoteProductService {
     required int supplier_id,
     required int brand_id,
     required String product_name,
+    required String description,
     required String product_code,
     required String product_garage,
     required String product_route,
@@ -247,6 +250,7 @@ class RemoteProductService {
   }) async {
     final base64Image = base64Encode(product_image.bytes!);
     var body = {
+      "description": description,
       "category_id": category_id,
       "supplier_id": supplier_id,
       "brand_id": brand_id,

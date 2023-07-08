@@ -259,6 +259,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
                                   image: _imageFile!,
                                   password_confirmation:
                                       passwordConfirmationController.text,
+                                  role: '',
                                 );
                               } else {
                                 Get.snackbar('Something wrong!',

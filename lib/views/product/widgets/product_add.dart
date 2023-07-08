@@ -100,6 +100,8 @@ class _ProductAddState extends State<ProductAdd> {
   }
 
   TextEditingController productNameController = TextEditingController();
+  TextEditingController descriptionController = TextEditingController();
+
   TextEditingController productCodeController = TextEditingController();
   TextEditingController productGarageController = TextEditingController();
   TextEditingController productRouteController = TextEditingController();
@@ -117,6 +119,7 @@ class _ProductAddState extends State<ProductAdd> {
     expireDateController.dispose();
     importPriceController.dispose();
     exportPriceController.dispose();
+    descriptionController.dispose();
   }
 
   @override
@@ -180,6 +183,30 @@ class _ProductAddState extends State<ProductAdd> {
                               width: 0.4.sw,
                               child: TextFormField(
                                 controller: productNameController,
+                                textInputAction: TextInputAction.next,
+                                obscureText: false,
+                                onChanged: (value) {
+                                  setState(() {});
+                                },
+                                decoration: InputDecoration(
+                                  border: OutlineInputBorder(
+                                    borderRadius: BorderRadius.circular(10.0.r),
+                                  ),
+                                ),
+                              ),
+                            ),
+                          ),
+                          Text(
+                            'Description',
+                            style: TextStyle(
+                                fontWeight: FontWeight.bold, fontSize: 14.sp),
+                          ),
+                          Padding(
+                            padding: REdgeInsets.only(bottom: 30.r, top: 10.r),
+                            child: SizedBox(
+                              width: 0.4.sw,
+                              child: TextFormField(
+                                controller: descriptionController,
                                 textInputAction: TextInputAction.next,
                                 obscureText: false,
                                 onChanged: (value) {
@@ -584,6 +611,7 @@ class _ProductAddState extends State<ProductAdd> {
                             expire_date: _selectedExpireDate.toString(),
                             import_price: int.parse(importPriceController.text),
                             export_price: int.parse(exportPriceController.text),
+                            description: descriptionController.text,
                           );
                         }
                       },

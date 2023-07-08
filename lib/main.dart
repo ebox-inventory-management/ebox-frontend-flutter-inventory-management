@@ -53,7 +53,7 @@ class MyApp extends StatelessWidget {
             getPages: [
               GetPage(name: '/signin', page: () => SignInScreen()),
               GetPage(name: '/navigation', page: () => NavigationBarScreen()),
-              GetPage(name: '/signup', page: () => SignUpScreen()),
+              // GetPage(name: '/signup', page: () => SignUpScreen()),
             ],
             debugShowCheckedModeBanner: false,
             title: 'eBox Inventory Management',

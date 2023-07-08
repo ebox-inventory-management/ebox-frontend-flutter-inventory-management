@@ -77,11 +77,13 @@ class RemoteAuthService {
       {required String email,
       required String name,
       required String password,
+      required String role,
       required PlatformFile image,
       required String password_confirmation}) async {
     final base64Image = base64Encode(image.bytes!);
 
     var body = {
+      "role": role,
       "name": name,
       "email": email,
       "password": password,
