@@ -12,6 +12,7 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 import 'package:intl/intl.dart';
 import 'package:qr_flutter/qr_flutter.dart';
+import 'package:readmore/readmore.dart';
 import 'package:url_launcher/url_launcher.dart';
 import 'package:web_scraper/web_scraper.dart';
 import 'dart:ui' as ui;
@@ -114,14 +115,24 @@ class _ProductDetailState extends State<ProductDetail> {
                           SizedBox(
                             height: 15.w,
                           ),
-                          Text(
-                            widget.product.description,
-                            overflow: TextOverflow.ellipsis,
-                            style: TextStyle(
-                                fontWeight: FontWeight.w500,
-                                fontSize: 18.sp,
-                                color: Colors.red),
-                          ),
+                          SizedBox(
+                              width: 0.4.sw,
+                              child: ReadMoreText(
+                                widget.product.description,
+                                trimLines: 3,
+                                colorClickableText: Colors.grey,
+                                lessStyle: TextStyle(
+                                    fontSize: 16.sp,
+                                    fontWeight: FontWeight.bold),
+                                moreStyle: TextStyle(
+                                    fontSize: 16.sp,
+                                    fontWeight: FontWeight.bold),
+                                trimMode: TrimMode.Line,
+                                trimCollapsedText: 'Show more',
+                                trimExpandedText: 'Show less',
+                                style: TextStyle(
+                                    fontSize: 16.sp, color: Colors.grey),
+                              )),
                           SizedBox(
                             height: 15.w,
                           ),
@@ -168,56 +179,24 @@ class _ProductDetailState extends State<ProductDetail> {
                           ),
                           Text(
                             'Product Code: ${widget.product.product_code}',
-                            style:
-                                TextStyle(fontSize: 16.sp, color: Colors.grey),
+                            style: TextStyle(fontSize: 16.sp),
                           ),
                           SizedBox(
                             height: 10.w,
                           ),
                           Text(
                             'Product Garage: ${widget.product.product_garage}',
-                            style:
-                                TextStyle(fontSize: 16.sp, color: Colors.grey),
+                            style: TextStyle(fontSize: 16.sp),
                           ),
                           SizedBox(
                             height: 10.w,
                           ),
                           Text(
                             'Product Route: ${widget.product.product_route}',
-                            style:
-                                TextStyle(fontSize: 16.sp, color: Colors.grey),
+                            style: TextStyle(fontSize: 16.sp),
                           ),
                           SizedBox(
                             height: 30.w,
-                          ),
-                          GestureDetector(
-                            onTap: () async {
-                              await launch(
-                                widget.product.product_url,
-                                forceSafariVC: false,
-                                forceWebView: true,
-                                headers: <String, String>{
-                                  'my_header_key': 'my_header_value'
-                                },
-                              );
-                            },
-                            child: Container(
-                              width: 200.w,
-                              height: 60.w,
-                              decoration: BoxDecoration(
-                                  color: Colors.orange,
-                                  borderRadius:
-                                      BorderRadius.all(Radius.circular(15.r))),
-                              child: Center(
-                                child: Text(
-                                  'View',
-                                  style: TextStyle(
-                                      fontSize: 16.sp,
-                                      color: Colors.white,
-                                      fontWeight: FontWeight.w500),
-                                ),
-                              ),
-                            ),
                           ),
                           RepaintBoundary(
                             key: _qrKey,
