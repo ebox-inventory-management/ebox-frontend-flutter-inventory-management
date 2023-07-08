@@ -61,40 +61,47 @@ class SupplierCard extends StatelessWidget {
               ),
             ),
             Spacer(),
-            Padding(
-              padding: REdgeInsets.all(15.r),
-              child: Row(
-                children: [
-                  IconButton(
-                      onPressed: () {
-                        Get.dialog(SupplierEdit(suppliers: suppliers));
-                      },
-                      icon: Icon(Icons.edit, color: Colors.blue, size: 25.r)),
-                  IconButton(
-                      onPressed: () {
-                        AwesomeDialog(
-                          context: context,
-                          width: 600.w,
-                          dialogType: DialogType.warning,
-                          animType: AnimType.bottomSlide,
-                          title: 'WARNING'.tr,
-                          desc:
-                              'Are you sure you want to delete ${suppliers.name}?'
-                                  .tr,
-                          btnCancelOnPress: () {},
-                          btnOkOnPress: () {
-                            supplierController.delete(id: suppliers.id);
+            Obx(() {
+              if (authController.user.value!.role != 'admin') {
+                return SizedBox();
+              } else {
+                return Padding(
+                  padding: REdgeInsets.all(15.r),
+                  child: Row(
+                    children: [
+                      IconButton(
+                          onPressed: () {
+                            Get.dialog(SupplierEdit(suppliers: suppliers));
                           },
-                        ).show();
-                      },
-                      icon: Icon(
-                        Icons.delete,
-                        color: Colors.red,
-                        size: 25.r,
-                      ))
-                ],
-              ),
-            )
+                          icon:
+                              Icon(Icons.edit, color: Colors.blue, size: 25.r)),
+                      IconButton(
+                          onPressed: () {
+                            AwesomeDialog(
+                              context: context,
+                              width: 600.w,
+                              dialogType: DialogType.warning,
+                              animType: AnimType.bottomSlide,
+                              title: 'WARNING'.tr,
+                              desc:
+                                  'Are you sure you want to delete ${suppliers.name}?'
+                                      .tr,
+                              btnCancelOnPress: () {},
+                              btnOkOnPress: () {
+                                supplierController.delete(id: suppliers.id);
+                              },
+                            ).show();
+                          },
+                          icon: Icon(
+                            Icons.delete,
+                            color: Colors.red,
+                            size: 25.r,
+                          ))
+                    ],
+                  ),
+                );
+              }
+            }),
           ],
         ),
       ),

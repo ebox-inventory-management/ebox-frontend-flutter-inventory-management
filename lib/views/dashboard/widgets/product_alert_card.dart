@@ -73,42 +73,49 @@ class _ProductAlertCardState extends State<ProductAlertCard> {
                 ),
               ),
               Spacer(),
-              Padding(
-                padding: REdgeInsets.all(15.r),
-                child: Row(
-                  children: [
-                    IconButton(
-                        onPressed: () {
-                          Get.dialog(ProductEdit(products: widget.product));
-                        },
-                        icon: Icon(Icons.edit, color: Colors.blue, size: 25.r)),
-                    IconButton(
-                        onPressed: () {
-                          AwesomeDialog(
-                            context: context,
-                            width: 600.w,
-                            dialogType: DialogType.warning,
-                            animType: AnimType.bottomSlide,
-                            title: 'WARNING'.tr,
-                            desc:
-                                'Are you sure you want to delete ${widget.product.product_name}?'
-                                    .tr,
-                            btnCancelOnPress: () {},
-                            btnOkOnPress: () {
-                              productController.deleteProduct(
-                                  id: widget.product.id,
-                                  name: widget.product.product_name);
+              Obx(() {
+                if (authController.user.value!.role != 'admin') {
+                  return SizedBox();
+                } else {
+                  return Padding(
+                    padding: REdgeInsets.all(15.r),
+                    child: Row(
+                      children: [
+                        IconButton(
+                            onPressed: () {
+                              Get.dialog(ProductEdit(products: widget.product));
                             },
-                          ).show();
-                        },
-                        icon: Icon(
-                          Icons.delete,
-                          color: Colors.red,
-                          size: 25.r,
-                        ))
-                  ],
-                ),
-              )
+                            icon: Icon(Icons.edit,
+                                color: Colors.blue, size: 25.r)),
+                        IconButton(
+                            onPressed: () {
+                              AwesomeDialog(
+                                context: context,
+                                width: 600.w,
+                                dialogType: DialogType.warning,
+                                animType: AnimType.bottomSlide,
+                                title: 'WARNING'.tr,
+                                desc:
+                                    'Are you sure you want to delete ${widget.product.product_name}?'
+                                        .tr,
+                                btnCancelOnPress: () {},
+                                btnOkOnPress: () {
+                                  productController.deleteProduct(
+                                      id: widget.product.id,
+                                      name: widget.product.product_name);
+                                },
+                              ).show();
+                            },
+                            icon: Icon(
+                              Icons.delete,
+                              color: Colors.red,
+                              size: 25.r,
+                            ))
+                      ],
+                    ),
+                  );
+                }
+              }),
             ],
           ),
         ),

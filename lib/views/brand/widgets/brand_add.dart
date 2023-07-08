@@ -107,8 +107,8 @@ class _BrandAddState extends State<BrandAdd> {
                               colorText: Colors.white,
                               margin: REdgeInsets.all(15),
                               backgroundColor: Colors.redAccent,
-                              snackPosition: SnackPosition.BOTTOM,
-                              duration: const Duration(seconds: 2));
+                              snackPosition: SnackPosition.TOP,
+                              duration: const Duration(seconds: 30));
                           return;
                         } else {
                           brandController.create(

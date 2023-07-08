@@ -19,6 +19,83 @@ class UserList extends StatelessWidget {
   Widget build(BuildContext context) {
     return Column(
       children: [
+        Row(
+          children: [
+            Icon(
+              Icons.person,
+              size: 30.r,
+            ),
+            SizedBox(
+              width: 10.w,
+            ),
+            Text(
+              'User',
+              style: TextStyle(fontWeight: FontWeight.bold, fontSize: 30.sp),
+            ),
+          ],
+        ),
+        Padding(
+          padding: REdgeInsets.only(top: 15.w, bottom: 15.r),
+          child: Divider(
+            color: Colors.black.withOpacity(0.1),
+            thickness: 5.w,
+          ),
+        ),
+        Material(
+          borderRadius: BorderRadius.circular(15),
+          child: Obx(
+            () => TextField(
+              controller: authController.searchUsersController,
+              onSubmitted: (value) {
+                authController.getUsersByKeyword(keyword: value);
+              },
+              onChanged: (value) {
+                if (value.isEmpty) {
+                  authController.getUsers();
+                } else {
+                  authController.searchVal.value = value;
+                }
+              },
+              cursorColor: Colors.orange,
+              decoration: InputDecoration(
+                prefixIconColor: Colors.grey,
+                prefixIcon: Icon(
+                  Icons.search,
+                  size: 20.r,
+                ),
+                suffixIconColor: Colors.grey,
+                suffixIcon: authController.searchVal.value.isNotEmpty
+                    ? IconButton(
+                        onPressed: () {
+                          FocusScope.of(context).requestFocus(FocusNode());
+
+                          authController.searchUsersController.clear();
+                          authController.searchVal.value = '';
+                          authController.getUsers();
+                        },
+                        icon: Icon(
+                          Icons.clear,
+                          size: 20.r,
+                        ))
+                    : null,
+                filled: true,
+                fillColor: Colors.white,
+                hintText: 'Search user'.tr,
+                hintStyle: TextStyle(
+                    fontSize: 12.sp,
+                    color: Colors.grey,
+                    fontWeight: FontWeight.w300),
+                contentPadding: REdgeInsets.only(top: 30),
+                focusedBorder: OutlineInputBorder(
+                    borderSide: const BorderSide(color: Colors.white),
+                    borderRadius: BorderRadius.circular(30.r)),
+                enabledBorder: OutlineInputBorder(
+                    borderSide: const BorderSide(color: Colors.white),
+                    borderRadius: BorderRadius.circular(30.r)),
+              ),
+            ),
+          ),
+        ),
         Padding(
           padding: REdgeInsets.only(top: 30.w, bottom: 15.w),
           child: Row(

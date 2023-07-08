@@ -57,38 +57,44 @@ class ImportScreen extends StatelessWidget {
                         fontSize: 20.sp,
                         color: Colors.grey),
                   ),
-                  TextButton(
-                      onPressed: () {
-                        Get.dialog(const ImportProductAdd());
-                      },
-                      style: TextButton.styleFrom(
-                        foregroundColor: Colors.white,
-                        backgroundColor: Colors.green,
-                        shape: RoundedRectangleBorder(
-                            borderRadius:
-                                BorderRadius.all(Radius.circular(15.r))),
-                      ),
-                      child: Padding(
-                        padding: REdgeInsets.all(15.r),
-                        child: Row(
-                          children: [
-                            Icon(
-                              Icons.download,
-                              size: 30.r,
+                  Obx(() {
+                    if (authController.user.value!.role != 'admin') {
+                      return SizedBox();
+                    } else {
+                      return TextButton(
+                          onPressed: () {
+                            Get.dialog(const ImportProductAdd());
+                          },
+                          style: TextButton.styleFrom(
+                            foregroundColor: Colors.white,
+                            backgroundColor: Colors.green,
+                            shape: RoundedRectangleBorder(
+                                borderRadius:
+                                    BorderRadius.all(Radius.circular(15.r))),
+                          ),
+                          child: Padding(
+                            padding: REdgeInsets.all(15.r),
+                            child: Row(
+                              children: [
+                                Icon(
+                                  Icons.download,
+                                  size: 30.r,
+                                ),
+                                SizedBox(
+                                  width: 5.w,
+                                ),
+                                Text(
+                                  'Import Product',
+                                  style: TextStyle(
+                                    fontWeight: FontWeight.w500,
+                                    fontSize: 14.sp,
+                                  ),
+                                ),
+                              ],
                             ),
-                            SizedBox(
-                              width: 5.w,
-                            ),
-                            Text(
-                              'Import Product',
-                              style: TextStyle(
-                                fontWeight: FontWeight.w500,
-                                fontSize: 14.sp,
-                              ),
-                            ),
-                          ],
-                        ),
-                      ))
+                          ));
+                    }
+                  }),
                 ],
               ),
             ),

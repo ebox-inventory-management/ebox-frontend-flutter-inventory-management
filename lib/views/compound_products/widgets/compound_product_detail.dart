@@ -88,8 +88,8 @@ class CompoundProductDetail extends StatelessWidget {
                             '\$${compoundProducts.price}',
                             overflow: TextOverflow.ellipsis,
                             style: TextStyle(
-                                fontWeight: FontWeight.w500,
-                                fontSize: 18.sp,
+                                fontWeight: FontWeight.bold,
+                                fontSize: 24.sp,
                                 color: Colors.red),
                           ),
                           SizedBox(

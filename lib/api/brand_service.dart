@@ -32,15 +32,15 @@ class RemoteBrandService {
           colorText: Colors.white,
           margin: REdgeInsets.all(15.r),
           backgroundColor: Colors.redAccent,
-          snackPosition: SnackPosition.BOTTOM,
-          duration: const Duration(seconds: 2));
+          snackPosition: SnackPosition.TOP,
+          duration: const Duration(seconds: 30));
     } else if (response.statusCode == 200) {
       Get.snackbar('Added Brand!', 'You have been add brand'.tr,
           colorText: Colors.white,
           margin: REdgeInsets.all(15.r),
           backgroundColor: Colors.green,
-          snackPosition: SnackPosition.BOTTOM,
-          duration: const Duration(seconds: 2));
+          snackPosition: SnackPosition.TOP,
+          duration: const Duration(seconds: 30));
 
       Get.offAndToNamed('/navigation');
     } else if (response.statusCode == 400) {
@@ -48,15 +48,15 @@ class RemoteBrandService {
           colorText: Colors.white,
           margin: REdgeInsets.all(15.r),
           backgroundColor: Colors.redAccent,
-          snackPosition: SnackPosition.BOTTOM,
-          duration: const Duration(seconds: 2));
+          snackPosition: SnackPosition.TOP,
+          duration: const Duration(seconds: 30));
     } else {
       Get.snackbar('Something wrong!', 'Add brand is not working right now',
           colorText: Colors.white,
           margin: REdgeInsets.all(15.r),
           backgroundColor: Colors.redAccent,
-          snackPosition: SnackPosition.BOTTOM,
-          duration: const Duration(seconds: 2));
+          snackPosition: SnackPosition.TOP,
+          duration: const Duration(seconds: 30));
     }
 
     brandController.getBrands();
@@ -85,22 +85,22 @@ class RemoteBrandService {
           colorText: Colors.white,
           margin: REdgeInsets.all(15.r),
           backgroundColor: Colors.redAccent,
-          snackPosition: SnackPosition.BOTTOM,
-          duration: const Duration(seconds: 2));
+          snackPosition: SnackPosition.TOP,
+          duration: const Duration(seconds: 30));
     } else if (response.statusCode == 400) {
       Get.snackbar('Something wrong!', 'Only admin can access',
           colorText: Colors.white,
           margin: REdgeInsets.all(15.r),
           backgroundColor: Colors.redAccent,
-          snackPosition: SnackPosition.BOTTOM,
-          duration: const Duration(seconds: 2));
+          snackPosition: SnackPosition.TOP,
+          duration: const Duration(seconds: 30));
     } else if (response.statusCode == 200) {
       Get.snackbar('Updated Brand!', 'You have been update brand'.tr,
           colorText: Colors.white,
           margin: REdgeInsets.all(15.r),
           backgroundColor: Colors.green,
-          snackPosition: SnackPosition.BOTTOM,
-          duration: const Duration(seconds: 2));
+          snackPosition: SnackPosition.TOP,
+          duration: const Duration(seconds: 30));
 
       Get.offAndToNamed('/navigation');
     } else {
@@ -108,8 +108,8 @@ class RemoteBrandService {
           colorText: Colors.white,
           margin: REdgeInsets.all(15.r),
           backgroundColor: Colors.redAccent,
-          snackPosition: SnackPosition.BOTTOM,
-          duration: const Duration(seconds: 2));
+          snackPosition: SnackPosition.TOP,
+          duration: const Duration(seconds: 30));
     }
 
     brandController.getBrands();
@@ -175,8 +175,8 @@ class RemoteBrandService {
           colorText: Colors.white,
           margin: REdgeInsets.all(15.r),
           backgroundColor: Colors.redAccent,
-          snackPosition: SnackPosition.BOTTOM,
-          duration: const Duration(seconds: 2));
+          snackPosition: SnackPosition.TOP,
+          duration: const Duration(seconds: 30));
     }
     return response;
   }
@@ -197,22 +197,22 @@ class RemoteBrandService {
           colorText: Colors.white,
           margin: REdgeInsets.all(15.r),
           backgroundColor: Colors.green,
-          snackPosition: SnackPosition.BOTTOM,
-          duration: const Duration(seconds: 2));
+          snackPosition: SnackPosition.TOP,
+          duration: const Duration(seconds: 30));
     } else if (response.statusCode == 400) {
       Get.snackbar('Something wrong!', 'Only admin can access',
           colorText: Colors.white,
           margin: REdgeInsets.all(15.r),
           backgroundColor: Colors.redAccent,
-          snackPosition: SnackPosition.BOTTOM,
-          duration: const Duration(seconds: 2));
+          snackPosition: SnackPosition.TOP,
+          duration: const Duration(seconds: 30));
     } else {
       Get.snackbar('Something wrong!', 'Delete brand is not working right now',
           colorText: Colors.white,
           margin: REdgeInsets.all(15.r),
           backgroundColor: Colors.redAccent,
-          snackPosition: SnackPosition.BOTTOM,
-          duration: const Duration(seconds: 2));
+          snackPosition: SnackPosition.TOP,
+          duration: const Duration(seconds: 30));
     }
     brandController.getBrands();
     return response;

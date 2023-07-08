@@ -54,16 +54,16 @@ class RemoteAuthService {
           colorText: Colors.white,
           margin: REdgeInsets.all(15.r),
           backgroundColor: Colors.green,
-          snackPosition: SnackPosition.BOTTOM,
-          duration: const Duration(seconds: 2));
+          snackPosition: SnackPosition.TOP,
+          duration: const Duration(seconds: 30));
       Get.offAndToNamed('/navigation');
     } else {
       Get.snackbar('Something wrong!', 'Update is not working right now',
           colorText: Colors.white,
           margin: REdgeInsets.all(15.r),
           backgroundColor: Colors.redAccent,
-          snackPosition: SnackPosition.BOTTOM,
-          duration: const Duration(seconds: 2));
+          snackPosition: SnackPosition.TOP,
+          duration: const Duration(seconds: 30));
     }
     authController.getUsers();
     authController.checkToken();
@@ -96,22 +96,21 @@ class RemoteAuthService {
       body: jsonEncode(body),
     );
     if (response.statusCode == 200) {
-      Get.snackbar(
-          'SignUp Successful!', 'Welcome to eBox Inventory Management'.tr,
+      Get.snackbar('Successful!', 'Added user ${name}'.tr,
           colorText: Colors.white,
           margin: REdgeInsets.all(15.r),
           backgroundColor: Colors.green,
-          snackPosition: SnackPosition.BOTTOM,
-          duration: const Duration(seconds: 2));
+          snackPosition: SnackPosition.TOP,
+          duration: const Duration(seconds: 30));
 
       Get.offAndToNamed('/navigation');
     } else {
-      Get.snackbar('Something wrong!', 'SignUp is not working right now',
+      Get.snackbar('Something wrong!', 'Add user is not working right now',
           colorText: Colors.white,
           margin: REdgeInsets.all(15.r),
           backgroundColor: Colors.redAccent,
-          snackPosition: SnackPosition.BOTTOM,
-          duration: const Duration(seconds: 2));
+          snackPosition: SnackPosition.TOP,
+          duration: const Duration(seconds: 30));
     }
     print(response.statusCode);
     return response;
@@ -135,8 +134,8 @@ class RemoteAuthService {
           colorText: Colors.white,
           margin: REdgeInsets.all(15.r),
           backgroundColor: Colors.redAccent,
-          snackPosition: SnackPosition.BOTTOM,
-          duration: const Duration(seconds: 2));
+          snackPosition: SnackPosition.TOP,
+          duration: const Duration(seconds: 30));
     }
     return response;
   }
@@ -197,15 +196,15 @@ class RemoteAuthService {
           colorText: Colors.white,
           margin: REdgeInsets.all(15.r),
           backgroundColor: Colors.green,
-          snackPosition: SnackPosition.BOTTOM,
-          duration: const Duration(seconds: 2));
+          snackPosition: SnackPosition.TOP,
+          duration: const Duration(seconds: 30));
     } else {
       Get.snackbar('Something wrong!', 'Delete user is not working right now',
           colorText: Colors.white,
           margin: REdgeInsets.all(15.r),
           backgroundColor: Colors.redAccent,
-          snackPosition: SnackPosition.BOTTOM,
-          duration: const Duration(seconds: 2));
+          snackPosition: SnackPosition.TOP,
+          duration: const Duration(seconds: 30));
     }
     authController.getUsers();
     return response;

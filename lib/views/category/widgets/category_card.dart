@@ -52,40 +52,46 @@ class CategoryCard extends StatelessWidget {
             ),
           ),
           Spacer(),
-          Padding(
-            padding: REdgeInsets.all(15.r),
-            child: Row(
-              children: [
-                IconButton(
-                    onPressed: () {
-                      Get.dialog(CategoryEdit(categories: categories));
-                    },
-                    icon: Icon(Icons.edit, color: Colors.blue, size: 25.r)),
-                IconButton(
-                    onPressed: () {
-                      AwesomeDialog(
-                        context: context,
-                        width: 600.w,
-                        dialogType: DialogType.warning,
-                        animType: AnimType.bottomSlide,
-                        title: 'WARNING'.tr,
-                        desc:
-                            'Are you sure you want to delete ${categories.name}?'
-                                .tr,
-                        btnCancelOnPress: () {},
-                        btnOkOnPress: () {
-                          categoryController.delete(id: categories.id);
+          Obx(() {
+            if (authController.user.value!.role != 'admin') {
+              return SizedBox();
+            } else {
+              return Padding(
+                padding: REdgeInsets.all(15.r),
+                child: Row(
+                  children: [
+                    IconButton(
+                        onPressed: () {
+                          Get.dialog(CategoryEdit(categories: categories));
                         },
-                      ).show();
-                    },
-                    icon: Icon(
-                      Icons.delete,
-                      color: Colors.red,
-                      size: 25.r,
-                    ))
-              ],
-            ),
-          )
+                        icon: Icon(Icons.edit, color: Colors.blue, size: 25.r)),
+                    IconButton(
+                        onPressed: () {
+                          AwesomeDialog(
+                            context: context,
+                            width: 600.w,
+                            dialogType: DialogType.warning,
+                            animType: AnimType.bottomSlide,
+                            title: 'WARNING'.tr,
+                            desc:
+                                'Are you sure you want to delete ${categories.name}?'
+                                    .tr,
+                            btnCancelOnPress: () {},
+                            btnOkOnPress: () {
+                              categoryController.delete(id: categories.id);
+                            },
+                          ).show();
+                        },
+                        icon: Icon(
+                          Icons.delete,
+                          color: Colors.red,
+                          size: 25.r,
+                        ))
+                  ],
+                ),
+              );
+            }
+          }),
         ],
       ),
     );

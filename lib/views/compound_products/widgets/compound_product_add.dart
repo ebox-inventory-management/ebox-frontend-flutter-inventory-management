@@ -41,6 +41,14 @@ class _CompoundProductAddState extends State<CompoundProductAdd> {
   }
 
   @override
+  void initState() {
+    super.initState();
+    setState(() {
+      compoundProductController.productsCompound.clear();
+    });
+  }
+
+  @override
   Widget build(BuildContext context) {
     return Center(
       child: Container(
@@ -253,86 +261,106 @@ class _CompoundProductAddState extends State<CompoundProductAdd> {
                         ),
                       ],
                     ),
-                    Center(
-                      child: TextButton(
-                        onPressed: () {
-                          if (nameController.text.isEmpty ||
-                              compoundProductController
-                                  .productsCompoundIdWithQuantity.isEmpty ||
-                              descriptionController.text.isEmpty) {
-                            print(compoundProductController
-                                .productWithQuantityJson);
-                            Get.snackbar('Something wrong!',
-                                'You need to input all compound product information to add',
-                                colorText: Colors.white,
-                                margin: REdgeInsets.all(15.r),
-                                backgroundColor: Colors.redAccent,
-                                snackPosition: SnackPosition.BOTTOM,
-                                duration: const Duration(seconds: 2));
-                            return;
-                          } else {
-                            compoundProductController.createCompoundProduct(
-                              description: descriptionController.text,
-                              name: nameController.text,
-                              price: compoundProductController.totalPrice,
-                              productCompound: compoundProductController
-                                  .productWithQuantityJson,
-                            );
-                          }
-                        },
-                        style: TextButton.styleFrom(
-                            foregroundColor: Colors.white,
-                            backgroundColor: nameController.text.isEmpty ||
-                                    compoundProductController
-                                        .productsCompoundIdWithQuantity
-                                        .isEmpty ||
-                                    descriptionController.text.isEmpty
-                                ? Colors.grey
-                                : Colors.green,
-                            shape: RoundedRectangleBorder(
-                                borderRadius:
-                                    BorderRadius.all(Radius.circular(15.r)))),
-                        child: Padding(
-                          padding: REdgeInsets.only(
-                              top: 15.r, bottom: 15.r, left: 30.r, right: 30.r),
-                          child: Text(
-                            'Add',
-                            style: TextStyle(fontSize: 20.sp),
-                          ),
-                        ),
-                      ),
-                    )
                   ],
                 ),
               ),
             ),
-            floatingActionButton: SizedBox(
-              width: 200.w,
-              child: FloatingActionButton(
-                onPressed: () {},
-                shape: RoundedRectangleBorder(
-                    borderRadius: BorderRadius.all(Radius.circular(15.r))),
-                backgroundColor: Colors.orange,
-                foregroundColor: Colors.white,
-                child: Obx(() {
-                  if (compoundProductController.productsCompound.isEmpty) {
-                    return Text(
-                      'Total',
-                      style: TextStyle(
-                          fontSize: 20.sp, fontWeight: FontWeight.bold),
-                    );
-                  } else {
-                    return Text(
-                      'Total: \$${compoundProductController.totalPrice ?? 0}',
-                      style: TextStyle(
-                          fontSize: 20.sp, fontWeight: FontWeight.bold),
-                    );
-                  }
-                }),
+            floatingActionButton: Padding(
+              padding: REdgeInsets.all(15.r),
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  Obx(() {
+                    if (compoundProductController.productsCompound.isEmpty) {
+                      return Container(
+                        decoration: BoxDecoration(
+                            color: Colors.orange,
+                            borderRadius:
+                                BorderRadius.all(Radius.circular(15.r))),
+                        child: Padding(
+                          padding: REdgeInsets.all(15.r),
+                          child: Text(
+                            'Total',
+                            style: TextStyle(
+                                fontSize: 20.sp,
+                                fontWeight: FontWeight.bold,
+                                color: Colors.white),
+                          ),
+                        ),
+                      );
+                    } else {
+                      return Container(
+                        decoration: BoxDecoration(
+                            color: Colors.orange,
+                            borderRadius:
+                                BorderRadius.all(Radius.circular(15.r))),
+                        child: Padding(
+                          padding: REdgeInsets.all(15.r),
+                          child: Text(
+                            'Total: \$${compoundProductController.totalPrice ?? 0}',
+                            style: TextStyle(
+                                fontSize: 20.sp,
+                                fontWeight: FontWeight.bold,
+                                color: Colors.white),
+                          ),
+                        ),
+                      );
+                    }
+                  }),
+                  SizedBox(
+                    width: 30.w,
+                  ),
+                  TextButton(
+                    onPressed: () {
+                      if (nameController.text.isEmpty ||
+                          compoundProductController
+                              .productsCompoundIdWithQuantity.isEmpty ||
+                          descriptionController.text.isEmpty) {
+                        print(
+                            compoundProductController.productWithQuantityJson);
+                        Get.snackbar('Something wrong!',
+                            'You need to input all compound product information to add',
+                            colorText: Colors.white,
+                            margin: REdgeInsets.all(15.r),
+                            backgroundColor: Colors.redAccent,
+                            snackPosition: SnackPosition.TOP,
+                            duration: const Duration(seconds: 30));
+                        return;
+                      } else {
+                        compoundProductController.createCompoundProduct(
+                          description: descriptionController.text,
+                          name: nameController.text,
+                          price: compoundProductController.totalPrice,
+                          productCompound:
+                              compoundProductController.productWithQuantityJson,
+                        );
+                      }
+                    },
+                    style: TextButton.styleFrom(
+                        foregroundColor: Colors.white,
+                        backgroundColor: nameController.text.isEmpty ||
+                                compoundProductController
+                                    .productsCompoundIdWithQuantity.isEmpty ||
+                                descriptionController.text.isEmpty
+                            ? Colors.grey
+                            : Colors.green,
+                        shape: RoundedRectangleBorder(
+                            borderRadius:
+                                BorderRadius.all(Radius.circular(15.r)))),
+                    child: Padding(
+                      padding: REdgeInsets.only(
+                          top: 15.r, bottom: 15.r, left: 30.r, right: 30.r),
+                      child: Text(
+                        'Add',
+                        style: TextStyle(fontSize: 20.sp),
+                      ),
+                    ),
+                  ),
+                ],
               ),
             ),
             floatingActionButtonLocation:
-                FloatingActionButtonLocation.startFloat,
+                FloatingActionButtonLocation.centerFloat,
           ),
         ),
       ),

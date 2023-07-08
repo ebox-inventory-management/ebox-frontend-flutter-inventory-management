@@ -1,5 +1,6 @@
 import 'package:awesome_dialog/awesome_dialog.dart';
 import 'package:ebox_frontend_web_inventory/controller/controllers.dart';
+import 'package:ebox_frontend_web_inventory/model/users.dart';
 import 'package:ebox_frontend_web_inventory/views/category/category_screen.dart';
 
 import 'package:ebox_frontend_web_inventory/views/dashboard/dashboard_screen.dart';
@@ -222,6 +223,36 @@ class CustomeSidebarX extends StatelessWidget {
         return Column(
           crossAxisAlignment: CrossAxisAlignment.center,
           children: [
+            Obx(() {
+              if (authController.user.value!.role != 'admin') {
+                return SizedBox();
+              } else {
+                return Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    SizedBox(),
+                    IconButton(
+                        onPressed: () {
+                          Get.dialog(UserEdit(
+                              users: Users(
+                                  id: authController.user.value!.id,
+                                  email: authController.user.value!.email,
+                                  role: authController.user.value!.role,
+                                  name: authController.user.value!.name,
+                                  image: authController.user.value!.image,
+                                  created_at:
+                                      authController.user.value!.created_at,
+                                  updated_at:
+                                      authController.user.value!.updated_at)));
+                        },
+                        icon: Icon(
+                          Icons.edit,
+                          color: Colors.blue,
+                        ))
+                  ],
+                );
+              }
+            }),
             SizedBox(
               height: 15.h,
             ),
