@@ -82,7 +82,7 @@ class _ProductCompoundCardState extends State<ProductCompoundCard> {
             ),
             Spacer(),
             Text(
-              '\$${widget.product.export_price}',
+              '\$${widget.product.export_price * widget.quantity}',
               style: TextStyle(
                   color: Colors.red,
                   fontWeight: FontWeight.w500,

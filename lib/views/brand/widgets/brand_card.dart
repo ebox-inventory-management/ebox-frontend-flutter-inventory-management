@@ -53,39 +53,46 @@ class BrandCard extends StatelessWidget {
             ),
           ),
           Spacer(),
-          Padding(
-            padding: REdgeInsets.all(15.r),
-            child: Row(
-              children: [
-                IconButton(
-                    onPressed: () {
-                      Get.dialog(BrandEdit(brands: brands));
-                    },
-                    icon: Icon(Icons.edit, color: Colors.blue, size: 25.r)),
-                IconButton(
-                    onPressed: () {
-                      AwesomeDialog(
-                        context: context,
-                        width: 600.w,
-                        dialogType: DialogType.warning,
-                        animType: AnimType.bottomSlide,
-                        title: 'WARNING'.tr,
-                        desc: 'Are you sure you want to delete ${brands.name}?'
-                            .tr,
-                        btnCancelOnPress: () {},
-                        btnOkOnPress: () {
-                          brandController.deleteBrand(id: brands.id);
+          Obx(() {
+            if (authController.user.value!.role != 'admin') {
+              return SizedBox();
+            } else {
+              return Padding(
+                padding: REdgeInsets.all(15.r),
+                child: Row(
+                  children: [
+                    IconButton(
+                        onPressed: () {
+                          Get.dialog(BrandEdit(brands: brands));
                         },
-                      ).show();
-                    },
-                    icon: Icon(
-                      Icons.delete,
-                      color: Colors.red,
-                      size: 25.r,
-                    ))
-              ],
-            ),
-          )
+                        icon: Icon(Icons.edit, color: Colors.blue, size: 25.r)),
+                    IconButton(
+                        onPressed: () {
+                          AwesomeDialog(
+                            context: context,
+                            width: 600.w,
+                            dialogType: DialogType.warning,
+                            animType: AnimType.bottomSlide,
+                            title: 'WARNING'.tr,
+                            desc:
+                                'Are you sure you want to delete ${brands.name}?'
+                                    .tr,
+                            btnCancelOnPress: () {},
+                            btnOkOnPress: () {
+                              brandController.deleteBrand(id: brands.id);
+                            },
+                          ).show();
+                        },
+                        icon: Icon(
+                          Icons.delete,
+                          color: Colors.red,
+                          size: 25.r,
+                        ))
+                  ],
+                ),
+              );
+            }
+          }),
         ],
       ),
     );

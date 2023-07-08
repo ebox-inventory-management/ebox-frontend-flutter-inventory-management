@@ -77,33 +77,6 @@ class _ImportProductAddState extends State<ImportProductAdd> {
                       ),
                     ),
                     Text(
-                      'Product Quantity',
-                      style: TextStyle(
-                          fontWeight: FontWeight.bold, fontSize: 14.sp),
-                    ),
-                    Padding(
-                      padding: REdgeInsets.only(bottom: 30.r, top: 10.r),
-                      child: SizedBox(
-                        width: 0.4.sw,
-                        child: TextFormField(
-                          controller: importQuantityController,
-                          keyboardType: TextInputType.number,
-                          inputFormatters: <TextInputFormatter>[
-                            FilteringTextInputFormatter.allow(
-                                RegExp(r'[0-9,-]')),
-                          ],
-                          onChanged: (value) {
-                            setState(() {});
-                          },
-                          decoration: InputDecoration(
-                            border: OutlineInputBorder(
-                              borderRadius: BorderRadius.circular(10.0.r),
-                            ),
-                          ),
-                        ),
-                      ),
-                    ),
-                    Text(
                       'Product',
                       style: TextStyle(
                           fontWeight: FontWeight.bold, fontSize: 14.sp),
@@ -139,6 +112,33 @@ class _ImportProductAddState extends State<ImportProductAdd> {
                         },
                       ),
                     ),
+                    Text(
+                      'Product Quantity',
+                      style: TextStyle(
+                          fontWeight: FontWeight.bold, fontSize: 14.sp),
+                    ),
+                    Padding(
+                      padding: REdgeInsets.only(bottom: 30.r, top: 10.r),
+                      child: SizedBox(
+                        width: 0.4.sw,
+                        child: TextFormField(
+                          controller: importQuantityController,
+                          keyboardType: TextInputType.number,
+                          inputFormatters: <TextInputFormatter>[
+                            FilteringTextInputFormatter.allow(
+                                RegExp(r'[0-9,-]')),
+                          ],
+                          onChanged: (value) {
+                            setState(() {});
+                          },
+                          decoration: InputDecoration(
+                            border: OutlineInputBorder(
+                              borderRadius: BorderRadius.circular(10.0.r),
+                            ),
+                          ),
+                        ),
+                      ),
+                    ),
                     Center(
                       child: TextButton(
                         onPressed: () {
@@ -149,8 +149,8 @@ class _ImportProductAddState extends State<ImportProductAdd> {
                                 colorText: Colors.white,
                                 margin: REdgeInsets.all(15),
                                 backgroundColor: Colors.redAccent,
-                                snackPosition: SnackPosition.BOTTOM,
-                                duration: const Duration(seconds: 2));
+                                snackPosition: SnackPosition.TOP,
+                                duration: const Duration(seconds: 30));
                             return;
                           } else {
                             importController.create(

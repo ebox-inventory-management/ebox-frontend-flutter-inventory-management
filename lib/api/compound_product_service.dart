@@ -48,16 +48,16 @@ class RemoteCompoundProductService {
           colorText: Colors.white,
           margin: REdgeInsets.all(15.r),
           backgroundColor: Colors.redAccent,
-          snackPosition: SnackPosition.BOTTOM,
-          duration: const Duration(seconds: 2));
+          snackPosition: SnackPosition.TOP,
+          duration: const Duration(seconds: 30));
     } else if (response.statusCode == 200) {
       Get.snackbar('Updated Compound Product!',
           'You have been update compound product'.tr,
           colorText: Colors.white,
           margin: REdgeInsets.all(15.r),
           backgroundColor: Colors.green,
-          snackPosition: SnackPosition.BOTTOM,
-          duration: const Duration(seconds: 2));
+          snackPosition: SnackPosition.TOP,
+          duration: const Duration(seconds: 30));
 
       Get.offAndToNamed('/navigation');
     } else if (response.statusCode == 400) {
@@ -65,16 +65,16 @@ class RemoteCompoundProductService {
           colorText: Colors.white,
           margin: REdgeInsets.all(15.r),
           backgroundColor: Colors.redAccent,
-          snackPosition: SnackPosition.BOTTOM,
-          duration: const Duration(seconds: 2));
+          snackPosition: SnackPosition.TOP,
+          duration: const Duration(seconds: 30));
     } else {
       Get.snackbar('Something wrong!',
           'Update Compound product is not working right now',
           colorText: Colors.white,
           margin: REdgeInsets.all(15.r),
           backgroundColor: Colors.redAccent,
-          snackPosition: SnackPosition.BOTTOM,
-          duration: const Duration(seconds: 2));
+          snackPosition: SnackPosition.TOP,
+          duration: const Duration(seconds: 30));
     }
   }
 
@@ -97,22 +97,22 @@ class RemoteCompoundProductService {
           colorText: Colors.white,
           margin: REdgeInsets.all(15.r),
           backgroundColor: Colors.green,
-          snackPosition: SnackPosition.BOTTOM,
-          duration: const Duration(seconds: 2));
+          snackPosition: SnackPosition.TOP,
+          duration: const Duration(seconds: 30));
     } else if (response.statusCode == 400) {
       Get.snackbar('Something wrong!', 'Only admin can access',
           colorText: Colors.white,
           margin: REdgeInsets.all(15.r),
           backgroundColor: Colors.redAccent,
-          snackPosition: SnackPosition.BOTTOM,
-          duration: const Duration(seconds: 2));
+          snackPosition: SnackPosition.TOP,
+          duration: const Duration(seconds: 30));
     } else {
       Get.snackbar('Something wrong!', 'Delete $name is not working right now',
           colorText: Colors.white,
           margin: REdgeInsets.all(15.r),
           backgroundColor: Colors.redAccent,
-          snackPosition: SnackPosition.BOTTOM,
-          duration: const Duration(seconds: 2));
+          snackPosition: SnackPosition.TOP,
+          duration: const Duration(seconds: 30));
     }
     compoundProductController.getCompoundProducts();
     print(response.statusCode);
@@ -192,23 +192,23 @@ class RemoteCompoundProductService {
           colorText: Colors.white,
           margin: REdgeInsets.all(15.r),
           backgroundColor: Colors.redAccent,
-          snackPosition: SnackPosition.BOTTOM,
-          duration: const Duration(seconds: 2));
+          snackPosition: SnackPosition.TOP,
+          duration: const Duration(seconds: 30));
     } else if (response.statusCode == 400) {
       Get.snackbar('Something wrong!', 'Only admin can access',
           colorText: Colors.white,
           margin: REdgeInsets.all(15.r),
           backgroundColor: Colors.redAccent,
-          snackPosition: SnackPosition.BOTTOM,
-          duration: const Duration(seconds: 2));
+          snackPosition: SnackPosition.TOP,
+          duration: const Duration(seconds: 30));
     } else if (response.statusCode == 200) {
       Get.snackbar(
           'Added Compound Product!', 'You have been add compound product'.tr,
           colorText: Colors.white,
           margin: REdgeInsets.all(15.r),
           backgroundColor: Colors.green,
-          snackPosition: SnackPosition.BOTTOM,
-          duration: const Duration(seconds: 2));
+          snackPosition: SnackPosition.TOP,
+          duration: const Duration(seconds: 30));
 
       Get.offAndToNamed('/navigation');
     } else {
@@ -217,8 +217,8 @@ class RemoteCompoundProductService {
           colorText: Colors.white,
           margin: REdgeInsets.all(15.r),
           backgroundColor: Colors.redAccent,
-          snackPosition: SnackPosition.BOTTOM,
-          duration: const Duration(seconds: 2));
+          snackPosition: SnackPosition.TOP,
+          duration: const Duration(seconds: 30));
     }
 
     print(response.statusCode);

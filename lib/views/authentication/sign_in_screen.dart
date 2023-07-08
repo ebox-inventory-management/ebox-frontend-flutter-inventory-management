@@ -93,8 +93,8 @@ class SignInScreen extends StatelessWidget {
                                 colorText: Colors.white,
                                 margin: REdgeInsets.all(15.r),
                                 backgroundColor: Colors.redAccent,
-                                snackPosition: SnackPosition.BOTTOM,
-                                duration: const Duration(seconds: 2));
+                                snackPosition: SnackPosition.TOP,
+                                duration: const Duration(seconds: 30));
                           } else {
                             authController.signIn(
                               email: emailController.text,

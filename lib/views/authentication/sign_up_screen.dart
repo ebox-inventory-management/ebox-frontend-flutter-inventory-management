@@ -267,8 +267,8 @@ class _SignUpScreenState extends State<SignUpScreen> {
                                     colorText: Colors.white,
                                     margin: REdgeInsets.all(15.r),
                                     backgroundColor: Colors.redAccent,
-                                    snackPosition: SnackPosition.BOTTOM,
-                                    duration: const Duration(seconds: 2));
+                                    snackPosition: SnackPosition.TOP,
+                                    duration: const Duration(seconds: 30));
                               }
                             }
                           },

@@ -104,47 +104,55 @@ class CompoundProductScreen extends StatelessWidget {
                 ),
               ),
             ),
-            Padding(
-              padding: REdgeInsets.only(top: 30.w, bottom: 15.w),
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: [
-                  SizedBox(),
-                  TextButton(
-                      onPressed: () {
-                        Get.dialog(const CompoundProductAdd());
-                      },
-                      style: TextButton.styleFrom(
-                        foregroundColor: Colors.white,
-                        backgroundColor: Colors.green,
-                        shape: RoundedRectangleBorder(
-                            borderRadius:
-                                BorderRadius.all(Radius.circular(15.r))),
-                      ),
-                      child: Padding(
-                        padding: REdgeInsets.all(15.r),
-                        child: Row(
-                          children: [
-                            Icon(
-                              Icons.add,
-                              size: 30.r,
+            Obx(() {
+              if (authController.user.value!.role != 'admin') {
+                return SizedBox(
+                  height: 30.w,
+                );
+              } else {
+                return Padding(
+                  padding: REdgeInsets.only(top: 30.w, bottom: 15.w),
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      SizedBox(),
+                      TextButton(
+                          onPressed: () {
+                            Get.dialog(const CompoundProductAdd());
+                          },
+                          style: TextButton.styleFrom(
+                            foregroundColor: Colors.white,
+                            backgroundColor: Colors.green,
+                            shape: RoundedRectangleBorder(
+                                borderRadius:
+                                    BorderRadius.all(Radius.circular(15.r))),
+                          ),
+                          child: Padding(
+                            padding: REdgeInsets.all(15.r),
+                            child: Row(
+                              children: [
+                                Icon(
+                                  Icons.add,
+                                  size: 30.r,
+                                ),
+                                SizedBox(
+                                  width: 5.w,
+                                ),
+                                Text(
+                                  'Add Compound Product',
+                                  style: TextStyle(
+                                    fontWeight: FontWeight.w500,
+                                    fontSize: 14.sp,
+                                  ),
+                                ),
+                              ],
                             ),
-                            SizedBox(
-                              width: 5.w,
-                            ),
-                            Text(
-                              'Add Compound Product',
-                              style: TextStyle(
-                                fontWeight: FontWeight.w500,
-                                fontSize: 14.sp,
-                              ),
-                            ),
-                          ],
-                        ),
-                      ))
-                ],
-              ),
-            ),
+                          ))
+                    ],
+                  ),
+                );
+              }
+            }),
             Obx(() {
               if (compoundProductController.isCompoundProductsLoading.value) {
                 return const Center(child: CircularProgressIndicator());

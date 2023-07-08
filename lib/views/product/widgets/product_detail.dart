@@ -5,6 +5,7 @@ import 'dart:typed_data';
 import 'package:ebox_frontend_web_inventory/model/category.dart';
 import 'package:ebox_frontend_web_inventory/model/products.dart';
 import 'package:ebox_frontend_web_inventory/model/supplier.dart';
+import 'package:ebox_frontend_web_inventory/views/product/widgets/product_data_card.dart';
 import 'package:file_picker/file_picker.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
@@ -140,9 +141,20 @@ class _ProductDetailState extends State<ProductDetail> {
                             'Quantity: ${widget.product.product_quantity}',
                             overflow: TextOverflow.ellipsis,
                             style: TextStyle(
-                                fontWeight: FontWeight.w500,
-                                fontSize: 18.sp,
-                                color: Colors.red),
+                              fontWeight: FontWeight.w500,
+                              fontSize: 18.sp,
+                            ),
+                          ),
+                          SizedBox(
+                            height: 5.w,
+                          ),
+                          Text(
+                            'Unit: ${widget.product.unit}',
+                            overflow: TextOverflow.ellipsis,
+                            style: TextStyle(
+                              fontWeight: FontWeight.w500,
+                              fontSize: 18.sp,
+                            ),
                           ),
                           SizedBox(
                             height: 5.w,
@@ -150,9 +162,9 @@ class _ProductDetailState extends State<ProductDetail> {
                           Text(
                             'Import Price: \$${widget.product.import_price}',
                             style: TextStyle(
-                                fontWeight: FontWeight.w500,
-                                fontSize: 18.sp,
-                                color: Colors.red),
+                              fontWeight: FontWeight.w500,
+                              fontSize: 18.sp,
+                            ),
                           ),
                           SizedBox(
                             height: 5.w,
@@ -160,9 +172,9 @@ class _ProductDetailState extends State<ProductDetail> {
                           Text(
                             'Export Price: \$${widget.product.export_price}',
                             style: TextStyle(
-                                fontWeight: FontWeight.w500,
-                                fontSize: 18.sp,
-                                color: Colors.red),
+                              fontWeight: FontWeight.w500,
+                              fontSize: 18.sp,
+                            ),
                           ),
                           SizedBox(
                             height: 5.w,
@@ -170,30 +182,9 @@ class _ProductDetailState extends State<ProductDetail> {
                           Text(
                             'Product amount: \$${widget.product.product_amount}',
                             style: TextStyle(
-                                fontWeight: FontWeight.w500,
-                                fontSize: 18.sp,
-                                color: Colors.red),
-                          ),
-                          SizedBox(
-                            height: 30.w,
-                          ),
-                          Text(
-                            'Product Code: ${widget.product.product_code}',
-                            style: TextStyle(fontSize: 16.sp),
-                          ),
-                          SizedBox(
-                            height: 10.w,
-                          ),
-                          Text(
-                            'Product Garage: ${widget.product.product_garage}',
-                            style: TextStyle(fontSize: 16.sp),
-                          ),
-                          SizedBox(
-                            height: 10.w,
-                          ),
-                          Text(
-                            'Product Route: ${widget.product.product_route}',
-                            style: TextStyle(fontSize: 16.sp),
+                              fontWeight: FontWeight.w500,
+                              fontSize: 18.sp,
+                            ),
                           ),
                           SizedBox(
                             height: 30.w,
@@ -226,6 +217,24 @@ class _ProductDetailState extends State<ProductDetail> {
                               ),
                             ),
                           ),
+                          ProductDataCard(
+                              name: 'Product Code',
+                              data: widget.product.product_code),
+                          ProductDataCard(
+                              name: 'Product Garage',
+                              data: widget.product.product_garage),
+                          ProductDataCard(
+                              name: 'Product Route',
+                              data: widget.product.product_route),
+                          ProductDataCard(
+                              name: 'Category',
+                              data: categoryController.category.value!.name),
+                          ProductDataCard(
+                              name: 'Supplier',
+                              data: supplierController.supplier.value!.name),
+                          ProductDataCard(
+                              name: 'Brand',
+                              data: brandController.brand.value!.name),
                           SizedBox(
                             height: 30.w,
                           ),
@@ -239,84 +248,6 @@ class _ProductDetailState extends State<ProductDetail> {
                             child: Center(
                               child: Text(
                                 'Expire Date: ${widget.product.expire_date}',
-                                style: TextStyle(
-                                    fontSize: 16.sp, color: Colors.white),
-                              ),
-                            ),
-                          ),
-                          SizedBox(
-                            height: 30.w,
-                          ),
-                          Text(
-                            'Category',
-                            style: TextStyle(
-                                fontWeight: FontWeight.w500, fontSize: 16.sp),
-                          ),
-                          SizedBox(
-                            height: 10.w,
-                          ),
-                          Container(
-                            width: 250.w,
-                            height: 50.w,
-                            decoration: BoxDecoration(
-                                color: Colors.orangeAccent,
-                                borderRadius:
-                                    BorderRadius.all(Radius.circular(10.r))),
-                            child: Center(
-                              child: Text(
-                                '${categoryController.category.value?.name}',
-                                style: TextStyle(
-                                    fontSize: 16.sp, color: Colors.white),
-                              ),
-                            ),
-                          ),
-                          SizedBox(
-                            height: 30.w,
-                          ),
-                          Text(
-                            'Supplier',
-                            style: TextStyle(
-                                fontWeight: FontWeight.w500, fontSize: 16.sp),
-                          ),
-                          SizedBox(
-                            height: 10.w,
-                          ),
-                          Container(
-                            width: 250.w,
-                            height: 50.w,
-                            decoration: BoxDecoration(
-                                color: Colors.orangeAccent,
-                                borderRadius:
-                                    BorderRadius.all(Radius.circular(10.r))),
-                            child: Center(
-                              child: Text(
-                                '${supplierController.supplier.value?.name}',
-                                style: TextStyle(
-                                    fontSize: 16.sp, color: Colors.white),
-                              ),
-                            ),
-                          ),
-                          SizedBox(
-                            height: 30.w,
-                          ),
-                          Text(
-                            'Brand',
-                            style: TextStyle(
-                                fontWeight: FontWeight.w500, fontSize: 16.sp),
-                          ),
-                          SizedBox(
-                            height: 10.w,
-                          ),
-                          Container(
-                            width: 250.w,
-                            height: 50.w,
-                            decoration: BoxDecoration(
-                                color: Colors.orangeAccent,
-                                borderRadius:
-                                    BorderRadius.all(Radius.circular(10.r))),
-                            child: Center(
-                              child: Text(
-                                '${brandController.brand.value?.name}',
                                 style: TextStyle(
                                     fontSize: 16.sp, color: Colors.white),
                               ),

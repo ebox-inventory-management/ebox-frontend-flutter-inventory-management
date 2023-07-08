@@ -47,8 +47,8 @@ class RemoteExportService {
           colorText: Colors.white,
           margin: REdgeInsets.all(15.r),
           backgroundColor: Colors.green,
-          snackPosition: SnackPosition.BOTTOM,
-          duration: const Duration(seconds: 2));
+          snackPosition: SnackPosition.TOP,
+          duration: const Duration(seconds: 30));
 
       Get.offAndToNamed('/navigation');
     } else if (response.statusCode == 400) {
@@ -56,16 +56,16 @@ class RemoteExportService {
           colorText: Colors.white,
           margin: REdgeInsets.all(15.r),
           backgroundColor: Colors.redAccent,
-          snackPosition: SnackPosition.BOTTOM,
-          duration: const Duration(seconds: 2));
+          snackPosition: SnackPosition.TOP,
+          duration: const Duration(seconds: 30));
     } else {
       Get.snackbar(
           'Something wrong!', 'Export product is not working right now',
           colorText: Colors.white,
           margin: REdgeInsets.all(15.r),
           backgroundColor: Colors.redAccent,
-          snackPosition: SnackPosition.BOTTOM,
-          duration: const Duration(seconds: 2));
+          snackPosition: SnackPosition.TOP,
+          duration: const Duration(seconds: 30));
     }
     exportController.getExports();
     productController.getProducts();

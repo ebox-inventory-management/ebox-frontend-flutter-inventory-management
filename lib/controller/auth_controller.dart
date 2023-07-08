@@ -157,6 +157,8 @@ class AuthController extends GetxController {
     required String password,
   }) async {
     try {
+      isUserLoading(true);
+
       EasyLoading.show(
         status: 'Loading...',
         dismissOnTap: false,
@@ -189,6 +191,7 @@ class AuthController extends GetxController {
       EasyLoading.showError('Something wrong. Try again!');
     } finally {
       EasyLoading.dismiss();
+      isUserLoading(false);
     }
   }
 

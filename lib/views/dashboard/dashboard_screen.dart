@@ -154,182 +154,199 @@ class _DashBoardScreenState extends State<DashBoardScreen> {
                   thickness: 5.w,
                 ),
               ),
-              Row(
-                crossAxisAlignment: CrossAxisAlignment.center,
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: [
-                  Row(
+              Obx(() {
+                if (authController.user.value!.role != 'admin') {
+                  return SizedBox();
+                } else {
+                  return Column(
                     children: [
-                      Icon(
-                        Icons.attach_money_sharp,
-                        color: Colors.orange,
-                        size: 30.r,
+                      Row(
+                        crossAxisAlignment: CrossAxisAlignment.center,
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        children: [
+                          Row(
+                            children: [
+                              Icon(
+                                Icons.attach_money_sharp,
+                                color: Colors.orange,
+                                size: 30.r,
+                              ),
+                              SizedBox(
+                                width: 5.w,
+                              ),
+                              Text(
+                                'Total',
+                                style: TextStyle(
+                                    fontWeight: FontWeight.w500,
+                                    color: Colors.orange,
+                                    fontSize: 20.sp),
+                              ),
+                            ],
+                          ),
+                          CustomDropdownButton2(
+                            buttonWidth: 0.2.sw,
+                            buttonHeight: 40.w,
+                            hint: 'Choose Date',
+                            dropdownItems: total,
+                            value: selectedValueTotal,
+                            buttonDecoration: BoxDecoration(
+                              borderRadius: BorderRadius.circular(15.r),
+                              color: Colors.white,
+                            ),
+                            dropdownWidth: 0.2.sw,
+                            dropdownDecoration: BoxDecoration(
+                              borderRadius: BorderRadius.circular(15.r),
+                              color: Colors.white,
+                            ),
+                            icon: Icon(
+                              Icons.arrow_drop_down,
+                              size: 40.r,
+                              color: Colors.orange,
+                            ),
+                            onChanged: (index) {
+                              setState(() {
+                                selectedValueTotal = index;
+                                if (selectedValueTotal == 'TODAY') {
+                                  tempIncomes = incomeController
+                                      .incomeToday.value?.today_income;
+                                  tempExpenses = expenseController
+                                      .expenseToday.value?.today_expense;
+                                  tempRevenue = revenueController
+                                      .revenueToday.value?.today_revenue;
+                                } else if (selectedValueTotal == 'THIS MONTH') {
+                                  tempIncomes = incomeController
+                                      .incomesMonth.value?.total
+                                      .toString();
+                                  tempExpenses = expenseController
+                                      .expenseMonth.value?.total
+                                      .toString();
+                                  tempRevenue = revenueController
+                                      .revenueMonth.value?.total
+                                      .toString();
+                                } else if (selectedValueTotal == 'THIS YEAR') {
+                                  tempIncomes = incomeController
+                                      .incomesYear.value?.total
+                                      .toString();
+                                  tempExpenses = expenseController
+                                      .expenseYear.value?.total
+                                      .toString();
+                                  tempRevenue = revenueController
+                                      .revenueYear.value?.total
+                                      .toString();
+                                }
+                              });
+                            },
+                          ),
+                        ],
                       ),
-                      SizedBox(
-                        width: 5.w,
+                      Padding(
+                        padding: REdgeInsets.only(top: 15.r, bottom: 15.r),
+                        child: Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                          crossAxisAlignment: CrossAxisAlignment.center,
+                          children: [
+                            Container(
+                              width: 380.w,
+                              height: 200.w,
+                              decoration: BoxDecoration(
+                                  borderRadius:
+                                      BorderRadius.all(Radius.circular(15.r)),
+                                  color: Colors.white),
+                              child: Padding(
+                                padding: REdgeInsets.all(20.r),
+                                child: Column(
+                                  crossAxisAlignment: CrossAxisAlignment.end,
+                                  mainAxisAlignment:
+                                      MainAxisAlignment.spaceBetween,
+                                  children: [
+                                    Text(
+                                      'INCOMES',
+                                      style: TextStyle(
+                                          fontSize: 16.sp, color: Colors.green),
+                                    ),
+                                    Center(
+                                      child: Text(
+                                        '\$$tempIncomes',
+                                        overflow: TextOverflow.ellipsis,
+                                        style: TextStyle(fontSize: 20.sp),
+                                      ),
+                                    ),
+                                    SizedBox()
+                                  ],
+                                ),
+                              ),
+                            ),
+                            Container(
+                              width: 380.w,
+                              height: 200.w,
+                              decoration: BoxDecoration(
+                                  borderRadius:
+                                      BorderRadius.all(Radius.circular(15.r)),
+                                  color: Colors.white),
+                              child: Padding(
+                                padding: REdgeInsets.all(20.r),
+                                child: Column(
+                                  crossAxisAlignment: CrossAxisAlignment.end,
+                                  mainAxisAlignment:
+                                      MainAxisAlignment.spaceBetween,
+                                  children: [
+                                    Text(
+                                      'EXPENSES',
+                                      style: TextStyle(
+                                          fontSize: 16.sp, color: Colors.red),
+                                    ),
+                                    Center(
+                                      child: Text(
+                                        '\$$tempExpenses',
+                                        overflow: TextOverflow.ellipsis,
+                                        style: TextStyle(fontSize: 20.sp),
+                                      ),
+                                    ),
+                                    SizedBox()
+                                  ],
+                                ),
+                              ),
+                            ),
+                            Container(
+                              width: 380.w,
+                              height: 200.w,
+                              decoration: BoxDecoration(
+                                  borderRadius:
+                                      BorderRadius.all(Radius.circular(15.r)),
+                                  color: Colors.white),
+                              child: Padding(
+                                padding: REdgeInsets.all(20.r),
+                                child: Column(
+                                  crossAxisAlignment: CrossAxisAlignment.end,
+                                  mainAxisAlignment:
+                                      MainAxisAlignment.spaceBetween,
+                                  children: [
+                                    Text(
+                                      'REVENUE',
+                                      style: TextStyle(
+                                          fontSize: 16.sp,
+                                          color: Colors.yellow),
+                                    ),
+                                    Center(
+                                      child: Text(
+                                        '\$$tempRevenue',
+                                        overflow: TextOverflow.ellipsis,
+                                        style: TextStyle(fontSize: 20.sp),
+                                      ),
+                                    ),
+                                    SizedBox()
+                                  ],
+                                ),
+                              ),
+                            ),
+                          ],
+                        ),
                       ),
-                      Text(
-                        'Total',
-                        style: TextStyle(
-                            fontWeight: FontWeight.w500,
-                            color: Colors.orange,
-                            fontSize: 20.sp),
-                      ),
+                      Divider(),
                     ],
-                  ),
-                  CustomDropdownButton2(
-                    buttonWidth: 0.2.sw,
-                    buttonHeight: 40.w,
-                    hint: 'Choose Date',
-                    dropdownItems: total,
-                    value: selectedValueTotal,
-                    buttonDecoration: BoxDecoration(
-                      borderRadius: BorderRadius.circular(15.r),
-                      color: Colors.white,
-                    ),
-                    dropdownWidth: 0.2.sw,
-                    dropdownDecoration: BoxDecoration(
-                      borderRadius: BorderRadius.circular(15.r),
-                      color: Colors.white,
-                    ),
-                    icon: Icon(
-                      Icons.arrow_drop_down,
-                      size: 40.r,
-                      color: Colors.orange,
-                    ),
-                    onChanged: (index) {
-                      setState(() {
-                        selectedValueTotal = index;
-                        if (selectedValueTotal == 'TODAY') {
-                          tempIncomes =
-                              incomeController.incomeToday.value?.today_income;
-                          tempExpenses = expenseController
-                              .expenseToday.value?.today_expense;
-                          tempRevenue = revenueController
-                              .revenueToday.value?.today_revenue;
-                        } else if (selectedValueTotal == 'THIS MONTH') {
-                          tempIncomes = incomeController
-                              .incomesMonth.value?.total
-                              .toString();
-                          tempExpenses = expenseController
-                              .expenseMonth.value?.total
-                              .toString();
-                          tempRevenue = revenueController
-                              .revenueMonth.value?.total
-                              .toString();
-                        } else if (selectedValueTotal == 'THIS YEAR') {
-                          tempIncomes = incomeController
-                              .incomesYear.value?.total
-                              .toString();
-                          tempExpenses = expenseController
-                              .expenseYear.value?.total
-                              .toString();
-                          tempRevenue = revenueController
-                              .revenueYear.value?.total
-                              .toString();
-                        }
-                      });
-                    },
-                  ),
-                ],
-              ),
-              Padding(
-                padding: REdgeInsets.only(top: 15.r, bottom: 15.r),
-                child: Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  crossAxisAlignment: CrossAxisAlignment.center,
-                  children: [
-                    Container(
-                      width: 380.w,
-                      height: 200.w,
-                      decoration: BoxDecoration(
-                          borderRadius: BorderRadius.all(Radius.circular(15.r)),
-                          color: Colors.white),
-                      child: Padding(
-                        padding: REdgeInsets.all(20.r),
-                        child: Column(
-                          crossAxisAlignment: CrossAxisAlignment.end,
-                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                          children: [
-                            Text(
-                              'INCOMES',
-                              style: TextStyle(
-                                  fontSize: 16.sp, color: Colors.green),
-                            ),
-                            Center(
-                              child: Text(
-                                '\$$tempIncomes',
-                                overflow: TextOverflow.ellipsis,
-                                style: TextStyle(fontSize: 20.sp),
-                              ),
-                            ),
-                            SizedBox()
-                          ],
-                        ),
-                      ),
-                    ),
-                    Container(
-                      width: 380.w,
-                      height: 200.w,
-                      decoration: BoxDecoration(
-                          borderRadius: BorderRadius.all(Radius.circular(15.r)),
-                          color: Colors.white),
-                      child: Padding(
-                        padding: REdgeInsets.all(20.r),
-                        child: Column(
-                          crossAxisAlignment: CrossAxisAlignment.end,
-                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                          children: [
-                            Text(
-                              'EXPENSES',
-                              style:
-                                  TextStyle(fontSize: 16.sp, color: Colors.red),
-                            ),
-                            Center(
-                              child: Text(
-                                '\$$tempExpenses',
-                                overflow: TextOverflow.ellipsis,
-                                style: TextStyle(fontSize: 20.sp),
-                              ),
-                            ),
-                            SizedBox()
-                          ],
-                        ),
-                      ),
-                    ),
-                    Container(
-                      width: 380.w,
-                      height: 200.w,
-                      decoration: BoxDecoration(
-                          borderRadius: BorderRadius.all(Radius.circular(15.r)),
-                          color: Colors.white),
-                      child: Padding(
-                        padding: REdgeInsets.all(20.r),
-                        child: Column(
-                          crossAxisAlignment: CrossAxisAlignment.end,
-                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                          children: [
-                            Text(
-                              'REVENUE',
-                              style: TextStyle(
-                                  fontSize: 16.sp, color: Colors.yellow),
-                            ),
-                            Center(
-                              child: Text(
-                                '\$$tempRevenue',
-                                overflow: TextOverflow.ellipsis,
-                                style: TextStyle(fontSize: 20.sp),
-                              ),
-                            ),
-                            SizedBox()
-                          ],
-                        ),
-                      ),
-                    ),
-                  ],
-                ),
-              ),
-              Divider(),
+                  );
+                }
+              }),
               Padding(
                 padding: REdgeInsets.only(top: 15.r, bottom: 15.r),
                 child: Row(
@@ -475,100 +492,112 @@ class _DashBoardScreenState extends State<DashBoardScreen> {
                   ],
                 ),
               ),
-              Container(
-                decoration: BoxDecoration(
-                    color: Colors.white,
-                    borderRadius: BorderRadius.all(Radius.circular(15.r))),
-                child: Padding(
-                  padding: REdgeInsets.all(15.r),
-                  child: SfCartesianChart(
-                    title: ChartTitle(
-                        text: 'Income, Expense and Revenue',
-                        textStyle: TextStyle(
-                            fontSize: 16.sp, fontWeight: FontWeight.bold)),
-                    primaryXAxis: DateTimeAxis(
-                        rangePadding: ChartRangePadding.auto,
-                        minimum: _selectedStartDate,
-                        maximum: _selectedEndDate),
-                    primaryYAxis: NumericAxis(),
-                    legend: Legend(isVisible: true),
-                    tooltipBehavior: TooltipBehavior(enable: true),
-                    zoomPanBehavior: ZoomPanBehavior(
-                      enableDoubleTapZooming: true,
+              Obx(() {
+                if (authController.user.value!.role != 'admin') {
+                  return SizedBox();
+                } else {
+                  return Container(
+                    decoration: BoxDecoration(
+                        color: Colors.white,
+                        borderRadius: BorderRadius.all(Radius.circular(15.r))),
+                    child: Padding(
+                      padding: REdgeInsets.all(15.r),
+                      child: SfCartesianChart(
+                        title: ChartTitle(
+                            text: 'Income, Expense and Revenue',
+                            textStyle: TextStyle(
+                                fontSize: 16.sp, fontWeight: FontWeight.bold)),
+                        primaryXAxis: DateTimeAxis(
+                            dateFormat: DateFormat(),
+                            rangePadding: ChartRangePadding.auto,
+                            minimum: _selectedStartDate,
+                            maximum: _selectedEndDate),
+                        primaryYAxis: NumericAxis(),
+                        legend: Legend(isVisible: true),
+                        tooltipBehavior: TooltipBehavior(enable: true),
+                        zoomPanBehavior: ZoomPanBehavior(
+                          enableDoubleTapZooming: true,
+                          enablePinching: true,
+                        ),
+                        series: <ChartSeries<dynamic, DateTime>>[
+                          SplineSeries<RangeIncomes, DateTime>(
+                              splineType: SplineType.monotonic,
+                              dataSource: incomeController.rangeIncomesList,
+                              color: Colors.blueAccent,
+                              isVisible: true,
+                              isVisibleInLegend: true,
+                              yAxisName: 'Income',
+                              xAxisName: 'Time',
+                              xValueMapper: (RangeIncomes data, _) =>
+                                  data.created_at,
+                              yValueMapper: (RangeIncomes data, _) =>
+                                  data.income_amount,
+                              name: 'Income',
+                              enableTooltip: true,
+                              markerSettings: MarkerSettings(
+                                  isVisible: true,
+                                  height: 4.w,
+                                  width: 4.w,
+                                  shape: DataMarkerType.circle,
+                                  color: Colors.white,
+                                  borderColor: Colors.black),
+                              dataLabelSettings: const DataLabelSettings(
+                                isVisible: true,
+                              )),
+                          SplineSeries<RangeExpenses, DateTime>(
+                              splineType: SplineType.monotonic,
+                              dataSource: expenseController.rangeExpensesList,
+                              color: Colors.redAccent,
+                              isVisible: true,
+                              isVisibleInLegend: true,
+                              yAxisName: 'Expense',
+                              xAxisName: 'Time',
+                              xValueMapper: (RangeExpenses data, _) =>
+                                  data.created_at,
+                              yValueMapper: (RangeExpenses data, _) =>
+                                  data.expense_amount,
+                              name: 'Expense',
+                              enableTooltip: true,
+                              markerSettings: MarkerSettings(
+                                  isVisible: true,
+                                  height: 4.w,
+                                  width: 4.w,
+                                  shape: DataMarkerType.circle,
+                                  color: Colors.white,
+                                  borderColor: Colors.black),
+                              dataLabelSettings: const DataLabelSettings(
+                                isVisible: true,
+                              )),
+                          SplineSeries<RangeRevenues, DateTime>(
+                              splineType: SplineType.monotonic,
+                              dataSource: revenueController.rangeRevenuesList,
+                              color: Colors.yellowAccent,
+                              isVisible: true,
+                              isVisibleInLegend: true,
+                              yAxisName: 'Revenue',
+                              xAxisName: 'Time',
+                              xValueMapper: (RangeRevenues data, _) =>
+                                  data.created_at,
+                              yValueMapper: (RangeRevenues data, _) =>
+                                  data.revenue,
+                              name: 'Revenue',
+                              enableTooltip: true,
+                              markerSettings: MarkerSettings(
+                                  isVisible: true,
+                                  height: 4.w,
+                                  width: 4.w,
+                                  shape: DataMarkerType.circle,
+                                  color: Colors.white,
+                                  borderColor: Colors.black),
+                              dataLabelSettings: const DataLabelSettings(
+                                isVisible: true,
+                              )),
+                        ],
+                      ),
                     ),
-                    series: <ChartSeries<dynamic, DateTime>>[
-                      LineSeries<RangeIncomes, DateTime>(
-                          dataSource: incomeController.rangeIncomesList,
-                          color: Colors.blueAccent,
-                          isVisible: true,
-                          isVisibleInLegend: true,
-                          yAxisName: 'Income',
-                          xAxisName: 'Time',
-                          xValueMapper: (RangeIncomes data, _) =>
-                              data.created_at,
-                          yValueMapper: (RangeIncomes data, _) =>
-                              data.income_amount,
-                          name: 'Income',
-                          enableTooltip: true,
-                          markerSettings: MarkerSettings(
-                              isVisible: true,
-                              height: 4.w,
-                              width: 4.w,
-                              shape: DataMarkerType.circle,
-                              color: Colors.white,
-                              borderColor: Colors.black),
-                          dataLabelSettings: const DataLabelSettings(
-                            isVisible: true,
-                          )),
-                      LineSeries<RangeExpenses, DateTime>(
-                          dataSource: expenseController.rangeExpensesList,
-                          color: Colors.redAccent,
-                          isVisible: true,
-                          isVisibleInLegend: true,
-                          yAxisName: 'Expense',
-                          xAxisName: 'Time',
-                          xValueMapper: (RangeExpenses data, _) =>
-                              data.created_at,
-                          yValueMapper: (RangeExpenses data, _) =>
-                              data.expense_amount,
-                          name: 'Expense',
-                          enableTooltip: true,
-                          markerSettings: MarkerSettings(
-                              isVisible: true,
-                              height: 4.w,
-                              width: 4.w,
-                              shape: DataMarkerType.circle,
-                              color: Colors.white,
-                              borderColor: Colors.black),
-                          dataLabelSettings: const DataLabelSettings(
-                            isVisible: true,
-                          )),
-                      LineSeries<RangeRevenues, DateTime>(
-                          dataSource: revenueController.rangeRevenuesList,
-                          color: Colors.yellowAccent,
-                          isVisible: true,
-                          isVisibleInLegend: true,
-                          yAxisName: 'Revenue',
-                          xAxisName: 'Time',
-                          xValueMapper: (RangeRevenues data, _) =>
-                              data.created_at,
-                          yValueMapper: (RangeRevenues data, _) => data.revenue,
-                          name: 'Revenue',
-                          enableTooltip: true,
-                          markerSettings: MarkerSettings(
-                              isVisible: true,
-                              height: 4.w,
-                              width: 4.w,
-                              shape: DataMarkerType.circle,
-                              color: Colors.white,
-                              borderColor: Colors.black),
-                          dataLabelSettings: const DataLabelSettings(
-                            isVisible: true,
-                          )),
-                    ],
-                  ),
-                ),
-              ),
+                  );
+                }
+              }),
               Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
@@ -586,6 +615,7 @@ class _DashBoardScreenState extends State<DashBoardScreen> {
                                 fontSize: 16.sp, fontWeight: FontWeight.bold)),
                         legend: Legend(isVisible: true),
                         primaryXAxis: DateTimeAxis(
+                            dateFormat: DateFormat(),
                             rangePadding: ChartRangePadding.auto,
                             minimum: _selectedStartDate,
                             maximum: _selectedEndDate),
@@ -593,9 +623,11 @@ class _DashBoardScreenState extends State<DashBoardScreen> {
                         tooltipBehavior: TooltipBehavior(enable: true),
                         zoomPanBehavior: ZoomPanBehavior(
                           enableDoubleTapZooming: true,
+                          enablePinching: true,
                         ),
                         series: <ChartSeries<dynamic, DateTime>>[
-                          LineSeries<ChartDataImport, DateTime>(
+                          SplineSeries<ChartDataImport, DateTime>(
+                              splineType: SplineType.monotonic,
                               dataSource:
                                   dashboardController.chartDataImportList,
                               color: Colors.blueAccent,
@@ -619,7 +651,8 @@ class _DashBoardScreenState extends State<DashBoardScreen> {
                               dataLabelSettings: const DataLabelSettings(
                                 isVisible: true,
                               )),
-                          LineSeries<ChartDataExport, DateTime>(
+                          SplineSeries<ChartDataExport, DateTime>(
+                              splineType: SplineType.monotonic,
                               dataSource:
                                   dashboardController.chartDataExportList,
                               color: Colors.redAccent,

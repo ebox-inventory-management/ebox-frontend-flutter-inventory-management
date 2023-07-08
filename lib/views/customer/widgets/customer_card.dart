@@ -65,40 +65,47 @@ class CustomerCard extends StatelessWidget {
               ),
             ),
             Spacer(),
-            Padding(
-              padding: REdgeInsets.all(15.r),
-              child: Row(
-                children: [
-                  IconButton(
-                      onPressed: () {
-                        Get.dialog(CustomerEdit(customers: customers));
-                      },
-                      icon: Icon(Icons.edit, color: Colors.blue, size: 25.r)),
-                  IconButton(
-                      onPressed: () {
-                        AwesomeDialog(
-                          context: context,
-                          width: 600.w,
-                          dialogType: DialogType.warning,
-                          animType: AnimType.bottomSlide,
-                          title: 'WARNING'.tr,
-                          desc:
-                              'Are you sure you want to delete ${customers.name}?'
-                                  .tr,
-                          btnCancelOnPress: () {},
-                          btnOkOnPress: () {
-                            customerController.delete(id: customers.id);
+            Obx(() {
+              if (authController.user.value!.role != 'admin') {
+                return SizedBox();
+              } else {
+                return Padding(
+                  padding: REdgeInsets.all(15.r),
+                  child: Row(
+                    children: [
+                      IconButton(
+                          onPressed: () {
+                            Get.dialog(CustomerEdit(customers: customers));
                           },
-                        ).show();
-                      },
-                      icon: Icon(
-                        Icons.delete,
-                        color: Colors.red,
-                        size: 25.r,
-                      ))
-                ],
-              ),
-            )
+                          icon:
+                              Icon(Icons.edit, color: Colors.blue, size: 25.r)),
+                      IconButton(
+                          onPressed: () {
+                            AwesomeDialog(
+                              context: context,
+                              width: 600.w,
+                              dialogType: DialogType.warning,
+                              animType: AnimType.bottomSlide,
+                              title: 'WARNING'.tr,
+                              desc:
+                                  'Are you sure you want to delete ${customers.name}?'
+                                      .tr,
+                              btnCancelOnPress: () {},
+                              btnOkOnPress: () {
+                                customerController.delete(id: customers.id);
+                              },
+                            ).show();
+                          },
+                          icon: Icon(
+                            Icons.delete,
+                            color: Colors.red,
+                            size: 25.r,
+                          ))
+                    ],
+                  ),
+                );
+              }
+            }),
           ],
         ),
       ),
