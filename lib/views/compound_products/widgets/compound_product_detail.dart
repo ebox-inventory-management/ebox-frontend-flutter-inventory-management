@@ -11,6 +11,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 import 'package:intl/intl.dart';
+import 'package:readmore/readmore.dart';
 
 import '../../../controller/controllers.dart';
 import '../../../model/brand.dart';
@@ -94,11 +95,24 @@ class CompoundProductDetail extends StatelessWidget {
                           SizedBox(
                             height: 30.w,
                           ),
-                          Text(
-                            compoundProducts.description!,
-                            style:
-                                TextStyle(fontSize: 16.sp, color: Colors.grey),
-                          ),
+                          SizedBox(
+                              width: 0.4.sw,
+                              child: ReadMoreText(
+                                compoundProducts.description!,
+                                trimLines: 3,
+                                colorClickableText: Colors.grey,
+                                lessStyle: TextStyle(
+                                    fontSize: 16.sp,
+                                    fontWeight: FontWeight.bold),
+                                moreStyle: TextStyle(
+                                    fontSize: 16.sp,
+                                    fontWeight: FontWeight.bold),
+                                trimMode: TrimMode.Line,
+                                trimCollapsedText: 'Show more',
+                                trimExpandedText: 'Show less',
+                                style: TextStyle(
+                                    fontSize: 16.sp, color: Colors.grey),
+                              )),
                           SizedBox(
                             height: 30.w,
                           ),

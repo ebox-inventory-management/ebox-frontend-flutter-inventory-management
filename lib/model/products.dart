@@ -13,7 +13,6 @@ class Products {
   final int product_quantity;
   final String product_code;
   final String description;
-
   final String product_garage;
   final String product_route;
   final String product_image;
