@@ -68,7 +68,8 @@ class ProductCompoundList extends StatelessWidget {
                       category_id: productsCompounds[index].categoryId!,
                       supplier_id: productsCompounds[index].supplierId!,
                       brand_id: productsCompounds[index].brandId!,
-                      unit: productsCompounds[index].unit!),
+                      unit: productsCompounds[index].unit!,
+                      description: productsCompounds[index].description!),
                   price: productsCompounds[index].exportPrice!,
                   quantity: productsCompounds[index].pivot!.productQuantity!,
                 );

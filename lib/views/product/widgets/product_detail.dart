@@ -115,6 +115,17 @@ class _ProductDetailState extends State<ProductDetail> {
                             height: 15.w,
                           ),
                           Text(
+                            widget.product.description,
+                            overflow: TextOverflow.ellipsis,
+                            style: TextStyle(
+                                fontWeight: FontWeight.w500,
+                                fontSize: 18.sp,
+                                color: Colors.red),
+                          ),
+                          SizedBox(
+                            height: 15.w,
+                          ),
+                          Text(
                             'Quantity: ${widget.product.product_quantity}',
                             overflow: TextOverflow.ellipsis,
                             style: TextStyle(

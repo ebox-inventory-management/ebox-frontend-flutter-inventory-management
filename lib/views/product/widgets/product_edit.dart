@@ -108,6 +108,7 @@ class _ProductEditState extends State<ProductEdit> {
   TextEditingController expireDateController = TextEditingController();
   TextEditingController importPriceController = TextEditingController();
   TextEditingController exportPriceController = TextEditingController();
+  TextEditingController descriptionController = TextEditingController();
 
   @override
   void dispose() {
@@ -119,6 +120,7 @@ class _ProductEditState extends State<ProductEdit> {
     expireDateController.dispose();
     importPriceController.dispose();
     exportPriceController.dispose();
+    descriptionController.dispose();
   }
 
   @override
@@ -129,6 +131,8 @@ class _ProductEditState extends State<ProductEdit> {
     productGarageController.text = widget.products.product_garage;
     productRouteController.text = widget.products.product_route;
     expireDateController.text = widget.products.expire_date;
+    descriptionController.text = widget.products.description;
+
     importPriceController.text = widget.products.import_price.toString();
     exportPriceController.text = widget.products.export_price.toString();
   }
@@ -201,6 +205,34 @@ class _ProductEditState extends State<ProductEdit> {
                                 },
                                 decoration: InputDecoration(
                                   hintText: widget.products.product_name,
+                                  hintStyle: TextStyle(
+                                    fontSize: 14.sp,
+                                  ),
+                                  border: OutlineInputBorder(
+                                    borderRadius: BorderRadius.circular(10.0.r),
+                                  ),
+                                ),
+                              ),
+                            ),
+                          ),
+                          Text(
+                            'Description',
+                            style: TextStyle(
+                                fontWeight: FontWeight.bold, fontSize: 14.sp),
+                          ),
+                          Padding(
+                            padding: REdgeInsets.only(bottom: 30.r, top: 10.r),
+                            child: SizedBox(
+                              width: 0.4.sw,
+                              child: TextFormField(
+                                controller: descriptionController,
+                                textInputAction: TextInputAction.next,
+                                obscureText: false,
+                                onChanged: (value) {
+                                  setState(() {});
+                                },
+                                decoration: InputDecoration(
+                                  hintText: widget.products.description,
                                   hintStyle: TextStyle(
                                     fontSize: 14.sp,
                                   ),
@@ -619,6 +651,7 @@ class _ProductEditState extends State<ProductEdit> {
                             import_price: int.parse(importPriceController.text),
                             export_price: int.parse(exportPriceController.text),
                             id: widget.products.id,
+                            description: descriptionController.text,
                           );
                         }
                       },

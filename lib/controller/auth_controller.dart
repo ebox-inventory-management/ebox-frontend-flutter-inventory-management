@@ -120,6 +120,7 @@ class AuthController extends GetxController {
   void signUp(
       {required String name,
       required String email,
+      required String role,
       required PlatformFile image,
       required String password,
       required String password_confirmation}) async {
@@ -135,22 +136,11 @@ class AuthController extends GetxController {
         name: name,
         image: image,
         password_confirmation: password_confirmation,
+        role: role,
       );
       if (result.statusCode == 200) {
-        String token = json.decode(result.body)['token'];
-
-        //after the login REST api call && response code ==200
-        SharedPreferences prefs = await SharedPreferences.getInstance();
-        prefs.setString('token', token);
-
-        var userResult = await RemoteAuthService().getUser(token: token);
-        if (userResult.statusCode == 200) {
-          user.value = userFromJson(userResult.body);
-          EasyLoading.showSuccess("Welcome to eBox Inventory Management!");
-          Get.offAllNamed('/navigation');
-        } else {
-          EasyLoading.showError('Something wrong. Try again!');
-        }
+        EasyLoading.showSuccess("User ${name} has been created!");
+        Get.offAllNamed('/navigation');
       } else {
         EasyLoading.showError('Something wrong. Try again!');
       }

@@ -45,6 +45,7 @@ class ProductController extends GetxController {
     required int supplier_id,
     required int brand_id,
     required String product_name,
+    required String description,
     required String product_code,
     required String product_garage,
     required String product_route,
@@ -74,7 +75,8 @@ class ProductController extends GetxController {
           import_price: import_price,
           expire_date: expire_date,
           id: id,
-          token: token);
+          token: token,
+          description: description);
       EasyLoading.dismiss();
     } catch (e) {
       debugPrint(e.toString());
@@ -92,6 +94,7 @@ class ProductController extends GetxController {
     required String product_code,
     required String product_garage,
     required String product_route,
+    required String description,
     required PlatformFile product_image,
     required String expire_date,
     required int import_price,
@@ -117,6 +120,7 @@ class ProductController extends GetxController {
         import_price: import_price,
         expire_date: expire_date,
         token: token,
+        description: description,
       );
       EasyLoading.dismiss();
     } catch (e) {

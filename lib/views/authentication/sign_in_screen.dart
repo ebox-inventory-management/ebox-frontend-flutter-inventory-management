@@ -119,34 +119,34 @@ class SignInScreen extends StatelessWidget {
             SizedBox(
               height: 10.h,
             ),
-            Row(
-              children: [
-                Text(
-                  'No have account yet? ',
-                  style: TextStyle(color: Colors.black54, fontSize: 16.sp),
-                ),
-                GestureDetector(
-                  onTap: () {
-                    Get.toNamed('/signup');
-                  },
-                  child: Container(
-                    decoration: BoxDecoration(
-                        borderRadius: BorderRadius.all(Radius.circular(10.r)),
-                        color: Colors.green),
-                    child: Padding(
-                      padding: REdgeInsets.all(10.0),
-                      child: Text(
-                        'SignUp',
-                        style: TextStyle(
-                            color: Colors.white,
-                            fontWeight: FontWeight.w500,
-                            fontSize: 16.sp),
-                      ),
-                    ),
-                  ),
-                )
-              ],
-            )
+            // Row(
+            //   children: [
+            //     Text(
+            //       'No have account yet? ',
+            //       style: TextStyle(color: Colors.black54, fontSize: 16.sp),
+            //     ),
+            //     GestureDetector(
+            //       onTap: () {
+            //         Get.toNamed('/signup');
+            //       },
+            //       child: Container(
+            //         decoration: BoxDecoration(
+            //             borderRadius: BorderRadius.all(Radius.circular(10.r)),
+            //             color: Colors.green),
+            //         child: Padding(
+            //           padding: REdgeInsets.all(10.0),
+            //           child: Text(
+            //             'SignUp',
+            //             style: TextStyle(
+            //                 color: Colors.white,
+            //                 fontWeight: FontWeight.w500,
+            //                 fontSize: 16.sp),
+            //           ),
+            //         ),
+            //       ),
+            //     )
+            //   ],
+            // )
           ]),
         ),
       ),

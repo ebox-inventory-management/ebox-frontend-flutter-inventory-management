@@ -12,6 +12,8 @@ class Products {
   final String product_url;
   final int product_quantity;
   final String product_code;
+  final String description;
+
   final String product_garage;
   final String product_route;
   final String product_image;
@@ -27,6 +29,7 @@ class Products {
 
   Products({
     required this.unit,
+    required this.description,
     required this.id,
     required this.product_name,
     required this.product_url,
@@ -48,6 +51,7 @@ class Products {
 
   factory Products.fromJson(Map<dynamic, dynamic> data) => Products(
         id: data['id'],
+        description: data['description'] ?? 'Not Yet',
         product_name: data['product_name'] ?? 'Not Yet',
         unit: data['unit'] ?? 'Not Yet',
         product_url: data['url'] ?? 'Not Yet',

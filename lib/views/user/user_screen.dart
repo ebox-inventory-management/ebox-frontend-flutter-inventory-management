@@ -6,6 +6,7 @@ import 'package:ebox_frontend_web_inventory/views/customer/widgets/customer_list
 import 'package:ebox_frontend_web_inventory/views/product/widgets/product_list.dart';
 import 'package:ebox_frontend_web_inventory/views/suppliers/widgets/supplier_add.dart';
 import 'package:ebox_frontend_web_inventory/views/suppliers/widgets/supplier_list.dart';
+import 'package:ebox_frontend_web_inventory/views/user/user_add.dart';
 import 'package:ebox_frontend_web_inventory/views/user/user_list.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
@@ -102,9 +103,6 @@ class UserScreen extends StatelessWidget {
                   ),
                 ),
               ),
-            ),
-            SizedBox(
-              height: 30.w,
             ),
             Obx(() {
               if (authController.user.value!.role != 'admin') {

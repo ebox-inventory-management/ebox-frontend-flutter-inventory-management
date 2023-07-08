@@ -15,18 +15,16 @@ import 'package:intl/intl.dart';
 
 import '../../../controller/controllers.dart';
 
-class UserEdit extends StatefulWidget {
-  final Users users;
-  const UserEdit({
+class UserAdd extends StatefulWidget {
+  const UserAdd({
     super.key,
-    required this.users,
   });
 
   @override
-  State<UserEdit> createState() => _UserEditState();
+  State<UserAdd> createState() => _UserAddState();
 }
 
-class _UserEditState extends State<UserEdit> {
+class _UserAddState extends State<UserAdd> {
   List<String> role = ['admin', 'staff'];
   String? selectedValueRole;
 
@@ -60,20 +58,16 @@ class _UserEditState extends State<UserEdit> {
 
   TextEditingController emailController = TextEditingController();
   TextEditingController nameController = TextEditingController();
-
+  TextEditingController passwordController = TextEditingController();
+  TextEditingController passwordConfirmationController =
+      TextEditingController();
   @override
   void dispose() {
     super.dispose();
     emailController.dispose();
     nameController.dispose();
-  }
-
-  @override
-  void initState() {
-    super.initState();
-    selectedValueRole = widget.users.role;
-    emailController.text = widget.users.email;
-    nameController.text = widget.users.name;
+    passwordController.dispose();
+    passwordConfirmationController.dispose();
   }
 
   @override
@@ -152,7 +146,6 @@ class _UserEditState extends State<UserEdit> {
                                   setState(() {});
                                 },
                                 decoration: InputDecoration(
-                                  hintText: widget.users.name,
                                   hintStyle: TextStyle(fontSize: 16.sp),
                                   border: OutlineInputBorder(
                                     borderRadius: BorderRadius.circular(10.0.r),
@@ -178,7 +171,58 @@ class _UserEditState extends State<UserEdit> {
                                   setState(() {});
                                 },
                                 decoration: InputDecoration(
-                                  hintText: widget.users.email,
+                                  hintStyle: TextStyle(fontSize: 16.sp),
+                                  border: OutlineInputBorder(
+                                    borderRadius: BorderRadius.circular(10.0.r),
+                                  ),
+                                ),
+                              ),
+                            ),
+                          ),
+                          Text(
+                            'Password',
+                            style: TextStyle(
+                                fontWeight: FontWeight.bold, fontSize: 14.sp),
+                          ),
+                          Padding(
+                            padding: REdgeInsets.only(bottom: 30.r, top: 10.r),
+                            child: SizedBox(
+                              width: 0.4.sw,
+                              child: TextFormField(
+                                obscureText: true,
+                                controller: passwordController,
+                                enableSuggestions: false,
+                                autocorrect: false,
+                                onChanged: (value) {
+                                  setState(() {});
+                                },
+                                decoration: InputDecoration(
+                                  hintStyle: TextStyle(fontSize: 16.sp),
+                                  border: OutlineInputBorder(
+                                    borderRadius: BorderRadius.circular(10.0.r),
+                                  ),
+                                ),
+                              ),
+                            ),
+                          ),
+                          Text(
+                            'Password Confirmation',
+                            style: TextStyle(
+                                fontWeight: FontWeight.bold, fontSize: 14.sp),
+                          ),
+                          Padding(
+                            padding: REdgeInsets.only(bottom: 30.r, top: 10.r),
+                            child: SizedBox(
+                              width: 0.4.sw,
+                              child: TextFormField(
+                                obscureText: true,
+                                enableSuggestions: false,
+                                autocorrect: false,
+                                controller: passwordConfirmationController,
+                                onChanged: (value) {
+                                  setState(() {});
+                                },
+                                decoration: InputDecoration(
                                   hintStyle: TextStyle(fontSize: 16.sp),
                                   border: OutlineInputBorder(
                                     borderRadius: BorderRadius.circular(10.0.r),
@@ -240,7 +284,7 @@ class _UserEditState extends State<UserEdit> {
                             ),
                             child: _imageFile == null
                                 ? Image.network(
-                                    widget.users.image,
+                                    'https://shop.mevid.hu/wp-content/uploads/2019/11/image.jpg',
                                     fit: BoxFit.cover,
                                   )
                                 : Image.memory(
@@ -281,31 +325,50 @@ class _UserEditState extends State<UserEdit> {
                   Center(
                     child: TextButton(
                       onPressed: () {
-                        if (nameController.text.isEmpty ||
-                            _imageFile == null ||
-                            emailController.text.isEmpty) {
+                        if (emailController.text.isEmpty ||
+                            passwordController.text.isEmpty ||
+                            nameController.text.isEmpty ||
+                            selectedValueRole == null ||
+                            passwordConfirmationController.text.isEmpty ||
+                            _imageFile == null) {
                           Get.snackbar('Something wrong!',
-                              'You need to input all user information to update',
+                              'You need to input all information to sign up',
                               colorText: Colors.white,
-                              margin: REdgeInsets.all(15),
+                              margin: REdgeInsets.all(15.r),
                               backgroundColor: Colors.redAccent,
                               snackPosition: SnackPosition.BOTTOM,
                               duration: const Duration(seconds: 2));
-                          return;
                         } else {
-                          authController.updateUser(
+                          if (passwordController.text ==
+                              passwordConfirmationController.text) {
+                            authController.signUp(
                               email: emailController.text,
+                              password: passwordController.text,
                               name: nameController.text,
                               image: _imageFile!,
-                              id: widget.users.id,
-                              role: selectedValueRole!);
+                              password_confirmation:
+                                  passwordConfirmationController.text,
+                              role: selectedValueRole!,
+                            );
+                          } else {
+                            Get.snackbar('Something wrong!',
+                                'You need to input password and password confirmation is the same',
+                                colorText: Colors.white,
+                                margin: REdgeInsets.all(15.r),
+                                backgroundColor: Colors.redAccent,
+                                snackPosition: SnackPosition.BOTTOM,
+                                duration: const Duration(seconds: 2));
+                          }
                         }
                       },
                       style: TextButton.styleFrom(
                           foregroundColor: Colors.white,
-                          backgroundColor: nameController.text.isEmpty ||
-                                  _imageFile == null ||
-                                  emailController.text.isEmpty
+                          backgroundColor: emailController.text.isEmpty ||
+                                  passwordController.text.isEmpty ||
+                                  nameController.text.isEmpty ||
+                                  selectedValueRole == null ||
+                                  passwordConfirmationController.text.isEmpty ||
+                                  _imageFile == null
                               ? Colors.grey
                               : Colors.green,
                           shape: RoundedRectangleBorder(
@@ -315,7 +378,7 @@ class _UserEditState extends State<UserEdit> {
                         padding: REdgeInsets.only(
                             top: 15.r, bottom: 15.r, left: 30.r, right: 30.r),
                         child: Text(
-                          'Update',
+                          'Add',
                           style: TextStyle(fontSize: 20.sp),
                         ),
                       ),

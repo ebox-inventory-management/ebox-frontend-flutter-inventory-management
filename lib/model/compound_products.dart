@@ -78,7 +78,7 @@ class Compounds {
 class ProductsCompound {
   int? id;
   String? productName;
-  Null? description;
+  String? description;
   int? productQuantity;
   String? unit;
   String? productCode;
@@ -121,21 +121,22 @@ class ProductsCompound {
 
   ProductsCompound.fromJson(Map<String, dynamic> json) {
     id = json['id'];
-    productName = json['product_name'];
-    description = json['description'];
-    productQuantity = json['product_quantity'];
-    unit = json['unit'];
-    productCode = json['product_code'];
-    productGarage = json['product_garage'];
-    productRoute = json['product_route'];
-    productImage = json['product_image'];
-    expireDate = json['expire_date'];
-    importPrice = json['import_price'];
-    exportPrice = json['export_price'];
+    productName = json['product_name'] ?? 'Not Yet';
+    description = json['description'] ?? 'Not Yet';
+    productQuantity = json['product_quantity'] ?? 0;
+    unit = json['unit'] ?? 'Not Yet';
+    productCode = json['product_code'] ?? 'Not Yet';
+    productGarage = json['product_garage'] ?? 'Not Yet';
+    productRoute = json['product_route'] ?? 'Not Yet';
+    productImage = json['product_image'] ??
+        'https://shop.mevid.hu/wp-content/uploads/2019/11/image.jpg';
+    expireDate = json['expire_date'] ?? 'Not Yet';
+    importPrice = json['import_price'] ?? 0;
+    exportPrice = json['export_price'] ?? 0;
     productAmount = json['product_amount'];
-    url = json['url'];
-    createdAt = json['created_at'];
-    updatedAt = json['updated_at'];
+    url = json['url'] ?? 'Not Yet';
+    createdAt = json['created_at'] ?? 'Not Yet';
+    updatedAt = json['updated_at'] ?? 'Not Yet';
     categoryId = json['category_id'];
     supplierId = json['supplier_id'];
     brandId = json['brand_id'];
